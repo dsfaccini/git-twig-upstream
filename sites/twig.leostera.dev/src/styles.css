@@ -245,7 +245,7 @@ h3 a:hover {
   background: #85a65f;
 }
 footer {
-  padding: 20px 0 24px;
+  padding: 20px 0 calc(48px + env(safe-area-inset-bottom, 0px));
   text-align: center;
   font-size: 13px;
   color: #6a755f;
