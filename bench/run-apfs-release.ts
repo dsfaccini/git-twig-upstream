@@ -4,7 +4,7 @@ import { createHash } from "node:crypto";
 import { chmodSync, closeSync, copyFileSync, existsSync, mkdirSync, openSync, readFileSync, renameSync, statfsSync, writeFileSync } from "node:fs";
 import { resolve } from "node:path";
 
-const [runArg, mainArg, axoArg] = process.argv.slice(2);
+const [runArg, mainArg, axoArg, continuation] = process.argv.slice(2);
 if (!runArg || !mainArg || !axoArg) throw new Error("bun bench/run-apfs-release.ts RUN_DIRECTORY MAIN_CHECKOUT AXO_CHECKOUT");
 const cwd = process.cwd();
 const run = resolve(runArg), main = resolve(mainArg), axo = resolve(axoArg);
@@ -31,14 +31,25 @@ const inputs = [
   { name: "openclaw", path: resolve(run, "input/openclaw.git"), commit: "410c0dda40702e25263b49b8b7d0786a5e49e366" },
 ];
 for (const input of inputs) text(["git", "-C", input.path, "cat-file", "-e", `${input.commit}^{commit}`]);
-const jobs = inputs.flatMap(input => {
+const plannedJobs = inputs.flatMap(input => {
   const large = ["linux", "openclaw"].includes(input.name);
   const modes = input.name === "linux" ? ["case-sensitive-image"] : ["host", "case-sensitive-image"];
   return modes.map(mode => ({ input, mode, count: large ? 10 : 100, concurrency: large ? 1 : 100, repeats: 3, capacity: input.name === "linux" ? 32 : input.name === "openclaw" ? 24 : 16, file: `${input.name}-${mode === "host" ? "host" : "images"}.json` }));
 });
+const previous = continuation === "continue" ? JSON.parse(readFileSync(resolve(run, "state.json"), "utf8")) : null;
+if (previous && previous.phase !== "failed") throw new Error("Only a stopped failed campaign can be continued");
+const jobs = previous ? plannedJobs
+  .filter(job => !previous.completed.some((done: any) => done.file === job.file && done.exitCode === 0))
+  .map(job => ({ ...job, file: existsSync(resolve(run, job.file)) ? job.file.replace(".json", "-retry-1.json") : job.file })) : plannedJobs;
+if (previous) {
+  const snapshot = resolve(run, "failed-attempt-state.json");
+  if (existsSync(snapshot)) throw new Error("Refusing to overwrite prior failure snapshot");
+  writeFileSync(snapshot, JSON.stringify(previous, null, 2) + "\n");
+}
 const manifest = {
   schemaVersion: 1, generatedAt: new Date().toISOString(), runnerCommit: text(["git", "rev-parse", "HEAD"]), dirty: false,
   candidateSourceCommit: "47c92163c3ca8b59eee76fa546f86eef826780a7",
+  continuationOf: previous ? { manifestSha256: sha(resolve(run, "manifest.json")), state: "failed-attempt-state.json", reason: "Retain failed setup attempt; rerun the entire incomplete job on fresh images using identical frozen binaries." } : null,
   candidateVersion: text([resolve(bin, "git-twig"), "--version"]),
   binaries: Object.fromEntries(["git-twig", "twig-real-bench", "git"].map(name => [name, { sha256: sha(resolve(bin, name)) }])),
   baseline: text([resolve(bin, "git"), "--version"]), platform: text(["sw_vers"]), cpu: text(["sysctl", "-n", "machdep.cpu.brand_string"]),
@@ -54,9 +65,11 @@ const manifest = {
     "All raw failures are retained. No retries or automatic exclusion of failed observations. Final verification, native selection and private writes are outside creation timing.",
   ],
 };
-writeFileSync(resolve(run, "manifest.json"), JSON.stringify(manifest, null, 2) + "\n");
+const manifestPath = resolve(run, previous ? "continuation-1.manifest.json" : "manifest.json");
+if (existsSync(manifestPath)) throw new Error("Refusing to overwrite campaign manifest");
+writeFileSync(manifestPath, JSON.stringify(manifest, null, 2) + "\n");
 let phase = "running";
-const completed: unknown[] = [];
+const completed: unknown[] = previous ? previous.completed.filter((job: any) => job.exitCode === 0) : [];
 let current = "", childPid: number | null = null;
 function state(extra: Record<string, unknown> = {}) {
   const fs = statfsSync(run);
