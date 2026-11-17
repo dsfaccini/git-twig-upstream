@@ -1,12 +1,12 @@
 # Existing-worktree adoption prototype
 
-This exists only on `exp/adopt`, not in any released Twig version. Build and use
-this experiment's binary explicitly; do not replace your installed Twig:
+This is an experimental command in development main, not released v0.4. Build and
+use the development binary explicitly; do not replace your installed stable Twig:
 
 ```sh
 CARGO_TARGET_DIR=target/build cargo build --release -p git-twig --locked
 # Run from the donor checkout; target is an existing linked worktree of that repo.
-/absolute/path/to/exp-adopt/target/build/release/git-twig adopt --dry-run ../existing
+/absolute/path/to/git-twig/target/build/release/git-twig adopt --dry-run ../existing
 ```
 
 Default mode is read-only inspection. It compares current raw bytes at the same
@@ -53,5 +53,5 @@ Generated repositories and scratch remain under ignored target paths / the
 explicit test mount. The open-descriptor counterexample retains both inode
 versions to demonstrate why clone-and-rename is not safe live APFS adoption.
 
-See [RFD0021](../../docs/rfds/RFD0021-adopt-existing-worktrees.md) for the contract,
+See [RFD0023](../../docs/rfds/RFD0023-adopt-existing-worktrees.md) for the contract,
 alternatives and outstanding APFS application problem.

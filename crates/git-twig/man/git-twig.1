@@ -22,6 +22,14 @@ Create a worktree. Development builds can select a nearby donor worktree for
 other commits; matching files are verified clones and Git writes the rest.
 Unsupported options delegate to Git. Published v0.3.0 requires the source HEAD.
 .TP
+.B adopt [--dry-run | --prepare | --dedupe] linked-worktree
+Experimental existing-worktree sharing, run from another donor checkout in the
+same repository. Default and --dry-run inspect matching current tracked bytes.
+--prepare retains verified private clones without replacing existing files.
+Linux --dedupe uses in-place kernel comparison/sharing; APFS live replacement
+is unsupported. Neither logical matching bytes nor ioctl bytes measure exclusive
+physical savings. Does not restore HEAD, rewrite the index, or alter registration.
+.TP
 .B list [--porcelain [-z]]
 List worktrees. Porcelain is Git's stable machine-readable format.
 .TP

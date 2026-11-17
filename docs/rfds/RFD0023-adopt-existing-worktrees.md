@@ -1,4 +1,4 @@
-# RFD0021 — Adopt existing worktrees without changing their contents
+# RFD0023 — Adopt existing worktrees without changing their contents
 
 - Status: experimental proposal
 - Author: leostera

@@ -22,9 +22,20 @@ describe changes from this baseline after they are implemented and verified.
 - Benchmark schema 4: separate donor/target provenance, isolated warmup/oracle
   registries, real verified-clone counts and explicit fallback baselines.
 
+### Experimental
+
+- `git twig adopt` inspects matching current tracked bytes in existing linked
+  worktrees without restoring HEAD or changing the index/registration. Default
+  mode and `--dry-run` are read-only; `--prepare` retains private verified clones.
+- Linux `adopt --dedupe` shares identical ranges in place through FIDEDUPERANGE,
+  preserving inode identity and open-writer/mapping behavior. Native XFS/Btrfs
+  tests include stale-comparison rejection, private writes and dirty/staged data.
+  APFS live replacement remains unsupported; preparation is not compaction, and
+  reported logical/kernel bytes are not measured exclusive allocation savings.
+
 External filters on regular files, sparse checkout, conditional config includes and
 relative attribute-file configuration remain conservative whole-request fallbacks.
-Braiding and re-sharing existing worktrees are not included.
+Braiding, agent lifecycle hooks and an automatic setup manager are not included.
 
 ## [0.4.0] — 2026-11-17
 

@@ -2,7 +2,7 @@
 use anyhow::{Context, Result, bail, ensure};
 use std::{
     ffi::OsString,
-    path::{Component, Path, PathBuf},
+    path::{Path, PathBuf},
 };
 
 const USAGE: &str =
@@ -76,20 +76,11 @@ mod unix {
                 fs::{DirBuilderExt, MetadataExt, OpenOptionsExt},
             },
         },
+        path::Component,
         time::{SystemTime, UNIX_EPOCH},
     };
 
-    fn git(path: &Path) -> std::process::Command {
-        let mut command = crate::git(path);
-        command.args([
-            "--no-optional-locks",
-            "-c",
-            "core.fsmonitor=false",
-            "-c",
-            "core.hooksPath=/nonexistent/twig-adopt-hooks",
-        ]);
-        command
-    }
+    use crate::registry::git;
 
     fn repository(path: &Path) -> Result<PathBuf> {
         let root = crate::output_path(
@@ -253,18 +244,7 @@ mod unix {
     }
 
     pub(super) fn run(cwd: &Path, request: Request) -> Result<i32> {
-        for key in [
-            "GIT_DIR",
-            "GIT_WORK_TREE",
-            "GIT_INDEX_FILE",
-            "GIT_COMMON_DIR",
-            "GIT_OBJECT_DIRECTORY",
-        ] {
-            ensure!(
-                std::env::var_os(key).is_none(),
-                "environment override {key} is unsupported"
-            );
-        }
+        crate::registry::ensure_environment()?;
         if request.mode == Mode::Dedupe {
             ensure!(
                 cfg!(all(
@@ -293,19 +273,11 @@ mod unix {
             fs::symlink_metadata(target_path.join(".git"))?.is_file(),
             "target must be a linked worktree"
         );
-        let registered =
-            crate::checked(git(&donor_path).args(["worktree", "list", "--porcelain", "-z"]))?;
+        let registered = crate::registry::read(&donor_path)?;
         ensure!(
-            registered
-                .stdout
-                .split(|byte| *byte == 0)
-                .filter_map(|record| record.strip_prefix(b"worktree "))
-                .any(|path| {
-                    fs::canonicalize(PathBuf::from(crate::native::os_string(path.to_vec())))
-                        .ok()
-                        .as_ref()
-                        == Some(&target_path)
-                }),
+            registered.iter().any(|record| {
+                fs::canonicalize(&record.path).ok().as_ref() == Some(&target_path)
+            }),
             "target is not a registered worktree"
         );
         let output = crate::checked(git(&target_path).args([

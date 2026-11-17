@@ -4,6 +4,7 @@ mod checkout;
 mod donor;
 mod native;
 mod objects;
+mod registry;
 mod snapshot;
 mod staging;
 mod tree;

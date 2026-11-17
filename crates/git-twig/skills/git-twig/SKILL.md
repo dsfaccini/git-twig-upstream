@@ -34,6 +34,7 @@ agent that can execute Git commands; they do not install or intercept client hoo
 
 ```text
 git twig new [<git-worktree options>] <path> [<commit>]
+git twig adopt [--dry-run | --prepare | --dedupe] <linked-worktree>
 git twig list [--porcelain [-z]]
 git twig remove <path>
 git twig move <path> <new-path>
@@ -49,6 +50,9 @@ git twig --version
 
 - `new`: create an ordinary linked worktree. Supported requests use native CoW;
   other requests use Git's normal checkout.
+- `adopt` (experimental development command, absent in released v0.4): inspect
+  existing linked worktrees for matching current bytes. See the adoption section;
+  it is not automatic cleanup or a session manager.
 - `list`: show worktrees in human-readable form. `--porcelain` is Git's stable
   machine-readable format; `-z` uses NUL separators for safe path parsing.
 - `remove`: remove a worktree and its registration. Check for changes and ask
@@ -72,8 +76,9 @@ git twig --version
 
 Standard Git worktree options are passed through. Use `git worktree <command> -h`
 for the full options of a delegated command (`new` uses Git's `add` options).
-Do not invent additional Twig commands or flags. Experimental adoption/setup
-prototypes are not capabilities of an installed release.
+Do not invent additional Twig commands or flags. Check subcommand help before
+using development features: released v0.4 has no `adopt`, and no `setup` command
+or lifecycle-hook manager is shipped.
 
 ## Create a workspace
 
@@ -125,6 +130,34 @@ Do not assume that creating a worktree moved an existing editor/session there.
 - Report the created/reused path, branch/base and setup still needed. Only claim
   native CoW when trace output confirms it; a successful Git fallback is valid but
   not evidence of sharing. Do not promise fixed speed or exclusive space savings.
+
+## Inspect or adopt an existing worktree
+
+First check `git twig adopt -h`; older installed releases do not have this command.
+Run from a distinct donor checkout of the same repository:
+
+```sh
+git -C main twig adopt --dry-run ../existing
+```
+
+Inspection does not replace files or refresh the index. It compares same-path
+tracked regular files by their current raw bytes, not HEAD or clean status.
+Dirty and staged work must survive unchanged. Missing, different, empty,
+symlinked, multiply-linked and cross-device candidates are skipped. Report these
+limits rather than promising all worktree bytes can be shared.
+
+On supported Linux filesystems, explicit `--dedupe` uses kernel in-place
+comparison/sharing without replacing inodes. Start with the dry-run and explain
+that a changed or unsupported range can stop the operation after earlier ranges
+were shared; no contents are rolled back. Do not infer exclusive space reclaimed
+from reported logical/kernel byte counts. Do not loop over every agent's
+worktrees or assume permission to perform unrelated maintenance.
+
+On macOS, `--prepare` only retains private verified clones for inspection and can
+consume extra space. It does NOT compact the original; `--dedupe` is unavailable.
+Never substitute clone-and-rename on an active APFS checkout: editors and writable
+mappings can keep writing the old inode. Leave existing agent ownership, paths,
+branches, index, permissions and registration intact. No agent hook is required.
 
 ## Know what is copied
 

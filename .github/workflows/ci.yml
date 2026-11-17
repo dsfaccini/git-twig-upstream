@@ -61,6 +61,11 @@ jobs:
         env:
           TWIG_TEST_REQUIRE_NATIVE: '1'
         run: cargo test -p git-twig --locked
+      - name: Verify native in-place adoption, including open mappings and stale comparisons
+        if: runner.os == 'Linux'
+        env:
+          TWIG_TEST_REQUIRE_NATIVE: '1'
+        run: cargo test -p git-twig --locked adopt -- --include-ignored
       - run: cargo build --workspace --release --locked
   minimum-git:
     strategy:
