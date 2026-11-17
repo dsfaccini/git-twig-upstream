@@ -1,0 +1,8 @@
+file-heavy: twig, repeat 1/1, 4 creates with concurrency 4
+cohort workers launched: 4; queued creates: 4
+twig: CLI completed 1/4; content verification pending
+twig: CLI completed 2/4; content verification pending
+twig: CLI completed 3/4; content verification pending
+twig: CLI completed 4/4; content verification pending
+  2.77s creates; 4 ok / 0 failed; allocation after status: 6.69 MiB
+  disposable image detached and removed

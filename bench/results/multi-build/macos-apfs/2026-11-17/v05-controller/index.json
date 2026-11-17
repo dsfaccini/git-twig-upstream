@@ -1,0 +1,50 @@
+{
+  "schemaVersion": 1,
+  "kind": "macos-v05-candidate-campaign-index",
+  "candidateSource": "b4f9c7b1e2e60ab6edc97ab9b6514fc5d87c220b",
+  "baselineSource": "9f86536d3deec6432a07dee250f9d5cce0835993",
+  "harnessSource": "4a455fa",
+  "verifiedPoints": 135,
+  "verifiedCreatesInCompletePoints": 432,
+  "runs": [
+    {
+      "manifest": "bench/results/sha256-d1c5f42dba40/macos-apfs/2026-11-17/run-174602.099-9a68472e-736e-43fb-b7de-c57df84ad4c0/manifest.json",
+      "status": "completed",
+      "verifiedPoints": 72,
+      "verifiedCreatesInCompletePoints": 288,
+      "unstableAllocationPoints": [
+        {
+          "profile": "file-heavy",
+          "concurrency": 16,
+          "round": 0,
+          "backend": "git"
+        }
+      ],
+      "failedPoints": []
+    },
+    {
+      "manifest": "bench/results/sha256-d1c5f42dba40/macos-apfs-sensitive/2026-11-17/run-175922.244-dec5993e-a3aa-4f88-8073-cffee928280f/manifest.json",
+      "status": "failed",
+      "verifiedPoints": 63,
+      "verifiedCreatesInCompletePoints": 144,
+      "unstableAllocationPoints": [],
+      "failedPoints": [
+        {
+          "result": "apfs-sensitive-file-heavy-c16-r0-git.json",
+          "profile": "file-heavy",
+          "concurrency": 16,
+          "backend": "git",
+          "error": "Process exit 1 / null"
+        }
+      ]
+    }
+  ],
+  "notes": [
+    "Synthetic shared-host warm-cache sparse APFS image measurements, not historical real-repository results.",
+    "Default APFS completes all 72 points; case-sensitive stops on stock Git peer-commondir registration errors at file-heavy c16, 12 verified successes and 4 failed creates in that incomplete cohort.",
+    "No retry or selective replacement. Incomplete or unstable groups are not qualified comparisons.",
+    "Raw point JSON and logs remain versioned; regenerated compact snapshot intermediates stay ignored to avoid duplicate evidence payload.",
+    "No release, version bump, tag, push, deployment, Linux measurement, or experimental adoption/hooks/setup code."
+  ],
+  "plotSourceCommit": "924cbe2d372a13aefef9cff289a5c5a07f9257bb"
+}

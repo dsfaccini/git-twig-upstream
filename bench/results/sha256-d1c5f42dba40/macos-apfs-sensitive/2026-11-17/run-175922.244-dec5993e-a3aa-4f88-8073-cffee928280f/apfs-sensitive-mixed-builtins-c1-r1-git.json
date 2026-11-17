@@ -1,0 +1,135 @@
+{
+  "schemaVersion": 4,
+  "filesystem": "case-sensitive-image",
+  "imageSizeGib": 8,
+  "warmup": true,
+  "requireNative": false,
+  "selectedBackend": "git",
+  "suite": "real-image-cohort",
+  "generatedAtUnixMs": 1794938459275,
+  "commit": "4a455fa0d4cc9687c80b04ef254ec863eb91b895",
+  "dirty": false,
+  "candidateSha256": "d1c5f42dba40a4b583ca6b70d4a6a5310f9a3a442ce53b8d0db676abc4de1af0",
+  "gitVersion": "git version 2.56.1",
+  "platform": "macos aarch64 25.5.0",
+  "cpu": "Apple M1 Ultra",
+  "concurrency": 1,
+  "worktreesPerCohort": 2,
+  "repeats": 1,
+  "repositories": [
+    {
+      "label": "mixed-builtins",
+      "commit": "964573f976277a8929dafbbeb7e9596aef96f83e",
+      "donor_commit": null
+    }
+  ],
+  "notes": [
+    "Each image-backed backend/repeat gets a fresh, isolated sparse filesystem image (capacity/format recorded in imageSizeGiB/filesystem). Seed uses git clone --shared --no-checkout plus explicit pinned-commit checkout. Original repositories and object stores are read-only inputs; seed history uses alternates outside image.",
+    "One operation warmup per backend in its own seed/registry so it cannot become a measured donor. Removed before APFS snapshots; retained on Linux/host and excluded by the before snapshot. Global/system config and fixture hooks disabled. Backend order alternates by repeat.",
+    "A barrier releases the bounded worker pool simultaneously; each worker starts its next queued create only after its previous CLI returns. worktreesPerCohort is the total count; concurrency is the maximum in flight. Create wall time includes thread startup/barrier and ends at the last CLI completion, excluding final coordinator checkpoint/join work. Per-operation latency measures only that CLI. harnessCpuMsDuringCreate records self CPU (coordinator and worker threads), excluding CLI child CPU. No verification/generation competes with creates. No retries: failures are data.",
+    "First git status is measured sequentially after all creates and the initial space snapshot. Full byte/symlink/executable verification follows each first status; its CPU is outside creation timing. A first-status sum is not a concurrent-status wall time.",
+    "Allocated space is total minus free blocks from statvfs on the isolated filesystem, sampled after sync until stable (or marked unstable). This includes working files, indexes, retained staging and filesystem metadata, not logical size/du/st_blocks. Host sparse-image allocation is not the metric.",
+    "After initial verification/space measurement, one data-bearing byte in the largest regular target file matching the original donor (offset and file length recorded) is changed in place; if no such data exists, the probe is not applicable. Additional filesystem allocation is sampled; seed file must remain unchanged. APFS images are detached and deleted after saving each cohort; Linux images and fixtures are retained after unmount; no benchmark input paths or source file contents are serialized.",
+    "Local warm-cache results. A sparse loopback/disk image is a controlled filesystem, not a claim about native host-volume maximum throughput. Report failures alongside latency and allocation; do not compare unequal successful counts as identical capacity.",
+    "Schema 4 records source/donor and target commits/trees separately. Different-revision checkout bytes come from an independent Git oracle outside the measured filesystem and worktree registry. Later measured creates may legitimately reuse earlier completed targets. requireNative=false is only for explicitly named fallback baselines; native flags and clone counts remain recorded, never relabeled.",
+    "Checkout campaign round 1, git; adjacent manifest.json records provenance and effective budgets."
+  ],
+  "cohorts": [
+    {
+      "repository": "mixed-builtins",
+      "sourceCommit": "964573f976277a8929dafbbeb7e9596aef96f83e",
+      "sourceTree": "bb9851335d7668bcc0fbea9550a249cf3e8dd10c",
+      "targetCommit": "964573f976277a8929dafbbeb7e9596aef96f83e",
+      "targetTree": "bb9851335d7668bcc0fbea9550a249cf3e8dd10c",
+      "backend": "git",
+      "repeat": 0,
+      "trackedFiles": 19,
+      "logicalBytesPerWorktree": 67108978,
+      "createWallMs": 147.74916599999997,
+      "harnessCpuMsDuringCreate": 3.0799999999999983,
+      "observerWallMs": 148.142541,
+      "createsPerSecond": 13.536455427437069,
+      "statusAndVerificationWallMs": 339.120916,
+      "succeeded": 2,
+      "failed": 0,
+      "verifiedFiles": 38,
+      "sourceUnchanged": true,
+      "privateWriteTested": true,
+      "warmupCleanupRecovered": false,
+      "privateWriteFileBytes": 4194304,
+      "privateWriteOffset": 0,
+      "before": {
+        "allocatedBytes": 160763904,
+        "totalBytes": 8380178432,
+        "stable": true,
+        "observedAllocatedBytes": [
+          160763904,
+          160763904,
+          160763904
+        ]
+      },
+      "afterCreate": {
+        "allocatedBytes": 295100416,
+        "totalBytes": 8380178432,
+        "stable": true,
+        "observedAllocatedBytes": [
+          295100416,
+          295100416,
+          295100416
+        ]
+      },
+      "afterStatus": {
+        "allocatedBytes": 295100416,
+        "totalBytes": 8380178432,
+        "stable": true,
+        "observedAllocatedBytes": [
+          295100416,
+          295100416,
+          295100416
+        ]
+      },
+      "afterPrivateWrites": {
+        "allocatedBytes": 295104512,
+        "totalBytes": 8380178432,
+        "stable": true,
+        "observedAllocatedBytes": [
+          295104512,
+          295104512,
+          295104512
+        ]
+      },
+      "growthAfterCreateBytes": 134336512,
+      "growthAfterStatusBytes": 134336512,
+      "privateWriteGrowthBytes": 4096,
+      "operations": [
+        {
+          "worker": 0,
+          "createMs": 81.197584,
+          "createStartedAtMs": 0.219666,
+          "createFinishedAtMs": 81.417333,
+          "firstStatusMs": 185.401333,
+          "exitCode": 0,
+          "nativeCow": false,
+          "verifiedClones": null,
+          "gitWrittenPaths": null,
+          "verified": true,
+          "error": null
+        },
+        {
+          "worker": 1,
+          "createMs": 66.29558300000001,
+          "createStartedAtMs": 81.45349999999999,
+          "createFinishedAtMs": 147.74916599999997,
+          "firstStatusMs": 121.05799999999999,
+          "exitCode": 0,
+          "nativeCow": false,
+          "verifiedClones": null,
+          "gitWrittenPaths": null,
+          "verified": true,
+          "error": null
+        }
+      ]
+    }
+  ],
+  "failures": []
+}

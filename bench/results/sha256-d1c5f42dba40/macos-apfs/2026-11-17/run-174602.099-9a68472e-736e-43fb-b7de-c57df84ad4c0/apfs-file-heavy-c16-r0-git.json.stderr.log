@@ -1,0 +1,20 @@
+file-heavy: git, repeat 1/1, 16 creates with concurrency 16
+cohort workers launched: 16; queued creates: 16
+git: CLI completed 1/16; content verification pending
+git: CLI completed 2/16; content verification pending
+git: CLI completed 3/16; content verification pending
+git: CLI completed 4/16; content verification pending
+git: CLI completed 5/16; content verification pending
+git: CLI completed 6/16; content verification pending
+git: CLI completed 7/16; content verification pending
+git: CLI completed 8/16; content verification pending
+git: CLI completed 9/16; content verification pending
+git: CLI completed 10/16; content verification pending
+git: CLI completed 11/16; content verification pending
+git: CLI completed 12/16; content verification pending
+git: CLI completed 13/16; content verification pending
+git: CLI completed 14/16; content verification pending
+git: CLI completed 15/16; content verification pending
+git: CLI completed 16/16; content verification pending
+  9.98s creates; 16 ok / 0 failed; allocation after status: 291.96 MiB
+  disposable image detached and removed

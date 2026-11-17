@@ -1,0 +1,6 @@
+file-heavy: git, repeat 1/1, 2 creates with concurrency 1
+cohort workers launched: 1; queued creates: 2
+git: CLI completed 1/2; content verification pending
+git: CLI completed 2/2; content verification pending
+  1.35s creates; 2 ok / 0 failed; allocation after status: 36.50 MiB
+  disposable image detached and removed

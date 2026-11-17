@@ -1,0 +1,67 @@
+{
+  "schemaVersion": 1,
+  "status": "prepared-not-started-awaiting-cleanup-approval",
+  "label": "v0.5 candidate, not a release",
+  "candidateSource": "b4f9c7b1e2e60ab6edc97ab9b6514fc5d87c220b",
+  "candidateVersion": "git-twig 0.4.0",
+  "baselineSource": "9f86536d3deec6432a07dee250f9d5cce0835993",
+  "baselineProvenance": "published v0.4 macOS ARM archive; matches committed issue5 reproduction manifest SHA-256",
+  "binaries": {
+    "git": {
+      "path": "/Users/leostera/Developer/github.com/leostera/git-twig/main/target/v0.5-macos-2026-11-17/bin/git",
+      "sha256": "b5eaefb829ec3b61176f83ed7fddc333a9d92e762ec4e558f55baadc4314297d"
+    },
+    "git-twig-candidate": {
+      "path": "/Users/leostera/Developer/github.com/leostera/git-twig/main/target/v0.5-macos-2026-11-17/bin/git-twig-candidate",
+      "sha256": "d1c5f42dba40a4b583ca6b70d4a6a5310f9a3a442ce53b8d0db676abc4de1af0"
+    },
+    "git-twig-v0.4": {
+      "path": "/Users/leostera/Developer/github.com/leostera/git-twig/main/target/v0.5-macos-2026-11-17/bin/git-twig-v0.4",
+      "sha256": "ad3bda055fcc63e592d5600eb30f31af70d955a8163a77c955b1a4f0bdb9fc8a"
+    },
+    "twig-coverage-fixture": {
+      "path": "/Users/leostera/Developer/github.com/leostera/git-twig/main/target/v0.5-macos-2026-11-17/bin/twig-coverage-fixture",
+      "sha256": "96e6a02c3070ccbdecac1fd92b7c39ac0d7c3e51253ade4fb40666f1d5216ce3"
+    },
+    "twig-fixture": {
+      "path": "/Users/leostera/Developer/github.com/leostera/git-twig/main/target/v0.5-macos-2026-11-17/bin/twig-fixture",
+      "sha256": "eee00359cefef1d104f64a61bcd60f16efae184ed208d0707b020620e4edc0aa"
+    },
+    "twig-real-bench": {
+      "path": "/Users/leostera/Developer/github.com/leostera/git-twig/main/target/v0.5-macos-2026-11-17/bin/twig-real-bench",
+      "sha256": "cdc9c9b703cc393028845754acd67571dcfc1bdcd0c5bbdeaaf34c713d433abf"
+    }
+  },
+  "rustc": "rustc 1.100.0 (0ef1bc386 2026-11-09)\nbinary: rustc\ncommit-hash: 0ef1bc386059596dada8fb65b50425aab2ea637a\ncommit-date: 2026-11-09\nhost: aarch64-apple-darwin\nrelease: 1.100.0\nLLVM version: 23.1.5\n",
+  "buildPolicy": "release workspace locked; RUSTFLAGS, CARGO_ENCODED_RUSTFLAGS, RUSTC and wrappers cleared",
+  "gitHelperPath": "/opt/homebrew/opt/git/libexec/git-core",
+  "gitHelperResolvedPath": "/opt/homebrew/Cellar/git/2.56.1/libexec/git-core",
+  "config": {
+    "targets": [
+      "macos-apfs",
+      "macos-apfs-sensitive"
+    ],
+    "profiles": [
+      "cross-revision",
+      "mixed-builtins",
+      "auto-crlf",
+      "submodules",
+      "byte-heavy",
+      "file-heavy"
+    ],
+    "rounds": 3,
+    "maximumConcurrency": 16,
+    "budgetSecondsPerTarget": 14400,
+    "pointTimeoutSeconds": 600,
+    "minimumHostFreeGiB": 128,
+    "expectedPointsPerTarget": 72,
+    "expectedMeasuredCreatesPerTarget": 288
+  },
+  "notes": [
+    "No benchmark started; cleanup confirmation timed out.",
+    "No release, version bump, tag, deployment, Linux benchmark or user-worktree deletion.",
+    "Candidate is current main only; unshipped hook/adopt/setup prototypes are not included.",
+    "Git helper prefix is recorded; do not update packages during measurement.",
+    "Synthetic checkout profiles are not the historical real-repository suite."
+  ]
+}

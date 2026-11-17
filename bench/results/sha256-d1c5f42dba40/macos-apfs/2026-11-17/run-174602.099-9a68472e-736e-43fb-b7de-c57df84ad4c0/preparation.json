@@ -1,0 +1,7 @@
+{
+  "command": [
+    "/Users/leostera/Developer/github.com/leostera/git-twig/main/target/v0.5-macos-2026-11-17/bin/twig-coverage-fixture",
+    "/Users/leostera/Developer/github.com/leostera/git-twig/feat-macos-benchmark-campaigns/target/bench-fixtures/run-174602.099-9a68472e-736e-43fb-b7de-c57df84ad4c0"
+  ],
+  "timeoutSeconds": 14399.969434584
+}

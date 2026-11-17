@@ -1,0 +1,19 @@
+{
+  "schemaVersion": 1,
+  "phase": "failed",
+  "current": "macos-apfs-sensitive",
+  "childPid": null,
+  "supervisorPid": 87389,
+  "updatedAt": "2026-11-17T18:09:17.829Z",
+  "completed": [
+    {
+      "target": "macos-apfs",
+      "exitCode": 0
+    },
+    {
+      "target": "macos-apfs-sensitive",
+      "exitCode": 1
+    }
+  ],
+  "error": "Error: Campaign macos-apfs-sensitive failed; all outcomes retained, no retry"
+}

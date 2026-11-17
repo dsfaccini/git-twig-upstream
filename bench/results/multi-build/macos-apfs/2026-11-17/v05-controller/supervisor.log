@@ -1,0 +1,15 @@
+2026-11-17T17:46:02.039Z START macos-apfs
+2026-11-17T17:59:22.182Z FINISH macos-apfs 0
+2026-11-17T17:59:22.182Z START macos-apfs-sensitive
+2026-11-17T18:09:17.829Z FINISH macos-apfs-sensitive 1
+21 |   const log=openSync(`${run}/${current}.controller.log`,'wx');
+22 |   const child=Bun.spawn(args,{cwd,env,stdin:'ignore',stdout:log,stderr:log});childPid=child.pid;state();
+23 |   const stop=()=>child.kill('SIGTERM');process.on('SIGINT',stop);process.on('SIGTERM',stop);
+24 |   const code=await child.exited;process.off('SIGINT',stop);process.off('SIGTERM',stop);closeSync(log);childPid=null;
+25 |   completed.push({target:current,exitCode:code});state();console.log(new Date().toISOString(),'FINISH',current,code);
+26 |   if(code!==0)throw new Error(`Campaign ${current} failed; all outcomes retained, no retry`);
+                             ^
+error: Campaign macos-apfs-sensitive failed; all outcomes retained, no retry
+      at /Users/leostera/Developer/github.com/leostera/git-twig/main/target/v0.5-macos-2026-11-17/supervisor.ts:26:25
+
+Bun v1.4.4 (macOS arm64)

@@ -1,0 +1,2155 @@
+{
+  "schemaVersion": 1,
+  "artifacts": [
+    {
+      "path": "bench/results/multi-build/macos-apfs/2026-11-17/v05-controller/binary-sha256.txt",
+      "sha256": "06237d0676ae9eb9078a0d11867f2aed3517ca7eac49c82f1df86fa3777e9935",
+      "bytes": 1042
+    },
+    {
+      "path": "bench/results/multi-build/macos-apfs/2026-11-17/v05-controller/candidate-source.txt",
+      "sha256": "6527a9c50dbd38c8bcac8cbadd7acb47bd85dbf677c6acdc1b05991b71b4d825",
+      "bytes": 41
+    },
+    {
+      "path": "bench/results/multi-build/macos-apfs/2026-11-17/v05-controller/index.json",
+      "sha256": "0a3975507f985c40649b7dbb726393ccf35423b2fbbeec6f23494d4369b3f8f6",
+      "bytes": 2094
+    },
+    {
+      "path": "bench/results/multi-build/macos-apfs/2026-11-17/v05-controller/launch.json",
+      "sha256": "c205529b30c8feb3e369267749d962553d85e5b6542bd0f5a554f532178db874",
+      "bytes": 6186
+    },
+    {
+      "path": "bench/results/multi-build/macos-apfs/2026-11-17/v05-controller/macos-apfs-sensitive.controller.log",
+      "sha256": "cc4b3c9a9268beb6256028bca0df23d76c500ec41e8fced9914a54b830fb8253",
+      "bytes": 4181
+    },
+    {
+      "path": "bench/results/multi-build/macos-apfs/2026-11-17/v05-controller/macos-apfs.controller.log",
+      "sha256": "6ea023866a513be506dc6924bc7e5b2e37783777792d3770fd71067ee077c897",
+      "bytes": 3917
+    },
+    {
+      "path": "bench/results/multi-build/macos-apfs/2026-11-17/v05-controller/preparation.json",
+      "sha256": "c5b1df186bf3bb75f273e62b0d70b66cc2ab6f47a0700e3041c1fdfc74a937f8",
+      "bytes": 3228
+    },
+    {
+      "path": "bench/results/multi-build/macos-apfs/2026-11-17/v05-controller/rustc.txt",
+      "sha256": "408acb044ad9f92dcbaeb61386ef4dc1c39dd1c92d20b02c82b694a783c4b809",
+      "bytes": 194
+    },
+    {
+      "path": "bench/results/multi-build/macos-apfs/2026-11-17/v05-controller/state.json",
+      "sha256": "1dec4ff005774ad83c3f6c54395e779a9485521ee5dca073b032798fce9f1b84",
+      "bytes": 420
+    },
+    {
+      "path": "bench/results/multi-build/macos-apfs/2026-11-17/v05-controller/supervisor.log",
+      "sha256": "e1eb4f7732c5f91150fe8cb603c1d59a4a02541ad7abcbdeebc09eff5c36d3d5",
+      "bytes": 1066
+    },
+    {
+      "path": "bench/results/sha256-d1c5f42dba40/macos-apfs/2026-11-17/run-174602.099-9a68472e-736e-43fb-b7de-c57df84ad4c0/apfs-auto-crlf-c1-r0-baseline.json",
+      "sha256": "141abed8ab0ac7b4cfdbad5299f064c2b27084a53eb556a0d9d518bfe26efc9d",
+      "bytes": 6542
+    },
+    {
+      "path": "bench/results/sha256-d1c5f42dba40/macos-apfs/2026-11-17/run-174602.099-9a68472e-736e-43fb-b7de-c57df84ad4c0/apfs-auto-crlf-c1-r0-baseline.json.log",
+      "sha256": "50b1fffd93fff04f61faf2ee69601e42e233b79c151fef5c984bf84ec65f1e9d",
+      "bytes": 229
+    },
+    {
+      "path": "bench/results/sha256-d1c5f42dba40/macos-apfs/2026-11-17/run-174602.099-9a68472e-736e-43fb-b7de-c57df84ad4c0/apfs-auto-crlf-c1-r0-baseline.json.stderr.log",
+      "sha256": "f866b5c5e8aa5edf0c6af10596d268c37ab8a5b7502417ba378151f0589dce74",
+      "bytes": 322
+    },
+    {
+      "path": "bench/results/sha256-d1c5f42dba40/macos-apfs/2026-11-17/run-174602.099-9a68472e-736e-43fb-b7de-c57df84ad4c0/apfs-auto-crlf-c1-r0-candidate.json",
+      "sha256": "fbbab334d8fbfb0d67fa046ce44bc8afbba18a62c10934bf57f4c44d0703e5e3",
+      "bytes": 6526
+    },
+    {
+      "path": "bench/results/sha256-d1c5f42dba40/macos-apfs/2026-11-17/run-174602.099-9a68472e-736e-43fb-b7de-c57df84ad4c0/apfs-auto-crlf-c1-r0-candidate.json.log",
+      "sha256": "44aa59f9f7018c5c5c8baa06eed45fcfc2dfb5bc4b0a2a03dfde96ecbeb666e5",
+      "bytes": 230
+    },
+    {
+      "path": "bench/results/sha256-d1c5f42dba40/macos-apfs/2026-11-17/run-174602.099-9a68472e-736e-43fb-b7de-c57df84ad4c0/apfs-auto-crlf-c1-r0-candidate.json.stderr.log",
+      "sha256": "bb029726761c039fa5e3aa36556f9b37e19553949d7fd723d02623d42decadcd",
+      "bytes": 320
+    },
+    {
+      "path": "bench/results/sha256-d1c5f42dba40/macos-apfs/2026-11-17/run-174602.099-9a68472e-736e-43fb-b7de-c57df84ad4c0/apfs-auto-crlf-c1-r0-git.json",
+      "sha256": "810edddf6da2766275e39fe2da7bf386d885caf3e6474f362cada39f8e0450c2",
+      "bytes": 6529
+    },
+    {
+      "path": "bench/results/sha256-d1c5f42dba40/macos-apfs/2026-11-17/run-174602.099-9a68472e-736e-43fb-b7de-c57df84ad4c0/apfs-auto-crlf-c1-r0-git.json.log",
+      "sha256": "379ed6d6b6fda3972e3ac9d84c69f4f8ef26f3f6a0f1fea5676d68ef07738701",
+      "bytes": 224
+    },
+    {
+      "path": "bench/results/sha256-d1c5f42dba40/macos-apfs/2026-11-17/run-174602.099-9a68472e-736e-43fb-b7de-c57df84ad4c0/apfs-auto-crlf-c1-r0-git.json.stderr.log",
+      "sha256": "a3980b5b413caa34cea4a57e750feb9c91372d822de9583164d2053e3468c301",
+      "bytes": 319
+    },
+    {
+      "path": "bench/results/sha256-d1c5f42dba40/macos-apfs/2026-11-17/run-174602.099-9a68472e-736e-43fb-b7de-c57df84ad4c0/apfs-auto-crlf-c1-r1-baseline.json",
+      "sha256": "9a0e3b5d46f0826cd9f54b0b5eea264c215d575a71ab51c8938fb4b50db37a22",
+      "bytes": 6536
+    },
+    {
+      "path": "bench/results/sha256-d1c5f42dba40/macos-apfs/2026-11-17/run-174602.099-9a68472e-736e-43fb-b7de-c57df84ad4c0/apfs-auto-crlf-c1-r1-baseline.json.log",
+      "sha256": "c26c2d630028d0ae41babed97063e108052a73b184ed82670660a67c60784553",
+      "bytes": 229
+    },
+    {
+      "path": "bench/results/sha256-d1c5f42dba40/macos-apfs/2026-11-17/run-174602.099-9a68472e-736e-43fb-b7de-c57df84ad4c0/apfs-auto-crlf-c1-r1-baseline.json.stderr.log",
+      "sha256": "f866b5c5e8aa5edf0c6af10596d268c37ab8a5b7502417ba378151f0589dce74",
+      "bytes": 322
+    },
+    {
+      "path": "bench/results/sha256-d1c5f42dba40/macos-apfs/2026-11-17/run-174602.099-9a68472e-736e-43fb-b7de-c57df84ad4c0/apfs-auto-crlf-c1-r1-candidate.json",
+      "sha256": "09d76f6a1213a9a1b92124abf8032dbb507990ec92f8ded2e19ca0d7fd5e49c4",
+      "bytes": 6526
+    },
+    {
+      "path": "bench/results/sha256-d1c5f42dba40/macos-apfs/2026-11-17/run-174602.099-9a68472e-736e-43fb-b7de-c57df84ad4c0/apfs-auto-crlf-c1-r1-candidate.json.log",
+      "sha256": "8aed60bc02e1cbeaf2eca205213b88d454c317173b2879c9e11fba4cfdb37482",
+      "bytes": 230
+    },
+    {
+      "path": "bench/results/sha256-d1c5f42dba40/macos-apfs/2026-11-17/run-174602.099-9a68472e-736e-43fb-b7de-c57df84ad4c0/apfs-auto-crlf-c1-r1-candidate.json.stderr.log",
+      "sha256": "2769c3cea25e50e4620acfc7320755cd5e023ab81712531815e513ec57102514",
+      "bytes": 320
+    },
+    {
+      "path": "bench/results/sha256-d1c5f42dba40/macos-apfs/2026-11-17/run-174602.099-9a68472e-736e-43fb-b7de-c57df84ad4c0/apfs-auto-crlf-c1-r1-git.json",
+      "sha256": "83b9605264e8452a04cd9b67ee205d2f271d108c6c431747dfdf513fb2056d74",
+      "bytes": 6527
+    },
+    {
+      "path": "bench/results/sha256-d1c5f42dba40/macos-apfs/2026-11-17/run-174602.099-9a68472e-736e-43fb-b7de-c57df84ad4c0/apfs-auto-crlf-c1-r1-git.json.log",
+      "sha256": "d4dbfe17a6f2baea17ba370a6772d07590c7dc69de18c68b1ef990d5059626cc",
+      "bytes": 224
+    },
+    {
+      "path": "bench/results/sha256-d1c5f42dba40/macos-apfs/2026-11-17/run-174602.099-9a68472e-736e-43fb-b7de-c57df84ad4c0/apfs-auto-crlf-c1-r1-git.json.stderr.log",
+      "sha256": "2838272dbd766ca79eba16b59c025c3626de9390bfce466c362feb80da336856",
+      "bytes": 319
+    },
+    {
+      "path": "bench/results/sha256-d1c5f42dba40/macos-apfs/2026-11-17/run-174602.099-9a68472e-736e-43fb-b7de-c57df84ad4c0/apfs-auto-crlf-c1-r2-baseline.json",
+      "sha256": "4746dbc7af1af1304df3d3899bc428753468d9a2b28b0445d6b04175d6fdf271",
+      "bytes": 6515
+    },
+    {
+      "path": "bench/results/sha256-d1c5f42dba40/macos-apfs/2026-11-17/run-174602.099-9a68472e-736e-43fb-b7de-c57df84ad4c0/apfs-auto-crlf-c1-r2-baseline.json.log",
+      "sha256": "42e41b1442c4bc1657460a1bab7ba9fcb7716408895b19b8bfb72bf7bbde1888",
+      "bytes": 229
+    },
+    {
+      "path": "bench/results/sha256-d1c5f42dba40/macos-apfs/2026-11-17/run-174602.099-9a68472e-736e-43fb-b7de-c57df84ad4c0/apfs-auto-crlf-c1-r2-baseline.json.stderr.log",
+      "sha256": "dccf57aaf41d7c3623bffe4f95e12f7c84200281a96a3f82788923507806d223",
+      "bytes": 322
+    },
+    {
+      "path": "bench/results/sha256-d1c5f42dba40/macos-apfs/2026-11-17/run-174602.099-9a68472e-736e-43fb-b7de-c57df84ad4c0/apfs-auto-crlf-c1-r2-candidate.json",
+      "sha256": "e406a7b60fdea949235cc8383f7eef6df4ccb768febd6cc08d0fdd3936aaf8e6",
+      "bytes": 6517
+    },
+    {
+      "path": "bench/results/sha256-d1c5f42dba40/macos-apfs/2026-11-17/run-174602.099-9a68472e-736e-43fb-b7de-c57df84ad4c0/apfs-auto-crlf-c1-r2-candidate.json.log",
+      "sha256": "b945e2a5438cbaf352de2bb1942bcaf9e9aea45fb986a8cf0b358a869b3e53c9",
+      "bytes": 230
+    },
+    {
+      "path": "bench/results/sha256-d1c5f42dba40/macos-apfs/2026-11-17/run-174602.099-9a68472e-736e-43fb-b7de-c57df84ad4c0/apfs-auto-crlf-c1-r2-candidate.json.stderr.log",
+      "sha256": "3883826e3cda6a3c08ff6dceea8be6682852cf53145f3f541c79f976592e1124",
+      "bytes": 320
+    },
+    {
+      "path": "bench/results/sha256-d1c5f42dba40/macos-apfs/2026-11-17/run-174602.099-9a68472e-736e-43fb-b7de-c57df84ad4c0/apfs-auto-crlf-c1-r2-git.json",
+      "sha256": "d70ae3efb14fef80f183220a1dffc3219d966bd839efc5756fc1404aef0f14a7",
+      "bytes": 6535
+    },
+    {
+      "path": "bench/results/sha256-d1c5f42dba40/macos-apfs/2026-11-17/run-174602.099-9a68472e-736e-43fb-b7de-c57df84ad4c0/apfs-auto-crlf-c1-r2-git.json.log",
+      "sha256": "3f5cc60e9ab9f01daa8ef039426167235063c4789c2508c7dcb86dfb55fe024c",
+      "bytes": 224
+    },
+    {
+      "path": "bench/results/sha256-d1c5f42dba40/macos-apfs/2026-11-17/run-174602.099-9a68472e-736e-43fb-b7de-c57df84ad4c0/apfs-auto-crlf-c1-r2-git.json.stderr.log",
+      "sha256": "5926e46cbfc8e2804e207a3e0280391388055faa7cdf2e8f79ec81f1b9c117b9",
+      "bytes": 319
+    },
+    {
+      "path": "bench/results/sha256-d1c5f42dba40/macos-apfs/2026-11-17/run-174602.099-9a68472e-736e-43fb-b7de-c57df84ad4c0/apfs-byte-heavy-c1-r0-baseline.json",
+      "sha256": "b517f7abcaa5371e7f7eef8fcb44326b6bfedb7789e47a84b472395a389cad63",
+      "bytes": 6535
+    },
+    {
+      "path": "bench/results/sha256-d1c5f42dba40/macos-apfs/2026-11-17/run-174602.099-9a68472e-736e-43fb-b7de-c57df84ad4c0/apfs-byte-heavy-c1-r0-baseline.json.log",
+      "sha256": "d7fbc447c3909d49c6a18d5197021aac6d2adde33523759b076b5b2ccedf9b20",
+      "bytes": 230
+    },
+    {
+      "path": "bench/results/sha256-d1c5f42dba40/macos-apfs/2026-11-17/run-174602.099-9a68472e-736e-43fb-b7de-c57df84ad4c0/apfs-byte-heavy-c1-r0-baseline.json.stderr.log",
+      "sha256": "8a21910da0bff25c8d0f02e5a6bf0a1f575c2751829cf97626850c8b66050b4d",
+      "bytes": 321
+    },
+    {
+      "path": "bench/results/sha256-d1c5f42dba40/macos-apfs/2026-11-17/run-174602.099-9a68472e-736e-43fb-b7de-c57df84ad4c0/apfs-byte-heavy-c1-r0-candidate.json",
+      "sha256": "515f6f65568433e685c0ccbea02881250e52dd0a9454bbd6b22286ff82a37cf6",
+      "bytes": 6522
+    },
+    {
+      "path": "bench/results/sha256-d1c5f42dba40/macos-apfs/2026-11-17/run-174602.099-9a68472e-736e-43fb-b7de-c57df84ad4c0/apfs-byte-heavy-c1-r0-candidate.json.log",
+      "sha256": "7b2236dab60935bc7ea53b66b6175b046a0e08a5e72a87a7ea8d176c1b742b7f",
+      "bytes": 231
+    },
+    {
+      "path": "bench/results/sha256-d1c5f42dba40/macos-apfs/2026-11-17/run-174602.099-9a68472e-736e-43fb-b7de-c57df84ad4c0/apfs-byte-heavy-c1-r0-candidate.json.stderr.log",
+      "sha256": "6437531362ee9122edb3413ce69655eac834170913add2e31c56eb53fc756de1",
+      "bytes": 321
+    },
+    {
+      "path": "bench/results/sha256-d1c5f42dba40/macos-apfs/2026-11-17/run-174602.099-9a68472e-736e-43fb-b7de-c57df84ad4c0/apfs-byte-heavy-c1-r0-git.json",
+      "sha256": "7f7c9badd801b51b9f8a9d3202ab6a30ccad3f537dec7f5423b4b067d0d7e185",
+      "bytes": 6574
+    },
+    {
+      "path": "bench/results/sha256-d1c5f42dba40/macos-apfs/2026-11-17/run-174602.099-9a68472e-736e-43fb-b7de-c57df84ad4c0/apfs-byte-heavy-c1-r0-git.json.log",
+      "sha256": "8bcb15177bc2f437ddb36421fe4c4dc1441f52e4cdfd2a37c2950c907a509a9f",
+      "bytes": 225
+    },
+    {
+      "path": "bench/results/sha256-d1c5f42dba40/macos-apfs/2026-11-17/run-174602.099-9a68472e-736e-43fb-b7de-c57df84ad4c0/apfs-byte-heavy-c1-r0-git.json.stderr.log",
+      "sha256": "39fa92214e8c106bedc6cd5a8911ef9aaaa5df02410d3473f3b25c4a0cc9e137",
+      "bytes": 320
+    },
+    {
+      "path": "bench/results/sha256-d1c5f42dba40/macos-apfs/2026-11-17/run-174602.099-9a68472e-736e-43fb-b7de-c57df84ad4c0/apfs-byte-heavy-c1-r1-baseline.json",
+      "sha256": "d6690a7f45af0ebcfea0157cac88d69daac43c1eb670f42a3076bc59c6628d7e",
+      "bytes": 6529
+    },
+    {
+      "path": "bench/results/sha256-d1c5f42dba40/macos-apfs/2026-11-17/run-174602.099-9a68472e-736e-43fb-b7de-c57df84ad4c0/apfs-byte-heavy-c1-r1-baseline.json.log",
+      "sha256": "45726c112751d01cbfcf6d729cdffeae8d396bfeb9ff3c3b2ac56fcc053886db",
+      "bytes": 230
+    },
+    {
+      "path": "bench/results/sha256-d1c5f42dba40/macos-apfs/2026-11-17/run-174602.099-9a68472e-736e-43fb-b7de-c57df84ad4c0/apfs-byte-heavy-c1-r1-baseline.json.stderr.log",
+      "sha256": "e0610ce13c7ba0bcba23fecb5dd5b573b51acddfe13845078072c8149106b9ab",
+      "bytes": 321
+    },
+    {
+      "path": "bench/results/sha256-d1c5f42dba40/macos-apfs/2026-11-17/run-174602.099-9a68472e-736e-43fb-b7de-c57df84ad4c0/apfs-byte-heavy-c1-r1-candidate.json",
+      "sha256": "ff870b240c6a5b394c7d4c4640c5efd9427931c2259ad80bd342edeff096ff93",
+      "bytes": 6522
+    },
+    {
+      "path": "bench/results/sha256-d1c5f42dba40/macos-apfs/2026-11-17/run-174602.099-9a68472e-736e-43fb-b7de-c57df84ad4c0/apfs-byte-heavy-c1-r1-candidate.json.log",
+      "sha256": "79ac9b35c4acb839eaa85be2162ca6584ca600a75f0d6c7793073258a8bc9a11",
+      "bytes": 231
+    },
+    {
+      "path": "bench/results/sha256-d1c5f42dba40/macos-apfs/2026-11-17/run-174602.099-9a68472e-736e-43fb-b7de-c57df84ad4c0/apfs-byte-heavy-c1-r1-candidate.json.stderr.log",
+      "sha256": "3af0a66ff51e43e62f9b7ea74c0964c32d56bb565088de339e22752a34eb65d6",
+      "bytes": 321
+    },
+    {
+      "path": "bench/results/sha256-d1c5f42dba40/macos-apfs/2026-11-17/run-174602.099-9a68472e-736e-43fb-b7de-c57df84ad4c0/apfs-byte-heavy-c1-r1-git.json",
+      "sha256": "16c71ad39c6cbcc18a442fb177b5efee45bd55da55ebf6bd2dc177accc41236b",
+      "bytes": 6551
+    },
+    {
+      "path": "bench/results/sha256-d1c5f42dba40/macos-apfs/2026-11-17/run-174602.099-9a68472e-736e-43fb-b7de-c57df84ad4c0/apfs-byte-heavy-c1-r1-git.json.log",
+      "sha256": "cfcbda1c65b3522d4326aa6f689d494c0397c5081954ae6d613bd26cc50260f3",
+      "bytes": 225
+    },
+    {
+      "path": "bench/results/sha256-d1c5f42dba40/macos-apfs/2026-11-17/run-174602.099-9a68472e-736e-43fb-b7de-c57df84ad4c0/apfs-byte-heavy-c1-r1-git.json.stderr.log",
+      "sha256": "fdaa4dbd40c7237a428eec83e3c82cbe2621dd6138089214f9c064f31ffd374e",
+      "bytes": 320
+    },
+    {
+      "path": "bench/results/sha256-d1c5f42dba40/macos-apfs/2026-11-17/run-174602.099-9a68472e-736e-43fb-b7de-c57df84ad4c0/apfs-byte-heavy-c1-r2-baseline.json",
+      "sha256": "ae99247be0bb682c74410d31b7d037ecc2d08f3e3fa2b359936305b65e9cef3a",
+      "bytes": 6518
+    },
+    {
+      "path": "bench/results/sha256-d1c5f42dba40/macos-apfs/2026-11-17/run-174602.099-9a68472e-736e-43fb-b7de-c57df84ad4c0/apfs-byte-heavy-c1-r2-baseline.json.log",
+      "sha256": "72de00f9652fa9c47aec87c90e90290d46ace0698759b11b01e6c02b99c4fc99",
+      "bytes": 230
+    },
+    {
+      "path": "bench/results/sha256-d1c5f42dba40/macos-apfs/2026-11-17/run-174602.099-9a68472e-736e-43fb-b7de-c57df84ad4c0/apfs-byte-heavy-c1-r2-baseline.json.stderr.log",
+      "sha256": "6437531362ee9122edb3413ce69655eac834170913add2e31c56eb53fc756de1",
+      "bytes": 321
+    },
+    {
+      "path": "bench/results/sha256-d1c5f42dba40/macos-apfs/2026-11-17/run-174602.099-9a68472e-736e-43fb-b7de-c57df84ad4c0/apfs-byte-heavy-c1-r2-candidate.json",
+      "sha256": "3a8367b86851240f023e108ffe86bf6451d1fb7c71cd41df5d9c9482f03df218",
+      "bytes": 6542
+    },
+    {
+      "path": "bench/results/sha256-d1c5f42dba40/macos-apfs/2026-11-17/run-174602.099-9a68472e-736e-43fb-b7de-c57df84ad4c0/apfs-byte-heavy-c1-r2-candidate.json.log",
+      "sha256": "f812175131136a7de9b7e295a3ac411e98e2e11a900237cf8e49dd784b6d43f2",
+      "bytes": 231
+    },
+    {
+      "path": "bench/results/sha256-d1c5f42dba40/macos-apfs/2026-11-17/run-174602.099-9a68472e-736e-43fb-b7de-c57df84ad4c0/apfs-byte-heavy-c1-r2-candidate.json.stderr.log",
+      "sha256": "8d6ddeef9ea58641ae82df8e17a17efab13464f8b5973227bc18d78312e6661f",
+      "bytes": 321
+    },
+    {
+      "path": "bench/results/sha256-d1c5f42dba40/macos-apfs/2026-11-17/run-174602.099-9a68472e-736e-43fb-b7de-c57df84ad4c0/apfs-byte-heavy-c1-r2-git.json",
+      "sha256": "bc70914323970b28bbb636ff70fa48e5eef133ad91a6762bb1d2680675710099",
+      "bytes": 6550
+    },
+    {
+      "path": "bench/results/sha256-d1c5f42dba40/macos-apfs/2026-11-17/run-174602.099-9a68472e-736e-43fb-b7de-c57df84ad4c0/apfs-byte-heavy-c1-r2-git.json.log",
+      "sha256": "5906077ec37878a3dcd6dead735520635633602623bacae9bb7a19e6f5e181c3",
+      "bytes": 225
+    },
+    {
+      "path": "bench/results/sha256-d1c5f42dba40/macos-apfs/2026-11-17/run-174602.099-9a68472e-736e-43fb-b7de-c57df84ad4c0/apfs-byte-heavy-c1-r2-git.json.stderr.log",
+      "sha256": "39fa92214e8c106bedc6cd5a8911ef9aaaa5df02410d3473f3b25c4a0cc9e137",
+      "bytes": 320
+    },
+    {
+      "path": "bench/results/sha256-d1c5f42dba40/macos-apfs/2026-11-17/run-174602.099-9a68472e-736e-43fb-b7de-c57df84ad4c0/apfs-cross-revision-c1-r0-baseline.json",
+      "sha256": "5ec3c7d4188b40b8540c1b4a30ac75c1a6be218f797a55ce8b671902f6fe2012",
+      "bytes": 6599
+    },
+    {
+      "path": "bench/results/sha256-d1c5f42dba40/macos-apfs/2026-11-17/run-174602.099-9a68472e-736e-43fb-b7de-c57df84ad4c0/apfs-cross-revision-c1-r0-baseline.json.log",
+      "sha256": "00c2b8d6cc3d94796ff489fd791767d14f16aa8dd4a5dd98e835dd08d8a0d72e",
+      "bytes": 234
+    },
+    {
+      "path": "bench/results/sha256-d1c5f42dba40/macos-apfs/2026-11-17/run-174602.099-9a68472e-736e-43fb-b7de-c57df84ad4c0/apfs-cross-revision-c1-r0-baseline.json.stderr.log",
+      "sha256": "0f9ea67f261bec93db4a735194143de80eb1f56efd0fe61d4415787414df399d",
+      "bytes": 327
+    },
+    {
+      "path": "bench/results/sha256-d1c5f42dba40/macos-apfs/2026-11-17/run-174602.099-9a68472e-736e-43fb-b7de-c57df84ad4c0/apfs-cross-revision-c1-r0-candidate.json",
+      "sha256": "114b725165229981dd07a2f4638a183ec73bd88d839b3d9704deef37dd3a8895",
+      "bytes": 6586
+    },
+    {
+      "path": "bench/results/sha256-d1c5f42dba40/macos-apfs/2026-11-17/run-174602.099-9a68472e-736e-43fb-b7de-c57df84ad4c0/apfs-cross-revision-c1-r0-candidate.json.log",
+      "sha256": "ab300536f4ba401074f5651748ed1705b2bb92cc65ab84bc09de38b6f26e80b1",
+      "bytes": 235
+    },
+    {
+      "path": "bench/results/sha256-d1c5f42dba40/macos-apfs/2026-11-17/run-174602.099-9a68472e-736e-43fb-b7de-c57df84ad4c0/apfs-cross-revision-c1-r0-candidate.json.stderr.log",
+      "sha256": "9f17e454f878714e6920d2de4e34779dffcc07dbd37af0189b7ead401ef0294b",
+      "bytes": 326
+    },
+    {
+      "path": "bench/results/sha256-d1c5f42dba40/macos-apfs/2026-11-17/run-174602.099-9a68472e-736e-43fb-b7de-c57df84ad4c0/apfs-cross-revision-c1-r0-git.json",
+      "sha256": "be59767788d5665a09d99398df69bcce4a7085f64564be3f64a3569d30455e43",
+      "bytes": 6572
+    },
+    {
+      "path": "bench/results/sha256-d1c5f42dba40/macos-apfs/2026-11-17/run-174602.099-9a68472e-736e-43fb-b7de-c57df84ad4c0/apfs-cross-revision-c1-r0-git.json.log",
+      "sha256": "6e9b9844113239453a7f72fd262a0459ded4772493d573f53e2f78eb98427a70",
+      "bytes": 229
+    },
+    {
+      "path": "bench/results/sha256-d1c5f42dba40/macos-apfs/2026-11-17/run-174602.099-9a68472e-736e-43fb-b7de-c57df84ad4c0/apfs-cross-revision-c1-r0-git.json.stderr.log",
+      "sha256": "d71d7b9c0aa9d502c7e941dd687df743a1fc0b02524b0de5e63ee4a735357cd8",
+      "bytes": 324
+    },
+    {
+      "path": "bench/results/sha256-d1c5f42dba40/macos-apfs/2026-11-17/run-174602.099-9a68472e-736e-43fb-b7de-c57df84ad4c0/apfs-cross-revision-c1-r1-baseline.json",
+      "sha256": "999675358aaddfa99d9bee0ba15b1c3584f1f2fe41ab98406528f36aff72243d",
+      "bytes": 6617
+    },
+    {
+      "path": "bench/results/sha256-d1c5f42dba40/macos-apfs/2026-11-17/run-174602.099-9a68472e-736e-43fb-b7de-c57df84ad4c0/apfs-cross-revision-c1-r1-baseline.json.log",
+      "sha256": "065dae62b586fd644835b2bad7f878b2d7aaa5daf7ac60081cd5ed710cd50370",
+      "bytes": 234
+    },
+    {
+      "path": "bench/results/sha256-d1c5f42dba40/macos-apfs/2026-11-17/run-174602.099-9a68472e-736e-43fb-b7de-c57df84ad4c0/apfs-cross-revision-c1-r1-baseline.json.stderr.log",
+      "sha256": "0f9ea67f261bec93db4a735194143de80eb1f56efd0fe61d4415787414df399d",
+      "bytes": 327
+    },
+    {
+      "path": "bench/results/sha256-d1c5f42dba40/macos-apfs/2026-11-17/run-174602.099-9a68472e-736e-43fb-b7de-c57df84ad4c0/apfs-cross-revision-c1-r1-candidate.json",
+      "sha256": "a0de1c288843b0d3c889fed2c8df032c373d2b53d35a3b4c96192119b31c12f3",
+      "bytes": 6565
+    },
+    {
+      "path": "bench/results/sha256-d1c5f42dba40/macos-apfs/2026-11-17/run-174602.099-9a68472e-736e-43fb-b7de-c57df84ad4c0/apfs-cross-revision-c1-r1-candidate.json.log",
+      "sha256": "5e7405cf5bb466cae036f82a4bc8244ad00e0e050cea7f117e3c864e17435a39",
+      "bytes": 235
+    },
+    {
+      "path": "bench/results/sha256-d1c5f42dba40/macos-apfs/2026-11-17/run-174602.099-9a68472e-736e-43fb-b7de-c57df84ad4c0/apfs-cross-revision-c1-r1-candidate.json.stderr.log",
+      "sha256": "9f17e454f878714e6920d2de4e34779dffcc07dbd37af0189b7ead401ef0294b",
+      "bytes": 326
+    },
+    {
+      "path": "bench/results/sha256-d1c5f42dba40/macos-apfs/2026-11-17/run-174602.099-9a68472e-736e-43fb-b7de-c57df84ad4c0/apfs-cross-revision-c1-r1-git.json",
+      "sha256": "ea75cee0351e93af5f7bf26bed84a755f3a107559602f24905d21c8184088daa",
+      "bytes": 6592
+    },
+    {
+      "path": "bench/results/sha256-d1c5f42dba40/macos-apfs/2026-11-17/run-174602.099-9a68472e-736e-43fb-b7de-c57df84ad4c0/apfs-cross-revision-c1-r1-git.json.log",
+      "sha256": "566329a97949ae0bea6eaaecbd5097bb95af5ec583e015243d83507533e1b5a1",
+      "bytes": 229
+    },
+    {
+      "path": "bench/results/sha256-d1c5f42dba40/macos-apfs/2026-11-17/run-174602.099-9a68472e-736e-43fb-b7de-c57df84ad4c0/apfs-cross-revision-c1-r1-git.json.stderr.log",
+      "sha256": "2dc2748339e4a598374cddc0ab4b18e1ba0d49ae2e1035061a43f8d1bad146a1",
+      "bytes": 324
+    },
+    {
+      "path": "bench/results/sha256-d1c5f42dba40/macos-apfs/2026-11-17/run-174602.099-9a68472e-736e-43fb-b7de-c57df84ad4c0/apfs-cross-revision-c1-r2-baseline.json",
+      "sha256": "0c12c19465b3ef054635a150e70326baa8b2ee2fb207a0f3cc1762cca97fd5b5",
+      "bytes": 6596
+    },
+    {
+      "path": "bench/results/sha256-d1c5f42dba40/macos-apfs/2026-11-17/run-174602.099-9a68472e-736e-43fb-b7de-c57df84ad4c0/apfs-cross-revision-c1-r2-baseline.json.log",
+      "sha256": "b32eb23b51c2f24bce9c00704681dbebb3858fef26994e048ce5aefeec4c5c45",
+      "bytes": 234
+    },
+    {
+      "path": "bench/results/sha256-d1c5f42dba40/macos-apfs/2026-11-17/run-174602.099-9a68472e-736e-43fb-b7de-c57df84ad4c0/apfs-cross-revision-c1-r2-baseline.json.stderr.log",
+      "sha256": "0f9ea67f261bec93db4a735194143de80eb1f56efd0fe61d4415787414df399d",
+      "bytes": 327
+    },
+    {
+      "path": "bench/results/sha256-d1c5f42dba40/macos-apfs/2026-11-17/run-174602.099-9a68472e-736e-43fb-b7de-c57df84ad4c0/apfs-cross-revision-c1-r2-candidate.json",
+      "sha256": "54dc6d366fd2c9e1739d4a18f21e624a468a29beed05fb3e0d2fa6992a92a081",
+      "bytes": 6580
+    },
+    {
+      "path": "bench/results/sha256-d1c5f42dba40/macos-apfs/2026-11-17/run-174602.099-9a68472e-736e-43fb-b7de-c57df84ad4c0/apfs-cross-revision-c1-r2-candidate.json.log",
+      "sha256": "c30d25e5135e3129099a82d367b01ccdc926e42c6141cfc7432706d870ea5bdc",
+      "bytes": 235
+    },
+    {
+      "path": "bench/results/sha256-d1c5f42dba40/macos-apfs/2026-11-17/run-174602.099-9a68472e-736e-43fb-b7de-c57df84ad4c0/apfs-cross-revision-c1-r2-candidate.json.stderr.log",
+      "sha256": "e257ba836f209e7754ecb72151b10cb64e2399f7c321caedeb5eda8ef8adf71a",
+      "bytes": 326
+    },
+    {
+      "path": "bench/results/sha256-d1c5f42dba40/macos-apfs/2026-11-17/run-174602.099-9a68472e-736e-43fb-b7de-c57df84ad4c0/apfs-cross-revision-c1-r2-git.json",
+      "sha256": "b1604b9b6108e551349ddd3dcd6a5d899576184582d9d9c5dd2a46feff5dc54b",
+      "bytes": 6589
+    },
+    {
+      "path": "bench/results/sha256-d1c5f42dba40/macos-apfs/2026-11-17/run-174602.099-9a68472e-736e-43fb-b7de-c57df84ad4c0/apfs-cross-revision-c1-r2-git.json.log",
+      "sha256": "c1e9e6786c8f0f2caa071fd39b0d023011ed38e3af61881f396be63b091faa83",
+      "bytes": 229
+    },
+    {
+      "path": "bench/results/sha256-d1c5f42dba40/macos-apfs/2026-11-17/run-174602.099-9a68472e-736e-43fb-b7de-c57df84ad4c0/apfs-cross-revision-c1-r2-git.json.stderr.log",
+      "sha256": "2dc2748339e4a598374cddc0ab4b18e1ba0d49ae2e1035061a43f8d1bad146a1",
+      "bytes": 324
+    },
+    {
+      "path": "bench/results/sha256-d1c5f42dba40/macos-apfs/2026-11-17/run-174602.099-9a68472e-736e-43fb-b7de-c57df84ad4c0/apfs-file-heavy-c1-r0-baseline.json",
+      "sha256": "9f37d22150e24e47a77c20cfc79d8df21fc2561f051e8d378e55ea5ea6bfdc32",
+      "bytes": 6528
+    },
+    {
+      "path": "bench/results/sha256-d1c5f42dba40/macos-apfs/2026-11-17/run-174602.099-9a68472e-736e-43fb-b7de-c57df84ad4c0/apfs-file-heavy-c1-r0-baseline.json.log",
+      "sha256": "52adfcb850d968112d811f4a0a146fbfd3f0052bd584100c5c4b6ecf59bce961",
+      "bytes": 230
+    },
+    {
+      "path": "bench/results/sha256-d1c5f42dba40/macos-apfs/2026-11-17/run-174602.099-9a68472e-736e-43fb-b7de-c57df84ad4c0/apfs-file-heavy-c1-r0-baseline.json.stderr.log",
+      "sha256": "cd51a9e6a98ac4275f0061d95ae65b39c8eea88a6b95dd8c0666297555b5a46e",
+      "bytes": 321
+    },
+    {
+      "path": "bench/results/sha256-d1c5f42dba40/macos-apfs/2026-11-17/run-174602.099-9a68472e-736e-43fb-b7de-c57df84ad4c0/apfs-file-heavy-c1-r0-candidate.json",
+      "sha256": "c903fdc279d510cc0325a82c5bb44206d75b56bcf690944895f4afc110471706",
+      "bytes": 6535
+    },
+    {
+      "path": "bench/results/sha256-d1c5f42dba40/macos-apfs/2026-11-17/run-174602.099-9a68472e-736e-43fb-b7de-c57df84ad4c0/apfs-file-heavy-c1-r0-candidate.json.log",
+      "sha256": "b0a4cb6162a31906c55e42af1b334188ecaf2b35305e2cc3ef153a3a0d1f6742",
+      "bytes": 231
+    },
+    {
+      "path": "bench/results/sha256-d1c5f42dba40/macos-apfs/2026-11-17/run-174602.099-9a68472e-736e-43fb-b7de-c57df84ad4c0/apfs-file-heavy-c1-r0-candidate.json.stderr.log",
+      "sha256": "92ff8a8f0dc485139d03114e5448723c1003371b6a0935094177006309bcf278",
+      "bytes": 321
+    },
+    {
+      "path": "bench/results/sha256-d1c5f42dba40/macos-apfs/2026-11-17/run-174602.099-9a68472e-736e-43fb-b7de-c57df84ad4c0/apfs-file-heavy-c1-r0-git.json",
+      "sha256": "12bdeefaf005be231aed3b9147916f9ca51bca5d8cf9a419f2906f0d131cc4d8",
+      "bytes": 6547
+    },
+    {
+      "path": "bench/results/sha256-d1c5f42dba40/macos-apfs/2026-11-17/run-174602.099-9a68472e-736e-43fb-b7de-c57df84ad4c0/apfs-file-heavy-c1-r0-git.json.log",
+      "sha256": "ae14a488a9f20b19a13764f1b1b16e7015b74d51ea9d0e5ea46f04e0320471ce",
+      "bytes": 225
+    },
+    {
+      "path": "bench/results/sha256-d1c5f42dba40/macos-apfs/2026-11-17/run-174602.099-9a68472e-736e-43fb-b7de-c57df84ad4c0/apfs-file-heavy-c1-r0-git.json.stderr.log",
+      "sha256": "e7aeef5a05a9a7d71c08a3757624f85c9ce5c735e76043439341c846df7a1090",
+      "bytes": 319
+    },
+    {
+      "path": "bench/results/sha256-d1c5f42dba40/macos-apfs/2026-11-17/run-174602.099-9a68472e-736e-43fb-b7de-c57df84ad4c0/apfs-file-heavy-c1-r1-baseline.json",
+      "sha256": "63b11c1dd200cabf9d91700db6b8bafa03faf0ad85fcb03d942189c8760eefd6",
+      "bytes": 6551
+    },
+    {
+      "path": "bench/results/sha256-d1c5f42dba40/macos-apfs/2026-11-17/run-174602.099-9a68472e-736e-43fb-b7de-c57df84ad4c0/apfs-file-heavy-c1-r1-baseline.json.log",
+      "sha256": "b4d775589f44e20e0a4795c8328602fc1a157f0221f0e7ca84668f8c8a2fe8d1",
+      "bytes": 230
+    },
+    {
+      "path": "bench/results/sha256-d1c5f42dba40/macos-apfs/2026-11-17/run-174602.099-9a68472e-736e-43fb-b7de-c57df84ad4c0/apfs-file-heavy-c1-r1-baseline.json.stderr.log",
+      "sha256": "00b1ca2110d8125bbd03f6528daf7745f235de8aa7323b367a980b0df8ca36bd",
+      "bytes": 321
+    },
+    {
+      "path": "bench/results/sha256-d1c5f42dba40/macos-apfs/2026-11-17/run-174602.099-9a68472e-736e-43fb-b7de-c57df84ad4c0/apfs-file-heavy-c1-r1-candidate.json",
+      "sha256": "6a380ef6b77e21668f2e16edf282c8b134581b48b461133e2d36ec96f0c8558d",
+      "bytes": 6523
+    },
+    {
+      "path": "bench/results/sha256-d1c5f42dba40/macos-apfs/2026-11-17/run-174602.099-9a68472e-736e-43fb-b7de-c57df84ad4c0/apfs-file-heavy-c1-r1-candidate.json.log",
+      "sha256": "c1d9c5efcbe9d6a43e730bf3e7e3ff65221de1b842941cd5d7475771fcf79939",
+      "bytes": 231
+    },
+    {
+      "path": "bench/results/sha256-d1c5f42dba40/macos-apfs/2026-11-17/run-174602.099-9a68472e-736e-43fb-b7de-c57df84ad4c0/apfs-file-heavy-c1-r1-candidate.json.stderr.log",
+      "sha256": "5075cfdc438fb1fd38167861c75efa04a9dbfed4fe006b26cd2fae20bf5edcad",
+      "bytes": 321
+    },
+    {
+      "path": "bench/results/sha256-d1c5f42dba40/macos-apfs/2026-11-17/run-174602.099-9a68472e-736e-43fb-b7de-c57df84ad4c0/apfs-file-heavy-c1-r1-git.json",
+      "sha256": "8ff44395753ffc377b05f830ee1babab1d5c9c0eaa208fc6798cb81c7127d712",
+      "bytes": 6537
+    },
+    {
+      "path": "bench/results/sha256-d1c5f42dba40/macos-apfs/2026-11-17/run-174602.099-9a68472e-736e-43fb-b7de-c57df84ad4c0/apfs-file-heavy-c1-r1-git.json.log",
+      "sha256": "8d9ceb61d6588b5fac2abfe11a0d4aeaff1d75a24fdef493011ac03b8335c990",
+      "bytes": 225
+    },
+    {
+      "path": "bench/results/sha256-d1c5f42dba40/macos-apfs/2026-11-17/run-174602.099-9a68472e-736e-43fb-b7de-c57df84ad4c0/apfs-file-heavy-c1-r1-git.json.stderr.log",
+      "sha256": "771c5814724b37478f9dcddb7119fa6e3850189dd4a91314d12181fe2c48f747",
+      "bytes": 319
+    },
+    {
+      "path": "bench/results/sha256-d1c5f42dba40/macos-apfs/2026-11-17/run-174602.099-9a68472e-736e-43fb-b7de-c57df84ad4c0/apfs-file-heavy-c1-r2-baseline.json",
+      "sha256": "1e0d8d46351eafce5fd3f42b6ef9641dd99d278677bdf25efeac8f3b5d06232e",
+      "bytes": 6506
+    },
+    {
+      "path": "bench/results/sha256-d1c5f42dba40/macos-apfs/2026-11-17/run-174602.099-9a68472e-736e-43fb-b7de-c57df84ad4c0/apfs-file-heavy-c1-r2-baseline.json.log",
+      "sha256": "728c3010579291904f892ba71dcc12b0d36e6f5984c18f60e48d460b0ee4c9a5",
+      "bytes": 230
+    },
+    {
+      "path": "bench/results/sha256-d1c5f42dba40/macos-apfs/2026-11-17/run-174602.099-9a68472e-736e-43fb-b7de-c57df84ad4c0/apfs-file-heavy-c1-r2-baseline.json.stderr.log",
+      "sha256": "93a6aba2fd78a4034b60e408497a61d4caa65650e3c4b9ab3d97744f6490b893",
+      "bytes": 321
+    },
+    {
+      "path": "bench/results/sha256-d1c5f42dba40/macos-apfs/2026-11-17/run-174602.099-9a68472e-736e-43fb-b7de-c57df84ad4c0/apfs-file-heavy-c1-r2-candidate.json",
+      "sha256": "61ace77d0091133bf4739083bd91d615932f77a418bac656af6b15e9d4fb7e66",
+      "bytes": 6543
+    },
+    {
+      "path": "bench/results/sha256-d1c5f42dba40/macos-apfs/2026-11-17/run-174602.099-9a68472e-736e-43fb-b7de-c57df84ad4c0/apfs-file-heavy-c1-r2-candidate.json.log",
+      "sha256": "4650444e94d3431dec7e53d116d40c72d5636d628b509040217897b092c48e77",
+      "bytes": 231
+    },
+    {
+      "path": "bench/results/sha256-d1c5f42dba40/macos-apfs/2026-11-17/run-174602.099-9a68472e-736e-43fb-b7de-c57df84ad4c0/apfs-file-heavy-c1-r2-candidate.json.stderr.log",
+      "sha256": "12779a84758597dc454fdc8efebda8970c22f60a9360d465e4054ce892e193aa",
+      "bytes": 321
+    },
+    {
+      "path": "bench/results/sha256-d1c5f42dba40/macos-apfs/2026-11-17/run-174602.099-9a68472e-736e-43fb-b7de-c57df84ad4c0/apfs-file-heavy-c1-r2-git.json",
+      "sha256": "35629ab49097e27151112c2218409f73e0d40b27ff6184e24ce6672acc95fcc8",
+      "bytes": 6526
+    },
+    {
+      "path": "bench/results/sha256-d1c5f42dba40/macos-apfs/2026-11-17/run-174602.099-9a68472e-736e-43fb-b7de-c57df84ad4c0/apfs-file-heavy-c1-r2-git.json.log",
+      "sha256": "2afd3e0623287d0b5219ce3942ff0920ade047b658f4c4464454a6c3cdccdea1",
+      "bytes": 225
+    },
+    {
+      "path": "bench/results/sha256-d1c5f42dba40/macos-apfs/2026-11-17/run-174602.099-9a68472e-736e-43fb-b7de-c57df84ad4c0/apfs-file-heavy-c1-r2-git.json.stderr.log",
+      "sha256": "8bf3e5fa39cfa3d79abe6a63f9a20a125b820463ae907e1aa59b1229d5b3ab3f",
+      "bytes": 319
+    },
+    {
+      "path": "bench/results/sha256-d1c5f42dba40/macos-apfs/2026-11-17/run-174602.099-9a68472e-736e-43fb-b7de-c57df84ad4c0/apfs-file-heavy-c16-r0-baseline.json",
+      "sha256": "27ee5ab676576d0f4f69f73c9c21e328489787285da70c853597b03d4802987f",
+      "bytes": 11897
+    },
+    {
+      "path": "bench/results/sha256-d1c5f42dba40/macos-apfs/2026-11-17/run-174602.099-9a68472e-736e-43fb-b7de-c57df84ad4c0/apfs-file-heavy-c16-r0-baseline.json.log",
+      "sha256": "73fb214750bade70012dd9d2022ff9c1d4f905cc807fe35d86b447975f6fbb7b",
+      "bytes": 231
+    },
+    {
+      "path": "bench/results/sha256-d1c5f42dba40/macos-apfs/2026-11-17/run-174602.099-9a68472e-736e-43fb-b7de-c57df84ad4c0/apfs-file-heavy-c16-r0-baseline.json.stderr.log",
+      "sha256": "021a72009215b87a4336e05708ce5dc6ae4e67e279eaf7367fec6579362c02c2",
+      "bytes": 1107
+    },
+    {
+      "path": "bench/results/sha256-d1c5f42dba40/macos-apfs/2026-11-17/run-174602.099-9a68472e-736e-43fb-b7de-c57df84ad4c0/apfs-file-heavy-c16-r0-candidate.json",
+      "sha256": "0cb070dd8d6457158c008bf06b64f5f17d5267da3f3b5dc2ff1987b6c635520d",
+      "bytes": 11945
+    },
+    {
+      "path": "bench/results/sha256-d1c5f42dba40/macos-apfs/2026-11-17/run-174602.099-9a68472e-736e-43fb-b7de-c57df84ad4c0/apfs-file-heavy-c16-r0-candidate.json.log",
+      "sha256": "4f2e2d96bea1ed80b8e4b131670b61a0df325e099f2493373e24bab8c26bd565",
+      "bytes": 232
+    },
+    {
+      "path": "bench/results/sha256-d1c5f42dba40/macos-apfs/2026-11-17/run-174602.099-9a68472e-736e-43fb-b7de-c57df84ad4c0/apfs-file-heavy-c16-r0-candidate.json.stderr.log",
+      "sha256": "88a564618e52029f83343efb7849433165b499acd58d7ecb97f7671444d9969e",
+      "bytes": 1106
+    },
+    {
+      "path": "bench/results/sha256-d1c5f42dba40/macos-apfs/2026-11-17/run-174602.099-9a68472e-736e-43fb-b7de-c57df84ad4c0/apfs-file-heavy-c16-r0-git.json",
+      "sha256": "397ec5d0c607a219386077362938fe25a0cd4303fc3a8f51779f3275ef2eece1",
+      "bytes": 12359
+    },
+    {
+      "path": "bench/results/sha256-d1c5f42dba40/macos-apfs/2026-11-17/run-174602.099-9a68472e-736e-43fb-b7de-c57df84ad4c0/apfs-file-heavy-c16-r0-git.json.log",
+      "sha256": "9509a2e6e603c1ddba51a961a02dfd5b1d565889f49555e17c740d3bc3e705f8",
+      "bytes": 226
+    },
+    {
+      "path": "bench/results/sha256-d1c5f42dba40/macos-apfs/2026-11-17/run-174602.099-9a68472e-736e-43fb-b7de-c57df84ad4c0/apfs-file-heavy-c16-r0-git.json.stderr.log",
+      "sha256": "c45d2de0d868c6a7de928639e9781970a47d30a63ec3b079ab9987cc21631c75",
+      "bytes": 1090
+    },
+    {
+      "path": "bench/results/sha256-d1c5f42dba40/macos-apfs/2026-11-17/run-174602.099-9a68472e-736e-43fb-b7de-c57df84ad4c0/apfs-file-heavy-c16-r1-baseline.json",
+      "sha256": "512c67add05af7bf031ec6b4f96b6729b4b84addb6a1470ff6cad8f55ca6aaa4",
+      "bytes": 11930
+    },
+    {
+      "path": "bench/results/sha256-d1c5f42dba40/macos-apfs/2026-11-17/run-174602.099-9a68472e-736e-43fb-b7de-c57df84ad4c0/apfs-file-heavy-c16-r1-baseline.json.log",
+      "sha256": "bfe30a59119e4ef2c8c2c64dd58e88a13390f8224269115240a2ad384fe1f39c",
+      "bytes": 231
+    },
+    {
+      "path": "bench/results/sha256-d1c5f42dba40/macos-apfs/2026-11-17/run-174602.099-9a68472e-736e-43fb-b7de-c57df84ad4c0/apfs-file-heavy-c16-r1-baseline.json.stderr.log",
+      "sha256": "58dc48948016788eb993a64dc439f038c5bc76dfdb42cdc1786671da6aace6f3",
+      "bytes": 1106
+    },
+    {
+      "path": "bench/results/sha256-d1c5f42dba40/macos-apfs/2026-11-17/run-174602.099-9a68472e-736e-43fb-b7de-c57df84ad4c0/apfs-file-heavy-c16-r1-candidate.json",
+      "sha256": "f3e0dee1dbd8da335f6217d54424c3407cf0c3718fbc82092e211980356622bd",
+      "bytes": 11928
+    },
+    {
+      "path": "bench/results/sha256-d1c5f42dba40/macos-apfs/2026-11-17/run-174602.099-9a68472e-736e-43fb-b7de-c57df84ad4c0/apfs-file-heavy-c16-r1-candidate.json.log",
+      "sha256": "298e78c18209aa512cf9b9d7661b7f645a7a5421d81c3837bacf8c5ab330603c",
+      "bytes": 232
+    },
+    {
+      "path": "bench/results/sha256-d1c5f42dba40/macos-apfs/2026-11-17/run-174602.099-9a68472e-736e-43fb-b7de-c57df84ad4c0/apfs-file-heavy-c16-r1-candidate.json.stderr.log",
+      "sha256": "624b21efaa152899dcd49bcab5083a02f82f49c2dc8d24319608f5551ca652f8",
+      "bytes": 1106
+    },
+    {
+      "path": "bench/results/sha256-d1c5f42dba40/macos-apfs/2026-11-17/run-174602.099-9a68472e-736e-43fb-b7de-c57df84ad4c0/apfs-file-heavy-c16-r1-git.json",
+      "sha256": "77568accc3773a258904c8d6e2119f60dd8cb9f9f8ad818ce5f95d58c0d9fa42",
+      "bytes": 11985
+    },
+    {
+      "path": "bench/results/sha256-d1c5f42dba40/macos-apfs/2026-11-17/run-174602.099-9a68472e-736e-43fb-b7de-c57df84ad4c0/apfs-file-heavy-c16-r1-git.json.log",
+      "sha256": "ff1d87fd1f6aab1e6f69fbffc8d8c625f9e2155ab0b57de3859533c1315f9bd2",
+      "bytes": 226
+    },
+    {
+      "path": "bench/results/sha256-d1c5f42dba40/macos-apfs/2026-11-17/run-174602.099-9a68472e-736e-43fb-b7de-c57df84ad4c0/apfs-file-heavy-c16-r1-git.json.stderr.log",
+      "sha256": "46f28d952ae2c76644b1786997598228fe8efc776fa61970bc647ea63631b4e0",
+      "bytes": 1091
+    },
+    {
+      "path": "bench/results/sha256-d1c5f42dba40/macos-apfs/2026-11-17/run-174602.099-9a68472e-736e-43fb-b7de-c57df84ad4c0/apfs-file-heavy-c16-r2-baseline.json",
+      "sha256": "df888668b811ee5377fe428d5429ac90709373c5c47d9c5752d43de7e48469f0",
+      "bytes": 12014
+    },
+    {
+      "path": "bench/results/sha256-d1c5f42dba40/macos-apfs/2026-11-17/run-174602.099-9a68472e-736e-43fb-b7de-c57df84ad4c0/apfs-file-heavy-c16-r2-baseline.json.log",
+      "sha256": "907089874b96914b16c070ba96ec03dede9162fafa4ec266833c23d819ae9dea",
+      "bytes": 231
+    },
+    {
+      "path": "bench/results/sha256-d1c5f42dba40/macos-apfs/2026-11-17/run-174602.099-9a68472e-736e-43fb-b7de-c57df84ad4c0/apfs-file-heavy-c16-r2-baseline.json.stderr.log",
+      "sha256": "5ee06ba665756b13f4de25307b066aaee574d6964590b13f766f03e71249b024",
+      "bytes": 1107
+    },
+    {
+      "path": "bench/results/sha256-d1c5f42dba40/macos-apfs/2026-11-17/run-174602.099-9a68472e-736e-43fb-b7de-c57df84ad4c0/apfs-file-heavy-c16-r2-candidate.json",
+      "sha256": "d5dbbf65e543a2a754b446f4d891f25f7a6b08b2c7c4ffccfa47c22b9913b39c",
+      "bytes": 11850
+    },
+    {
+      "path": "bench/results/sha256-d1c5f42dba40/macos-apfs/2026-11-17/run-174602.099-9a68472e-736e-43fb-b7de-c57df84ad4c0/apfs-file-heavy-c16-r2-candidate.json.log",
+      "sha256": "b6e1c3bd6d5e8e56f85c96e3e113e9e26959afce1f5cfe89f5e5335860704e18",
+      "bytes": 232
+    },
+    {
+      "path": "bench/results/sha256-d1c5f42dba40/macos-apfs/2026-11-17/run-174602.099-9a68472e-736e-43fb-b7de-c57df84ad4c0/apfs-file-heavy-c16-r2-candidate.json.stderr.log",
+      "sha256": "4dc9e4892091daff27bc0b5447f1f76f043a67f042e98a2e0dc362c1bc504311",
+      "bytes": 1107
+    },
+    {
+      "path": "bench/results/sha256-d1c5f42dba40/macos-apfs/2026-11-17/run-174602.099-9a68472e-736e-43fb-b7de-c57df84ad4c0/apfs-file-heavy-c16-r2-git.json",
+      "sha256": "433a11f07bb159f1cb755c580cbf86b5a10b1e29fdc6ec8701a9c10138eddcb2",
+      "bytes": 12155
+    },
+    {
+      "path": "bench/results/sha256-d1c5f42dba40/macos-apfs/2026-11-17/run-174602.099-9a68472e-736e-43fb-b7de-c57df84ad4c0/apfs-file-heavy-c16-r2-git.json.log",
+      "sha256": "e0e47cee8db97ee10fe3d0a097c1aa558f90fb16d4b750ebc71d5e18fbfece26",
+      "bytes": 226
+    },
+    {
+      "path": "bench/results/sha256-d1c5f42dba40/macos-apfs/2026-11-17/run-174602.099-9a68472e-736e-43fb-b7de-c57df84ad4c0/apfs-file-heavy-c16-r2-git.json.stderr.log",
+      "sha256": "27423c6720591445af2a471b508173e72e4e75799bc35405e5563805838d2db0",
+      "bytes": 1091
+    },
+    {
+      "path": "bench/results/sha256-d1c5f42dba40/macos-apfs/2026-11-17/run-174602.099-9a68472e-736e-43fb-b7de-c57df84ad4c0/apfs-file-heavy-c4-r0-baseline.json",
+      "sha256": "7486efc968ea3f4276e641e839196d9f770f44762a6f224a49ad2eb8cb3ee3be",
+      "bytes": 7329
+    },
+    {
+      "path": "bench/results/sha256-d1c5f42dba40/macos-apfs/2026-11-17/run-174602.099-9a68472e-736e-43fb-b7de-c57df84ad4c0/apfs-file-heavy-c4-r0-baseline.json.log",
+      "sha256": "a100e0f8608aaa30e25ffda632b6d609212432b969a143d3d9260581d6fdf9f3",
+      "bytes": 230
+    },
+    {
+      "path": "bench/results/sha256-d1c5f42dba40/macos-apfs/2026-11-17/run-174602.099-9a68472e-736e-43fb-b7de-c57df84ad4c0/apfs-file-heavy-c4-r0-baseline.json.stderr.log",
+      "sha256": "14f30876734f352f4ec54911aa8e9fccbeb90f5f3fb3ac1e1da0f31b761e0648",
+      "bytes": 429
+    },
+    {
+      "path": "bench/results/sha256-d1c5f42dba40/macos-apfs/2026-11-17/run-174602.099-9a68472e-736e-43fb-b7de-c57df84ad4c0/apfs-file-heavy-c4-r0-candidate.json",
+      "sha256": "9a456f0f0d834467bfd73dd68d2937ee4db714fb4fdab022e5ae4cb55e6a4dbd",
+      "bytes": 7276
+    },
+    {
+      "path": "bench/results/sha256-d1c5f42dba40/macos-apfs/2026-11-17/run-174602.099-9a68472e-736e-43fb-b7de-c57df84ad4c0/apfs-file-heavy-c4-r0-candidate.json.log",
+      "sha256": "7a869897ebb130392ab357c83c15ecee482faac0b2db98178ffe4f5f9d7112c5",
+      "bytes": 231
+    },
+    {
+      "path": "bench/results/sha256-d1c5f42dba40/macos-apfs/2026-11-17/run-174602.099-9a68472e-736e-43fb-b7de-c57df84ad4c0/apfs-file-heavy-c4-r0-candidate.json.stderr.log",
+      "sha256": "b7c0b7bdf2dbd8a6348542f5d6360881fb35e3162ea895a88d70d902709ed3c2",
+      "bytes": 429
+    },
+    {
+      "path": "bench/results/sha256-d1c5f42dba40/macos-apfs/2026-11-17/run-174602.099-9a68472e-736e-43fb-b7de-c57df84ad4c0/apfs-file-heavy-c4-r0-git.json",
+      "sha256": "a553e9a507e074f189b99b2ed8930de5e65c0cd48f7e151ab19cd67503b62ae1",
+      "bytes": 7317
+    },
+    {
+      "path": "bench/results/sha256-d1c5f42dba40/macos-apfs/2026-11-17/run-174602.099-9a68472e-736e-43fb-b7de-c57df84ad4c0/apfs-file-heavy-c4-r0-git.json.log",
+      "sha256": "2b1b6dd8a2f0ca22126bdd3ecab28967271d6ffd8f6c39aae923d698becc231c",
+      "bytes": 225
+    },
+    {
+      "path": "bench/results/sha256-d1c5f42dba40/macos-apfs/2026-11-17/run-174602.099-9a68472e-736e-43fb-b7de-c57df84ad4c0/apfs-file-heavy-c4-r0-git.json.stderr.log",
+      "sha256": "2285a1369bdf4a075b5035c369e31d14d608fa3cba9eb3fef97c9793fd132760",
+      "bytes": 425
+    },
+    {
+      "path": "bench/results/sha256-d1c5f42dba40/macos-apfs/2026-11-17/run-174602.099-9a68472e-736e-43fb-b7de-c57df84ad4c0/apfs-file-heavy-c4-r1-baseline.json",
+      "sha256": "90059500cc85ba0c85200e75b0ea80feb9e720d473e8660ef33c3afa6cf1da26",
+      "bytes": 7298
+    },
+    {
+      "path": "bench/results/sha256-d1c5f42dba40/macos-apfs/2026-11-17/run-174602.099-9a68472e-736e-43fb-b7de-c57df84ad4c0/apfs-file-heavy-c4-r1-baseline.json.log",
+      "sha256": "58663866bfc9be389032657d2c7ad16f35b671cbd45414876c43c1f83864f51f",
+      "bytes": 230
+    },
+    {
+      "path": "bench/results/sha256-d1c5f42dba40/macos-apfs/2026-11-17/run-174602.099-9a68472e-736e-43fb-b7de-c57df84ad4c0/apfs-file-heavy-c4-r1-baseline.json.stderr.log",
+      "sha256": "e7e2d2aac04de38f9df0987fb0603fe34ff00c63abda775ce09bd70e67b30120",
+      "bytes": 429
+    },
+    {
+      "path": "bench/results/sha256-d1c5f42dba40/macos-apfs/2026-11-17/run-174602.099-9a68472e-736e-43fb-b7de-c57df84ad4c0/apfs-file-heavy-c4-r1-candidate.json",
+      "sha256": "5b2f12b77ef8c04aa18880c851aa4df75ab129c3a3f395b93ff1858edb3d9be2",
+      "bytes": 7304
+    },
+    {
+      "path": "bench/results/sha256-d1c5f42dba40/macos-apfs/2026-11-17/run-174602.099-9a68472e-736e-43fb-b7de-c57df84ad4c0/apfs-file-heavy-c4-r1-candidate.json.log",
+      "sha256": "a28a2663ac86378b68eb43e65ee49bdc74ecbb8c5b8d4bf62036003400ca6bf8",
+      "bytes": 231
+    },
+    {
+      "path": "bench/results/sha256-d1c5f42dba40/macos-apfs/2026-11-17/run-174602.099-9a68472e-736e-43fb-b7de-c57df84ad4c0/apfs-file-heavy-c4-r1-candidate.json.stderr.log",
+      "sha256": "aaf7bad94e73873de3677711a67d0f5a324b9460cc22302cd45b7e6b1012cda1",
+      "bytes": 429
+    },
+    {
+      "path": "bench/results/sha256-d1c5f42dba40/macos-apfs/2026-11-17/run-174602.099-9a68472e-736e-43fb-b7de-c57df84ad4c0/apfs-file-heavy-c4-r1-git.json",
+      "sha256": "7d44d802974fd38e212214452e409e44bf3c5ca035780928bbf3447c0176142b",
+      "bytes": 7315
+    },
+    {
+      "path": "bench/results/sha256-d1c5f42dba40/macos-apfs/2026-11-17/run-174602.099-9a68472e-736e-43fb-b7de-c57df84ad4c0/apfs-file-heavy-c4-r1-git.json.log",
+      "sha256": "8ca58c5e019633ba623b646c8629c73fcbca8edc06b3d84b4f15df1137eb9933",
+      "bytes": 225
+    },
+    {
+      "path": "bench/results/sha256-d1c5f42dba40/macos-apfs/2026-11-17/run-174602.099-9a68472e-736e-43fb-b7de-c57df84ad4c0/apfs-file-heavy-c4-r1-git.json.stderr.log",
+      "sha256": "1a3e5a9ae4493b85b032ebbd851785516f63591fccf6ef19ab71084b634b03c2",
+      "bytes": 425
+    },
+    {
+      "path": "bench/results/sha256-d1c5f42dba40/macos-apfs/2026-11-17/run-174602.099-9a68472e-736e-43fb-b7de-c57df84ad4c0/apfs-file-heavy-c4-r2-baseline.json",
+      "sha256": "bc69fd82ae2fd5f0600eebea11e8a429ba6c9702275787b3f19280cd6625edb7",
+      "bytes": 7308
+    },
+    {
+      "path": "bench/results/sha256-d1c5f42dba40/macos-apfs/2026-11-17/run-174602.099-9a68472e-736e-43fb-b7de-c57df84ad4c0/apfs-file-heavy-c4-r2-baseline.json.log",
+      "sha256": "656bd447e88c8da106b33545c4aae82433f6bc3343e36e914eb0fd39c6ae84b5",
+      "bytes": 230
+    },
+    {
+      "path": "bench/results/sha256-d1c5f42dba40/macos-apfs/2026-11-17/run-174602.099-9a68472e-736e-43fb-b7de-c57df84ad4c0/apfs-file-heavy-c4-r2-baseline.json.stderr.log",
+      "sha256": "216eef9f6cc7f15e6c1a938bb7c90a3ab08d490cbaf0bf9c869432483f764090",
+      "bytes": 429
+    },
+    {
+      "path": "bench/results/sha256-d1c5f42dba40/macos-apfs/2026-11-17/run-174602.099-9a68472e-736e-43fb-b7de-c57df84ad4c0/apfs-file-heavy-c4-r2-candidate.json",
+      "sha256": "470f274e1b2e2b2105a2bc4fdfda7f587555c5396742d2eb01f33da69ff16c2b",
+      "bytes": 7309
+    },
+    {
+      "path": "bench/results/sha256-d1c5f42dba40/macos-apfs/2026-11-17/run-174602.099-9a68472e-736e-43fb-b7de-c57df84ad4c0/apfs-file-heavy-c4-r2-candidate.json.log",
+      "sha256": "95e749b88f20dc11845db4be71b638314923b1cb9aea186e9ab10e859a1f2e18",
+      "bytes": 231
+    },
+    {
+      "path": "bench/results/sha256-d1c5f42dba40/macos-apfs/2026-11-17/run-174602.099-9a68472e-736e-43fb-b7de-c57df84ad4c0/apfs-file-heavy-c4-r2-candidate.json.stderr.log",
+      "sha256": "9c6def263cfc4537e46575463c80d90f9d37ad3463701c8656e8c1e7ed013e5c",
+      "bytes": 429
+    },
+    {
+      "path": "bench/results/sha256-d1c5f42dba40/macos-apfs/2026-11-17/run-174602.099-9a68472e-736e-43fb-b7de-c57df84ad4c0/apfs-file-heavy-c4-r2-git.json",
+      "sha256": "6f1c8e48eccdce92b509b475fddf56683890d42c126e500dae298205373122ea",
+      "bytes": 7323
+    },
+    {
+      "path": "bench/results/sha256-d1c5f42dba40/macos-apfs/2026-11-17/run-174602.099-9a68472e-736e-43fb-b7de-c57df84ad4c0/apfs-file-heavy-c4-r2-git.json.log",
+      "sha256": "99bbcb8acf10600992674bdcc582c92183c6795bedf709b91c5e1091da49e0e6",
+      "bytes": 225
+    },
+    {
+      "path": "bench/results/sha256-d1c5f42dba40/macos-apfs/2026-11-17/run-174602.099-9a68472e-736e-43fb-b7de-c57df84ad4c0/apfs-file-heavy-c4-r2-git.json.stderr.log",
+      "sha256": "20bbef3ed228fe01125612931452f22ed4e91bd0a9f39a54e377fc7bed5282f0",
+      "bytes": 425
+    },
+    {
+      "path": "bench/results/sha256-d1c5f42dba40/macos-apfs/2026-11-17/run-174602.099-9a68472e-736e-43fb-b7de-c57df84ad4c0/apfs-mixed-builtins-c1-r0-baseline.json",
+      "sha256": "190199395a114114504559adc7342c81ec826f37ffb2b3e99d8808f033e2b683",
+      "bytes": 6583
+    },
+    {
+      "path": "bench/results/sha256-d1c5f42dba40/macos-apfs/2026-11-17/run-174602.099-9a68472e-736e-43fb-b7de-c57df84ad4c0/apfs-mixed-builtins-c1-r0-baseline.json.log",
+      "sha256": "2a04f24db1cb4f7e4d79ccb68ae85c843d7193de9d560c1b00e1d9fd04d280ea",
+      "bytes": 234
+    },
+    {
+      "path": "bench/results/sha256-d1c5f42dba40/macos-apfs/2026-11-17/run-174602.099-9a68472e-736e-43fb-b7de-c57df84ad4c0/apfs-mixed-builtins-c1-r0-baseline.json.stderr.log",
+      "sha256": "8b636c7fa39bcdf027ce40d7adf9a89ea94c3c33bb6593a215a6a00df84ae2b0",
+      "bytes": 327
+    },
+    {
+      "path": "bench/results/sha256-d1c5f42dba40/macos-apfs/2026-11-17/run-174602.099-9a68472e-736e-43fb-b7de-c57df84ad4c0/apfs-mixed-builtins-c1-r0-candidate.json",
+      "sha256": "fba7fae33830c294922d1d139d4ae7555c6fbf06f179a45c88994e50e52688e4",
+      "bytes": 6545
+    },
+    {
+      "path": "bench/results/sha256-d1c5f42dba40/macos-apfs/2026-11-17/run-174602.099-9a68472e-736e-43fb-b7de-c57df84ad4c0/apfs-mixed-builtins-c1-r0-candidate.json.log",
+      "sha256": "404d61dac19c6da590ebbff0e62ab9929085fe96fa4d1e72ea6dc1be71475884",
+      "bytes": 235
+    },
+    {
+      "path": "bench/results/sha256-d1c5f42dba40/macos-apfs/2026-11-17/run-174602.099-9a68472e-736e-43fb-b7de-c57df84ad4c0/apfs-mixed-builtins-c1-r0-candidate.json.stderr.log",
+      "sha256": "553a0bce69e83796fd2519bac3cd2dd3eff7f75ad63d2844e496959ca0ae7a6f",
+      "bytes": 325
+    },
+    {
+      "path": "bench/results/sha256-d1c5f42dba40/macos-apfs/2026-11-17/run-174602.099-9a68472e-736e-43fb-b7de-c57df84ad4c0/apfs-mixed-builtins-c1-r0-git.json",
+      "sha256": "13beabd60fe9eb68fb40d80e758b25bc42b2a40a699549bc8e09d47d206325ca",
+      "bytes": 6536
+    },
+    {
+      "path": "bench/results/sha256-d1c5f42dba40/macos-apfs/2026-11-17/run-174602.099-9a68472e-736e-43fb-b7de-c57df84ad4c0/apfs-mixed-builtins-c1-r0-git.json.log",
+      "sha256": "b82a757620f84bb80c5abe36a00ebba814ea85c7e49cd4c7f9b5a22fba8c21df",
+      "bytes": 229
+    },
+    {
+      "path": "bench/results/sha256-d1c5f42dba40/macos-apfs/2026-11-17/run-174602.099-9a68472e-736e-43fb-b7de-c57df84ad4c0/apfs-mixed-builtins-c1-r0-git.json.stderr.log",
+      "sha256": "70720e01912b4c81e59aaf0dca4377eb259c61895e742aeb1cdf0f55fea3118c",
+      "bytes": 324
+    },
+    {
+      "path": "bench/results/sha256-d1c5f42dba40/macos-apfs/2026-11-17/run-174602.099-9a68472e-736e-43fb-b7de-c57df84ad4c0/apfs-mixed-builtins-c1-r1-baseline.json",
+      "sha256": "ff5e92262c02144f3df002fe19a54c02dbd64d40ef1512867dcf942826b71748",
+      "bytes": 6545
+    },
+    {
+      "path": "bench/results/sha256-d1c5f42dba40/macos-apfs/2026-11-17/run-174602.099-9a68472e-736e-43fb-b7de-c57df84ad4c0/apfs-mixed-builtins-c1-r1-baseline.json.log",
+      "sha256": "ad457e5bae5934c4ec49e15cd5cc779060fe28ff692ee0e38b156f2ad5097520",
+      "bytes": 234
+    },
+    {
+      "path": "bench/results/sha256-d1c5f42dba40/macos-apfs/2026-11-17/run-174602.099-9a68472e-736e-43fb-b7de-c57df84ad4c0/apfs-mixed-builtins-c1-r1-baseline.json.stderr.log",
+      "sha256": "8b636c7fa39bcdf027ce40d7adf9a89ea94c3c33bb6593a215a6a00df84ae2b0",
+      "bytes": 327
+    },
+    {
+      "path": "bench/results/sha256-d1c5f42dba40/macos-apfs/2026-11-17/run-174602.099-9a68472e-736e-43fb-b7de-c57df84ad4c0/apfs-mixed-builtins-c1-r1-candidate.json",
+      "sha256": "4e6026e3b77f5e99141eede3783848700f47727adf6f973a0a10c43c733e55b9",
+      "bytes": 6553
+    },
+    {
+      "path": "bench/results/sha256-d1c5f42dba40/macos-apfs/2026-11-17/run-174602.099-9a68472e-736e-43fb-b7de-c57df84ad4c0/apfs-mixed-builtins-c1-r1-candidate.json.log",
+      "sha256": "4951ddb8f961b67420de77a028a50ff626f9fa72082f700da99da07c0123f138",
+      "bytes": 235
+    },
+    {
+      "path": "bench/results/sha256-d1c5f42dba40/macos-apfs/2026-11-17/run-174602.099-9a68472e-736e-43fb-b7de-c57df84ad4c0/apfs-mixed-builtins-c1-r1-candidate.json.stderr.log",
+      "sha256": "e140eb301484a601aadc21c9be56647da0e54aa6a00d1bc0ab30d2be68afa777",
+      "bytes": 325
+    },
+    {
+      "path": "bench/results/sha256-d1c5f42dba40/macos-apfs/2026-11-17/run-174602.099-9a68472e-736e-43fb-b7de-c57df84ad4c0/apfs-mixed-builtins-c1-r1-git.json",
+      "sha256": "29338e5cbc6e711d7f6ace9cf62fff079d27ff3e310b4272034495bcce705ca4",
+      "bytes": 6550
+    },
+    {
+      "path": "bench/results/sha256-d1c5f42dba40/macos-apfs/2026-11-17/run-174602.099-9a68472e-736e-43fb-b7de-c57df84ad4c0/apfs-mixed-builtins-c1-r1-git.json.log",
+      "sha256": "785929db5e7b6d0b7524075594b56f292d028121661519a8c1e511f4d9e86264",
+      "bytes": 229
+    },
+    {
+      "path": "bench/results/sha256-d1c5f42dba40/macos-apfs/2026-11-17/run-174602.099-9a68472e-736e-43fb-b7de-c57df84ad4c0/apfs-mixed-builtins-c1-r1-git.json.stderr.log",
+      "sha256": "ebb240b67d5291c242bc8a6e4414be608545395044f6debc423ac3bc95f40319",
+      "bytes": 324
+    },
+    {
+      "path": "bench/results/sha256-d1c5f42dba40/macos-apfs/2026-11-17/run-174602.099-9a68472e-736e-43fb-b7de-c57df84ad4c0/apfs-mixed-builtins-c1-r2-baseline.json",
+      "sha256": "ea80514ece36ec5eeacd9197fdd8cd08a528002b819e92c21716bc2311acf17c",
+      "bytes": 6552
+    },
+    {
+      "path": "bench/results/sha256-d1c5f42dba40/macos-apfs/2026-11-17/run-174602.099-9a68472e-736e-43fb-b7de-c57df84ad4c0/apfs-mixed-builtins-c1-r2-baseline.json.log",
+      "sha256": "0088a421887bdb8d42691acf128b3aa58a6153157dfee3cc36e83ac91e423654",
+      "bytes": 234
+    },
+    {
+      "path": "bench/results/sha256-d1c5f42dba40/macos-apfs/2026-11-17/run-174602.099-9a68472e-736e-43fb-b7de-c57df84ad4c0/apfs-mixed-builtins-c1-r2-baseline.json.stderr.log",
+      "sha256": "e862008a3c187393e82a511f8f3177842af1893d3d951dd5049cee73d6c6b642",
+      "bytes": 327
+    },
+    {
+      "path": "bench/results/sha256-d1c5f42dba40/macos-apfs/2026-11-17/run-174602.099-9a68472e-736e-43fb-b7de-c57df84ad4c0/apfs-mixed-builtins-c1-r2-candidate.json",
+      "sha256": "1d3e55330b35f8cdc43cfbc78a22bb2693b938dbacf994e8bceec191197c6e59",
+      "bytes": 6538
+    },
+    {
+      "path": "bench/results/sha256-d1c5f42dba40/macos-apfs/2026-11-17/run-174602.099-9a68472e-736e-43fb-b7de-c57df84ad4c0/apfs-mixed-builtins-c1-r2-candidate.json.log",
+      "sha256": "64e31572c804f509ca792baf22ff0943f8b9049eca6e0e84f0062b8d2be41b09",
+      "bytes": 235
+    },
+    {
+      "path": "bench/results/sha256-d1c5f42dba40/macos-apfs/2026-11-17/run-174602.099-9a68472e-736e-43fb-b7de-c57df84ad4c0/apfs-mixed-builtins-c1-r2-candidate.json.stderr.log",
+      "sha256": "4af64eb3a5606d857cf4c8ef066e46dfdf25e168ffbefec018abfc449c6ca70b",
+      "bytes": 325
+    },
+    {
+      "path": "bench/results/sha256-d1c5f42dba40/macos-apfs/2026-11-17/run-174602.099-9a68472e-736e-43fb-b7de-c57df84ad4c0/apfs-mixed-builtins-c1-r2-git.json",
+      "sha256": "79ab4e71165ffa8aa23368cc90806ad2bf5351e618dbe4f42be5d3c78e4b7b36",
+      "bytes": 6549
+    },
+    {
+      "path": "bench/results/sha256-d1c5f42dba40/macos-apfs/2026-11-17/run-174602.099-9a68472e-736e-43fb-b7de-c57df84ad4c0/apfs-mixed-builtins-c1-r2-git.json.log",
+      "sha256": "547a0212fa07b1c94b0c86e20710a37e941bf5b2248e3630f4a7ec7ded2370da",
+      "bytes": 229
+    },
+    {
+      "path": "bench/results/sha256-d1c5f42dba40/macos-apfs/2026-11-17/run-174602.099-9a68472e-736e-43fb-b7de-c57df84ad4c0/apfs-mixed-builtins-c1-r2-git.json.stderr.log",
+      "sha256": "ebb240b67d5291c242bc8a6e4414be608545395044f6debc423ac3bc95f40319",
+      "bytes": 324
+    },
+    {
+      "path": "bench/results/sha256-d1c5f42dba40/macos-apfs/2026-11-17/run-174602.099-9a68472e-736e-43fb-b7de-c57df84ad4c0/apfs-submodules-c1-r0-baseline.json",
+      "sha256": "aee6a2b18f5341435cb4598067605307a09d517a30ba4c29ac1c2c8c496e9dd7",
+      "bytes": 6533
+    },
+    {
+      "path": "bench/results/sha256-d1c5f42dba40/macos-apfs/2026-11-17/run-174602.099-9a68472e-736e-43fb-b7de-c57df84ad4c0/apfs-submodules-c1-r0-baseline.json.log",
+      "sha256": "6e6b90a76ccc0e86e45f26de9a026792c67f131fb50eca6c906e8da67af57915",
+      "bytes": 230
+    },
+    {
+      "path": "bench/results/sha256-d1c5f42dba40/macos-apfs/2026-11-17/run-174602.099-9a68472e-736e-43fb-b7de-c57df84ad4c0/apfs-submodules-c1-r0-baseline.json.stderr.log",
+      "sha256": "9c92d0a81a223d3bc4337bbe02e248c6dfb919abd7788f17ddb104743ecf27c4",
+      "bytes": 323
+    },
+    {
+      "path": "bench/results/sha256-d1c5f42dba40/macos-apfs/2026-11-17/run-174602.099-9a68472e-736e-43fb-b7de-c57df84ad4c0/apfs-submodules-c1-r0-candidate.json",
+      "sha256": "033f7f60f73c4b52d76c435caba0823dfe2a2b18a4b3436537c137cd533a4ac7",
+      "bytes": 6542
+    },
+    {
+      "path": "bench/results/sha256-d1c5f42dba40/macos-apfs/2026-11-17/run-174602.099-9a68472e-736e-43fb-b7de-c57df84ad4c0/apfs-submodules-c1-r0-candidate.json.log",
+      "sha256": "673b6243f530d4b197ca586fe39a48b662ad8857e8bcf6abf3e78df3b610a621",
+      "bytes": 231
+    },
+    {
+      "path": "bench/results/sha256-d1c5f42dba40/macos-apfs/2026-11-17/run-174602.099-9a68472e-736e-43fb-b7de-c57df84ad4c0/apfs-submodules-c1-r0-candidate.json.stderr.log",
+      "sha256": "08223523e9d03734c7293c33babc41e7543eb9760c572701bdd1d6fb1f701ca3",
+      "bytes": 321
+    },
+    {
+      "path": "bench/results/sha256-d1c5f42dba40/macos-apfs/2026-11-17/run-174602.099-9a68472e-736e-43fb-b7de-c57df84ad4c0/apfs-submodules-c1-r0-git.json",
+      "sha256": "ed32338c2ef74420c3561156fc30cdde11214c266d020b6b963b4a564debd077",
+      "bytes": 6537
+    },
+    {
+      "path": "bench/results/sha256-d1c5f42dba40/macos-apfs/2026-11-17/run-174602.099-9a68472e-736e-43fb-b7de-c57df84ad4c0/apfs-submodules-c1-r0-git.json.log",
+      "sha256": "95ad3330f1139e0a589806bbe0a831d87aadbdb9dfacffeddf212009a7568ea5",
+      "bytes": 225
+    },
+    {
+      "path": "bench/results/sha256-d1c5f42dba40/macos-apfs/2026-11-17/run-174602.099-9a68472e-736e-43fb-b7de-c57df84ad4c0/apfs-submodules-c1-r0-git.json.stderr.log",
+      "sha256": "3f192dd4f2c45bb44cc2313c611b832379bb201bc37c594d3e17034b6685607e",
+      "bytes": 320
+    },
+    {
+      "path": "bench/results/sha256-d1c5f42dba40/macos-apfs/2026-11-17/run-174602.099-9a68472e-736e-43fb-b7de-c57df84ad4c0/apfs-submodules-c1-r1-baseline.json",
+      "sha256": "be877e585e35eefe853d19ac04adf442bdce7c82fcc4ac0fcde28a53fbfb0efa",
+      "bytes": 6571
+    },
+    {
+      "path": "bench/results/sha256-d1c5f42dba40/macos-apfs/2026-11-17/run-174602.099-9a68472e-736e-43fb-b7de-c57df84ad4c0/apfs-submodules-c1-r1-baseline.json.log",
+      "sha256": "89e28e00da48a93c0d436838c603450a00ceaa448264bf3e20c92a766c150ced",
+      "bytes": 230
+    },
+    {
+      "path": "bench/results/sha256-d1c5f42dba40/macos-apfs/2026-11-17/run-174602.099-9a68472e-736e-43fb-b7de-c57df84ad4c0/apfs-submodules-c1-r1-baseline.json.stderr.log",
+      "sha256": "9c92d0a81a223d3bc4337bbe02e248c6dfb919abd7788f17ddb104743ecf27c4",
+      "bytes": 323
+    },
+    {
+      "path": "bench/results/sha256-d1c5f42dba40/macos-apfs/2026-11-17/run-174602.099-9a68472e-736e-43fb-b7de-c57df84ad4c0/apfs-submodules-c1-r1-candidate.json",
+      "sha256": "eeca2f97df69fcc3cc2a454c7d9d25e7d2291f3044f6879161bf33312481c2fe",
+      "bytes": 6529
+    },
+    {
+      "path": "bench/results/sha256-d1c5f42dba40/macos-apfs/2026-11-17/run-174602.099-9a68472e-736e-43fb-b7de-c57df84ad4c0/apfs-submodules-c1-r1-candidate.json.log",
+      "sha256": "70c1db5ebdfa164698db00111e55422def4528264d4922024b6c11b20a5342d8",
+      "bytes": 231
+    },
+    {
+      "path": "bench/results/sha256-d1c5f42dba40/macos-apfs/2026-11-17/run-174602.099-9a68472e-736e-43fb-b7de-c57df84ad4c0/apfs-submodules-c1-r1-candidate.json.stderr.log",
+      "sha256": "e1dc2aa7858fc8712fc90ac1b3b1efd7d1dc1a80bfc368d4ce1751aab4be100a",
+      "bytes": 321
+    },
+    {
+      "path": "bench/results/sha256-d1c5f42dba40/macos-apfs/2026-11-17/run-174602.099-9a68472e-736e-43fb-b7de-c57df84ad4c0/apfs-submodules-c1-r1-git.json",
+      "sha256": "d42bd3b7057a8cac58765c5ac7e5e0651d95a2f30d9888297fd5f2f432be0401",
+      "bytes": 6526
+    },
+    {
+      "path": "bench/results/sha256-d1c5f42dba40/macos-apfs/2026-11-17/run-174602.099-9a68472e-736e-43fb-b7de-c57df84ad4c0/apfs-submodules-c1-r1-git.json.log",
+      "sha256": "7e0e3c0a6e16e7f604762f743ce11ff502fad9fe74feed897ce937cddb8b7254",
+      "bytes": 225
+    },
+    {
+      "path": "bench/results/sha256-d1c5f42dba40/macos-apfs/2026-11-17/run-174602.099-9a68472e-736e-43fb-b7de-c57df84ad4c0/apfs-submodules-c1-r1-git.json.stderr.log",
+      "sha256": "3f192dd4f2c45bb44cc2313c611b832379bb201bc37c594d3e17034b6685607e",
+      "bytes": 320
+    },
+    {
+      "path": "bench/results/sha256-d1c5f42dba40/macos-apfs/2026-11-17/run-174602.099-9a68472e-736e-43fb-b7de-c57df84ad4c0/apfs-submodules-c1-r2-baseline.json",
+      "sha256": "c203faffcbc25d417b51a7feed335a02aae3259590311305020398b80edcebe2",
+      "bytes": 6557
+    },
+    {
+      "path": "bench/results/sha256-d1c5f42dba40/macos-apfs/2026-11-17/run-174602.099-9a68472e-736e-43fb-b7de-c57df84ad4c0/apfs-submodules-c1-r2-baseline.json.log",
+      "sha256": "0b335bb01b7e1981a8bc84a6fc658b4a97751ef56a32c31d485d94f2a146a12d",
+      "bytes": 230
+    },
+    {
+      "path": "bench/results/sha256-d1c5f42dba40/macos-apfs/2026-11-17/run-174602.099-9a68472e-736e-43fb-b7de-c57df84ad4c0/apfs-submodules-c1-r2-baseline.json.stderr.log",
+      "sha256": "9c92d0a81a223d3bc4337bbe02e248c6dfb919abd7788f17ddb104743ecf27c4",
+      "bytes": 323
+    },
+    {
+      "path": "bench/results/sha256-d1c5f42dba40/macos-apfs/2026-11-17/run-174602.099-9a68472e-736e-43fb-b7de-c57df84ad4c0/apfs-submodules-c1-r2-candidate.json",
+      "sha256": "80b5c6f6a58dccb23c57cb766f14c00b712d609790f6d74a7acc00419fa492af",
+      "bytes": 6538
+    },
+    {
+      "path": "bench/results/sha256-d1c5f42dba40/macos-apfs/2026-11-17/run-174602.099-9a68472e-736e-43fb-b7de-c57df84ad4c0/apfs-submodules-c1-r2-candidate.json.log",
+      "sha256": "b2b07c720dc6890dfcdefd9301918875c09b2a672046c9508c467656ae7dff52",
+      "bytes": 231
+    },
+    {
+      "path": "bench/results/sha256-d1c5f42dba40/macos-apfs/2026-11-17/run-174602.099-9a68472e-736e-43fb-b7de-c57df84ad4c0/apfs-submodules-c1-r2-candidate.json.stderr.log",
+      "sha256": "027ccf01bbd89054f1dcbbab9ebc89c2e93304b2851204ed056fac04b455e7d3",
+      "bytes": 321
+    },
+    {
+      "path": "bench/results/sha256-d1c5f42dba40/macos-apfs/2026-11-17/run-174602.099-9a68472e-736e-43fb-b7de-c57df84ad4c0/apfs-submodules-c1-r2-git.json",
+      "sha256": "2821aaf9dcf41700e1358ae75b7c9e11497799fb631c0bf50cecb8ff768445cb",
+      "bytes": 6547
+    },
+    {
+      "path": "bench/results/sha256-d1c5f42dba40/macos-apfs/2026-11-17/run-174602.099-9a68472e-736e-43fb-b7de-c57df84ad4c0/apfs-submodules-c1-r2-git.json.log",
+      "sha256": "f7cdef14b1eae292d0be868cd797e8ac999a5497665b2ee02b675aae98c99174",
+      "bytes": 225
+    },
+    {
+      "path": "bench/results/sha256-d1c5f42dba40/macos-apfs/2026-11-17/run-174602.099-9a68472e-736e-43fb-b7de-c57df84ad4c0/apfs-submodules-c1-r2-git.json.stderr.log",
+      "sha256": "30e60e1ec66ba32aeb1be479745721ee7f6c5f5cfdfe97f9c53ea36528e6e29f",
+      "bytes": 320
+    },
+    {
+      "path": "bench/results/sha256-d1c5f42dba40/macos-apfs/2026-11-17/run-174602.099-9a68472e-736e-43fb-b7de-c57df84ad4c0/comparison.svg",
+      "sha256": "ce273825e85d7d2321432829860e1e5cf703ac650aa666f2a09d2f57943b8d25",
+      "bytes": 9145
+    },
+    {
+      "path": "bench/results/sha256-d1c5f42dba40/macos-apfs/2026-11-17/run-174602.099-9a68472e-736e-43fb-b7de-c57df84ad4c0/manifest.json",
+      "sha256": "aa7424dce0314ac591c001037382828c2105d88c31ca667af565d78d740b7d8e",
+      "bytes": 134830
+    },
+    {
+      "path": "bench/results/sha256-d1c5f42dba40/macos-apfs/2026-11-17/run-174602.099-9a68472e-736e-43fb-b7de-c57df84ad4c0/preparation.json",
+      "sha256": "426a8427e775192d041241c82a85ed55b623d6fba0eaa31d84101883351536a0",
+      "bytes": 348
+    },
+    {
+      "path": "bench/results/sha256-d1c5f42dba40/macos-apfs/2026-11-17/run-174602.099-9a68472e-736e-43fb-b7de-c57df84ad4c0/prepare.log",
+      "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+      "bytes": 0
+    },
+    {
+      "path": "bench/results/sha256-d1c5f42dba40/macos-apfs/2026-11-17/run-174602.099-9a68472e-736e-43fb-b7de-c57df84ad4c0/prepare.stderr.log",
+      "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+      "bytes": 0
+    },
+    {
+      "path": "bench/results/sha256-d1c5f42dba40/macos-apfs/2026-11-17/run-174602.099-9a68472e-736e-43fb-b7de-c57df84ad4c0/summary.csv",
+      "sha256": "94364e7c4e32388b1f59c978ae9dbdbb0e232ff378c158be16d0520c4a967523",
+      "bytes": 4951
+    },
+    {
+      "path": "bench/results/sha256-d1c5f42dba40/macos-apfs-sensitive/2026-11-17/run-175922.244-dec5993e-a3aa-4f88-8073-cffee928280f/apfs-sensitive-auto-crlf-c1-r0-baseline.json",
+      "sha256": "970d04bb0d013e177f1e7713859b1fd7798515cb6b00c8cd7b5da994caa63ece",
+      "bytes": 6532
+    },
+    {
+      "path": "bench/results/sha256-d1c5f42dba40/macos-apfs-sensitive/2026-11-17/run-175922.244-dec5993e-a3aa-4f88-8073-cffee928280f/apfs-sensitive-auto-crlf-c1-r0-baseline.json.log",
+      "sha256": "ea383e4ac8848995b9f18020c86bd8fe549f17ac1a183bbf64656c7b559aaf8f",
+      "bytes": 249
+    },
+    {
+      "path": "bench/results/sha256-d1c5f42dba40/macos-apfs-sensitive/2026-11-17/run-175922.244-dec5993e-a3aa-4f88-8073-cffee928280f/apfs-sensitive-auto-crlf-c1-r0-baseline.json.stderr.log",
+      "sha256": "de945f1e8d5855fa2d0ee16d3d431f0173870c2225d539413670978880ab708c",
+      "bytes": 322
+    },
+    {
+      "path": "bench/results/sha256-d1c5f42dba40/macos-apfs-sensitive/2026-11-17/run-175922.244-dec5993e-a3aa-4f88-8073-cffee928280f/apfs-sensitive-auto-crlf-c1-r0-candidate.json",
+      "sha256": "1e8de8e672627452cf238eab7e6cb2945f484e74d0a8ad2743fc52d706f75972",
+      "bytes": 6547
+    },
+    {
+      "path": "bench/results/sha256-d1c5f42dba40/macos-apfs-sensitive/2026-11-17/run-175922.244-dec5993e-a3aa-4f88-8073-cffee928280f/apfs-sensitive-auto-crlf-c1-r0-candidate.json.log",
+      "sha256": "b637f681202593de0c4910c128a945a951807b1ab969d3f31958cd295688c229",
+      "bytes": 250
+    },
+    {
+      "path": "bench/results/sha256-d1c5f42dba40/macos-apfs-sensitive/2026-11-17/run-175922.244-dec5993e-a3aa-4f88-8073-cffee928280f/apfs-sensitive-auto-crlf-c1-r0-candidate.json.stderr.log",
+      "sha256": "082e36b84213d797b4bb492466184d02db1a92b75cd51b5ff50e493177f2538e",
+      "bytes": 320
+    },
+    {
+      "path": "bench/results/sha256-d1c5f42dba40/macos-apfs-sensitive/2026-11-17/run-175922.244-dec5993e-a3aa-4f88-8073-cffee928280f/apfs-sensitive-auto-crlf-c1-r0-git.json",
+      "sha256": "e9d51db014ac0240932a9a7fdae9787f6e2951c89abfdb465677190178a11236",
+      "bytes": 6541
+    },
+    {
+      "path": "bench/results/sha256-d1c5f42dba40/macos-apfs-sensitive/2026-11-17/run-175922.244-dec5993e-a3aa-4f88-8073-cffee928280f/apfs-sensitive-auto-crlf-c1-r0-git.json.log",
+      "sha256": "18bbcaf15b0d14623ad7df93ad949c683bf5b55eb417c54fc8c43edd51f8dbb5",
+      "bytes": 244
+    },
+    {
+      "path": "bench/results/sha256-d1c5f42dba40/macos-apfs-sensitive/2026-11-17/run-175922.244-dec5993e-a3aa-4f88-8073-cffee928280f/apfs-sensitive-auto-crlf-c1-r0-git.json.stderr.log",
+      "sha256": "a3980b5b413caa34cea4a57e750feb9c91372d822de9583164d2053e3468c301",
+      "bytes": 319
+    },
+    {
+      "path": "bench/results/sha256-d1c5f42dba40/macos-apfs-sensitive/2026-11-17/run-175922.244-dec5993e-a3aa-4f88-8073-cffee928280f/apfs-sensitive-auto-crlf-c1-r1-baseline.json",
+      "sha256": "69964a7532acc97b67efef3a536d1bc1f71737ccc1ab2de72826e200b15c9695",
+      "bytes": 6548
+    },
+    {
+      "path": "bench/results/sha256-d1c5f42dba40/macos-apfs-sensitive/2026-11-17/run-175922.244-dec5993e-a3aa-4f88-8073-cffee928280f/apfs-sensitive-auto-crlf-c1-r1-baseline.json.log",
+      "sha256": "9e4b41031bca23465be3d9fa560392af13b4d8413d98686e1c9d1c637e265444",
+      "bytes": 249
+    },
+    {
+      "path": "bench/results/sha256-d1c5f42dba40/macos-apfs-sensitive/2026-11-17/run-175922.244-dec5993e-a3aa-4f88-8073-cffee928280f/apfs-sensitive-auto-crlf-c1-r1-baseline.json.stderr.log",
+      "sha256": "dccf57aaf41d7c3623bffe4f95e12f7c84200281a96a3f82788923507806d223",
+      "bytes": 322
+    },
+    {
+      "path": "bench/results/sha256-d1c5f42dba40/macos-apfs-sensitive/2026-11-17/run-175922.244-dec5993e-a3aa-4f88-8073-cffee928280f/apfs-sensitive-auto-crlf-c1-r1-candidate.json",
+      "sha256": "ecc629df26e7fcf550d343a5cbf8bc93533fd40f5977a20b0ce6ca856f1639bc",
+      "bytes": 6543
+    },
+    {
+      "path": "bench/results/sha256-d1c5f42dba40/macos-apfs-sensitive/2026-11-17/run-175922.244-dec5993e-a3aa-4f88-8073-cffee928280f/apfs-sensitive-auto-crlf-c1-r1-candidate.json.log",
+      "sha256": "5923638763e6d9d1dc94fb89c22b2c2d6efaf4908f8157eb7639967b62fc7608",
+      "bytes": 250
+    },
+    {
+      "path": "bench/results/sha256-d1c5f42dba40/macos-apfs-sensitive/2026-11-17/run-175922.244-dec5993e-a3aa-4f88-8073-cffee928280f/apfs-sensitive-auto-crlf-c1-r1-candidate.json.stderr.log",
+      "sha256": "86c42f59f7f551f04f7f81bb3c0dc35f95115f4876781d3c4df94e63a5139f1d",
+      "bytes": 320
+    },
+    {
+      "path": "bench/results/sha256-d1c5f42dba40/macos-apfs-sensitive/2026-11-17/run-175922.244-dec5993e-a3aa-4f88-8073-cffee928280f/apfs-sensitive-auto-crlf-c1-r1-git.json",
+      "sha256": "39cfb020529275780fd1e49c1aed63267a19df668378f10cb0899942dd647f95",
+      "bytes": 6528
+    },
+    {
+      "path": "bench/results/sha256-d1c5f42dba40/macos-apfs-sensitive/2026-11-17/run-175922.244-dec5993e-a3aa-4f88-8073-cffee928280f/apfs-sensitive-auto-crlf-c1-r1-git.json.log",
+      "sha256": "f7d9ea500d69f6dff2a904ea2ba2955b3d2088fea88a4b4645363de95b6f1892",
+      "bytes": 244
+    },
+    {
+      "path": "bench/results/sha256-d1c5f42dba40/macos-apfs-sensitive/2026-11-17/run-175922.244-dec5993e-a3aa-4f88-8073-cffee928280f/apfs-sensitive-auto-crlf-c1-r1-git.json.stderr.log",
+      "sha256": "2838272dbd766ca79eba16b59c025c3626de9390bfce466c362feb80da336856",
+      "bytes": 319
+    },
+    {
+      "path": "bench/results/sha256-d1c5f42dba40/macos-apfs-sensitive/2026-11-17/run-175922.244-dec5993e-a3aa-4f88-8073-cffee928280f/apfs-sensitive-auto-crlf-c1-r2-baseline.json",
+      "sha256": "eb968a5fb375cdd87da5ac7cc3ed1b1a4ec4b2061801e97e9875ad8389bcfe14",
+      "bytes": 6524
+    },
+    {
+      "path": "bench/results/sha256-d1c5f42dba40/macos-apfs-sensitive/2026-11-17/run-175922.244-dec5993e-a3aa-4f88-8073-cffee928280f/apfs-sensitive-auto-crlf-c1-r2-baseline.json.log",
+      "sha256": "5f7db362bf24a8de38de9cdb333769a4d9eeccd3c54501a733d76dd33e7b6152",
+      "bytes": 249
+    },
+    {
+      "path": "bench/results/sha256-d1c5f42dba40/macos-apfs-sensitive/2026-11-17/run-175922.244-dec5993e-a3aa-4f88-8073-cffee928280f/apfs-sensitive-auto-crlf-c1-r2-baseline.json.stderr.log",
+      "sha256": "0cf7cd5f740bda69ab6698d7d0645429a695b79c074e675e6ec8da37177a2bc4",
+      "bytes": 322
+    },
+    {
+      "path": "bench/results/sha256-d1c5f42dba40/macos-apfs-sensitive/2026-11-17/run-175922.244-dec5993e-a3aa-4f88-8073-cffee928280f/apfs-sensitive-auto-crlf-c1-r2-candidate.json",
+      "sha256": "d54cab4bf980bd8e99c779597a1a6eb86ef9f43033ed4f1fb8b6eaf1aa3dee36",
+      "bytes": 6543
+    },
+    {
+      "path": "bench/results/sha256-d1c5f42dba40/macos-apfs-sensitive/2026-11-17/run-175922.244-dec5993e-a3aa-4f88-8073-cffee928280f/apfs-sensitive-auto-crlf-c1-r2-candidate.json.log",
+      "sha256": "a01c70b926a77ac81bf5ee88f621cb5ee504c43985b2135fc1eb776f654be8cc",
+      "bytes": 250
+    },
+    {
+      "path": "bench/results/sha256-d1c5f42dba40/macos-apfs-sensitive/2026-11-17/run-175922.244-dec5993e-a3aa-4f88-8073-cffee928280f/apfs-sensitive-auto-crlf-c1-r2-candidate.json.stderr.log",
+      "sha256": "42031dcb0e0884f3fb94a3c222552f795de93f1ef7e3cb4e0efa931edd9e08bb",
+      "bytes": 320
+    },
+    {
+      "path": "bench/results/sha256-d1c5f42dba40/macos-apfs-sensitive/2026-11-17/run-175922.244-dec5993e-a3aa-4f88-8073-cffee928280f/apfs-sensitive-auto-crlf-c1-r2-git.json",
+      "sha256": "4c0c58e8cc853cf44e23ef8a1e4b20bcfd4eb693604f56f3ebfc96ea5a4c5784",
+      "bytes": 6559
+    },
+    {
+      "path": "bench/results/sha256-d1c5f42dba40/macos-apfs-sensitive/2026-11-17/run-175922.244-dec5993e-a3aa-4f88-8073-cffee928280f/apfs-sensitive-auto-crlf-c1-r2-git.json.log",
+      "sha256": "7fb1d337d508e3e2d5cb628eba35221f352c8d18f196b156c2d7db52f86a38f1",
+      "bytes": 244
+    },
+    {
+      "path": "bench/results/sha256-d1c5f42dba40/macos-apfs-sensitive/2026-11-17/run-175922.244-dec5993e-a3aa-4f88-8073-cffee928280f/apfs-sensitive-auto-crlf-c1-r2-git.json.stderr.log",
+      "sha256": "a3980b5b413caa34cea4a57e750feb9c91372d822de9583164d2053e3468c301",
+      "bytes": 319
+    },
+    {
+      "path": "bench/results/sha256-d1c5f42dba40/macos-apfs-sensitive/2026-11-17/run-175922.244-dec5993e-a3aa-4f88-8073-cffee928280f/apfs-sensitive-byte-heavy-c1-r0-baseline.json",
+      "sha256": "f190124639abe02c4e03b38e07dd462e1f8bec59476a6d0569726b066f247252",
+      "bytes": 6529
+    },
+    {
+      "path": "bench/results/sha256-d1c5f42dba40/macos-apfs-sensitive/2026-11-17/run-175922.244-dec5993e-a3aa-4f88-8073-cffee928280f/apfs-sensitive-byte-heavy-c1-r0-baseline.json.log",
+      "sha256": "518531f89ce8a4fcefec67376254cdb9864d6b5f2f45f9b5b6395cad0b3fd8cf",
+      "bytes": 250
+    },
+    {
+      "path": "bench/results/sha256-d1c5f42dba40/macos-apfs-sensitive/2026-11-17/run-175922.244-dec5993e-a3aa-4f88-8073-cffee928280f/apfs-sensitive-byte-heavy-c1-r0-baseline.json.stderr.log",
+      "sha256": "ef4157416f72c1abcd02fdf3fb3ad1abe17444ea02dd4c0173ab7e321ac3a671",
+      "bytes": 321
+    },
+    {
+      "path": "bench/results/sha256-d1c5f42dba40/macos-apfs-sensitive/2026-11-17/run-175922.244-dec5993e-a3aa-4f88-8073-cffee928280f/apfs-sensitive-byte-heavy-c1-r0-candidate.json",
+      "sha256": "afdd41b9e8f4081912b599debbf3cb51b37f2a05794387ea16108afe6deca17c",
+      "bytes": 6560
+    },
+    {
+      "path": "bench/results/sha256-d1c5f42dba40/macos-apfs-sensitive/2026-11-17/run-175922.244-dec5993e-a3aa-4f88-8073-cffee928280f/apfs-sensitive-byte-heavy-c1-r0-candidate.json.log",
+      "sha256": "cc58d80212a28f0f69773b8026b3fbe54d84342b71b9b4659bcf3941ed525539",
+      "bytes": 251
+    },
+    {
+      "path": "bench/results/sha256-d1c5f42dba40/macos-apfs-sensitive/2026-11-17/run-175922.244-dec5993e-a3aa-4f88-8073-cffee928280f/apfs-sensitive-byte-heavy-c1-r0-candidate.json.stderr.log",
+      "sha256": "da7adccb9845f12bad17a000fe17f1f6c597c551728e63a0b38f4180ddc899f8",
+      "bytes": 321
+    },
+    {
+      "path": "bench/results/sha256-d1c5f42dba40/macos-apfs-sensitive/2026-11-17/run-175922.244-dec5993e-a3aa-4f88-8073-cffee928280f/apfs-sensitive-byte-heavy-c1-r0-git.json",
+      "sha256": "b23caa91e505d5db2a2fe9adf21e552eb8f3eae394b47a8f8f83e9cdd9616099",
+      "bytes": 6529
+    },
+    {
+      "path": "bench/results/sha256-d1c5f42dba40/macos-apfs-sensitive/2026-11-17/run-175922.244-dec5993e-a3aa-4f88-8073-cffee928280f/apfs-sensitive-byte-heavy-c1-r0-git.json.log",
+      "sha256": "b5d286dcc333df6f02287879c48c4c92a479ffac20715eddc3f00c602c9aa88e",
+      "bytes": 245
+    },
+    {
+      "path": "bench/results/sha256-d1c5f42dba40/macos-apfs-sensitive/2026-11-17/run-175922.244-dec5993e-a3aa-4f88-8073-cffee928280f/apfs-sensitive-byte-heavy-c1-r0-git.json.stderr.log",
+      "sha256": "14f287b3907a3590b832ebf387266b8b00f56168e46d44dec2a655142d9b97df",
+      "bytes": 320
+    },
+    {
+      "path": "bench/results/sha256-d1c5f42dba40/macos-apfs-sensitive/2026-11-17/run-175922.244-dec5993e-a3aa-4f88-8073-cffee928280f/apfs-sensitive-byte-heavy-c1-r1-baseline.json",
+      "sha256": "5922d0c2e2f19e640efdf479bfe03415ec773a3b2dc03710a3c54323fe50e0db",
+      "bytes": 6522
+    },
+    {
+      "path": "bench/results/sha256-d1c5f42dba40/macos-apfs-sensitive/2026-11-17/run-175922.244-dec5993e-a3aa-4f88-8073-cffee928280f/apfs-sensitive-byte-heavy-c1-r1-baseline.json.log",
+      "sha256": "11ca3e523126de7ee694a188e0cce3eaa68b84ae1e4eb8c0861bd599159535b9",
+      "bytes": 250
+    },
+    {
+      "path": "bench/results/sha256-d1c5f42dba40/macos-apfs-sensitive/2026-11-17/run-175922.244-dec5993e-a3aa-4f88-8073-cffee928280f/apfs-sensitive-byte-heavy-c1-r1-baseline.json.stderr.log",
+      "sha256": "f0ce1dc157c0d31b63392cb8f0f1d26232510efdfe104195bb40de69ebeab603",
+      "bytes": 321
+    },
+    {
+      "path": "bench/results/sha256-d1c5f42dba40/macos-apfs-sensitive/2026-11-17/run-175922.244-dec5993e-a3aa-4f88-8073-cffee928280f/apfs-sensitive-byte-heavy-c1-r1-candidate.json",
+      "sha256": "b6cb59abc9c896bc6c9d80ddc2bbd9ed5121a5c8b7dfcdfcab7c3df8a3dc43f7",
+      "bytes": 6538
+    },
+    {
+      "path": "bench/results/sha256-d1c5f42dba40/macos-apfs-sensitive/2026-11-17/run-175922.244-dec5993e-a3aa-4f88-8073-cffee928280f/apfs-sensitive-byte-heavy-c1-r1-candidate.json.log",
+      "sha256": "ec051ec044de69463a4a21183057695e1333f4e7c108c272cb9189afe21f285c",
+      "bytes": 251
+    },
+    {
+      "path": "bench/results/sha256-d1c5f42dba40/macos-apfs-sensitive/2026-11-17/run-175922.244-dec5993e-a3aa-4f88-8073-cffee928280f/apfs-sensitive-byte-heavy-c1-r1-candidate.json.stderr.log",
+      "sha256": "cbfc9af160d2b0c07a6eb463453be91fff7255f8fa6e9a44526e089d920a7d80",
+      "bytes": 321
+    },
+    {
+      "path": "bench/results/sha256-d1c5f42dba40/macos-apfs-sensitive/2026-11-17/run-175922.244-dec5993e-a3aa-4f88-8073-cffee928280f/apfs-sensitive-byte-heavy-c1-r1-git.json",
+      "sha256": "a69a03e9655d4f9f5a87d7cb78435e0015d0ad1ee565181e8ae8431ba4ae7e12",
+      "bytes": 6545
+    },
+    {
+      "path": "bench/results/sha256-d1c5f42dba40/macos-apfs-sensitive/2026-11-17/run-175922.244-dec5993e-a3aa-4f88-8073-cffee928280f/apfs-sensitive-byte-heavy-c1-r1-git.json.log",
+      "sha256": "df69142100f9b70bf8d0dcb27d2c0185ad16ced736e87f75a63312f2eb6666d2",
+      "bytes": 245
+    },
+    {
+      "path": "bench/results/sha256-d1c5f42dba40/macos-apfs-sensitive/2026-11-17/run-175922.244-dec5993e-a3aa-4f88-8073-cffee928280f/apfs-sensitive-byte-heavy-c1-r1-git.json.stderr.log",
+      "sha256": "1c2a36c5f9c2b94890cb934237300a847c7b2bc0a361fde6edb08d1e1b914323",
+      "bytes": 320
+    },
+    {
+      "path": "bench/results/sha256-d1c5f42dba40/macos-apfs-sensitive/2026-11-17/run-175922.244-dec5993e-a3aa-4f88-8073-cffee928280f/apfs-sensitive-byte-heavy-c1-r2-baseline.json",
+      "sha256": "c53198cc9fe8dce50b033749363f4c156b51f970a6547c02e7c432469afbd3ff",
+      "bytes": 6519
+    },
+    {
+      "path": "bench/results/sha256-d1c5f42dba40/macos-apfs-sensitive/2026-11-17/run-175922.244-dec5993e-a3aa-4f88-8073-cffee928280f/apfs-sensitive-byte-heavy-c1-r2-baseline.json.log",
+      "sha256": "1cee0f04002284f63671bab3472944ed22bcc78e7716f25856d469302a788720",
+      "bytes": 250
+    },
+    {
+      "path": "bench/results/sha256-d1c5f42dba40/macos-apfs-sensitive/2026-11-17/run-175922.244-dec5993e-a3aa-4f88-8073-cffee928280f/apfs-sensitive-byte-heavy-c1-r2-baseline.json.stderr.log",
+      "sha256": "8d6ddeef9ea58641ae82df8e17a17efab13464f8b5973227bc18d78312e6661f",
+      "bytes": 321
+    },
+    {
+      "path": "bench/results/sha256-d1c5f42dba40/macos-apfs-sensitive/2026-11-17/run-175922.244-dec5993e-a3aa-4f88-8073-cffee928280f/apfs-sensitive-byte-heavy-c1-r2-candidate.json",
+      "sha256": "81fdf4636b5ce59b9ad6773304580832bd893c25436375a609ef16c88b93d9d2",
+      "bytes": 6552
+    },
+    {
+      "path": "bench/results/sha256-d1c5f42dba40/macos-apfs-sensitive/2026-11-17/run-175922.244-dec5993e-a3aa-4f88-8073-cffee928280f/apfs-sensitive-byte-heavy-c1-r2-candidate.json.log",
+      "sha256": "32ed3dd231a3d4b17a0b9b438586f8a659820dcc16e2fc449d28fd12ae2e3c5b",
+      "bytes": 251
+    },
+    {
+      "path": "bench/results/sha256-d1c5f42dba40/macos-apfs-sensitive/2026-11-17/run-175922.244-dec5993e-a3aa-4f88-8073-cffee928280f/apfs-sensitive-byte-heavy-c1-r2-candidate.json.stderr.log",
+      "sha256": "6437531362ee9122edb3413ce69655eac834170913add2e31c56eb53fc756de1",
+      "bytes": 321
+    },
+    {
+      "path": "bench/results/sha256-d1c5f42dba40/macos-apfs-sensitive/2026-11-17/run-175922.244-dec5993e-a3aa-4f88-8073-cffee928280f/apfs-sensitive-byte-heavy-c1-r2-git.json",
+      "sha256": "d5430f5d107b8488fd53a1124b570d312b1262a9607635717a481900291887d8",
+      "bytes": 6523
+    },
+    {
+      "path": "bench/results/sha256-d1c5f42dba40/macos-apfs-sensitive/2026-11-17/run-175922.244-dec5993e-a3aa-4f88-8073-cffee928280f/apfs-sensitive-byte-heavy-c1-r2-git.json.log",
+      "sha256": "db65a8a497640c53ea766d8791ea419ba005f021173da21f4d62ef3daa64e41c",
+      "bytes": 245
+    },
+    {
+      "path": "bench/results/sha256-d1c5f42dba40/macos-apfs-sensitive/2026-11-17/run-175922.244-dec5993e-a3aa-4f88-8073-cffee928280f/apfs-sensitive-byte-heavy-c1-r2-git.json.stderr.log",
+      "sha256": "39fa92214e8c106bedc6cd5a8911ef9aaaa5df02410d3473f3b25c4a0cc9e137",
+      "bytes": 320
+    },
+    {
+      "path": "bench/results/sha256-d1c5f42dba40/macos-apfs-sensitive/2026-11-17/run-175922.244-dec5993e-a3aa-4f88-8073-cffee928280f/apfs-sensitive-cross-revision-c1-r0-baseline.json",
+      "sha256": "c9e99872df3b9008d3836f005400cb0fe1f367faab6c7b6f4ca8d954de5874b8",
+      "bytes": 6614
+    },
+    {
+      "path": "bench/results/sha256-d1c5f42dba40/macos-apfs-sensitive/2026-11-17/run-175922.244-dec5993e-a3aa-4f88-8073-cffee928280f/apfs-sensitive-cross-revision-c1-r0-baseline.json.log",
+      "sha256": "4d28ed97d246e4b0b50b0206f02ab84550f5efc4c54984a082461c3db057fb17",
+      "bytes": 254
+    },
+    {
+      "path": "bench/results/sha256-d1c5f42dba40/macos-apfs-sensitive/2026-11-17/run-175922.244-dec5993e-a3aa-4f88-8073-cffee928280f/apfs-sensitive-cross-revision-c1-r0-baseline.json.stderr.log",
+      "sha256": "c2c599c337235fedd2a2dbddd6e9ecd8a2e67f4afb6a51bfdfe2c1b8b9d80dd6",
+      "bytes": 327
+    },
+    {
+      "path": "bench/results/sha256-d1c5f42dba40/macos-apfs-sensitive/2026-11-17/run-175922.244-dec5993e-a3aa-4f88-8073-cffee928280f/apfs-sensitive-cross-revision-c1-r0-candidate.json",
+      "sha256": "298ede015c23a728c59cb1ce4b5e4489c1383566dab4da7b7234b8e61039dadc",
+      "bytes": 6568
+    },
+    {
+      "path": "bench/results/sha256-d1c5f42dba40/macos-apfs-sensitive/2026-11-17/run-175922.244-dec5993e-a3aa-4f88-8073-cffee928280f/apfs-sensitive-cross-revision-c1-r0-candidate.json.log",
+      "sha256": "436fd18d61df518a233ef7da6e859f9659346db9646099bb92b8bd272f734e15",
+      "bytes": 255
+    },
+    {
+      "path": "bench/results/sha256-d1c5f42dba40/macos-apfs-sensitive/2026-11-17/run-175922.244-dec5993e-a3aa-4f88-8073-cffee928280f/apfs-sensitive-cross-revision-c1-r0-candidate.json.stderr.log",
+      "sha256": "1b4e43adc06193774a3ad06d420a2f97a26621e07afe720892dc8d523399d8a9",
+      "bytes": 326
+    },
+    {
+      "path": "bench/results/sha256-d1c5f42dba40/macos-apfs-sensitive/2026-11-17/run-175922.244-dec5993e-a3aa-4f88-8073-cffee928280f/apfs-sensitive-cross-revision-c1-r0-git.json",
+      "sha256": "a7a49032e633eb435767a7f30e296f5e5176326c482b7946819e258e0fdced23",
+      "bytes": 6589
+    },
+    {
+      "path": "bench/results/sha256-d1c5f42dba40/macos-apfs-sensitive/2026-11-17/run-175922.244-dec5993e-a3aa-4f88-8073-cffee928280f/apfs-sensitive-cross-revision-c1-r0-git.json.log",
+      "sha256": "ffd50ba1bf79af97f0b96d883fd67c507a2a178f75f86e9f0f88a9758d68b96b",
+      "bytes": 249
+    },
+    {
+      "path": "bench/results/sha256-d1c5f42dba40/macos-apfs-sensitive/2026-11-17/run-175922.244-dec5993e-a3aa-4f88-8073-cffee928280f/apfs-sensitive-cross-revision-c1-r0-git.json.stderr.log",
+      "sha256": "2dc2748339e4a598374cddc0ab4b18e1ba0d49ae2e1035061a43f8d1bad146a1",
+      "bytes": 324
+    },
+    {
+      "path": "bench/results/sha256-d1c5f42dba40/macos-apfs-sensitive/2026-11-17/run-175922.244-dec5993e-a3aa-4f88-8073-cffee928280f/apfs-sensitive-cross-revision-c1-r1-baseline.json",
+      "sha256": "e9b5b30d10a0a67abda5518818ce1fccdd7c64af2f70703ef4b69bd207713077",
+      "bytes": 6629
+    },
+    {
+      "path": "bench/results/sha256-d1c5f42dba40/macos-apfs-sensitive/2026-11-17/run-175922.244-dec5993e-a3aa-4f88-8073-cffee928280f/apfs-sensitive-cross-revision-c1-r1-baseline.json.log",
+      "sha256": "54b7fad13235d3314e6ab5f21fef7674756c3d1d250e311577f41ea6a1fa643d",
+      "bytes": 254
+    },
+    {
+      "path": "bench/results/sha256-d1c5f42dba40/macos-apfs-sensitive/2026-11-17/run-175922.244-dec5993e-a3aa-4f88-8073-cffee928280f/apfs-sensitive-cross-revision-c1-r1-baseline.json.stderr.log",
+      "sha256": "5c975ddca17e893afd03390e722d68eafc4fd9936b9f1040b57201ac1250fee8",
+      "bytes": 327
+    },
+    {
+      "path": "bench/results/sha256-d1c5f42dba40/macos-apfs-sensitive/2026-11-17/run-175922.244-dec5993e-a3aa-4f88-8073-cffee928280f/apfs-sensitive-cross-revision-c1-r1-candidate.json",
+      "sha256": "d6bf5fffe48df1b4019bb1120bdaa9c31bf2ab6de82b31c02386f0d73341806e",
+      "bytes": 6629
+    },
+    {
+      "path": "bench/results/sha256-d1c5f42dba40/macos-apfs-sensitive/2026-11-17/run-175922.244-dec5993e-a3aa-4f88-8073-cffee928280f/apfs-sensitive-cross-revision-c1-r1-candidate.json.log",
+      "sha256": "36adaa9b746db285b036286d52308384e4567a4943e1f6fc54c175ba7598ef90",
+      "bytes": 255
+    },
+    {
+      "path": "bench/results/sha256-d1c5f42dba40/macos-apfs-sensitive/2026-11-17/run-175922.244-dec5993e-a3aa-4f88-8073-cffee928280f/apfs-sensitive-cross-revision-c1-r1-candidate.json.stderr.log",
+      "sha256": "97de9f1d4411e90eba00a739d2c84dc128ff3244fc587a299e4325b374abb173",
+      "bytes": 326
+    },
+    {
+      "path": "bench/results/sha256-d1c5f42dba40/macos-apfs-sensitive/2026-11-17/run-175922.244-dec5993e-a3aa-4f88-8073-cffee928280f/apfs-sensitive-cross-revision-c1-r1-git.json",
+      "sha256": "34b4c4429989bb130134e3d3592cfe281c9a6fc15971b26df37e03fed903e43e",
+      "bytes": 6613
+    },
+    {
+      "path": "bench/results/sha256-d1c5f42dba40/macos-apfs-sensitive/2026-11-17/run-175922.244-dec5993e-a3aa-4f88-8073-cffee928280f/apfs-sensitive-cross-revision-c1-r1-git.json.log",
+      "sha256": "009ad53b8625750adde340064c0cb6b38449b89071da34c5110223726fcfffc3",
+      "bytes": 249
+    },
+    {
+      "path": "bench/results/sha256-d1c5f42dba40/macos-apfs-sensitive/2026-11-17/run-175922.244-dec5993e-a3aa-4f88-8073-cffee928280f/apfs-sensitive-cross-revision-c1-r1-git.json.stderr.log",
+      "sha256": "2dc2748339e4a598374cddc0ab4b18e1ba0d49ae2e1035061a43f8d1bad146a1",
+      "bytes": 324
+    },
+    {
+      "path": "bench/results/sha256-d1c5f42dba40/macos-apfs-sensitive/2026-11-17/run-175922.244-dec5993e-a3aa-4f88-8073-cffee928280f/apfs-sensitive-cross-revision-c1-r2-baseline.json",
+      "sha256": "e26343622b66ac7d4bbab30aefb7cbb7cbcd0c61678332d1fa103dd21702e5ac",
+      "bytes": 6588
+    },
+    {
+      "path": "bench/results/sha256-d1c5f42dba40/macos-apfs-sensitive/2026-11-17/run-175922.244-dec5993e-a3aa-4f88-8073-cffee928280f/apfs-sensitive-cross-revision-c1-r2-baseline.json.log",
+      "sha256": "647c5651127ccc0f65e1f842fd2e0168216cdc7f8b35ebc1a91d966b11b35025",
+      "bytes": 254
+    },
+    {
+      "path": "bench/results/sha256-d1c5f42dba40/macos-apfs-sensitive/2026-11-17/run-175922.244-dec5993e-a3aa-4f88-8073-cffee928280f/apfs-sensitive-cross-revision-c1-r2-baseline.json.stderr.log",
+      "sha256": "c2c599c337235fedd2a2dbddd6e9ecd8a2e67f4afb6a51bfdfe2c1b8b9d80dd6",
+      "bytes": 327
+    },
+    {
+      "path": "bench/results/sha256-d1c5f42dba40/macos-apfs-sensitive/2026-11-17/run-175922.244-dec5993e-a3aa-4f88-8073-cffee928280f/apfs-sensitive-cross-revision-c1-r2-candidate.json",
+      "sha256": "0f336c19a10eafc47dae9b36c6a90df704ee71ac366e3d01b236229104a04d07",
+      "bytes": 6586
+    },
+    {
+      "path": "bench/results/sha256-d1c5f42dba40/macos-apfs-sensitive/2026-11-17/run-175922.244-dec5993e-a3aa-4f88-8073-cffee928280f/apfs-sensitive-cross-revision-c1-r2-candidate.json.log",
+      "sha256": "52494cfacdf9134d70611def1be5a213f6b7c3bbe559e82d435c1b67620070db",
+      "bytes": 255
+    },
+    {
+      "path": "bench/results/sha256-d1c5f42dba40/macos-apfs-sensitive/2026-11-17/run-175922.244-dec5993e-a3aa-4f88-8073-cffee928280f/apfs-sensitive-cross-revision-c1-r2-candidate.json.stderr.log",
+      "sha256": "f0ac77c36c725ca9007ecee46709d969b23f7d238d36118f427bdbcd24db2d1e",
+      "bytes": 326
+    },
+    {
+      "path": "bench/results/sha256-d1c5f42dba40/macos-apfs-sensitive/2026-11-17/run-175922.244-dec5993e-a3aa-4f88-8073-cffee928280f/apfs-sensitive-cross-revision-c1-r2-git.json",
+      "sha256": "4b6c841be722d1e911b0006314fca40404b1ff31c2551073710f41e0d1428cf1",
+      "bytes": 6609
+    },
+    {
+      "path": "bench/results/sha256-d1c5f42dba40/macos-apfs-sensitive/2026-11-17/run-175922.244-dec5993e-a3aa-4f88-8073-cffee928280f/apfs-sensitive-cross-revision-c1-r2-git.json.log",
+      "sha256": "98bfeeb0bc303facf40b521ee7680d9019877639acc2ec70b24ae345dec659f1",
+      "bytes": 249
+    },
+    {
+      "path": "bench/results/sha256-d1c5f42dba40/macos-apfs-sensitive/2026-11-17/run-175922.244-dec5993e-a3aa-4f88-8073-cffee928280f/apfs-sensitive-cross-revision-c1-r2-git.json.stderr.log",
+      "sha256": "2dc2748339e4a598374cddc0ab4b18e1ba0d49ae2e1035061a43f8d1bad146a1",
+      "bytes": 324
+    },
+    {
+      "path": "bench/results/sha256-d1c5f42dba40/macos-apfs-sensitive/2026-11-17/run-175922.244-dec5993e-a3aa-4f88-8073-cffee928280f/apfs-sensitive-file-heavy-c1-r0-baseline.json",
+      "sha256": "c37903d7c5f88b0e57a66d0e60c09cd990adb7cbf050ac568d4ae8292eb9a1b3",
+      "bytes": 6566
+    },
+    {
+      "path": "bench/results/sha256-d1c5f42dba40/macos-apfs-sensitive/2026-11-17/run-175922.244-dec5993e-a3aa-4f88-8073-cffee928280f/apfs-sensitive-file-heavy-c1-r0-baseline.json.log",
+      "sha256": "ff86e116f36b062d2901e132fe1d2d4f9f3a3090704052aaab47dbbd61c8d1fe",
+      "bytes": 250
+    },
+    {
+      "path": "bench/results/sha256-d1c5f42dba40/macos-apfs-sensitive/2026-11-17/run-175922.244-dec5993e-a3aa-4f88-8073-cffee928280f/apfs-sensitive-file-heavy-c1-r0-baseline.json.stderr.log",
+      "sha256": "e216349bf42b85ff230b4050fabf6b853932ec7cfeb3f94c46c27eb84dc0dc90",
+      "bytes": 321
+    },
+    {
+      "path": "bench/results/sha256-d1c5f42dba40/macos-apfs-sensitive/2026-11-17/run-175922.244-dec5993e-a3aa-4f88-8073-cffee928280f/apfs-sensitive-file-heavy-c1-r0-candidate.json",
+      "sha256": "ab7f5aded8012c2f581207946f8c56cc77fa88167429d3a3113c713e48f6b2ce",
+      "bytes": 6533
+    },
+    {
+      "path": "bench/results/sha256-d1c5f42dba40/macos-apfs-sensitive/2026-11-17/run-175922.244-dec5993e-a3aa-4f88-8073-cffee928280f/apfs-sensitive-file-heavy-c1-r0-candidate.json.log",
+      "sha256": "12cce0905e250cb7e57ea16f2833dcf8a6dd1280868aae03e726fa32a1b03460",
+      "bytes": 251
+    },
+    {
+      "path": "bench/results/sha256-d1c5f42dba40/macos-apfs-sensitive/2026-11-17/run-175922.244-dec5993e-a3aa-4f88-8073-cffee928280f/apfs-sensitive-file-heavy-c1-r0-candidate.json.stderr.log",
+      "sha256": "4dbc298332b31967412d6b2e92060233821dd4c1e7e9efabd9d6b9f1b01a7004",
+      "bytes": 321
+    },
+    {
+      "path": "bench/results/sha256-d1c5f42dba40/macos-apfs-sensitive/2026-11-17/run-175922.244-dec5993e-a3aa-4f88-8073-cffee928280f/apfs-sensitive-file-heavy-c1-r0-git.json",
+      "sha256": "b623b407bdc788604ba03a11be225797818381b14114ebe0e57f692e7c71f225",
+      "bytes": 6564
+    },
+    {
+      "path": "bench/results/sha256-d1c5f42dba40/macos-apfs-sensitive/2026-11-17/run-175922.244-dec5993e-a3aa-4f88-8073-cffee928280f/apfs-sensitive-file-heavy-c1-r0-git.json.log",
+      "sha256": "ad4f7487cf009d993bfb8dd6e494f39543704e33ef95ef68fadd77004dc76195",
+      "bytes": 245
+    },
+    {
+      "path": "bench/results/sha256-d1c5f42dba40/macos-apfs-sensitive/2026-11-17/run-175922.244-dec5993e-a3aa-4f88-8073-cffee928280f/apfs-sensitive-file-heavy-c1-r0-git.json.stderr.log",
+      "sha256": "d81f190a7e4713da7031750722e3bf0ea238e3704cefd63cc1afb11b127ec44f",
+      "bytes": 319
+    },
+    {
+      "path": "bench/results/sha256-d1c5f42dba40/macos-apfs-sensitive/2026-11-17/run-175922.244-dec5993e-a3aa-4f88-8073-cffee928280f/apfs-sensitive-file-heavy-c1-r1-baseline.json",
+      "sha256": "b1d881a7f1c9dc3079e18afa1a5acb5d7fc94dbbf6eafff33724496f5ad3f6d2",
+      "bytes": 6529
+    },
+    {
+      "path": "bench/results/sha256-d1c5f42dba40/macos-apfs-sensitive/2026-11-17/run-175922.244-dec5993e-a3aa-4f88-8073-cffee928280f/apfs-sensitive-file-heavy-c1-r1-baseline.json.log",
+      "sha256": "f2ef021eae9ee059413aea42960d9893a5997c2fea72e89a906f3ce59bd7b95b",
+      "bytes": 250
+    },
+    {
+      "path": "bench/results/sha256-d1c5f42dba40/macos-apfs-sensitive/2026-11-17/run-175922.244-dec5993e-a3aa-4f88-8073-cffee928280f/apfs-sensitive-file-heavy-c1-r1-baseline.json.stderr.log",
+      "sha256": "957f9ccc00b7f7807578b050470abc52089f1b9971e7cee4f7cbcb8ffefff98b",
+      "bytes": 321
+    },
+    {
+      "path": "bench/results/sha256-d1c5f42dba40/macos-apfs-sensitive/2026-11-17/run-175922.244-dec5993e-a3aa-4f88-8073-cffee928280f/apfs-sensitive-file-heavy-c1-r1-candidate.json",
+      "sha256": "84306c9fe5324377ae7f15ff322f8b93c71e1ab32a421c3ab466ae4854f98c9b",
+      "bytes": 6543
+    },
+    {
+      "path": "bench/results/sha256-d1c5f42dba40/macos-apfs-sensitive/2026-11-17/run-175922.244-dec5993e-a3aa-4f88-8073-cffee928280f/apfs-sensitive-file-heavy-c1-r1-candidate.json.log",
+      "sha256": "b1fc4b4b538e85675c3ff9d640c74a89081d6807ab0c6104d14f46168c411dff",
+      "bytes": 251
+    },
+    {
+      "path": "bench/results/sha256-d1c5f42dba40/macos-apfs-sensitive/2026-11-17/run-175922.244-dec5993e-a3aa-4f88-8073-cffee928280f/apfs-sensitive-file-heavy-c1-r1-candidate.json.stderr.log",
+      "sha256": "967dd94c0a5304112dbe3419f7013fe5b6f4d803de8318c5e46635de8c89716d",
+      "bytes": 321
+    },
+    {
+      "path": "bench/results/sha256-d1c5f42dba40/macos-apfs-sensitive/2026-11-17/run-175922.244-dec5993e-a3aa-4f88-8073-cffee928280f/apfs-sensitive-file-heavy-c1-r1-git.json",
+      "sha256": "fd5a73b211eb45c904587a36f6460d7d87ffa5abddda37c48eb6212079acc5ad",
+      "bytes": 6553
+    },
+    {
+      "path": "bench/results/sha256-d1c5f42dba40/macos-apfs-sensitive/2026-11-17/run-175922.244-dec5993e-a3aa-4f88-8073-cffee928280f/apfs-sensitive-file-heavy-c1-r1-git.json.log",
+      "sha256": "a31e9fbf2a1ae662a6413d5cc2b6a6456a40902790f74f3c209888e17158b42b",
+      "bytes": 245
+    },
+    {
+      "path": "bench/results/sha256-d1c5f42dba40/macos-apfs-sensitive/2026-11-17/run-175922.244-dec5993e-a3aa-4f88-8073-cffee928280f/apfs-sensitive-file-heavy-c1-r1-git.json.stderr.log",
+      "sha256": "149480df3a873cdc610e2c99e99f9c7b8c2c1e46112aefe7d6db7148e8dd0c67",
+      "bytes": 319
+    },
+    {
+      "path": "bench/results/sha256-d1c5f42dba40/macos-apfs-sensitive/2026-11-17/run-175922.244-dec5993e-a3aa-4f88-8073-cffee928280f/apfs-sensitive-file-heavy-c1-r2-baseline.json",
+      "sha256": "9e520c97b49ba3df3aee64e2ce5ba8f93444b8ed07c7edefbb56c908468afea6",
+      "bytes": 6549
+    },
+    {
+      "path": "bench/results/sha256-d1c5f42dba40/macos-apfs-sensitive/2026-11-17/run-175922.244-dec5993e-a3aa-4f88-8073-cffee928280f/apfs-sensitive-file-heavy-c1-r2-baseline.json.log",
+      "sha256": "9461017a594297078f03f9a005f17ea78d7b47baec4d37a065f2b195555437ff",
+      "bytes": 250
+    },
+    {
+      "path": "bench/results/sha256-d1c5f42dba40/macos-apfs-sensitive/2026-11-17/run-175922.244-dec5993e-a3aa-4f88-8073-cffee928280f/apfs-sensitive-file-heavy-c1-r2-baseline.json.stderr.log",
+      "sha256": "5c9a2bf404e171cbdfd95c1ff9748b723504563195c274eb16d74953dc165664",
+      "bytes": 321
+    },
+    {
+      "path": "bench/results/sha256-d1c5f42dba40/macos-apfs-sensitive/2026-11-17/run-175922.244-dec5993e-a3aa-4f88-8073-cffee928280f/apfs-sensitive-file-heavy-c1-r2-candidate.json",
+      "sha256": "bb43522d23f489fdc8d6c69ffb239569edfcef57240b7991fccc99cf21369583",
+      "bytes": 6560
+    },
+    {
+      "path": "bench/results/sha256-d1c5f42dba40/macos-apfs-sensitive/2026-11-17/run-175922.244-dec5993e-a3aa-4f88-8073-cffee928280f/apfs-sensitive-file-heavy-c1-r2-candidate.json.log",
+      "sha256": "d02e27542660a5fa2dd30b96a06d2081ae0152db9971551a2399709a2a11dc68",
+      "bytes": 251
+    },
+    {
+      "path": "bench/results/sha256-d1c5f42dba40/macos-apfs-sensitive/2026-11-17/run-175922.244-dec5993e-a3aa-4f88-8073-cffee928280f/apfs-sensitive-file-heavy-c1-r2-candidate.json.stderr.log",
+      "sha256": "8dc4a72859c51ea7414f63eead34943730adc723f526cc23e98c622828875413",
+      "bytes": 321
+    },
+    {
+      "path": "bench/results/sha256-d1c5f42dba40/macos-apfs-sensitive/2026-11-17/run-175922.244-dec5993e-a3aa-4f88-8073-cffee928280f/apfs-sensitive-file-heavy-c1-r2-git.json",
+      "sha256": "d280e16397362e28bfe9c8ff0c622951f256b63c462ff0fd9c0dd489ef198f04",
+      "bytes": 6555
+    },
+    {
+      "path": "bench/results/sha256-d1c5f42dba40/macos-apfs-sensitive/2026-11-17/run-175922.244-dec5993e-a3aa-4f88-8073-cffee928280f/apfs-sensitive-file-heavy-c1-r2-git.json.log",
+      "sha256": "4b7f9dd2159e706c7d463775995e51f8040bedb30ad22de4c4a1089244996818",
+      "bytes": 245
+    },
+    {
+      "path": "bench/results/sha256-d1c5f42dba40/macos-apfs-sensitive/2026-11-17/run-175922.244-dec5993e-a3aa-4f88-8073-cffee928280f/apfs-sensitive-file-heavy-c1-r2-git.json.stderr.log",
+      "sha256": "0106449768e16d0faf8b03bb2217fe4eb26a05307dae85361a9c2b77cb5e339f",
+      "bytes": 319
+    },
+    {
+      "path": "bench/results/sha256-d1c5f42dba40/macos-apfs-sensitive/2026-11-17/run-175922.244-dec5993e-a3aa-4f88-8073-cffee928280f/apfs-sensitive-file-heavy-c16-r0-git.json",
+      "sha256": "17140941fa982f2dcc1966bdc66a1fa0ff8a049f15df6876b8bf7ddd6f47acca",
+      "bytes": 12718
+    },
+    {
+      "path": "bench/results/sha256-d1c5f42dba40/macos-apfs-sensitive/2026-11-17/run-175922.244-dec5993e-a3aa-4f88-8073-cffee928280f/apfs-sensitive-file-heavy-c16-r0-git.json.log",
+      "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+      "bytes": 0
+    },
+    {
+      "path": "bench/results/sha256-d1c5f42dba40/macos-apfs-sensitive/2026-11-17/run-175922.244-dec5993e-a3aa-4f88-8073-cffee928280f/apfs-sensitive-file-heavy-c16-r0-git.json.stderr.log",
+      "sha256": "691b56a57d718b95ca98270f41938b7e43c6b5a83c126928992b5ed24f297334",
+      "bytes": 1378
+    },
+    {
+      "path": "bench/results/sha256-d1c5f42dba40/macos-apfs-sensitive/2026-11-17/run-175922.244-dec5993e-a3aa-4f88-8073-cffee928280f/apfs-sensitive-file-heavy-c4-r0-baseline.json",
+      "sha256": "2d09a0bec952b70d7a07617f3cf871e69b3611e04f05d521f89d07287edbacc1",
+      "bytes": 7304
+    },
+    {
+      "path": "bench/results/sha256-d1c5f42dba40/macos-apfs-sensitive/2026-11-17/run-175922.244-dec5993e-a3aa-4f88-8073-cffee928280f/apfs-sensitive-file-heavy-c4-r0-baseline.json.log",
+      "sha256": "062e9bb9696548bdf01fa9027ed468bfe4e3b2772a2bf8ab7a5376158bfaa1f7",
+      "bytes": 250
+    },
+    {
+      "path": "bench/results/sha256-d1c5f42dba40/macos-apfs-sensitive/2026-11-17/run-175922.244-dec5993e-a3aa-4f88-8073-cffee928280f/apfs-sensitive-file-heavy-c4-r0-baseline.json.stderr.log",
+      "sha256": "960f936315d684d96766ec5c54f107f364f1d6fe7098c20a5ea1a5764a5bdc2c",
+      "bytes": 429
+    },
+    {
+      "path": "bench/results/sha256-d1c5f42dba40/macos-apfs-sensitive/2026-11-17/run-175922.244-dec5993e-a3aa-4f88-8073-cffee928280f/apfs-sensitive-file-heavy-c4-r0-candidate.json",
+      "sha256": "1693f83ccbd9d8d9d06468d5d30de65715d120d08e4f3464ec764bcece2eb675",
+      "bytes": 7289
+    },
+    {
+      "path": "bench/results/sha256-d1c5f42dba40/macos-apfs-sensitive/2026-11-17/run-175922.244-dec5993e-a3aa-4f88-8073-cffee928280f/apfs-sensitive-file-heavy-c4-r0-candidate.json.log",
+      "sha256": "4182c0709a7a5df145d881d84e88f1267b9b372bcaf64782e48e8dfa1561979c",
+      "bytes": 251
+    },
+    {
+      "path": "bench/results/sha256-d1c5f42dba40/macos-apfs-sensitive/2026-11-17/run-175922.244-dec5993e-a3aa-4f88-8073-cffee928280f/apfs-sensitive-file-heavy-c4-r0-candidate.json.stderr.log",
+      "sha256": "331743d03ff42a9e7956bd019224fb8a20553f5befbe321d75392ccfd26519a8",
+      "bytes": 429
+    },
+    {
+      "path": "bench/results/sha256-d1c5f42dba40/macos-apfs-sensitive/2026-11-17/run-175922.244-dec5993e-a3aa-4f88-8073-cffee928280f/apfs-sensitive-file-heavy-c4-r0-git.json",
+      "sha256": "b57ca18bbf80a2e227719d30ad7c3c92f34deafc0cba083a596c6813b306acf3",
+      "bytes": 7319
+    },
+    {
+      "path": "bench/results/sha256-d1c5f42dba40/macos-apfs-sensitive/2026-11-17/run-175922.244-dec5993e-a3aa-4f88-8073-cffee928280f/apfs-sensitive-file-heavy-c4-r0-git.json.log",
+      "sha256": "5b9f17fab6b32dc08e5b2c57409b6a5debd493671d147e538e86fe4290faeee4",
+      "bytes": 245
+    },
+    {
+      "path": "bench/results/sha256-d1c5f42dba40/macos-apfs-sensitive/2026-11-17/run-175922.244-dec5993e-a3aa-4f88-8073-cffee928280f/apfs-sensitive-file-heavy-c4-r0-git.json.stderr.log",
+      "sha256": "524404cc07dbc3d11966caa413db656400a28b6cfd1656198bd13281f3dfad8e",
+      "bytes": 425
+    },
+    {
+      "path": "bench/results/sha256-d1c5f42dba40/macos-apfs-sensitive/2026-11-17/run-175922.244-dec5993e-a3aa-4f88-8073-cffee928280f/apfs-sensitive-file-heavy-c4-r1-baseline.json",
+      "sha256": "d3a611cd8daac0cc9fb3feffdd3e3e613c322cf609685138fa8620c92ce16195",
+      "bytes": 7303
+    },
+    {
+      "path": "bench/results/sha256-d1c5f42dba40/macos-apfs-sensitive/2026-11-17/run-175922.244-dec5993e-a3aa-4f88-8073-cffee928280f/apfs-sensitive-file-heavy-c4-r1-baseline.json.log",
+      "sha256": "c41716771f08ea920ca9360ad33f206cc66f10f42ffb097f79d83a9cbd3c75ce",
+      "bytes": 250
+    },
+    {
+      "path": "bench/results/sha256-d1c5f42dba40/macos-apfs-sensitive/2026-11-17/run-175922.244-dec5993e-a3aa-4f88-8073-cffee928280f/apfs-sensitive-file-heavy-c4-r1-baseline.json.stderr.log",
+      "sha256": "1c29ced60a150712fa51f95d8731f278121bc3b25228b09260aeedd58c36704d",
+      "bytes": 429
+    },
+    {
+      "path": "bench/results/sha256-d1c5f42dba40/macos-apfs-sensitive/2026-11-17/run-175922.244-dec5993e-a3aa-4f88-8073-cffee928280f/apfs-sensitive-file-heavy-c4-r1-candidate.json",
+      "sha256": "bba7448799fdbd2d7aeb0d7d401c1f5940a7f9676fc70af9fcf7be1cbe436821",
+      "bytes": 7278
+    },
+    {
+      "path": "bench/results/sha256-d1c5f42dba40/macos-apfs-sensitive/2026-11-17/run-175922.244-dec5993e-a3aa-4f88-8073-cffee928280f/apfs-sensitive-file-heavy-c4-r1-candidate.json.log",
+      "sha256": "00dd26fe277125fe146b22ea6e0282c970f032516c85d2b72825e691653cb3f5",
+      "bytes": 251
+    },
+    {
+      "path": "bench/results/sha256-d1c5f42dba40/macos-apfs-sensitive/2026-11-17/run-175922.244-dec5993e-a3aa-4f88-8073-cffee928280f/apfs-sensitive-file-heavy-c4-r1-candidate.json.stderr.log",
+      "sha256": "92574bbb164479383e442b77c33a9f129f38a7772cfd4f5800692ba8401c1171",
+      "bytes": 429
+    },
+    {
+      "path": "bench/results/sha256-d1c5f42dba40/macos-apfs-sensitive/2026-11-17/run-175922.244-dec5993e-a3aa-4f88-8073-cffee928280f/apfs-sensitive-file-heavy-c4-r1-git.json",
+      "sha256": "225d0bdab8bfc6c3ca5391e24ee9614f684979927043412546e726123f19f898",
+      "bytes": 7316
+    },
+    {
+      "path": "bench/results/sha256-d1c5f42dba40/macos-apfs-sensitive/2026-11-17/run-175922.244-dec5993e-a3aa-4f88-8073-cffee928280f/apfs-sensitive-file-heavy-c4-r1-git.json.log",
+      "sha256": "42f34d0b2decc80111ae5dc7d09a3dec5012ebeb572a808a5f549be29185acae",
+      "bytes": 245
+    },
+    {
+      "path": "bench/results/sha256-d1c5f42dba40/macos-apfs-sensitive/2026-11-17/run-175922.244-dec5993e-a3aa-4f88-8073-cffee928280f/apfs-sensitive-file-heavy-c4-r1-git.json.stderr.log",
+      "sha256": "d612629a105f70c97d2d6c67487734a5c4a2bff2e69db81f81e654776a80f569",
+      "bytes": 425
+    },
+    {
+      "path": "bench/results/sha256-d1c5f42dba40/macos-apfs-sensitive/2026-11-17/run-175922.244-dec5993e-a3aa-4f88-8073-cffee928280f/apfs-sensitive-file-heavy-c4-r2-baseline.json",
+      "sha256": "f74ce6a4834d1f08ea7c679c61fd887996d586148a6f4ba4c00bb6a52c7eabc5",
+      "bytes": 7295
+    },
+    {
+      "path": "bench/results/sha256-d1c5f42dba40/macos-apfs-sensitive/2026-11-17/run-175922.244-dec5993e-a3aa-4f88-8073-cffee928280f/apfs-sensitive-file-heavy-c4-r2-baseline.json.log",
+      "sha256": "4e2a4a3484b93177714708f72fefb5643c8dbe82646aba7065eaeedc20f1ecce",
+      "bytes": 250
+    },
+    {
+      "path": "bench/results/sha256-d1c5f42dba40/macos-apfs-sensitive/2026-11-17/run-175922.244-dec5993e-a3aa-4f88-8073-cffee928280f/apfs-sensitive-file-heavy-c4-r2-baseline.json.stderr.log",
+      "sha256": "e0154311977d2b51789900e5f1c728330bb5b8173f9af881c055f1910ae89650",
+      "bytes": 429
+    },
+    {
+      "path": "bench/results/sha256-d1c5f42dba40/macos-apfs-sensitive/2026-11-17/run-175922.244-dec5993e-a3aa-4f88-8073-cffee928280f/apfs-sensitive-file-heavy-c4-r2-candidate.json",
+      "sha256": "604ada29954037803cd4d101b1b93bbf3235e92e62a0ad62cd2fb8e5d2709a14",
+      "bytes": 7280
+    },
+    {
+      "path": "bench/results/sha256-d1c5f42dba40/macos-apfs-sensitive/2026-11-17/run-175922.244-dec5993e-a3aa-4f88-8073-cffee928280f/apfs-sensitive-file-heavy-c4-r2-candidate.json.log",
+      "sha256": "d37204735165fc55cb486da186d3c459725e63e03af57e9d7d9e170fd285855f",
+      "bytes": 251
+    },
+    {
+      "path": "bench/results/sha256-d1c5f42dba40/macos-apfs-sensitive/2026-11-17/run-175922.244-dec5993e-a3aa-4f88-8073-cffee928280f/apfs-sensitive-file-heavy-c4-r2-candidate.json.stderr.log",
+      "sha256": "d7cfd3c2417cb4661bdfcce7c6f94dd34f6998682aaa0652f54f4f3247b32fd3",
+      "bytes": 429
+    },
+    {
+      "path": "bench/results/sha256-d1c5f42dba40/macos-apfs-sensitive/2026-11-17/run-175922.244-dec5993e-a3aa-4f88-8073-cffee928280f/apfs-sensitive-file-heavy-c4-r2-git.json",
+      "sha256": "65ff7e0c2dc23be0525e6414f277aab8071527ae41939b756326d3450fd58b43",
+      "bytes": 7296
+    },
+    {
+      "path": "bench/results/sha256-d1c5f42dba40/macos-apfs-sensitive/2026-11-17/run-175922.244-dec5993e-a3aa-4f88-8073-cffee928280f/apfs-sensitive-file-heavy-c4-r2-git.json.log",
+      "sha256": "5c727e27f153384764bc919dfa5b9d712c4ae5bd178c82962f8b12f61f9efbcb",
+      "bytes": 245
+    },
+    {
+      "path": "bench/results/sha256-d1c5f42dba40/macos-apfs-sensitive/2026-11-17/run-175922.244-dec5993e-a3aa-4f88-8073-cffee928280f/apfs-sensitive-file-heavy-c4-r2-git.json.stderr.log",
+      "sha256": "8a4f25d6577ffb2e1fc9f56fc2e60cf55e51e64e6c6c89df08a5195a02953440",
+      "bytes": 425
+    },
+    {
+      "path": "bench/results/sha256-d1c5f42dba40/macos-apfs-sensitive/2026-11-17/run-175922.244-dec5993e-a3aa-4f88-8073-cffee928280f/apfs-sensitive-mixed-builtins-c1-r0-baseline.json",
+      "sha256": "118bbe896e1034968eb851e56a8cdd9fdc3e7ea19c73f27799b667c2c702dc40",
+      "bytes": 6595
+    },
+    {
+      "path": "bench/results/sha256-d1c5f42dba40/macos-apfs-sensitive/2026-11-17/run-175922.244-dec5993e-a3aa-4f88-8073-cffee928280f/apfs-sensitive-mixed-builtins-c1-r0-baseline.json.log",
+      "sha256": "6c0b9243e0551603da13e3ff18d49036f44f02035d297f62773ded6476570daa",
+      "bytes": 254
+    },
+    {
+      "path": "bench/results/sha256-d1c5f42dba40/macos-apfs-sensitive/2026-11-17/run-175922.244-dec5993e-a3aa-4f88-8073-cffee928280f/apfs-sensitive-mixed-builtins-c1-r0-baseline.json.stderr.log",
+      "sha256": "9db47cb85b3ac1ce2e2ba58c55cae2276e1b9f9744e2b84790b02916be810035",
+      "bytes": 327
+    },
+    {
+      "path": "bench/results/sha256-d1c5f42dba40/macos-apfs-sensitive/2026-11-17/run-175922.244-dec5993e-a3aa-4f88-8073-cffee928280f/apfs-sensitive-mixed-builtins-c1-r0-candidate.json",
+      "sha256": "fe894b111771f68fb58d81f0d13d217fa56647bac8ff976827a576dc8b5eede9",
+      "bytes": 6535
+    },
+    {
+      "path": "bench/results/sha256-d1c5f42dba40/macos-apfs-sensitive/2026-11-17/run-175922.244-dec5993e-a3aa-4f88-8073-cffee928280f/apfs-sensitive-mixed-builtins-c1-r0-candidate.json.log",
+      "sha256": "95a575ddcd686ab27dee59d7245552ed244fdfca2d6816f61d7d784b6b461811",
+      "bytes": 255
+    },
+    {
+      "path": "bench/results/sha256-d1c5f42dba40/macos-apfs-sensitive/2026-11-17/run-175922.244-dec5993e-a3aa-4f88-8073-cffee928280f/apfs-sensitive-mixed-builtins-c1-r0-candidate.json.stderr.log",
+      "sha256": "108165808ab9e06cf5122dcf2117c2da658c5f093cdb1a236916580fc8859199",
+      "bytes": 325
+    },
+    {
+      "path": "bench/results/sha256-d1c5f42dba40/macos-apfs-sensitive/2026-11-17/run-175922.244-dec5993e-a3aa-4f88-8073-cffee928280f/apfs-sensitive-mixed-builtins-c1-r0-git.json",
+      "sha256": "d162963a963838c93c078599588416f11ef2370230883583eb6575c16d051b74",
+      "bytes": 6579
+    },
+    {
+      "path": "bench/results/sha256-d1c5f42dba40/macos-apfs-sensitive/2026-11-17/run-175922.244-dec5993e-a3aa-4f88-8073-cffee928280f/apfs-sensitive-mixed-builtins-c1-r0-git.json.log",
+      "sha256": "ed601c942fb59f59dbc3bf6313549cf0fe03e491111479a80b2c8e781b4ebc99",
+      "bytes": 249
+    },
+    {
+      "path": "bench/results/sha256-d1c5f42dba40/macos-apfs-sensitive/2026-11-17/run-175922.244-dec5993e-a3aa-4f88-8073-cffee928280f/apfs-sensitive-mixed-builtins-c1-r0-git.json.stderr.log",
+      "sha256": "8bfe03d1acf5b6c36d7173697337508d057dfc6f33a4ee68a7034fd5dfa835f6",
+      "bytes": 324
+    },
+    {
+      "path": "bench/results/sha256-d1c5f42dba40/macos-apfs-sensitive/2026-11-17/run-175922.244-dec5993e-a3aa-4f88-8073-cffee928280f/apfs-sensitive-mixed-builtins-c1-r1-baseline.json",
+      "sha256": "5e3ecb3821d4b187b1efee88e4e76cdd1ed5ade829acc22b0fe3ea9a770732b5",
+      "bytes": 6589
+    },
+    {
+      "path": "bench/results/sha256-d1c5f42dba40/macos-apfs-sensitive/2026-11-17/run-175922.244-dec5993e-a3aa-4f88-8073-cffee928280f/apfs-sensitive-mixed-builtins-c1-r1-baseline.json.log",
+      "sha256": "86e9d3e0ae53187a06b3fb1dbab81e5b8081b548414bf0a009eb7bfce571a9e4",
+      "bytes": 254
+    },
+    {
+      "path": "bench/results/sha256-d1c5f42dba40/macos-apfs-sensitive/2026-11-17/run-175922.244-dec5993e-a3aa-4f88-8073-cffee928280f/apfs-sensitive-mixed-builtins-c1-r1-baseline.json.stderr.log",
+      "sha256": "1da7397029c50eea6560679925aaeb262293c76345d2b3f9098acc5f71890474",
+      "bytes": 327
+    },
+    {
+      "path": "bench/results/sha256-d1c5f42dba40/macos-apfs-sensitive/2026-11-17/run-175922.244-dec5993e-a3aa-4f88-8073-cffee928280f/apfs-sensitive-mixed-builtins-c1-r1-candidate.json",
+      "sha256": "52d16642d8cb9ee0425cc6985cace051d88c38080a48e43314e164bfd78c37c5",
+      "bytes": 6542
+    },
+    {
+      "path": "bench/results/sha256-d1c5f42dba40/macos-apfs-sensitive/2026-11-17/run-175922.244-dec5993e-a3aa-4f88-8073-cffee928280f/apfs-sensitive-mixed-builtins-c1-r1-candidate.json.log",
+      "sha256": "d21675b392bd0ba604fa68ad9c0d3ef77406735299d02b2050497a4713bd6457",
+      "bytes": 255
+    },
+    {
+      "path": "bench/results/sha256-d1c5f42dba40/macos-apfs-sensitive/2026-11-17/run-175922.244-dec5993e-a3aa-4f88-8073-cffee928280f/apfs-sensitive-mixed-builtins-c1-r1-candidate.json.stderr.log",
+      "sha256": "f7758d020ee0c3922d01df93ee2fd32f4ad1e6b6352b91a96298eaf7ef0c1553",
+      "bytes": 325
+    },
+    {
+      "path": "bench/results/sha256-d1c5f42dba40/macos-apfs-sensitive/2026-11-17/run-175922.244-dec5993e-a3aa-4f88-8073-cffee928280f/apfs-sensitive-mixed-builtins-c1-r1-git.json",
+      "sha256": "c0bedef57804058c75861d03e50889495deb28682ebbcf1be598edba4cac6519",
+      "bytes": 6577
+    },
+    {
+      "path": "bench/results/sha256-d1c5f42dba40/macos-apfs-sensitive/2026-11-17/run-175922.244-dec5993e-a3aa-4f88-8073-cffee928280f/apfs-sensitive-mixed-builtins-c1-r1-git.json.log",
+      "sha256": "62c96689db4bba1b162b937298c3b4e4758a7a83888858868bb4f434d594f1a3",
+      "bytes": 249
+    },
+    {
+      "path": "bench/results/sha256-d1c5f42dba40/macos-apfs-sensitive/2026-11-17/run-175922.244-dec5993e-a3aa-4f88-8073-cffee928280f/apfs-sensitive-mixed-builtins-c1-r1-git.json.stderr.log",
+      "sha256": "70720e01912b4c81e59aaf0dca4377eb259c61895e742aeb1cdf0f55fea3118c",
+      "bytes": 324
+    },
+    {
+      "path": "bench/results/sha256-d1c5f42dba40/macos-apfs-sensitive/2026-11-17/run-175922.244-dec5993e-a3aa-4f88-8073-cffee928280f/apfs-sensitive-mixed-builtins-c1-r2-baseline.json",
+      "sha256": "4c1a92b06badf3ea569a36f854d8ecdaf830bbec075a3a96f5b82c4bdcd17205",
+      "bytes": 6563
+    },
+    {
+      "path": "bench/results/sha256-d1c5f42dba40/macos-apfs-sensitive/2026-11-17/run-175922.244-dec5993e-a3aa-4f88-8073-cffee928280f/apfs-sensitive-mixed-builtins-c1-r2-baseline.json.log",
+      "sha256": "db7fe40ffe0bb0fbdb4b117a84eb2c7dcb6c87e8a106807b10cfbc6ef8acaed3",
+      "bytes": 254
+    },
+    {
+      "path": "bench/results/sha256-d1c5f42dba40/macos-apfs-sensitive/2026-11-17/run-175922.244-dec5993e-a3aa-4f88-8073-cffee928280f/apfs-sensitive-mixed-builtins-c1-r2-baseline.json.stderr.log",
+      "sha256": "9db47cb85b3ac1ce2e2ba58c55cae2276e1b9f9744e2b84790b02916be810035",
+      "bytes": 327
+    },
+    {
+      "path": "bench/results/sha256-d1c5f42dba40/macos-apfs-sensitive/2026-11-17/run-175922.244-dec5993e-a3aa-4f88-8073-cffee928280f/apfs-sensitive-mixed-builtins-c1-r2-candidate.json",
+      "sha256": "b368090d0980e92e2e8b4943821daff6280911d7f63b177b22fed3e5c5070176",
+      "bytes": 6539
+    },
+    {
+      "path": "bench/results/sha256-d1c5f42dba40/macos-apfs-sensitive/2026-11-17/run-175922.244-dec5993e-a3aa-4f88-8073-cffee928280f/apfs-sensitive-mixed-builtins-c1-r2-candidate.json.log",
+      "sha256": "4b65b96d6a2d146d1623ac96dc24282a89977dd49b9dac7feaee30d58ef0f499",
+      "bytes": 255
+    },
+    {
+      "path": "bench/results/sha256-d1c5f42dba40/macos-apfs-sensitive/2026-11-17/run-175922.244-dec5993e-a3aa-4f88-8073-cffee928280f/apfs-sensitive-mixed-builtins-c1-r2-candidate.json.stderr.log",
+      "sha256": "61699fc23302dfe3ad5daa0f4de971e0be1e74e8f2896df4816e9e1e1442c71c",
+      "bytes": 325
+    },
+    {
+      "path": "bench/results/sha256-d1c5f42dba40/macos-apfs-sensitive/2026-11-17/run-175922.244-dec5993e-a3aa-4f88-8073-cffee928280f/apfs-sensitive-mixed-builtins-c1-r2-git.json",
+      "sha256": "d80ffdc0ec07f1cff819acab91d77f27e3b8db5c776899fac4c9d6a24b4c694a",
+      "bytes": 6541
+    },
+    {
+      "path": "bench/results/sha256-d1c5f42dba40/macos-apfs-sensitive/2026-11-17/run-175922.244-dec5993e-a3aa-4f88-8073-cffee928280f/apfs-sensitive-mixed-builtins-c1-r2-git.json.log",
+      "sha256": "1015536d5c7ca3e780adb14a3177facd504ef85eeffb1544877750b2ca4ed62b",
+      "bytes": 249
+    },
+    {
+      "path": "bench/results/sha256-d1c5f42dba40/macos-apfs-sensitive/2026-11-17/run-175922.244-dec5993e-a3aa-4f88-8073-cffee928280f/apfs-sensitive-mixed-builtins-c1-r2-git.json.stderr.log",
+      "sha256": "70720e01912b4c81e59aaf0dca4377eb259c61895e742aeb1cdf0f55fea3118c",
+      "bytes": 324
+    },
+    {
+      "path": "bench/results/sha256-d1c5f42dba40/macos-apfs-sensitive/2026-11-17/run-175922.244-dec5993e-a3aa-4f88-8073-cffee928280f/apfs-sensitive-submodules-c1-r0-baseline.json",
+      "sha256": "1fc8752b7047d75061287bf64f8d2f64f0e2a640e0b7dd6b03342297e2abc318",
+      "bytes": 6544
+    },
+    {
+      "path": "bench/results/sha256-d1c5f42dba40/macos-apfs-sensitive/2026-11-17/run-175922.244-dec5993e-a3aa-4f88-8073-cffee928280f/apfs-sensitive-submodules-c1-r0-baseline.json.log",
+      "sha256": "12d814efb0164927f0d8e13fa19ffc0a334ede0e0b813b47d2cc93c03902e7ac",
+      "bytes": 250
+    },
+    {
+      "path": "bench/results/sha256-d1c5f42dba40/macos-apfs-sensitive/2026-11-17/run-175922.244-dec5993e-a3aa-4f88-8073-cffee928280f/apfs-sensitive-submodules-c1-r0-baseline.json.stderr.log",
+      "sha256": "9c92d0a81a223d3bc4337bbe02e248c6dfb919abd7788f17ddb104743ecf27c4",
+      "bytes": 323
+    },
+    {
+      "path": "bench/results/sha256-d1c5f42dba40/macos-apfs-sensitive/2026-11-17/run-175922.244-dec5993e-a3aa-4f88-8073-cffee928280f/apfs-sensitive-submodules-c1-r0-candidate.json",
+      "sha256": "e5e4275f6b055c83418a69aaf711d9aa7eb67c2573be3be2f85319132335baa4",
+      "bytes": 6524
+    },
+    {
+      "path": "bench/results/sha256-d1c5f42dba40/macos-apfs-sensitive/2026-11-17/run-175922.244-dec5993e-a3aa-4f88-8073-cffee928280f/apfs-sensitive-submodules-c1-r0-candidate.json.log",
+      "sha256": "3a20cab97f4a0c6445938e80226ba8574cf5add1997d0bad7e6003c1549e286b",
+      "bytes": 251
+    },
+    {
+      "path": "bench/results/sha256-d1c5f42dba40/macos-apfs-sensitive/2026-11-17/run-175922.244-dec5993e-a3aa-4f88-8073-cffee928280f/apfs-sensitive-submodules-c1-r0-candidate.json.stderr.log",
+      "sha256": "08223523e9d03734c7293c33babc41e7543eb9760c572701bdd1d6fb1f701ca3",
+      "bytes": 321
+    },
+    {
+      "path": "bench/results/sha256-d1c5f42dba40/macos-apfs-sensitive/2026-11-17/run-175922.244-dec5993e-a3aa-4f88-8073-cffee928280f/apfs-sensitive-submodules-c1-r0-git.json",
+      "sha256": "427e098bf866ab2f549bf4c7c3b9fc6035905f0121ecffffa7bbb70cfbb70c64",
+      "bytes": 6557
+    },
+    {
+      "path": "bench/results/sha256-d1c5f42dba40/macos-apfs-sensitive/2026-11-17/run-175922.244-dec5993e-a3aa-4f88-8073-cffee928280f/apfs-sensitive-submodules-c1-r0-git.json.log",
+      "sha256": "86b39f9ecbf96a042d031e85dd2134d55398e570a83ca190f9f6c167e4fc9f37",
+      "bytes": 245
+    },
+    {
+      "path": "bench/results/sha256-d1c5f42dba40/macos-apfs-sensitive/2026-11-17/run-175922.244-dec5993e-a3aa-4f88-8073-cffee928280f/apfs-sensitive-submodules-c1-r0-git.json.stderr.log",
+      "sha256": "aaae96db6710e63175eac8a24f126c0c5638334d74eb2ac865c49f2e8b994a9d",
+      "bytes": 320
+    },
+    {
+      "path": "bench/results/sha256-d1c5f42dba40/macos-apfs-sensitive/2026-11-17/run-175922.244-dec5993e-a3aa-4f88-8073-cffee928280f/apfs-sensitive-submodules-c1-r1-baseline.json",
+      "sha256": "12bfc74fa7aed5f74e670c8ddcddd66f149844e06f61e7a4e922ecbc075237eb",
+      "bytes": 6574
+    },
+    {
+      "path": "bench/results/sha256-d1c5f42dba40/macos-apfs-sensitive/2026-11-17/run-175922.244-dec5993e-a3aa-4f88-8073-cffee928280f/apfs-sensitive-submodules-c1-r1-baseline.json.log",
+      "sha256": "d79b9da8c11f7f243eb0ec272675607858c7653054d83e46f940ba8a80887fcd",
+      "bytes": 250
+    },
+    {
+      "path": "bench/results/sha256-d1c5f42dba40/macos-apfs-sensitive/2026-11-17/run-175922.244-dec5993e-a3aa-4f88-8073-cffee928280f/apfs-sensitive-submodules-c1-r1-baseline.json.stderr.log",
+      "sha256": "17280a3cb00154940010886ec50f8674c965f8da8add81a06f42fa21864d9336",
+      "bytes": 323
+    },
+    {
+      "path": "bench/results/sha256-d1c5f42dba40/macos-apfs-sensitive/2026-11-17/run-175922.244-dec5993e-a3aa-4f88-8073-cffee928280f/apfs-sensitive-submodules-c1-r1-candidate.json",
+      "sha256": "32ecfdc24efdb43a1b60919b972fc4c30e4cac9b45b044d723ee7d42f26b5ef0",
+      "bytes": 6523
+    },
+    {
+      "path": "bench/results/sha256-d1c5f42dba40/macos-apfs-sensitive/2026-11-17/run-175922.244-dec5993e-a3aa-4f88-8073-cffee928280f/apfs-sensitive-submodules-c1-r1-candidate.json.log",
+      "sha256": "b9143eeed9db1cf5dc1c0a3de9debb900a750af540eb4b1016f775c33bf487c9",
+      "bytes": 251
+    },
+    {
+      "path": "bench/results/sha256-d1c5f42dba40/macos-apfs-sensitive/2026-11-17/run-175922.244-dec5993e-a3aa-4f88-8073-cffee928280f/apfs-sensitive-submodules-c1-r1-candidate.json.stderr.log",
+      "sha256": "2a27645223c6798ab4ca902ca812d37aaef70fc2bf21d846eb7ea49d0592b841",
+      "bytes": 321
+    },
+    {
+      "path": "bench/results/sha256-d1c5f42dba40/macos-apfs-sensitive/2026-11-17/run-175922.244-dec5993e-a3aa-4f88-8073-cffee928280f/apfs-sensitive-submodules-c1-r1-git.json",
+      "sha256": "464331e76daa5cbd80236e131e3a53be8f582ccaa9d1f5e8c79b065c19b475de",
+      "bytes": 6540
+    },
+    {
+      "path": "bench/results/sha256-d1c5f42dba40/macos-apfs-sensitive/2026-11-17/run-175922.244-dec5993e-a3aa-4f88-8073-cffee928280f/apfs-sensitive-submodules-c1-r1-git.json.log",
+      "sha256": "4f4d3aae98eb9959c80873ab502c169db631404c7c1a2bf690638abee40a9aa1",
+      "bytes": 245
+    },
+    {
+      "path": "bench/results/sha256-d1c5f42dba40/macos-apfs-sensitive/2026-11-17/run-175922.244-dec5993e-a3aa-4f88-8073-cffee928280f/apfs-sensitive-submodules-c1-r1-git.json.stderr.log",
+      "sha256": "30e60e1ec66ba32aeb1be479745721ee7f6c5f5cfdfe97f9c53ea36528e6e29f",
+      "bytes": 320
+    },
+    {
+      "path": "bench/results/sha256-d1c5f42dba40/macos-apfs-sensitive/2026-11-17/run-175922.244-dec5993e-a3aa-4f88-8073-cffee928280f/apfs-sensitive-submodules-c1-r2-baseline.json",
+      "sha256": "bb6f6cc408fa6c7905cb7443748c510d5c48a7b1b62521edb6d67798b92a8067",
+      "bytes": 6574
+    },
+    {
+      "path": "bench/results/sha256-d1c5f42dba40/macos-apfs-sensitive/2026-11-17/run-175922.244-dec5993e-a3aa-4f88-8073-cffee928280f/apfs-sensitive-submodules-c1-r2-baseline.json.log",
+      "sha256": "344c1081b787122fdc734c998b141a93f527f3a404cf6fd19158064eecaa50ac",
+      "bytes": 250
+    },
+    {
+      "path": "bench/results/sha256-d1c5f42dba40/macos-apfs-sensitive/2026-11-17/run-175922.244-dec5993e-a3aa-4f88-8073-cffee928280f/apfs-sensitive-submodules-c1-r2-baseline.json.stderr.log",
+      "sha256": "e51f6529c6061946d25ee957591591a8b818f20cddaeb35d316ab7f2e716331e",
+      "bytes": 323
+    },
+    {
+      "path": "bench/results/sha256-d1c5f42dba40/macos-apfs-sensitive/2026-11-17/run-175922.244-dec5993e-a3aa-4f88-8073-cffee928280f/apfs-sensitive-submodules-c1-r2-candidate.json",
+      "sha256": "f8630079afde3ff27c70be8a32f6992849b3a70c0eb9d0cb5223a61472d515a8",
+      "bytes": 6559
+    },
+    {
+      "path": "bench/results/sha256-d1c5f42dba40/macos-apfs-sensitive/2026-11-17/run-175922.244-dec5993e-a3aa-4f88-8073-cffee928280f/apfs-sensitive-submodules-c1-r2-candidate.json.log",
+      "sha256": "cf60f47644c61551b59cc25f68149462051facd17590aca3601bb9a71b643cee",
+      "bytes": 251
+    },
+    {
+      "path": "bench/results/sha256-d1c5f42dba40/macos-apfs-sensitive/2026-11-17/run-175922.244-dec5993e-a3aa-4f88-8073-cffee928280f/apfs-sensitive-submodules-c1-r2-candidate.json.stderr.log",
+      "sha256": "916d16e9d1279c39c343eb21ce452eb6fc0c6a6ef70ea4a26053dd4ba3ee64d4",
+      "bytes": 321
+    },
+    {
+      "path": "bench/results/sha256-d1c5f42dba40/macos-apfs-sensitive/2026-11-17/run-175922.244-dec5993e-a3aa-4f88-8073-cffee928280f/apfs-sensitive-submodules-c1-r2-git.json",
+      "sha256": "078f57b93ef81df30fc968a6923b1a02027bea825fb1bd1813adb0a08187d3cd",
+      "bytes": 6556
+    },
+    {
+      "path": "bench/results/sha256-d1c5f42dba40/macos-apfs-sensitive/2026-11-17/run-175922.244-dec5993e-a3aa-4f88-8073-cffee928280f/apfs-sensitive-submodules-c1-r2-git.json.log",
+      "sha256": "bb70d230ec7fe98623e8c7fa8267178677359f8654274a1fae614d9390fa8085",
+      "bytes": 245
+    },
+    {
+      "path": "bench/results/sha256-d1c5f42dba40/macos-apfs-sensitive/2026-11-17/run-175922.244-dec5993e-a3aa-4f88-8073-cffee928280f/apfs-sensitive-submodules-c1-r2-git.json.stderr.log",
+      "sha256": "64bcc70f34f72c5d4dbc773ec7838e196fc35f5edbeb1f05cf9dea61cb47098d",
+      "bytes": 320
+    },
+    {
+      "path": "bench/results/sha256-d1c5f42dba40/macos-apfs-sensitive/2026-11-17/run-175922.244-dec5993e-a3aa-4f88-8073-cffee928280f/comparison.svg",
+      "sha256": "3aa748bc18d35509ddc47b72fafd36bc6e67cead255e3d4932d38d112c58c70d",
+      "bytes": 9076
+    },
+    {
+      "path": "bench/results/sha256-d1c5f42dba40/macos-apfs-sensitive/2026-11-17/run-175922.244-dec5993e-a3aa-4f88-8073-cffee928280f/manifest.json",
+      "sha256": "451bdb7be421df24cd6d725265ed147a766065742cedfd7ec0eec66250df76e0",
+      "bytes": 123669
+    },
+    {
+      "path": "bench/results/sha256-d1c5f42dba40/macos-apfs-sensitive/2026-11-17/run-175922.244-dec5993e-a3aa-4f88-8073-cffee928280f/preparation.json",
+      "sha256": "689914136ce6e3b28aa19b0ec65e2bf55666f9d0caa4171f03852c5a7590384a",
+      "bytes": 348
+    },
+    {
+      "path": "bench/results/sha256-d1c5f42dba40/macos-apfs-sensitive/2026-11-17/run-175922.244-dec5993e-a3aa-4f88-8073-cffee928280f/prepare.log",
+      "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+      "bytes": 0
+    },
+    {
+      "path": "bench/results/sha256-d1c5f42dba40/macos-apfs-sensitive/2026-11-17/run-175922.244-dec5993e-a3aa-4f88-8073-cffee928280f/prepare.stderr.log",
+      "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+      "bytes": 0
+    },
+    {
+      "path": "bench/results/sha256-d1c5f42dba40/macos-apfs-sensitive/2026-11-17/run-175922.244-dec5993e-a3aa-4f88-8073-cffee928280f/summary.csv",
+      "sha256": "cc7dad94768cd76de037598359ef1dec0928f5b486084a77f505020ef1078903",
+      "bytes": 4566
+    }
+  ]
+}
