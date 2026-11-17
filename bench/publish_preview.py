@@ -126,7 +126,7 @@ def duration(value):
 
 def markdown(data):
     default = data["datasets"][0]
-    lines = ["| Workload · APFS | Stock Git | Twig v0.4 | v0.5 preview |",
+    lines = ["| Workload · APFS | Stock Git | Twig v0.4 | v0.5 candidate |",
              "|---|---|---|---|"]
     for profile in default["profiles"]:
         values = profile["measurements"]

@@ -46,7 +46,7 @@ export function PreviewChart({ datasets }: { datasets: LatestDataset[] }) {
     <figure className="disk-chart preview-chart">
       <figcaption>
         <h2>{metric === "bytes" ? "Disk use" : "Creation time"}</h2>
-        <span>v0.5 preview · unreleased</span>
+        <span>v0.5 · candidate measurements</span>
       </figcaption>
       <div className="chart-controls" aria-label="Filesystem">
         {datasets.map((d) => (
@@ -134,7 +134,7 @@ export function PreviewChart({ datasets }: { datasets: LatestDataset[] }) {
         {" · "}
         <a href={source("bench/preview.md")}>Method & limitations</a>
         {" · "}
-        <span>Synthetic workloads</span>
+        <span>Pre-release synthetic workloads</span>
       </p>
     </figure>
   );

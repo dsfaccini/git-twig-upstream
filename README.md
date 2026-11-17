@@ -26,8 +26,8 @@ git -C main twig new -b feat/x ../feat-x HEAD
 git -C main twig list
 ```
 
-Released v0.4.0 requires the source checkout's current `HEAD`. Development builds
-can reuse matching files from nearby worktrees for other revisions too.
+Version 0.5.0 can reuse matching files from nearby worktrees for other revisions
+too. Git writes changed, new or converted files.
 Short help works outside a checkout: `git twig -h` or `git twig new --help`.
 
 For coding agents: `git twig skill` prints the bundled skill. Give those
@@ -80,11 +80,11 @@ Checkout policy coverage below is separate from filesystem capability.
 
 Version 0.4.0 supports common LF policies such as `text=auto eol=lf`.
 They compare private clones to raw target blobs and let Git write exceptional
-files, retaining sharing for the rest. Development builds also choose a donor
-across revisions and let Git write builtin ident/encoding exceptions. External
+files, retaining sharing for the rest. Version 0.5.0 also chooses a donor
+across revisions and lets Git write builtin ident/encoding exceptions. External
 filters and sparse checkout still delegate. Submodules are Git-written empty
 directories, never copied or recursively initialized from a donor.
-See the [changelog](CHANGELOG.md) for released fixes and unreleased coverage.
+See the [changelog](CHANGELOG.md) for release details.
 
 With `TWIG_TRACE=1`, native creation reports verified-clone and Git-written path
 counts. Delegation reports its specific cause; an attribute refusal names the
@@ -94,15 +94,15 @@ that changes Git checkout semantics rather than proving the bytes are correct.
 
 ## Benchmarks
 
-### v0.5 preview · unreleased
+### v0.5 checkout coverage
 
 Share unchanged files across revisions, builtin conversions and submodule checkouts.
-These synthetic workloads exercise the new sharing coverage; faster creation is
-not guaranteed. The preview benchmarks do not measure experimental `adopt`.
+These synthetic workloads measure a frozen pre-release candidate, not the published
+binary; faster creation is not guaranteed. They do not measure experimental `adopt`.
 
 <!-- twig-preview:start -->
 
-| Workload · APFS | Stock Git | Twig v0.4 | v0.5 preview |
+| Workload · APFS | Stock Git | Twig v0.4 | v0.5 candidate |
 |---|---|---|---|
 | Cross-revision | 139ms / 128.09 MiB | 181ms / 128.09 MiB | 884ms / 16.08 MiB |
 | Builtin conversions | 145ms / 128.11 MiB | 372ms / 128.12 MiB | 923ms / 88.00 KiB |

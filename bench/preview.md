@@ -1,4 +1,4 @@
-# v0.5 checkout preview
+# v0.5 candidate checkout measurements
 
 ## Question
 
@@ -7,7 +7,7 @@ conversions and submodule checkouts without changing Git's output? What does tha
 cost in creation time and additional filesystem allocation?
 
 These are synthetic coverage workloads, not representative whole applications.
-They do not measure `adopt`, exclusive bytes reclaimed, or a released v0.5 binary.
+They do not measure `adopt`, exclusive bytes reclaimed, or the published v0.5.0 binary.
 
 ## Setup and measurements
 

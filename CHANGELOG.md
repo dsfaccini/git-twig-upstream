@@ -6,8 +6,10 @@ describe changes from this baseline after they are implemented and verified.
 
 ## Unreleased
 
-The v0.5 preview expands file sharing to more revisions and checkout policies,
-and adds experimental tools for existing worktrees. v0.4.0 is still the latest release.
+## [0.5.0] — 2026-11-17
+
+Share unchanged files across revisions and more checkout policies, and inspect
+existing worktrees with experimental adoption tools.
 
 ### Added
 
@@ -32,7 +34,7 @@ and adds experimental tools for existing worktrees. v0.4.0 is still the latest r
   NTFS drivers and portable-filesystem fallback subsets.
 - Frozen checkout campaigns across XFS, Btrfs and default/case-sensitive APFS,
   with separate timing/allocation observations and retained failed/unstable points.
-- Generated README tables for the unreleased candidate against stock Git and
+- Generated README tables for the frozen v0.5 candidate against stock Git and
   source-built v0.4; the website compares only stock Git with the latest candidate.
   Synthetic workload results remain separate from historical real-repository
   benchmarks; no blanket speedup or adoption-space-savings claim.
@@ -150,5 +152,6 @@ not included.
 - JSON listing, commit/integration queues and re-sharing existing worktrees are
   not available in this release. macOS binaries are not signed or notarized.
 
+[0.5.0]: https://github.com/leostera/git-twig/releases/tag/v0.5.0
 [0.4.0]: https://github.com/leostera/git-twig/releases/tag/v0.4.0
 [0.3.0]: https://github.com/leostera/git-twig/releases/tag/v0.3.0
