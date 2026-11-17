@@ -84,6 +84,9 @@ struct Point {
     round: usize,
     backend: Backend,
     result: String,
+    started_elapsed_ms: u128,
+    finished_elapsed_ms: u128,
+    timeout_seconds: u64,
     exit_code: Option<i32>,
     verified: bool,
     allocation_stable: bool,
@@ -484,7 +487,7 @@ fn main() -> Result<()> {
     fs::create_dir(&output).context("output must be a new directory")?;
     let output = fs::canonicalize(output)?;
     let mut manifest = Manifest {
-        schema_version: 1, generated_at_unix_ms: generated, commit: git(&cwd, &["rev-parse", "HEAD"])?,
+        schema_version: 2, generated_at_unix_ms: generated, commit: git(&cwd, &["rev-parse", "HEAD"])?,
         baseline: Binary { label: "frozen-twig".into(), source_commit: baseline_commit, sha256: digest(&baseline, &cwd)? },
         candidate: Binary { label: "candidate-twig".into(), source_commit: candidate_commit, sha256: digest(&candidate, &cwd)? },
         config, fixtures: fixtures(&output, &binaries)?, status: "running".into(), points: Vec::new(), stop_reason: None,
@@ -511,10 +514,12 @@ fn main() -> Result<()> {
                 let worktrees = concurrency.max(2);
                 for round in 0..manifest.config.rounds {
                     for backend in order(round) {
+                        let elapsed = start.elapsed();
                         let remaining = manifest
                             .config
                             .budget_seconds
-                            .saturating_sub(start.elapsed().as_secs());
+                            .saturating_sub(elapsed.as_secs());
+                        let timeout_seconds = remaining.min(manifest.config.point_timeout_seconds);
                         if remaining == 0 {
                             manifest.status = "budget-stop".into();
                             manifest.stop_reason = Some("configured total run budget exhausted; remaining points unmeasured".into());
@@ -534,7 +539,7 @@ fn main() -> Result<()> {
                         };
                         let mut child = command("timeout", &cwd);
                         child.args(["--signal=TERM", "--kill-after=15s"])
-                            .arg(format!("{}s", remaining.min(manifest.config.point_timeout_seconds)))
+                            .arg(format!("{timeout_seconds}s"))
                             .arg(binaries.join("twig-real-bench"))
                             .args(["--filesystem", &format!("linux-{filesystem}-image"), "--repo", &format!("{}={}", fixture.label, fixture.path.display()), "--revision", &format!("{}={}", fixture.label, fixture.target_commit), "--backend", if matches!(backend, Backend::Git) { "git" } else { "twig" }, "--require-native", if matches!(backend, Backend::Candidate) { "true" } else { "false" }, "--repeats", "1", "--concurrency", &concurrency.to_string(), "--worktrees", &worktrees.to_string(), "--image-gib", &manifest.config.image_gib.to_string()])
                             .arg("--candidate").arg(binary).arg("--output").arg(output.join(&filename))
@@ -591,6 +596,9 @@ fn main() -> Result<()> {
                             round,
                             backend,
                             result: filename,
+                            started_elapsed_ms: elapsed.as_millis(),
+                            finished_elapsed_ms: start.elapsed().as_millis(),
+                            timeout_seconds,
                             exit_code: status.code(),
                             verified,
                             allocation_stable,
@@ -654,6 +662,31 @@ mod tests {
         incomplete["cohorts"][0]["verifiedFiles"] = 0.into();
         assert!(valid_result(&incomplete, Backend::Candidate, 1, &fixture).is_err());
         Ok(())
+    }
+
+    #[test]
+    fn points_record_effective_deadline_not_only_configured_limit() {
+        let point = Point {
+            filesystem: "btrfs".into(),
+            profile: "file-heavy".into(),
+            concurrency: 16,
+            worktrees: 16,
+            round: 0,
+            backend: Backend::Git,
+            result: "interrupted.json".into(),
+            started_elapsed_ms: 1_797_000,
+            finished_elapsed_ms: 1_800_010,
+            timeout_seconds: 3,
+            exit_code: Some(124),
+            verified: false,
+            allocation_stable: false,
+            error: Some("total budget exhausted".into()),
+        };
+        let raw = serde_json::to_value(point).unwrap();
+        assert_eq!(raw["timeoutSeconds"], 3);
+        assert_eq!(raw["startedElapsedMs"], 1_797_000);
+        assert_eq!(raw["finishedElapsedMs"], 1_800_010);
+        assert_eq!(raw["verified"], false);
     }
 
     #[test]

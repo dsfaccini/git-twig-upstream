@@ -138,5 +138,20 @@ inheritance. This isolation applies to benchmark fixtures, not production Twig.
 Empty gitlink directories are checked for type and emptiness; nested module data
 is not counted as worktree payload.
 
+Collect a compact snapshot (raw JSON measurements and interrupted diagnostics,
+not source files/images) with `python3 bench/coverage_snapshot.py --manifest
+target/linux-coverage/<run>/manifest.json --output <snapshot.json> --csv
+<summary.csv>`. Add `--interrupted-progress <retained-image>.creation.jsonl`
+when exactly one point was interrupted. Rebuild the CSV or local SVG without
+uncommitted raw files using `--snapshot <snapshot.json> --csv <new-summary.csv>
+--svg <local-chart.svg>`. Outputs refuse to overwrite existing files.
+
+Driver manifest v2 records effective timeout seconds and elapsed start/finish
+times per point. A point gets the smaller of its configured timeout and the
+remaining total budget; v1 does not record that effective value. Partial
+creation checkpoints are diagnostic, unverified outcomes, not performance data.
+The summary includes sample counts; nearest-rank percentiles from small samples
+do not establish population tail latency. Charts use complete groups only.
+
 Runs are local only. Updating README/site numbers, pushing or releasing is a
 separate user decision. See [RFD0015](../docs/rfds/RFD0015-linux-donor-coverage.md).

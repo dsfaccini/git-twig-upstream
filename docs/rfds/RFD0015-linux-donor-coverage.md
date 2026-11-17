@@ -98,6 +98,24 @@ Ramp concurrency within a named time/disk budget; retain partial runs and failur
 Do not repeat the unbounded kernel loopback-stall experiment or publish incomplete
 pairs as a win. The aim is additional allocation saved, not promised lower latency.
 
+The local [snapshot](../../bench/results/2026-11-17-linux-coverage/snapshot.json)
+and generated CSV support the disk-first decision for these synthetic fixtures:
+two sequential cross-revision creates allocate 16.09 MiB rather than 128.08 MiB
+(XFS) or 128.31 MiB (Btrfs). Builtin, automatic-CRLF and RFD0016 gitlink cases
+avoid nearly all duplicated large-file data. Keep raw verification despite its
+cost: cross-revision batch time rises from 180.56 to 376.89 ms on XFS, and
+286.95 to 470.45 ms on Btrfs versus the frozen baseline. Unchanged-file sharing
+does not materially improve, and Btrfs many-small-file allocation remains
+metadata-heavy. These are not universal speed or capacity claims.
+
+The campaign contains 135 verified points/432 creates and an interrupted,
+unpaired Btrfs c16 point. Its checkpoints expose one stock Git registration error
+while other creators were in flight; the total remaining budget expired before
+verification. Preserve that finding without comparing incomplete capacity or
+treating unverified exit-zero creates as successes. Manifest v2 now records the
+actual effective timeout so a total-budget stop cannot be mistaken for the full
+configured per-point timeout. No retry or publication is part of this decision.
+
 Keeping same-HEAD only is simpler but leaves ordinary branch workflows without
 sharing. Trusting donor stat caches is faster but loses the required raw-byte
 certificate. Registering first and running arbitrary filters in staging risks
