@@ -15,6 +15,9 @@ jobs:
       - uses: actions/checkout@v4
         with:
           ref: ${{ inputs.tag }}
+      - uses: actions/setup-python@v5
+        with:
+          python-version: '3.12'
       - uses: dtolnay/rust-toolchain@stable
       - uses: Swatinem/rust-cache@v2
       - name: Build tagged source with the LTS glibc baseline
@@ -55,6 +58,9 @@ jobs:
         with:
           name: rebuilt-linux
           path: dist
+      - uses: actions/setup-python@v5
+        with:
+          python-version: '3.12'
       - name: Preserve superseded assets and publish the verified rebuild
         env:
           TARGET_TAG: ${{ inputs.tag }}
