@@ -231,3 +231,45 @@ Twig to match stock Git's failure and cleanup. It does not silently skip the
 path or relabel the filesystem restriction as a successful checkout. File-shape
 private-write tests use representable names so empty/large/sparse coverage is
 still exercised on these filesystems.
+
+## tmpfs, exFAT/VFAT and device boundaries
+
+No partition changes are needed. Use a bounded owned tmpfs mount (for example
+`size=512M,uid=<uid>,gid=<gid>,nodev,nosuid`) for the full correctness suite. Use
+new regular sparse image files with `mkfs.exfat` or `mkfs.vfat -F 32`, mounted
+with explicit uid/gid/umask, for removable-filesystem checks. Never format a real
+block device or existing volume to run these tests.
+
+exFAT/VFAT lack the POSIX mode/symlink guarantees assumed by the complete suite.
+Run the explicitly portable subset rather than suppressing arbitrary failures:
+
+```sh
+TWIG_TEST_FIXTURE_ROOT=/owned/mount/fixtures cargo test -p git-twig --test worktrees --locked filesystem_coverage::portable_
+TWIG_TEST_FIXTURE_ROOT=/owned/mount/fixtures cargo test -p git-twig --test worktrees --locked raw_byte_paths_match_git_or_its_filesystem_rejection
+TWIG_TEST_FIXTURE_ROOT=/owned/mount/fixtures cargo test -p git-twig --test worktrees --locked empty_large_and_sparse_files_have_private_writes
+```
+
+This covers conversion bytes, parent/current revisions, explicit regular-file
+symlink placeholders, file shapes and private writes. It is not full POSIX
+compatibility, sparse-allocation evidence or a capacity benchmark. Charset
+options matter: the tested exFAT UTF-8 mount rejects the raw name with EOVERFLOW;
+the tested VFAT iso8859-1 mount represents it. Both must match stock Git.
+
+To test destination and Git-metadata device boundaries, set fixture and other
+roots on demonstrably different devices:
+
+```sh
+TWIG_TEST_FIXTURE_ROOT=/owned/xfs/fixtures \
+TWIG_TEST_CROSS_FILESYSTEM_ROOT=/owned/tmpfs/other \
+cargo test -p git-twig --test worktrees --locked filesystem
+```
+
+Run both directions. The tests assert different device IDs, stock-Git fallback,
+byte/index/source preservation and registration state. Git cannot move an
+existing .git across devices using reinitialization; the separate-metadata
+fixture creates that layout directly instead.
+
+Before unmounting a local tmpfs, archive its fixtures into a new owned ignored
+`target/` directory using a permissions-preserving copy. Then unmount owned test
+filesystems only, retaining images/logs. CI's temporary runner is disposable;
+its cleanup unmounts the owned filesystem even after a failed test.

@@ -70,6 +70,29 @@ separate. Neither tested driver accepts the clone probe, so no native-CoW or
 allocation savings claim follows. Default mounts without POSIX permission support
 and Windows-hosted NTFS are different configurations, not implied coverage.
 
+## tmpfs, removable filesystems and mixed mounts
+
+Use tmpfs as a POSIX-capable fallback/control filesystem, not a disk allocation
+benchmark. Keep its test memory bounded. Before unmounting local tmpfs, archive
+its fixtures into owned ignored storage; retain ordinary image-backed filesystems
+after unmount as usual.
+
+exFAT/VFAT do not supply the POSIX symlink/mode semantics assumed by the full test
+matrix. Exercise a portable subset against stock Git instead: regular checkout
+bytes, builtin conversions, HEAD/parent revisions, explicit core.symlinks=false
+placeholder files, private writes and representable empty/large/sparse file
+shapes. Do not silently classify those checks as full POSIX support or physically
+sparse allocation. The exFAT UTF conversion rejection is EOVERFLOW in the tested
+mount, while the VFAT charset may represent the same byte name. Always compare
+against Git; the rejection test must not become a broad error-swallowing skip.
+
+Test two separate device boundaries: destination versus source, and common Git
+metadata versus source/destination. For separate metadata, initialize the Git
+layout directly on the other device; Git cannot migrate an existing .git there
+using its rename-based --separate-git-dir path. Compare fallback checkout bytes,
+source and index preservation in both directions. No cross-device hardlink,
+unchecked copy or partial registration is a substitute for stock Git semantics.
+
 ## Alternatives and boundaries
 
 Treating every overlay as unsupported is simpler but discards working native

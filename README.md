@@ -52,6 +52,8 @@ staging and may leave a partial registered worktree; inspect before retrying.
 | Linux | Btrfs | Native `FICLONE` | Tests, CI and allocation benchmarks |
 | Linux | XFS with `reflink=1` | Native `FICLONE` | Tests, CI and allocation benchmarks |
 | Linux | Typical ext4 | Stock Git fallback; no reflink savings | Full checkout test matrix |
+| Linux | tmpfs | Stock Git fallback; no reflink savings | Checkout matrix and mixed-mount isolation |
+| Linux | exFAT / VFAT | Stock Git fallback; filesystem limitations apply | Portable checkout subset, not full POSIX semantics |
 | Linux | XFS with `reflink=0` | Stock Git fallback expected | Not separately verified |
 | Linux | OverlayFS over ext4 | Stock Git fallback | Checkout matrix and lower-layer preservation tests |
 | Linux | OverlayFS over reflink-enabled XFS / Btrfs | Native `FICLONE` in tested layouts | Checkout matrix, copy-up and private-write tests |

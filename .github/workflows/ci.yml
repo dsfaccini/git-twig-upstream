@@ -157,6 +157,49 @@ jobs:
         run: |
           root="$RUNNER_TEMP/ntfs-lab"
           if mountpoint -q "$root/mount"; then sudo umount "$root/mount"; fi
+  portable-filesystems:
+    runs-on: ubuntu-latest
+    strategy:
+      matrix:
+        filesystem: [tmpfs, exfat, vfat]
+    steps:
+      - uses: actions/checkout@v4
+      - uses: dtolnay/rust-toolchain@stable
+      - uses: Swatinem/rust-cache@v2
+      - name: Prepare bounded owned filesystem
+        run: |
+          sudo apt-get update
+          sudo apt-get install -y exfatprogs dosfstools
+          root="$RUNNER_TEMP/portable-lab"
+          mkdir "$root"
+          mkdir "$root/mount" "$root/other"
+          if [ '${{ matrix.filesystem }}' = tmpfs ]; then
+            sudo mount -t tmpfs -o "size=512M,uid=$(id -u),gid=$(id -g),nodev,nosuid" tmpfs "$root/mount"
+          else
+            truncate -s 1G "$root/volume.img"
+            if [ '${{ matrix.filesystem }}' = exfat ]; then
+              mkfs.exfat "$root/volume.img"
+            else
+              mkfs.vfat -F 32 "$root/volume.img"
+            fi
+            sudo mount -t '${{ matrix.filesystem }}' -o "loop,uid=$(id -u),gid=$(id -g),umask=022" "$root/volume.img" "$root/mount"
+          fi
+      - name: Check appropriate filesystem contract
+        env:
+          TWIG_TEST_FIXTURE_ROOT: ${{ runner.temp }}/portable-lab/mount/fixtures
+        run: |
+          if [ '${{ matrix.filesystem }}' = tmpfs ]; then
+            TWIG_TEST_CROSS_FILESYSTEM_ROOT="$RUNNER_TEMP/portable-lab/other" cargo test -p git-twig --locked
+          else
+            cargo test -p git-twig --test worktrees --locked filesystem_coverage::portable_
+            cargo test -p git-twig --test worktrees --locked raw_byte_paths_match_git_or_its_filesystem_rejection
+            cargo test -p git-twig --test worktrees --locked empty_large_and_sparse_files_have_private_writes
+          fi
+      - name: Unmount owned filesystem
+        if: always()
+        run: |
+          root="$RUNNER_TEMP/portable-lab"
+          if mountpoint -q "$root/mount"; then sudo umount "$root/mount"; fi
   msrv:
     runs-on: ubuntu-latest
     steps:

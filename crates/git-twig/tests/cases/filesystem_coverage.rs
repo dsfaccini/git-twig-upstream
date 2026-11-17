@@ -1,5 +1,137 @@
 use super::{donor_coverage::Snapshot, *};
 
+// These contracts intentionally avoid requiring POSIX symlinks/chmod or raw-byte
+// names, so removable-media filesystems are checked without hiding limitations.
+#[test]
+fn portable_regular_files_and_conversions_match_git() -> Result<()> {
+    let f = Fixture::new()?;
+    fs::write(
+        f.source.join(".gitattributes"),
+        "crlf text eol=crlf\nident ident\n",
+    )?;
+    fs::write(f.source.join("crlf"), "line\n")?;
+    fs::write(f.source.join("ident"), "$Id$\n")?;
+    fs::write(f.source.join("data.bin"), vec![42; 262144])?;
+    git(&f.source, &["add", "."])?;
+    git(&f.source, &["commit", "-m", "portable conversions"])?;
+    let before = Snapshot::capture(&f.source)?;
+    let index = fs::read(f.source.join(".git/index"))?;
+    let reflinks = linux_reflinks_available(&f)?;
+    for (number, revision) in ["HEAD", "HEAD^"].into_iter().enumerate() {
+        let destination = format!("../portable-twig-{number}");
+        let stock = format!("../portable-stock-{number}");
+        let output = checked(twig(
+            &f.source,
+            &["new", "--detach", &destination, revision],
+        )?)?;
+        if !reflinks {
+            assert!(String::from_utf8_lossy(&output.stderr).contains("stock Git:"));
+        }
+        git(
+            &f.source,
+            &["worktree", "add", "--detach", &stock, revision],
+        )?;
+        assert_eq!(
+            Snapshot::capture(&f.root.join(format!("portable-stock-{number}")))?,
+            Snapshot::capture(&f.root.join(format!("portable-twig-{number}")))?
+        );
+        fs::write(
+            f.root.join(format!("portable-twig-{number}/hello.txt")),
+            "private\n",
+        )?;
+        assert_eq!(before, Snapshot::capture(&f.source)?);
+        assert_eq!(index, fs::read(f.source.join(".git/index"))?);
+    }
+    Ok(())
+}
+
+#[test]
+fn portable_symlink_placeholders_match_git() -> Result<()> {
+    let f = Fixture::new()?;
+    git(&f.source, &["config", "core.symlinks", "false"])?;
+    let object = String::from_utf8(git(&f.source, &["rev-parse", "HEAD:hello.txt"])?.stdout)?;
+    git(
+        &f.source,
+        &[
+            "update-index",
+            "--add",
+            "--cacheinfo",
+            "120000",
+            object.trim(),
+            "link",
+        ],
+    )?;
+    git(
+        &f.source,
+        &["commit", "-m", "portable symlink representation"],
+    )?;
+    git(&f.source, &["checkout-index", "--force", "link"])?;
+    let before = Snapshot::capture(&f.source)?;
+    checked(f.add()?)?;
+    git(
+        &f.source,
+        &["worktree", "add", "--detach", "../stock", "HEAD"],
+    )?;
+    assert_eq!(
+        Snapshot::capture(&f.root.join("stock"))?,
+        Snapshot::capture(&f.destination())?
+    );
+    assert!(fs::symlink_metadata(f.destination().join("link"))?.is_file());
+    assert_eq!(fs::read(f.destination().join("link"))?, b"hello\n");
+    assert_eq!(before, Snapshot::capture(&f.source)?);
+    Ok(())
+}
+
+#[test]
+fn separate_git_metadata_on_another_filesystem_delegates() -> Result<()> {
+    use std::os::unix::fs::MetadataExt;
+    let Some(other) = std::env::var_os("TWIG_TEST_CROSS_FILESYSTEM_ROOT") else {
+        return Ok(());
+    };
+    let f = Fixture::new()?;
+    let parent = PathBuf::from(other).join(format!(
+        "metadata-{}",
+        f.root.file_name().unwrap().to_string_lossy()
+    ));
+    fs::create_dir(&parent)?;
+    let admin = parent.join("admin");
+    // Git cannot move an existing .git across devices with --separate-git-dir.
+    // Preserve the initial fixture admin directory, then initialize this layout
+    // directly on the other device rather than testing an invalid migration.
+    fs::rename(f.source.join(".git"), f.root.join("original-admin"))?;
+    checked(
+        command("git", &f.source)
+            .args(["init", "-b", "main", "--separate-git-dir"])
+            .arg(&admin)
+            .output()?,
+    )?;
+    git(&f.source, &["config", "user.name", "Fixture"])?;
+    git(
+        &f.source,
+        &["config", "user.email", "fixture@example.invalid"],
+    )?;
+    git(&f.source, &["add", "."])?;
+    git(&f.source, &["commit", "-m", "separate metadata seed"])?;
+    assert_ne!(fs::metadata(&admin)?.dev(), fs::metadata(&f.source)?.dev());
+    let before = Snapshot::capture(&f.source)?;
+    let index = fs::read(admin.join("index"))?;
+    let output = checked(f.add()?)?;
+    assert!(String::from_utf8_lossy(&output.stderr).contains("stock Git:"));
+    git(
+        &f.source,
+        &["worktree", "add", "--detach", "../stock", "HEAD"],
+    )?;
+    assert_eq!(
+        Snapshot::capture(&f.root.join("stock"))?,
+        Snapshot::capture(&f.destination())?
+    );
+    assert_eq!(before, Snapshot::capture(&f.source)?);
+    assert_eq!(index, fs::read(admin.join("index"))?);
+    fs::write(f.destination().join("hello.txt"), "private\n")?;
+    assert_eq!(fs::read(f.source.join("hello.txt"))?, b"hello\n");
+    Ok(())
+}
+
 #[test]
 fn raw_byte_paths_match_git_or_its_filesystem_rejection() -> Result<()> {
     use std::os::unix::ffi::OsStringExt;
@@ -7,7 +139,14 @@ fn raw_byte_paths_match_git_or_its_filesystem_rejection() -> Result<()> {
     let name = std::ffi::OsString::from_vec(b"raw-\xff".to_vec());
     let representable = match fs::write(f.source.join(&name), b"hello\n") {
         Ok(()) => true,
-        Err(error) if matches!(error.raw_os_error(), Some(libc::EINVAL | libc::EILSEQ)) => {
+        // These UTF conversion failures occur on NTFS/exFAT. Stock Git must
+        // independently reject the indexed name below; none becomes a skip.
+        Err(error)
+            if matches!(
+                error.raw_os_error(),
+                Some(libc::EINVAL | libc::EILSEQ | libc::EOVERFLOW)
+            ) =>
+        {
             eprintln!("filesystem rejects non-UTF-8 path before Twig: {error}");
             false
         }
