@@ -1,0 +1,131 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="1200" height="830" viewBox="0 0 1200 830">
+<style>text{font-family:Inter,ui-sans-serif,system-ui,-apple-system,sans-serif;fill:#101828}
+.title{font-size:26px;font-weight:700}.sub{font-size:15px;fill:#475467}
+.tick{font-size:13px;fill:#667085}.label{font-size:15px;font-weight:600;fill:#344054}
+.section{font-size:16px;font-weight:700}.legend{font-size:15px}
+.value{font-size:13px;font-weight:600;fill:#344054}
+.fail{font-size:14px;font-weight:600;fill:#b54708}
+.grid{stroke:#eaecf0}.range{stroke:#344054;stroke-width:1.5;opacity:.55}</style>
+<rect width="1200" height="830" fill="#fff"/>
+<text x="48" y="40" class="title">Twig · checkout time and disk allocation</text>
+<text x="48" y="66" class="sub">Warm-cache filesystem images · cohort medians · one create at a time · lower is better</text>
+<text x="48" y="90" class="fail">Run stopped · 63 verified points · 1 failed/unfinished point; incomplete groups not compared</text>
+<rect x="48" y="112" width="26" height="14" rx="3" fill="#98a2b3"/><text x="84" y="125" class="legend">stock Git</text>
+<rect x="308" y="112" width="26" height="14" rx="3" fill="#5789c7"/><text x="344" y="125" class="legend">Twig baseline · 9f86536</text>
+<rect x="568" y="112" width="26" height="14" rx="3" fill="#3a9d5d"/><text x="604" y="125" class="legend">Twig candidate · dc7f720</text>
+<text x="48" y="170" class="section">APFS · default</text>
+<text x="250" y="170" class="section">Creation time</text>
+<path d="M250.0 188V702" class="grid"/>
+<text x="250.0" y="722" text-anchor="middle" class="tick">0 ms</text>
+<path d="M320.0 188V702" class="grid"/>
+<text x="320.0" y="722" text-anchor="middle" class="tick">562 ms</text>
+<path d="M390.0 188V702" class="grid"/>
+<text x="390.0" y="722" text-anchor="middle" class="tick">1.12 s</text>
+<path d="M460.0 188V702" class="grid"/>
+<text x="460.0" y="722" text-anchor="middle" class="tick">1.69 s</text>
+<path d="M530.0 188V702" class="grid"/>
+<text x="530.0" y="722" text-anchor="middle" class="tick">2.25 s</text>
+<rect x="250.0" y="192" width="17.4" height="16" rx="3" fill="#98a2b3"/>
+<text x="650" y="205" text-anchor="end" class="value">139 ms</text>
+<rect x="250.0" y="213" width="22.6" height="16" rx="3" fill="#5789c7"/>
+<text x="650" y="226" text-anchor="end" class="value">181 ms</text>
+<rect x="250.0" y="234" width="110.1" height="16" rx="3" fill="#3a9d5d"/>
+<text x="650" y="247" text-anchor="end" class="value">884 ms</text>
+<rect x="250.0" y="280" width="18.1" height="16" rx="3" fill="#98a2b3"/>
+<text x="650" y="293" text-anchor="end" class="value">145 ms</text>
+<rect x="250.0" y="301" width="46.3" height="16" rx="3" fill="#5789c7"/>
+<text x="650" y="314" text-anchor="end" class="value">372 ms</text>
+<rect x="250.0" y="322" width="114.9" height="16" rx="3" fill="#3a9d5d"/>
+<text x="650" y="335" text-anchor="end" class="value">923 ms</text>
+<rect x="250.0" y="368" width="48.9" height="16" rx="3" fill="#98a2b3"/>
+<text x="650" y="381" text-anchor="end" class="value">392 ms</text>
+<rect x="250.0" y="389" width="100.0" height="16" rx="3" fill="#5789c7"/>
+<text x="650" y="402" text-anchor="end" class="value">803 ms</text>
+<rect x="250.0" y="410" width="76.5" height="16" rx="3" fill="#3a9d5d"/>
+<text x="650" y="423" text-anchor="end" class="value">614 ms</text>
+<rect x="250.0" y="456" width="17.2" height="16" rx="3" fill="#98a2b3"/>
+<text x="650" y="469" text-anchor="end" class="value">138 ms</text>
+<rect x="250.0" y="477" width="33.3" height="16" rx="3" fill="#5789c7"/>
+<text x="650" y="490" text-anchor="end" class="value">267 ms</text>
+<rect x="250.0" y="498" width="112.2" height="16" rx="3" fill="#3a9d5d"/>
+<text x="650" y="511" text-anchor="end" class="value">900 ms</text>
+<rect x="250.0" y="544" width="16.7" height="16" rx="3" fill="#98a2b3"/>
+<text x="650" y="557" text-anchor="end" class="value">134 ms</text>
+<rect x="250.0" y="565" width="106.3" height="16" rx="3" fill="#5789c7"/>
+<text x="650" y="578" text-anchor="end" class="value">853 ms</text>
+<rect x="250.0" y="586" width="109.6" height="16" rx="3" fill="#3a9d5d"/>
+<text x="650" y="599" text-anchor="end" class="value">880 ms</text>
+<rect x="250.0" y="632" width="138.7" height="16" rx="3" fill="#98a2b3"/>
+<text x="650" y="645" text-anchor="end" class="value">1.11 s</text>
+<rect x="250.0" y="653" width="258.1" height="16" rx="3" fill="#5789c7"/>
+<text x="650" y="666" text-anchor="end" class="value">2.07 s</text>
+<rect x="250.0" y="674" width="259.3" height="16" rx="3" fill="#3a9d5d"/>
+<text x="650" y="687" text-anchor="end" class="value">2.08 s</text>
+<text x="775" y="170" class="section">Additional allocation</text>
+<path d="M775.0 188V702" class="grid"/>
+<text x="775.0" y="722" text-anchor="middle" class="tick">0.0 KiB</text>
+<path d="M845.0 188V702" class="grid"/>
+<text x="845.0" y="722" text-anchor="middle" class="tick">34.59 MiB</text>
+<path d="M915.0 188V702" class="grid"/>
+<text x="915.0" y="722" text-anchor="middle" class="tick">69.19 MiB</text>
+<path d="M985.0 188V702" class="grid"/>
+<text x="985.0" y="722" text-anchor="middle" class="tick">103.78 MiB</text>
+<path d="M1055.0 188V702" class="grid"/>
+<text x="1055.0" y="722" text-anchor="middle" class="tick">138.37 MiB</text>
+<rect x="775.0" y="192" width="259.2" height="16" rx="3" fill="#98a2b3"/>
+<text x="1175" y="205" text-anchor="end" class="value">128.09 MiB</text>
+<rect x="775.0" y="213" width="259.2" height="16" rx="3" fill="#5789c7"/>
+<text x="1175" y="226" text-anchor="end" class="value">128.09 MiB</text>
+<rect x="775.0" y="234" width="32.5" height="16" rx="3" fill="#3a9d5d"/>
+<text x="1175" y="247" text-anchor="end" class="value">16.08 MiB</text>
+<rect x="775.0" y="280" width="259.2" height="16" rx="3" fill="#98a2b3"/>
+<path d="M1034.2 288H1034.3" class="range"/>
+<text x="1175" y="293" text-anchor="end" class="value">128.11 MiB</text>
+<rect x="775.0" y="301" width="259.3" height="16" rx="3" fill="#5789c7"/>
+<path d="M1034.3 309H1034.3" class="range"/>
+<text x="1175" y="314" text-anchor="end" class="value">128.12 MiB</text>
+<rect x="775.0" y="322" width="2.0" height="16" rx="3" fill="#3a9d5d"/>
+<text x="1175" y="335" text-anchor="end" class="value">88.0 KiB</text>
+<rect x="775.0" y="368" width="259.2" height="16" rx="3" fill="#98a2b3"/>
+<text x="1175" y="381" text-anchor="end" class="value">128.09 MiB</text>
+<rect x="775.0" y="389" width="259.2" height="16" rx="3" fill="#5789c7"/>
+<text x="1175" y="402" text-anchor="end" class="value">128.09 MiB</text>
+<rect x="775.0" y="410" width="2.0" height="16" rx="3" fill="#3a9d5d"/>
+<text x="1175" y="423" text-anchor="end" class="value">88.0 KiB</text>
+<rect x="775.0" y="456" width="259.2" height="16" rx="3" fill="#98a2b3"/>
+<text x="1175" y="469" text-anchor="end" class="value">128.09 MiB</text>
+<rect x="775.0" y="477" width="259.2" height="16" rx="3" fill="#5789c7"/>
+<text x="1175" y="490" text-anchor="end" class="value">128.09 MiB</text>
+<rect x="775.0" y="498" width="2.0" height="16" rx="3" fill="#3a9d5d"/>
+<text x="1175" y="511" text-anchor="end" class="value">72.0 KiB</text>
+<rect x="775.0" y="544" width="259.2" height="16" rx="3" fill="#98a2b3"/>
+<path d="M1034.2 552H1034.2" class="range"/>
+<text x="1175" y="557" text-anchor="end" class="value">128.07 MiB</text>
+<rect x="775.0" y="565" width="2.0" height="16" rx="3" fill="#5789c7"/>
+<text x="1175" y="578" text-anchor="end" class="value">68.0 KiB</text>
+<rect x="775.0" y="586" width="2.0" height="16" rx="3" fill="#3a9d5d"/>
+<text x="1175" y="599" text-anchor="end" class="value">68.0 KiB</text>
+<rect x="775.0" y="632" width="73.7" height="16" rx="3" fill="#98a2b3"/>
+<path d="M848.7 640H848.9" class="range"/>
+<text x="1175" y="645" text-anchor="end" class="value">36.41 MiB</text>
+<rect x="775.0" y="653" width="6.7" height="16" rx="3" fill="#5789c7"/>
+<path d="M781.7 661H781.7" class="range"/>
+<text x="1175" y="666" text-anchor="end" class="value">3.31 MiB</text>
+<rect x="775.0" y="674" width="6.8" height="16" rx="3" fill="#3a9d5d"/>
+<path d="M781.7 682H781.9" class="range"/>
+<text x="1175" y="687" text-anchor="end" class="value">3.38 MiB</text>
+<text x="48" y="218" class="label">Cross-revision</text>
+<text x="48" y="239" class="tick">2 creates · 3 rounds</text>
+<text x="48" y="306" class="label">Builtin conversions</text>
+<text x="48" y="327" class="tick">2 creates · 3 rounds</text>
+<text x="48" y="394" class="label">Auto CRLF</text>
+<text x="48" y="415" class="tick">2 creates · 3 rounds</text>
+<text x="48" y="482" class="label">Submodules</text>
+<text x="48" y="503" class="tick">2 creates · 3 rounds</text>
+<text x="48" y="570" class="label">Unchanged bytes</text>
+<text x="48" y="591" class="tick">2 creates · 3 rounds</text>
+<text x="48" y="658" class="label">4,096 small files</text>
+<text x="48" y="679" class="tick">2 creates · 3 rounds</text>
+<text x="48" y="778" class="sub">Each column uses one linear scale per filesystem. Allocation includes metadata and indexes after first status.</text>
+<text x="48" y="802" class="sub">Synthetic workloads on a shared host. CSV retains every level, unstable observation and incomplete group.</text>
+</svg>

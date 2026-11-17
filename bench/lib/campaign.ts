@@ -69,6 +69,12 @@ export async function campaign(
   };
   const worker = join(config.binaryDir, "twig-real-bench");
   const preparer = join(config.binaryDir, "twig-coverage-fixture");
+  const gitPath = execFileSync("sh", ["-c", "command -v git"], {
+    cwd: root,
+    env: environment(),
+    encoding: "utf8",
+  }).trim();
+  invariant(gitPath.length > 0, "Cannot locate Git executable");
   const frozen = new Map<string, string>();
   for (const file of [
     config.baseline,
@@ -76,6 +82,7 @@ export async function campaign(
     worker,
     preparer,
     join(config.binaryDir, "twig-fixture"),
+    gitPath,
   ])
     frozen.set(file, await digest(file));
   const output = await allocate(
@@ -92,6 +99,11 @@ export async function campaign(
     runtime: process.versions,
     ...identities,
     tools: Object.fromEntries(frozen),
+    git: {
+      path: gitPath,
+      version: git(root, ["--version"]),
+      execPath: git(root, ["--exec-path"]),
+    },
     config: { ...config, filesystems: [config.target.filesystem] },
     fixtures: [] as {
       label: string;
@@ -103,6 +115,7 @@ export async function campaign(
       "No retries. Complete paired groups only. Rust owns timing, allocation, full byte verification and private-write probes.",
       "Binary source commits are operator declarations; SHA-256 identifies the measured bytes.",
       `Operator-provided environment: ${config.environment}`,
+      ...config.target.notes,
     ],
     status: "preparing" as State,
     stopReason: null as string | null,

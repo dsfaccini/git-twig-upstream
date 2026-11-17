@@ -1,0 +1,34 @@
+{
+  "schemaVersion": 1,
+  "kind": "derived-chart-index",
+  "notes": [
+    "Derived horizontal comparison views; original snapshots, CSVs, raw archives, chart.svg files and their artifact indexes are unchanged.",
+    "No benchmarks rerun."
+  ],
+  "charts": [
+    {
+      "snapshot": "bench/results/sha256-a73d956e3301/linux-btrfs/2026-11-17/checkout-v05/snapshot.json",
+      "snapshotSHA256": "1265194e79da4827fb3efb2553a655fb9cddc4c81d7e969617b858548a51ea9e",
+      "chart": "bench/results/sha256-a73d956e3301/linux-btrfs/2026-11-17/checkout-v05/comparison.svg",
+      "chartSHA256": "4a590b97c9d7d77e72a9d2a854deb7f60f42bd9eb055b59f090e46ca0e3f7936"
+    },
+    {
+      "snapshot": "bench/results/sha256-a73d956e3301/linux-xfs/2026-11-17/checkout-v05/snapshot.json",
+      "snapshotSHA256": "f3ce0c2744b4a054a8b6a964c04db500be9d949abaf4aae1fa26347392e305f4",
+      "chart": "bench/results/sha256-a73d956e3301/linux-xfs/2026-11-17/checkout-v05/comparison.svg",
+      "chartSHA256": "dab4e8f86cadc3aeddb4bb15c89bccf9acb794eb1af8f831edd62e9a5e540086"
+    },
+    {
+      "snapshot": "bench/results/sha256-c4989db26497/macos-apfs/2026-11-17/checkout-v05/snapshot.json",
+      "snapshotSHA256": "df08fc6bed79278a6b58b85dee9ee7e4f7feaebcddb279a64f2f4a5ddf230fb3",
+      "chart": "bench/results/sha256-c4989db26497/macos-apfs/2026-11-17/checkout-v05/comparison.svg",
+      "chartSHA256": "f9a9e483b7771ebf9574f52c77665c1285a69bcd1c37707d4492e5e139a5fad8"
+    },
+    {
+      "snapshot": "bench/results/sha256-c4989db26497/macos-apfs-case-sensitive/2026-11-17/checkout-v05/snapshot.json",
+      "snapshotSHA256": "bf779e47938ff6e1697d1ef622fbecfa28fd8c354bf2ecb700dd091065a444c3",
+      "chart": "bench/results/sha256-c4989db26497/macos-apfs-case-sensitive/2026-11-17/checkout-v05/comparison.svg",
+      "chartSHA256": "5b285ba2294e7f07e6aa61b977977d917135b3586f6fb8916c2ad1deee0378c4"
+    }
+  ]
+}

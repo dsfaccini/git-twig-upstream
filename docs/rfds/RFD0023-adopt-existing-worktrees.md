@@ -1,6 +1,6 @@
 # RFD0023 — Adopt existing worktrees without changing their contents
 
-- Status: experimental proposal
+- Status: experimental implementation contract
 - Author: leostera
 - Date: 2026-11-17
 
@@ -9,8 +9,9 @@
 Prototype `git twig adopt` for existing linked worktrees. Preserve current bytes,
 not HEAD: dirty files and staged changes are legitimate state. Registration,
 branches, index contents, file identities, links and permissions must not be
-rewritten merely to gain shared storage. Never hardlink a donor. This experiment
-is not a release proposal or a claim of measured space savings.
+rewritten merely to gain shared storage. Never hardlink a donor. The command is
+experimental in development main, not published v0.4, and makes no claim of measured
+space savings.
 
 ## Guide-level contract
 
