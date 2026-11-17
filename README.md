@@ -26,7 +26,7 @@ git -C main twig new -b feat/x ../feat-x HEAD
 git -C main twig list
 ```
 
-Published v0.3.0 requires the source checkout's current `HEAD`. Development builds
+Released v0.4.0 requires the source checkout's current `HEAD`. Development builds
 can reuse matching files from nearby worktrees for other revisions too.
 Short help works outside a checkout: `git twig -h` or `git twig new --help`.
 
@@ -94,6 +94,38 @@ that changes Git checkout semantics rather than proving the bytes are correct.
 
 ## Benchmarks
 
+### v0.5 preview · unreleased
+
+Share unchanged files across revisions, builtin conversions and submodule checkouts.
+These synthetic workloads exercise the new sharing coverage; faster creation is
+not guaranteed. The preview benchmarks do not measure experimental `adopt`.
+
+<!-- twig-preview:start -->
+
+| Workload · APFS | Stock Git | Twig v0.4 | v0.5 preview |
+|---|---|---|---|
+| Cross-revision | 139ms / 128.09 MiB | 181ms / 128.09 MiB | 884ms / 16.08 MiB |
+| Builtin conversions | 145ms / 128.11 MiB | 372ms / 128.12 MiB | 923ms / 88.00 KiB |
+| Auto CRLF | 392ms / 128.09 MiB | 803ms / 128.09 MiB | 614ms / 88.00 KiB |
+| Submodules | 138ms / 128.09 MiB | 267ms / 128.09 MiB | 900ms / 72.00 KiB |
+| Unchanged bytes | 134ms / 128.07 MiB | 853ms / 68.00 KiB | 880ms / 68.00 KiB |
+| 4,096 small files | 1.11s / 36.41 MiB | 2.07s / 3.31 MiB | 2.08s / 3.38 MiB |
+
+Each cell is **creation time / additional disk allocation**. Medians of 3
+two-worktree batches, one create at a time, on warm-cache filesystem images.
+Synthetic workloads, not real-repository or universal speed claims. Allocation
+includes Git metadata after first status; it is not exclusive file space reclaimed.
+
+Across all levels: 992 certified creates; 2 failed points and 1 unstable observation retained.
+
+Other filesystems: [APFS (case-sensitive)](bench/results/sha256-c4989db26497/macos-apfs-case-sensitive/2026-11-17/checkout-v05/comparison.svg) · [XFS](bench/results/sha256-a73d956e3301/linux-xfs/2026-11-17/checkout-v05/comparison.svg) · [Btrfs](bench/results/sha256-a73d956e3301/linux-btrfs/2026-11-17/checkout-v05/comparison.svg).
+Speed varies by workload. [Full results and limitations](bench/preview.md).
+
+<!-- twig-preview:end -->
+
+<details>
+<summary>v0.4 real-repository benchmarks</summary>
+
 <!-- twig-bench:start -->
 
 <!-- Generated from bench/results/readme.json by twig-readme-table. Do not edit numbers. -->
@@ -110,6 +142,8 @@ that changes Git checkout semantics rather than proving the bytes are correct.
 Each cell is **creation time / additional disk space**. Batch sizes differ; creation excludes first status. † Includes failed Git attempts. [Setup and raw results](bench/results/readme-details.md).
 
 <!-- twig-bench:end -->
+
+</details>
 
 For Linux CLI time/allocation measurements, see [Linux benchmarks](bench/linux.md).
 

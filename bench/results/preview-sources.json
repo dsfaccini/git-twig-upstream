@@ -1,0 +1,21 @@
+{
+  "schemaVersion": 1,
+  "datasets": [
+    {
+      "label": "APFS",
+      "snapshot": "bench/results/sha256-c4989db26497/macos-apfs/2026-11-17/checkout-v05/snapshot.json"
+    },
+    {
+      "label": "APFS (case-sensitive)",
+      "snapshot": "bench/results/sha256-c4989db26497/macos-apfs-case-sensitive/2026-11-17/checkout-v05/snapshot.json"
+    },
+    {
+      "label": "XFS",
+      "snapshot": "bench/results/sha256-a73d956e3301/linux-xfs/2026-11-17/checkout-v05/snapshot.json"
+    },
+    {
+      "label": "Btrfs",
+      "snapshot": "bench/results/sha256-a73d956e3301/linux-btrfs/2026-11-17/checkout-v05/snapshot.json"
+    }
+  ]
+}

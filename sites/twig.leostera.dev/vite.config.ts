@@ -2,7 +2,8 @@ import react from "@vitejs/plugin-react";
 import { cloudflare } from "@cloudflare/vite-plugin";
 import { defineConfig, type Plugin } from "vite";
 import { fileURLToPath } from "node:url";
-import { benchmarkFile, loadBenchmarks, sources } from "./scripts/benchmarks.ts";
+import { loadBenchmarks } from "./scripts/benchmarks.ts";
+import { previewFile } from "./scripts/preview.ts";
 
 const virtualId = "virtual:twig-benchmarks";
 function benchmarkData(): Plugin {
@@ -13,8 +14,7 @@ function benchmarkData(): Plugin {
     },
     load(id) {
       if (id !== "\0" + virtualId) return;
-      for (const { file } of sources)
-        this.addWatchFile(fileURLToPath(benchmarkFile(file)));
+      this.addWatchFile(fileURLToPath(previewFile));
       return `export default ${JSON.stringify(loadBenchmarks())}`;
     },
   };

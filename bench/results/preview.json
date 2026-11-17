@@ -1,0 +1,758 @@
+{
+  "schemaVersion": 1,
+  "kind": "twig-checkout-preview",
+  "datasets": [
+    {
+      "label": "APFS",
+      "target": "macos-apfs",
+      "snapshot": "bench/results/sha256-c4989db26497/macos-apfs/2026-11-17/checkout-v05/snapshot.json",
+      "snapshotSHA256": "df08fc6bed79278a6b58b85dee9ee7e4f7feaebcddb279a64f2f4a5ddf230fb3",
+      "candidate": {
+        "label": "candidate-twig",
+        "sourceCommit": "dc7f7205d46a8628508eee138149a39d4da96f24",
+        "sha256": "c4989db264978bba06274a9f3f1e4b4e3b4f50e72edcd7ae0f8cbe857d190456"
+      },
+      "baseline": {
+        "label": "frozen-twig",
+        "sourceCommit": "9f86536d3deec6432a07dee250f9d5cce0835993",
+        "sha256": "e50747ef19f4e3a538954a7faf86974b4240686e3cccfdcd7da800613f7999be"
+      },
+      "environment": "Shared Mac Studio host; owned default and case-sensitive APFS images on internal APFS storage. Source-built v0.4.0 tag baseline and candidate use rustc 1.95.0 release builds. Synthetic warm-cache coverage only, not real-repository or host-volume claims; one campaign per backing disk; no intentional competing builds/tests; background apps not stopped.",
+      "status": "failed",
+      "verifiedCreates": 144,
+      "failedPoints": 1,
+      "unstablePoints": 0,
+      "rounds": 3,
+      "worktrees": 2,
+      "concurrency": 1,
+      "profiles": [
+        {
+          "profile": "cross-revision",
+          "label": "Cross-revision",
+          "measurements": [
+            {
+              "backend": "git",
+              "timeMs": 139.3,
+              "bytes": 134316032,
+              "minBytes": 134316032,
+              "maxBytes": 134316032
+            },
+            {
+              "backend": "baseline",
+              "timeMs": 181.281375,
+              "bytes": 134316032,
+              "minBytes": 134316032,
+              "maxBytes": 134316032
+            },
+            {
+              "backend": "candidate",
+              "timeMs": 883.831375,
+              "bytes": 16859136,
+              "minBytes": 16859136,
+              "maxBytes": 16859136
+            }
+          ]
+        },
+        {
+          "profile": "mixed-builtins",
+          "label": "Builtin conversions",
+          "measurements": [
+            {
+              "backend": "git",
+              "timeMs": 145.16891700000002,
+              "bytes": 134336512,
+              "minBytes": 134336512,
+              "maxBytes": 134340608
+            },
+            {
+              "backend": "baseline",
+              "timeMs": 371.969917,
+              "bytes": 134344704,
+              "minBytes": 134340608,
+              "maxBytes": 134344704
+            },
+            {
+              "backend": "candidate",
+              "timeMs": 922.711875,
+              "bytes": 90112,
+              "minBytes": 90112,
+              "maxBytes": 90112
+            }
+          ]
+        },
+        {
+          "profile": "auto-crlf",
+          "label": "Auto CRLF",
+          "measurements": [
+            {
+              "backend": "git",
+              "timeMs": 392.252833,
+              "bytes": 134316032,
+              "minBytes": 134316032,
+              "maxBytes": 134316032
+            },
+            {
+              "backend": "baseline",
+              "timeMs": 802.505125,
+              "bytes": 134311936,
+              "minBytes": 134311936,
+              "maxBytes": 134311936
+            },
+            {
+              "backend": "candidate",
+              "timeMs": 613.8139590000001,
+              "bytes": 90112,
+              "minBytes": 90112,
+              "maxBytes": 90112
+            }
+          ]
+        },
+        {
+          "profile": "submodules",
+          "label": "Submodules",
+          "measurements": [
+            {
+              "backend": "git",
+              "timeMs": 137.914542,
+              "bytes": 134311936,
+              "minBytes": 134311936,
+              "maxBytes": 134311936
+            },
+            {
+              "backend": "baseline",
+              "timeMs": 267.49525,
+              "bytes": 134311936,
+              "minBytes": 134311936,
+              "maxBytes": 134311936
+            },
+            {
+              "backend": "candidate",
+              "timeMs": 900.4674580000001,
+              "bytes": 73728,
+              "minBytes": 73728,
+              "maxBytes": 73728
+            }
+          ]
+        },
+        {
+          "profile": "byte-heavy",
+          "label": "Unchanged bytes",
+          "measurements": [
+            {
+              "backend": "git",
+              "timeMs": 134.376542,
+              "bytes": 134295552,
+              "minBytes": 134295552,
+              "maxBytes": 134299648
+            },
+            {
+              "backend": "baseline",
+              "timeMs": 853.100375,
+              "bytes": 69632,
+              "minBytes": 69632,
+              "maxBytes": 69632
+            },
+            {
+              "backend": "candidate",
+              "timeMs": 879.945334,
+              "bytes": 69632,
+              "minBytes": 69632,
+              "maxBytes": 69632
+            }
+          ]
+        },
+        {
+          "profile": "file-heavy",
+          "label": "4,096 small files",
+          "measurements": [
+            {
+              "backend": "git",
+              "timeMs": 1113.7812920000001,
+              "bytes": 38182912,
+              "minBytes": 38170624,
+              "maxBytes": 38281216
+            },
+            {
+              "backend": "baseline",
+              "timeMs": 2071.722583,
+              "bytes": 3473408,
+              "minBytes": 3469312,
+              "maxBytes": 3493888
+            },
+            {
+              "backend": "candidate",
+              "timeMs": 2081.170291,
+              "bytes": 3547136,
+              "minBytes": 3485696,
+              "maxBytes": 3551232
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "label": "APFS (case-sensitive)",
+      "target": "macos-apfs-case-sensitive",
+      "snapshot": "bench/results/sha256-c4989db26497/macos-apfs-case-sensitive/2026-11-17/checkout-v05/snapshot.json",
+      "snapshotSHA256": "bf779e47938ff6e1697d1ef622fbecfa28fd8c354bf2ecb700dd091065a444c3",
+      "candidate": {
+        "label": "candidate-twig",
+        "sourceCommit": "dc7f7205d46a8628508eee138149a39d4da96f24",
+        "sha256": "c4989db264978bba06274a9f3f1e4b4e3b4f50e72edcd7ae0f8cbe857d190456"
+      },
+      "baseline": {
+        "label": "frozen-twig",
+        "sourceCommit": "9f86536d3deec6432a07dee250f9d5cce0835993",
+        "sha256": "e50747ef19f4e3a538954a7faf86974b4240686e3cccfdcd7da800613f7999be"
+      },
+      "environment": "Shared Mac Studio host; owned case-sensitive APFS images on internal APFS storage. Same frozen builds and plan as separate default-APFS campaign. Default-APFS stock Git c16 commondir-read failure retained, not retried. Synthetic warm-cache coverage only; not real-repository or host-volume claims; one campaign per backing disk; no intentional competing builds/tests; background apps not stopped.",
+      "status": "completed",
+      "verifiedCreates": 288,
+      "failedPoints": 0,
+      "unstablePoints": 1,
+      "rounds": 3,
+      "worktrees": 2,
+      "concurrency": 1,
+      "profiles": [
+        {
+          "profile": "cross-revision",
+          "label": "Cross-revision",
+          "measurements": [
+            {
+              "backend": "git",
+              "timeMs": 138.06425,
+              "bytes": 134316032,
+              "minBytes": 134316032,
+              "maxBytes": 134316032
+            },
+            {
+              "backend": "baseline",
+              "timeMs": 185.90883399999998,
+              "bytes": 134316032,
+              "minBytes": 134316032,
+              "maxBytes": 134316032
+            },
+            {
+              "backend": "candidate",
+              "timeMs": 886.499084,
+              "bytes": 16859136,
+              "minBytes": 16859136,
+              "maxBytes": 16859136
+            }
+          ]
+        },
+        {
+          "profile": "mixed-builtins",
+          "label": "Builtin conversions",
+          "measurements": [
+            {
+              "backend": "git",
+              "timeMs": 137.34812499999998,
+              "bytes": 134336512,
+              "minBytes": 134336512,
+              "maxBytes": 134336512
+            },
+            {
+              "backend": "baseline",
+              "timeMs": 379.71470899999997,
+              "bytes": 134344704,
+              "minBytes": 134340608,
+              "maxBytes": 134344704
+            },
+            {
+              "backend": "candidate",
+              "timeMs": 899.1309170000001,
+              "bytes": 90112,
+              "minBytes": 86016,
+              "maxBytes": 90112
+            }
+          ]
+        },
+        {
+          "profile": "auto-crlf",
+          "label": "Auto CRLF",
+          "measurements": [
+            {
+              "backend": "git",
+              "timeMs": 392.416125,
+              "bytes": 134316032,
+              "minBytes": 134316032,
+              "maxBytes": 134316032
+            },
+            {
+              "backend": "baseline",
+              "timeMs": 797.471,
+              "bytes": 134311936,
+              "minBytes": 134311936,
+              "maxBytes": 134311936
+            },
+            {
+              "backend": "candidate",
+              "timeMs": 619.248375,
+              "bytes": 90112,
+              "minBytes": 90112,
+              "maxBytes": 90112
+            }
+          ]
+        },
+        {
+          "profile": "submodules",
+          "label": "Submodules",
+          "measurements": [
+            {
+              "backend": "git",
+              "timeMs": 134.844292,
+              "bytes": 134311936,
+              "minBytes": 134307840,
+              "maxBytes": 134311936
+            },
+            {
+              "backend": "baseline",
+              "timeMs": 263.754792,
+              "bytes": 134311936,
+              "minBytes": 134311936,
+              "maxBytes": 134311936
+            },
+            {
+              "backend": "candidate",
+              "timeMs": 898.0533750000001,
+              "bytes": 73728,
+              "minBytes": 73728,
+              "maxBytes": 73728
+            }
+          ]
+        },
+        {
+          "profile": "byte-heavy",
+          "label": "Unchanged bytes",
+          "measurements": [
+            {
+              "backend": "git",
+              "timeMs": 137.289834,
+              "bytes": 134295552,
+              "minBytes": 134295552,
+              "maxBytes": 134299648
+            },
+            {
+              "backend": "baseline",
+              "timeMs": 860.7505,
+              "bytes": 69632,
+              "minBytes": 69632,
+              "maxBytes": 69632
+            },
+            {
+              "backend": "candidate",
+              "timeMs": 945.670917,
+              "bytes": 69632,
+              "minBytes": 69632,
+              "maxBytes": 69632
+            }
+          ]
+        },
+        {
+          "profile": "file-heavy",
+          "label": "4,096 small files",
+          "measurements": [
+            {
+              "backend": "git",
+              "timeMs": 1193.30825,
+              "bytes": 38182912,
+              "minBytes": 38170624,
+              "maxBytes": 38326272
+            },
+            {
+              "backend": "baseline",
+              "timeMs": 1770.63175,
+              "bytes": 3497984,
+              "minBytes": 3489792,
+              "maxBytes": 3547136
+            },
+            {
+              "backend": "candidate",
+              "timeMs": 2103.0291669999997,
+              "bytes": 3489792,
+              "minBytes": 3469312,
+              "maxBytes": 3493888
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "label": "XFS",
+      "target": "linux-xfs",
+      "snapshot": "bench/results/sha256-a73d956e3301/linux-xfs/2026-11-17/checkout-v05/snapshot.json",
+      "snapshotSHA256": "f3ce0c2744b4a054a8b6a964c04db500be9d949abaf4aae1fa26347392e305f4",
+      "candidate": {
+        "label": "candidate-twig",
+        "sourceCommit": "dc7f7205d46a8628508eee138149a39d4da96f24",
+        "sha256": "a73d956e3301603be4359ce027ec1f135cb01a3df21fdb9d823e2f70b8b838ea"
+      },
+      "baseline": {
+        "label": "frozen-twig",
+        "sourceCommit": "9f86536d3deec6432a07dee250f9d5cce0835993",
+        "sha256": "cdd90c370be5d9379c21ae4ba993f5e164126e966506d67f6a820a13d856145a"
+      },
+      "environment": "Shared Linux host kernel 7.0.0-43-generic in privileged Ubuntu lab container; owned sparse XFS reflink=1 / Btrfs loopback images backed by ext4 /dev/sda1 on shared host disk. Source-built v0.4.0 tag baseline and candidate use rustc 1.95.0 release builds. Synthetic warm-cache coverage, no real-repository or bare-device speed claim; one campaign at a time on this backing disk; no intentional competing builds/tests.",
+      "status": "completed",
+      "verifiedCreates": 288,
+      "failedPoints": 0,
+      "unstablePoints": 0,
+      "rounds": 3,
+      "worktrees": 2,
+      "concurrency": 1,
+      "profiles": [
+        {
+          "profile": "cross-revision",
+          "label": "Cross-revision",
+          "measurements": [
+            {
+              "backend": "git",
+              "timeMs": 187.601818,
+              "bytes": 134299648,
+              "minBytes": 134299648,
+              "maxBytes": 134299648
+            },
+            {
+              "backend": "baseline",
+              "timeMs": 178.90862299999998,
+              "bytes": 134299648,
+              "minBytes": 134299648,
+              "maxBytes": 134299648
+            },
+            {
+              "backend": "candidate",
+              "timeMs": 621.920192,
+              "bytes": 16875520,
+              "minBytes": 16875520,
+              "maxBytes": 16875520
+            }
+          ]
+        },
+        {
+          "profile": "mixed-builtins",
+          "label": "Builtin conversions",
+          "measurements": [
+            {
+              "backend": "git",
+              "timeMs": 185.329458,
+              "bytes": 134307840,
+              "minBytes": 134307840,
+              "maxBytes": 134307840
+            },
+            {
+              "backend": "baseline",
+              "timeMs": 256.122813,
+              "bytes": 134340608,
+              "minBytes": 134340608,
+              "maxBytes": 134340608
+            },
+            {
+              "backend": "candidate",
+              "timeMs": 623.647955,
+              "bytes": 106496,
+              "minBytes": 106496,
+              "maxBytes": 106496
+            }
+          ]
+        },
+        {
+          "profile": "auto-crlf",
+          "label": "Auto CRLF",
+          "measurements": [
+            {
+              "backend": "git",
+              "timeMs": 476.661049,
+              "bytes": 134299648,
+              "minBytes": 134299648,
+              "maxBytes": 134299648
+            },
+            {
+              "backend": "baseline",
+              "timeMs": 664.004156,
+              "bytes": 134324224,
+              "minBytes": 134324224,
+              "maxBytes": 134324224
+            },
+            {
+              "backend": "candidate",
+              "timeMs": 361.11022199999996,
+              "bytes": 106496,
+              "minBytes": 106496,
+              "maxBytes": 106496
+            }
+          ]
+        },
+        {
+          "profile": "submodules",
+          "label": "Submodules",
+          "measurements": [
+            {
+              "backend": "git",
+              "timeMs": 177.07376499999998,
+              "bytes": 134291456,
+              "minBytes": 134291456,
+              "maxBytes": 134291456
+            },
+            {
+              "backend": "baseline",
+              "timeMs": 225.39282799999998,
+              "bytes": 134291456,
+              "minBytes": 134291456,
+              "maxBytes": 134291456
+            },
+            {
+              "backend": "candidate",
+              "timeMs": 610.756707,
+              "bytes": 57344,
+              "minBytes": 57344,
+              "maxBytes": 57344
+            }
+          ]
+        },
+        {
+          "profile": "byte-heavy",
+          "label": "Unchanged bytes",
+          "measurements": [
+            {
+              "backend": "git",
+              "timeMs": 177.578132,
+              "bytes": 134283264,
+              "minBytes": 134283264,
+              "maxBytes": 134283264
+            },
+            {
+              "backend": "baseline",
+              "timeMs": 605.038318,
+              "bytes": 90112,
+              "minBytes": 90112,
+              "maxBytes": 90112
+            },
+            {
+              "backend": "candidate",
+              "timeMs": 605.095369,
+              "bytes": 90112,
+              "minBytes": 90112,
+              "maxBytes": 90112
+            }
+          ]
+        },
+        {
+          "profile": "file-heavy",
+          "label": "4,096 small files",
+          "measurements": [
+            {
+              "backend": "git",
+              "timeMs": 768.101992,
+              "bytes": 39059456,
+              "minBytes": 39059456,
+              "maxBytes": 39059456
+            },
+            {
+              "backend": "baseline",
+              "timeMs": 1622.4555939999998,
+              "bytes": 5562368,
+              "minBytes": 5562368,
+              "maxBytes": 5562368
+            },
+            {
+              "backend": "candidate",
+              "timeMs": 1732.149054,
+              "bytes": 5562368,
+              "minBytes": 5562368,
+              "maxBytes": 5562368
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "label": "Btrfs",
+      "target": "linux-btrfs",
+      "snapshot": "bench/results/sha256-a73d956e3301/linux-btrfs/2026-11-17/checkout-v05/snapshot.json",
+      "snapshotSHA256": "1265194e79da4827fb3efb2553a655fb9cddc4c81d7e969617b858548a51ea9e",
+      "candidate": {
+        "label": "candidate-twig",
+        "sourceCommit": "dc7f7205d46a8628508eee138149a39d4da96f24",
+        "sha256": "a73d956e3301603be4359ce027ec1f135cb01a3df21fdb9d823e2f70b8b838ea"
+      },
+      "baseline": {
+        "label": "frozen-twig",
+        "sourceCommit": "9f86536d3deec6432a07dee250f9d5cce0835993",
+        "sha256": "cdd90c370be5d9379c21ae4ba993f5e164126e966506d67f6a820a13d856145a"
+      },
+      "environment": "Shared Linux host kernel 7.0.0-43-generic in privileged Ubuntu lab container; owned sparse XFS reflink=1 / Btrfs loopback images backed by ext4 /dev/sda1 on shared host disk. Source-built v0.4.0 tag baseline and candidate use rustc 1.95.0 release builds. Synthetic warm-cache coverage, no real-repository or bare-device speed claim; one campaign at a time on this backing disk; no intentional competing builds/tests.",
+      "status": "failed",
+      "verifiedCreates": 272,
+      "failedPoints": 1,
+      "unstablePoints": 0,
+      "rounds": 3,
+      "worktrees": 2,
+      "concurrency": 1,
+      "profiles": [
+        {
+          "profile": "cross-revision",
+          "label": "Cross-revision",
+          "measurements": [
+            {
+              "backend": "git",
+              "timeMs": 300.05565,
+              "bytes": 134545408,
+              "minBytes": 134545408,
+              "maxBytes": 134545408
+            },
+            {
+              "backend": "baseline",
+              "timeMs": 292.440516,
+              "bytes": 134545408,
+              "minBytes": 134545408,
+              "maxBytes": 134545408
+            },
+            {
+              "backend": "candidate",
+              "timeMs": 688.521375,
+              "bytes": 16875520,
+              "minBytes": 16875520,
+              "maxBytes": 16875520
+            }
+          ]
+        },
+        {
+          "profile": "mixed-builtins",
+          "label": "Builtin conversions",
+          "measurements": [
+            {
+              "backend": "git",
+              "timeMs": 283.970896,
+              "bytes": 134545408,
+              "minBytes": 134545408,
+              "maxBytes": 134545408
+            },
+            {
+              "backend": "baseline",
+              "timeMs": 348.517504,
+              "bytes": 134545408,
+              "minBytes": 134545408,
+              "maxBytes": 134545408
+            },
+            {
+              "backend": "candidate",
+              "timeMs": 708.907444,
+              "bytes": 65536,
+              "minBytes": 65536,
+              "maxBytes": 65536
+            }
+          ]
+        },
+        {
+          "profile": "auto-crlf",
+          "label": "Auto CRLF",
+          "measurements": [
+            {
+              "backend": "git",
+              "timeMs": 602.812197,
+              "bytes": 134545408,
+              "minBytes": 134545408,
+              "maxBytes": 134545408
+            },
+            {
+              "backend": "baseline",
+              "timeMs": 748.357191,
+              "bytes": 134545408,
+              "minBytes": 134545408,
+              "maxBytes": 134545408
+            },
+            {
+              "backend": "candidate",
+              "timeMs": 419.14182999999997,
+              "bytes": 65536,
+              "minBytes": 65536,
+              "maxBytes": 65536
+            }
+          ]
+        },
+        {
+          "profile": "submodules",
+          "label": "Submodules",
+          "measurements": [
+            {
+              "backend": "git",
+              "timeMs": 281.310142,
+              "bytes": 134545408,
+              "minBytes": 134545408,
+              "maxBytes": 134545408
+            },
+            {
+              "backend": "baseline",
+              "timeMs": 328.838809,
+              "bytes": 134545408,
+              "minBytes": 134545408,
+              "maxBytes": 134545408
+            },
+            {
+              "backend": "candidate",
+              "timeMs": 684.984098,
+              "bytes": 65536,
+              "minBytes": 65536,
+              "maxBytes": 65536
+            }
+          ]
+        },
+        {
+          "profile": "byte-heavy",
+          "label": "Unchanged bytes",
+          "measurements": [
+            {
+              "backend": "git",
+              "timeMs": 284.653178,
+              "bytes": 134512640,
+              "minBytes": 134512640,
+              "maxBytes": 134545408
+            },
+            {
+              "backend": "baseline",
+              "timeMs": 664.837137,
+              "bytes": 32768,
+              "minBytes": 32768,
+              "maxBytes": 32768
+            },
+            {
+              "backend": "candidate",
+              "timeMs": 674.4920930000001,
+              "bytes": 32768,
+              "minBytes": 32768,
+              "maxBytes": 32768
+            }
+          ]
+        },
+        {
+          "profile": "file-heavy",
+          "label": "4,096 small files",
+          "measurements": [
+            {
+              "backend": "git",
+              "timeMs": 835.276892,
+              "bytes": 27795456,
+              "minBytes": 27467776,
+              "maxBytes": 27795456
+            },
+            {
+              "backend": "baseline",
+              "timeMs": 1211.320821,
+              "bytes": 26124288,
+              "minBytes": 26124288,
+              "maxBytes": 26124288
+            },
+            {
+              "backend": "candidate",
+              "timeMs": 1423.7168490000001,
+              "bytes": 26091520,
+              "minBytes": 26091520,
+              "maxBytes": 26124288
+            }
+          ]
+        }
+      ]
+    }
+  ]
+}

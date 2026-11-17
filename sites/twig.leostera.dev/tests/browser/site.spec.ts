@@ -9,49 +9,67 @@ test("onboards an agent and shows source-backed space savings", async ({
   await context.grantPermissions(["clipboard-read"]);
   await page.goto("/");
   await expect(page.getByRole("heading", { level: 1 })).toHaveText("twig");
-  const github = page.getByRole("link", { name: "Twig on GitHub", exact: true });
+  const github = page.getByRole("link", {
+    name: "Twig on GitHub",
+    exact: true,
+  });
   await expect(github).toBeVisible();
-  await expect(github).toHaveAttribute("href", "https://github.com/leostera/git-twig");
+  await expect(github).toHaveAttribute(
+    "href",
+    "https://github.com/leostera/git-twig",
+  );
   const githubBounds = await github.boundingBox();
   expect(githubBounds!.y).toBeLessThan(24);
   expect(githubBounds!.x).toBeGreaterThan(page.viewportSize()!.width - 80);
-  await expect(page.getByText("lightweight git-worktrees for agents", { exact: true })).toBeVisible();
+  await expect(
+    page.getByText("lightweight git-worktrees for agents", { exact: true }),
+  ).toBeVisible();
   await expect(page.locator(".description")).toHaveText(
     "With twig, your agents can create cheap lightweight worktrees and use up to 97% less space on disk. Imagine all the worktrees you could now make!",
   );
   await page.evaluate(() => document.fonts.ready);
-  const bottomPadding = await page.locator("footer").evaluate(
-    (footer) => Number.parseFloat(getComputedStyle(footer).paddingBottom),
-  );
+  const bottomPadding = await page
+    .locator("footer")
+    .evaluate((footer) =>
+      Number.parseFloat(getComputedStyle(footer).paddingBottom),
+    );
   expect(bottomPadding).toBeGreaterThanOrEqual(48);
-  const artworkCenter = await page.locator(".twig-mark img").evaluate(async (element) => {
-    const image = element as HTMLImageElement;
-    await image.decode();
-    const canvas = document.createElement("canvas");
-    canvas.width = canvas.height = 192;
-    const context = canvas.getContext("2d")!;
-    context.drawImage(image, 0, 0, 192, 192);
-    const pixels = context.getImageData(0, 0, 192, 192).data;
-    let mass = 0, x = 0, y = 0;
-    for (let i = 0; i < pixels.length; i += 4) {
-      const alpha = pixels[i + 3];
-      mass += alpha;
-      x += (i / 4 % 192) * alpha;
-      y += Math.floor(i / 4 / 192) * alpha;
-    }
-    return { x: x / mass / 192, y: y / mass / 192 };
-  });
+  const artworkCenter = await page
+    .locator(".twig-mark img")
+    .evaluate(async (element) => {
+      const image = element as HTMLImageElement;
+      await image.decode();
+      const canvas = document.createElement("canvas");
+      canvas.width = canvas.height = 192;
+      const context = canvas.getContext("2d")!;
+      context.drawImage(image, 0, 0, 192, 192);
+      const pixels = context.getImageData(0, 0, 192, 192).data;
+      let mass = 0,
+        x = 0,
+        y = 0;
+      for (let i = 0; i < pixels.length; i += 4) {
+        const alpha = pixels[i + 3];
+        mass += alpha;
+        x += ((i / 4) % 192) * alpha;
+        y += Math.floor(i / 4 / 192) * alpha;
+      }
+      return { x: x / mass / 192, y: y / mass / 192 };
+    });
   expect(Math.abs(artworkCenter.x - 0.5)).toBeLessThan(0.015);
   expect(Math.abs(artworkCenter.y - 0.5)).toBeLessThan(0.015);
   if (test.info().project.name === "desktop") {
-    const height = await page.evaluate(() => document.documentElement.scrollHeight);
-    expect(height).toBeLessThanOrEqual(920);
+    const height = await page.evaluate(
+      () => document.documentElement.scrollHeight,
+    );
+    expect(height).toBeLessThanOrEqual(960);
   }
   await page.screenshot({
     path: `test-results/landing-${test.info().project.name}.png`,
     fullPage: true,
   });
-  const button = page.getByRole("button", { name: "Onboard your agent to Twig" });
+  const button = page.getByRole("button", {
+    name: "Onboard your agent to Twig",
+  });
   const buttonBounds = await button.boundingBox();
   await button.click();
   await expect(page.getByRole("status")).toHaveText("Setup prompt copied");
@@ -62,13 +80,21 @@ test("onboards an agent and shows source-backed space savings", async ({
     path: `test-results/onboard-${test.info().project.name}.png`,
     fullPage: true,
   });
-  expect(await page.evaluate(async (prompt) =>
-    await navigator.clipboard.readText() === prompt, setupPrompt)).toBe(true);
+  expect(
+    await page.evaluate(
+      async (prompt) => (await navigator.clipboard.readText()) === prompt,
+      setupPrompt,
+    ),
+  ).toBe(true);
   await expect(
-    page.getByRole("heading", { name: "Linux kernel", exact: true }),
+    page.getByRole("heading", { name: "Disk use", exact: true }),
   ).toBeVisible();
+  await expect(
+    page.getByRole("heading", { name: "Builtin conversions", exact: true }),
+  ).toBeVisible();
+  await expect(page.locator(".preview-chart .bar-row")).toHaveCount(10);
   await expect(page.locator(".disk-chart")).toHaveCount(1);
-  await expect(page.locator(".repo-group")).toHaveCount(6);
+  await expect(page.locator(".repo-group")).toHaveCount(5);
   expect(
     await page.evaluate(
       () => document.documentElement.scrollWidth <= innerWidth,
@@ -77,34 +103,103 @@ test("onboards an agent and shows source-backed space savings", async ({
   const instructions = await request.get("/llms.txt");
   expect(instructions.headers()["content-type"]).toContain("text/plain");
   const installInstructions = await instructions.text();
-  expect(installInstructions).toContain("brew install leostera/git-twig/git-twig");
+  expect(installInstructions).toContain(
+    "brew install leostera/git-twig/git-twig",
+  );
   expect(installInstructions).toContain("cargo install git-twig --locked");
   await expect(page.getByRole("status")).toHaveText("", { timeout: 5000 });
 });
-test("copies the real prompt even when the async Clipboard API is denied", async ({ page, context }) => {
+test("compares four filesystems and both metrics without mixing historical results", async ({
+  page,
+}) => {
+  await page.goto("/?filesystem=linux-btrfs");
+  await expect(
+    page.getByRole("button", { name: "Btrfs", exact: true }),
+  ).toHaveAttribute("aria-pressed", "true");
+  await expect(page.locator(".chart-health")).toContainText(
+    "272 verified creates",
+  );
+  await expect(page.locator(".chart-health")).toContainText("1 failed point");
+  for (const label of ["APFS", "APFS (case-sensitive)", "XFS", "Btrfs"]) {
+    await page.getByRole("button", { name: label, exact: true }).click();
+    await expect(
+      page.getByRole("button", { name: label, exact: true }),
+    ).toHaveAttribute("aria-pressed", "true");
+    await expect(page.locator(".preview-chart .bar-row")).toHaveCount(10);
+    expect(
+      await page.evaluate(
+        () => document.documentElement.scrollWidth <= innerWidth,
+      ),
+    ).toBe(true);
+  }
+  await page
+    .getByRole("button", { name: "Creation time", exact: true })
+    .focus();
+  await page.keyboard.press("Enter");
+  await expect(
+    page.getByRole("button", { name: "Creation time", exact: true }),
+  ).toHaveAttribute("aria-pressed", "true");
+  expect(
+    await page.locator(".preview-chart .bar-row > span").allTextContents(),
+  ).toEqual(expect.arrayContaining([expect.stringMatching(/ms| s/)]));
+  await page.screenshot({
+    path: `test-results/preview-time-${test.info().project.name}.png`,
+    fullPage: true,
+  });
+  await expect(page.getByText("Cross-revision", { exact: true })).toHaveCount(
+    0,
+  );
+  await expect(page.getByText("Twig v0.4", { exact: true })).toHaveCount(0);
+  expect(
+    new Set(await page.locator(".bar-row code").allTextContents()),
+  ).toEqual(new Set(["stock Git", "git twig"]));
+});
+
+test("copies the real prompt even when the async Clipboard API is denied", async ({
+  page,
+  context,
+}) => {
   await context.grantPermissions(["clipboard-read"]);
   await page.addInitScript(() => {
     Object.defineProperty(navigator.clipboard, "writeText", {
-      value: async () => { throw new Error("denied"); },
+      value: async () => {
+        throw new Error("denied");
+      },
     });
   });
   await page.goto("/");
-  await page.getByRole("button", { name: "Onboard your agent to Twig" }).click();
+  await page
+    .getByRole("button", { name: "Onboard your agent to Twig" })
+    .click();
   await expect(page.getByRole("status")).toHaveText("Setup prompt copied");
-  expect(await page.evaluate(async (prompt) =>
-    await navigator.clipboard.readText() === prompt, setupPrompt)).toBe(true);
+  expect(
+    await page.evaluate(
+      async (prompt) => (await navigator.clipboard.readText()) === prompt,
+      setupPrompt,
+    ),
+  ).toBe(true);
   await expect(page.getByText(setupPrompt, { exact: true })).toHaveCount(0);
 });
 
-test("does not dump the prompt or claim success when both copy methods fail", async ({ page }) => {
+test("does not dump the prompt or claim success when both copy methods fail", async ({
+  page,
+}) => {
   await page.addInitScript(() => {
     document.execCommand = () => false;
     Object.defineProperty(navigator, "clipboard", {
-      value: { writeText: async () => { throw new Error("denied"); } },
+      value: {
+        writeText: async () => {
+          throw new Error("denied");
+        },
+      },
     });
   });
   await page.goto("/");
-  await page.getByRole("button", { name: "Onboard your agent to Twig" }).click();
-  await expect(page.getByRole("status")).toHaveText("Couldn’t copy. Please try again.");
+  await page
+    .getByRole("button", { name: "Onboard your agent to Twig" })
+    .click();
+  await expect(page.getByRole("status")).toHaveText(
+    "Couldn’t copy. Please try again.",
+  );
   await expect(page.getByText(setupPrompt, { exact: true })).toHaveCount(0);
 });

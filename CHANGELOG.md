@@ -6,6 +6,9 @@ describe changes from this baseline after they are implemented and verified.
 
 ## Unreleased
 
+The v0.5 preview expands file sharing to more revisions and checkout policies,
+and adds experimental tools for existing worktrees. v0.4.0 is still the latest release.
+
 ### Added
 
 - Bounded same-filesystem donor selection across target revisions, while keeping
@@ -18,12 +21,21 @@ describe changes from this baseline after they are implemented and verified.
   donor submodules are never copied or recursively checked out.
 - Conversion rules on symlinks/gitlinks do not disable unrelated sharing, and
   core.symlinks=false only delegates when the target has symlink entries.
-- Differential revision/donor cases and deliberate comparator corruption controls.
-- Benchmark schema 4: separate donor/target provenance, isolated warmup/oracle
-  registries, real verified-clone counts and explicit fallback baselines.
-- Typed benchmark campaigns for Linux XFS/Btrfs and both APFS layouts, with frozen
-  executable identities, resource/deadline guards, retained failures and
-  reproducible CSV/SVG outputs.
+- Agent skill guidance for choosing a checkout, creating task branches, and
+  asking before cleanup, without requiring client-specific lifecycle hooks.
+
+### Verification and benchmarks
+
+- Differential revision/donor cases, dirty/staged source preservation, private
+  writes, concurrent creators and deterministic interruption/race coverage.
+- Linux filesystem coverage includes native XFS/Btrfs, tested OverlayFS layouts,
+  NTFS drivers and portable-filesystem fallback subsets.
+- Frozen checkout campaigns across XFS, Btrfs and default/case-sensitive APFS,
+  with separate timing/allocation observations and retained failed/unstable points.
+- Generated README tables for the unreleased candidate against stock Git and
+  source-built v0.4; the website compares only stock Git with the latest candidate.
+  Synthetic workload results remain separate from historical real-repository
+  benchmarks; no blanket speedup or adoption-space-savings claim.
 
 ### Experimental
 
@@ -45,7 +57,6 @@ describe changes from this baseline after they are implemented and verified.
 
 External filters on regular files, sparse checkout, conditional config includes and
 relative attribute-file configuration remain conservative whole-request fallbacks.
-Braiding, agent lifecycle hooks and an automatic setup manager are not included.
 
 ## [0.4.0] — 2026-11-17
 
