@@ -1,0 +1,29 @@
+{
+  "schemaVersion": 1,
+  "kind": "campaign-build-provenance",
+  "sourceCommit": "dc7f7205d46a8628508eee138149a39d4da96f24",
+  "baselineSourceCommit": "9f86536d3deec6432a07dee250f9d5cce0835993",
+  "baselineBuild": "source-built tag v0.4.0, not downloaded release archive",
+  "toolchain": "rustc 1.95.0 (59807616e 2026-04-14)\nbinary: rustc\ncommit-hash: 59807616e1fa2540724bfbac14d7976d7e4a3860\ncommit-date: 2026-04-14\nhost: aarch64-apple-darwin\nrelease: 1.95.0\nLLVM version: 22.1.2\n",
+  "platform": "ProductName:\t\tmacOS\nProductVersion:\t\t26.5\nBuildVersion:\t\t25F71\n",
+  "cpu": "Apple M1 Ultra\n",
+  "gitVersion": "git version 2.56.1\n",
+  "executables": {
+    "git-twig-v0.4.0-source": "e50747ef19f4e3a538954a7faf86974b4240686e3cccfdcd7da800613f7999be",
+    "twig-fixture": "18276d922cdfd9073b57c32c56f2f84ea7ec72334e818e9951f12d6bbec9c718",
+    "twig-real-bench": "90355620e2d5dd638f3ff6b686dd5904b8b99d3863eb1ff526bcfee38d83800b",
+    "twig-coverage-fixture": "ac6a6a9b5cefb41aa557045c588acdc01627a9990502fed36a3bad26896387ac",
+    "git-twig": "c4989db264978bba06274a9f3f1e4b4e3b4f50e72edcd7ae0f8cbe857d190456",
+    "git": "b5eaefb829ec3b61176f83ed7fddc333a9d92e762ec4e558f55baadc4314297d"
+  },
+  "minimumFreeGiB": 128,
+  "totalBudgetSecondsPerTarget": 1800,
+  "pointTimeoutSeconds": 180,
+  "targets": [
+    "macos-apfs",
+    "macos-apfs-case-sensitive"
+  ],
+  "notes": [
+    "No intentional competing build/test/benchmark workload on this host. Background apps are not stopped. Owned APFS images are disposable and allocation is not exclusive per-file block usage. Synthetic warm-cache coverage only."
+  ]
+}

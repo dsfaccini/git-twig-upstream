@@ -1,5 +1,5 @@
 #!/usr/bin/env python3
-"""Collect local Linux campaign JSONs without fixtures/images/logs; derive CSV."""
+"""Collect frozen checkout campaigns without fixtures/images/logs; derive CSV/SVG."""
 import argparse
 import csv
 import hashlib
@@ -53,7 +53,9 @@ def collect(manifest_path, interrupted_progress=None):
         data = interrupted_progress.read_bytes()
         records = [json.loads(line) for line in data.splitlines() if line.strip()]
         partial = {'point': failed[0]['result'], 'sha256': hashlib.sha256(data).hexdigest(), 'records': records}
-    return {'schemaVersion': 1, 'kind': 'linux-coverage-snapshot',
+    kind = ('checkout-coverage-snapshot' if manifest['config'].get('target', {}).get('os') == 'darwin'
+            else 'linux-coverage-snapshot')
+    return {'schemaVersion': 1, 'kind': kind,
             'notes': ['All original suite headers and cohorts are retained without changing measurements. Original file hashes identify the source runs; images, source fixtures and large logs are excluded.',
                       'CSV batch medians use repeated cohorts, not individual-create latency. Nearest-rank operation percentiles describe only the observed sample; small samples do not establish population tail latency.',
                       'Manifest v1 does not record each effective timeout. The runner bounds it by min(pointTimeoutSeconds, remaining total budget). A timeout at the end of a campaign is not necessarily the full configured per-point timeout.',
@@ -112,39 +114,54 @@ def save_csv(snapshot, path):
 
 
 def save_svg(snapshot, path):
+    from html import escape
     rows = [r for r in summaries(snapshot) if r['pairedGroupComplete'] and r['concurrency'] == 1]
+    if not rows:
+        raise ValueError('no complete c1 groups for chart')
+    filesystems = sorted({r['filesystem'] for r in rows})
     profiles = ['cross-revision', 'mixed-builtins', 'auto-crlf', 'submodules', 'byte-heavy', 'file-heavy']
     labels = ['revision', 'builtins', 'auto CRLF', 'gitlinks', 'unchanged', '4096 files']
     backends = [('git', '#7c8696'), ('baseline', '#5187d2'), ('candidate', '#28a179')]
-    parts = ['<svg xmlns="http://www.w3.org/2000/svg" width="1240" height="850" viewBox="0 0 1240 850">', '<rect width="1240" height="850" fill="#fff"/>',
-             '<g font-family="monospace" font-size="12" fill="#17212c">', '<text x="30" y="24">Local warm-cache loopback: two sequential creates; medians of three rounds</text>']
+    height = 120 + 365 * len(filesystems)
+    rounds = snapshot['manifest']['config']['rounds']
+    parts = [f'<svg xmlns="http://www.w3.org/2000/svg" width="1240" height="{height}" viewBox="0 0 1240 {height}">',
+             '<rect width="100%" height="100%" fill="#fff"/>',
+             '<g font-family="monospace" font-size="12" fill="#17212c">',
+             f'<text x="30" y="24">Local warm-cache filesystem images: c1 batch medians; {escape(str(rounds))} planned rounds</text>']
     for i, (backend, color) in enumerate(backends):
         identity = snapshot['manifest'].get(backend, {})
         revision = identity.get('sourceCommit') or identity.get('sha256', '')
         name = 'stock Git' if backend == 'git' else f'Twig {revision[:7]}'
-        parts.append(f'<rect x="{30+i*220}" y="40" width="14" height="14" fill="{color}"/><text x="{50+i*220}" y="52">{name}</text>')
-    for fs_index, filesystem in enumerate(('xfs', 'btrfs')):
+        parts.append(f'<rect x="{30+i*220}" y="40" width="14" height="14" fill="{color}"/><text x="{50+i*220}" y="52">{escape(name)}</text>')
+    for fs_index, filesystem in enumerate(filesystems):
         for metric_index, (metric, divisor, title) in enumerate([
                 ('allocationMedianBytes', 1048576, 'additional allocation after status (MiB)'),
                 ('batchCreateMedianMs', 1, 'batch create CLI wall time (ms)')]):
             x0, y0 = 65 + metric_index * 620, 345 + fs_index * 365
             selected = {(r['profile'], r['backend']): r[metric]/divisor for r in rows if r['filesystem'] == filesystem}
-            if not selected:
-                continue
+            lower = min(min(selected.values()) * 1.18, 0)
             upper = max(max(selected.values()) * 1.18, 1e-9)
-            parts.append(f'<text x="{x0-30}" y="{y0-255}">{filesystem}: {title}</text>')
+            scale = 220 / (upper - lower)
+            zero = y0 + lower * scale
+            parts.append(f'<text x="{x0-30}" y="{y0-255}">{escape(filesystem)}: {title}</text>')
             for tick in range(5):
-                value, y = upper*tick/4, y0-220*tick/4
+                value = lower + (upper-lower)*tick/4
+                y = y0 - (value-lower)*scale
                 parts.append(f'<path d="M{x0} {y}h520" stroke="#e3e7eb"/><text x="{x0-52}" y="{y+4}">{value:.1f}</text>')
+            parts.append(f'<path d="M{x0} {zero}h520" stroke="#7c8696"/>')
             for i, (profile, label) in enumerate(zip(profiles, labels)):
                 if any((profile, backend) not in selected for backend, _ in backends):
                     continue
                 for j, (backend, color) in enumerate(backends):
                     value = selected[(profile, backend)]
-                    x, height = x0 + i*86 + j*23, 220*value/upper
-                    parts.append(f'<rect x="{x}" y="{y0-height}" width="20" height="{max(height,0.5)}" fill="{color}"/><text x="{x+10}" y="{y0-height-6}" text-anchor="middle" font-size="9">{value:.2f}</text>')
+                    x = x0 + i*86 + j*23
+                    y = y0 - (value-lower)*scale
+                    bar_y, bar_height = min(y, zero), max(abs(y-zero), 0.5)
+                    label_y = bar_y-6 if value >= 0 else bar_y+bar_height+12
+                    label_value = f"{value:.4f}" if 0 < abs(value) < 0.01 else f"{value:.2f}"
+                    parts.append(f'<rect x="{x}" y="{bar_y}" width="20" height="{bar_height}" fill="{color}"/><text x="{x+10}" y="{label_y}" text-anchor="middle" font-size="9">{label_value}</text>')
                 parts.append(f'<text x="{x0+i*86+30}" y="{y0+22}" text-anchor="middle" font-size="10">{label}</text>')
-    parts.extend(['<text x="30" y="825">Synthetic fixtures; no universal speed/capacity claim. Interrupted Btrfs c16 is excluded from comparisons.</text>', '</g></svg>'])
+    parts.extend([f'<text x="30" y="{height-25}">Synthetic fixtures only; complete stable groups only. Small samples do not establish population tails.</text>', '</g></svg>'])
     with path.open('x') as handle:
         handle.write('\n'.join(parts) + '\n')
 

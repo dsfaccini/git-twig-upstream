@@ -68,6 +68,18 @@ test("APFS targets preserve their distinct worker filesystems", () => {
     expect(() => verify(raw, expected)).toThrow();
   }
 });
+test("Python reporting caches cannot dirty a measured checkout", () => {
+  const path = "bench/__pycache__/coverage_snapshot.cpython-313.pyc";
+  const root = new URL("../../", import.meta.url);
+  expect(
+    execFileSync("git", ["check-ignore", "--stdin"], {
+      cwd: root,
+      env: environment(),
+      input: path + "\n",
+      encoding: "utf8",
+    }).trim(),
+  ).toBe(path);
+});
 test("three rounds rotate each variant through each position", () => {
   const points = plan(["byte-heavy"], 3, 16);
   for (let position = 0; position < 3; position++)

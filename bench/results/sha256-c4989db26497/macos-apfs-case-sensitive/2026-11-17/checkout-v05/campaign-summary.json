@@ -1,0 +1,17 @@
+{
+  "schemaVersion": 1,
+  "target": "macos-apfs-case-sensitive",
+  "status": "completed",
+  "plannedPoints": 72,
+  "observedPoints": 72,
+  "verifiedPoints": 72,
+  "stableVerifiedPoints": 71,
+  "certifiedCreates": 288,
+  "failedPoints": [],
+  "unmeasuredPoints": 0,
+  "completeComparisonCells": 7,
+  "notes": [
+    "Incomplete and unstable comparison cells are retained, not retried, and excluded from comparisons. Small samples do not establish population tails.",
+    "Source-built v0.4.0 baseline, not the published binary archive. Synthetic warm-cache filesystem images, not real-repository, bare-device or cross-host speed claims."
+  ]
+}

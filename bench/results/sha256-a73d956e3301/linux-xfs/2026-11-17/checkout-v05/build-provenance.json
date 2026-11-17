@@ -1,0 +1,61 @@
+{
+  "schemaVersion": 1,
+  "kind": "campaign-build-provenance",
+  "args": [
+    "bun",
+    "bench/run.ts",
+    "run",
+    "--target",
+    "linux-xfs",
+    "--baseline",
+    "/home/leostera/Developer/github.com/leostera/git-twig/feat-v05-parity/target/v05-bench-dc7f720-20261117T163835/bin/git-twig-v0.4.0-source",
+    "--baseline-commit",
+    "9f86536d3deec6432a07dee250f9d5cce0835993",
+    "--candidate",
+    "/home/leostera/Developer/github.com/leostera/git-twig/feat-v05-parity/target/v05-bench-dc7f720-20261117T163835/bin/git-twig",
+    "--candidate-commit",
+    "dc7f7205d46a8628508eee138149a39d4da96f24",
+    "--binary-dir",
+    "/home/leostera/Developer/github.com/leostera/git-twig/feat-v05-parity/target/v05-bench-dc7f720-20261117T163835/bin",
+    "--rounds",
+    "3",
+    "--max-concurrency",
+    "16",
+    "--budget-seconds",
+    "1800",
+    "--point-timeout-seconds",
+    "180",
+    "--minimum-free-gib",
+    "128",
+    "--environment",
+    "Shared Linux host kernel 7.0.0-43-generic in privileged Ubuntu lab container; owned sparse XFS reflink=1 / Btrfs loopback images backed by ext4 /dev/sda1 on shared host disk. Source-built v0.4.0 tag baseline and candidate use rustc 1.95.0 release builds. Synthetic warm-cache coverage, no real-repository or bare-device speed claim; one campaign at a time on this backing disk; no intentional competing builds/tests."
+  ],
+  "baselineSourceCommit": "9f86536d3deec6432a07dee250f9d5cce0835993",
+  "candidateSourceCommit": "dc7f7205d46a8628508eee138149a39d4da96f24",
+  "baselineBuild": "source-built tag v0.4.0, not downloaded release archive",
+  "toolchain": "rustc 1.95.0",
+  "minimumFreeGiB": 128,
+  "totalBudgetSeconds": 1800,
+  "pointTimeoutSeconds": 180,
+  "targets": [
+    "linux-xfs",
+    "linux-btrfs"
+  ],
+  "rustc": "rustc 1.95.0 (59807616e 2026-04-14)\nbinary: rustc\ncommit-hash: 59807616e1fa2540724bfbac14d7976d7e4a3860\ncommit-date: 2026-04-14\nhost: x86_64-unknown-linux-gnu\nrelease: 1.95.0\nLLVM version: 22.1.2\n",
+  "kernel": "Linux starbase2 7.0.0-43-generic #43-Ubuntu SMP PREEMPT_DYNAMIC Fri Oct 23 13:25:25 UTC 2026 x86_64 GNU/Linux",
+  "binaries": {
+    "twig-real-bench": "4ebb35b4fb88b77419a196c191a34a4fd08181660f30bd8b68dc121b96e6a1de",
+    "git-twig": "a73d956e3301603be4359ce027ec1f135cb01a3df21fdb9d823e2f70b8b838ea",
+    "bun": "10702245766b225e70bbf6235fd6b47214fd94b4760d00ffaed8ab0df57ac235",
+    "twig-fixture": "5f72255d3235c6a1a4148e264b35a4b60ea057fb44d389b5922cbdab7d150af7",
+    "git-twig-v0.4.0-source": "cdd90c370be5d9379c21ae4ba993f5e164126e966506d67f6a820a13d856145a",
+    "git": "eb54b535467e0975c1284d4c4d08eea779aeb248a5d34b02e2ee171382e22201",
+    "twig-coverage-fixture": "1dbae85ec0651830dfe84cb16271f99e9d8b4d5ed97cfef797b9369e44b3c6d9"
+  },
+  "buildEnvironment": {
+    "RUSTFLAGS": null,
+    "CARGO_ENCODED_RUSTFLAGS": null,
+    "CARGO_BUILD_TARGET": null
+  },
+  "rawArtifactRoot": "/home/leostera/Developer/github.com/leostera/git-twig/feat-v05-parity/target/v05-bench-dc7f720-20261117T163835"
+}

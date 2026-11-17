@@ -1,6 +1,6 @@
 # RFD0021 — v0.5 parity and benchmark gates
 
-- Status: proposal
+- Status: accepted
 - Author: leostera
 - Date: 2026-11-17
 

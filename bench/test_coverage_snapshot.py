@@ -1,4 +1,6 @@
+import hashlib
 import json
+import tarfile
 import tempfile
 import unittest
 from pathlib import Path
@@ -31,6 +33,57 @@ class SnapshotTests(unittest.TestCase):
         self.manifest['points'].append(point)
         (self.root / 'point.json').write_text(json.dumps(self.result))
         return point
+
+    def test_apfs_retains_platform_identity(self):
+        self.manifest['config']['target'] = {'os': 'darwin'}
+        self.point(filesystem='apfs')
+        value = snapshot.collect(self.write())
+        self.assertEqual(value['kind'], 'checkout-coverage-snapshot')
+        self.assertEqual(value['manifest']['points'][0]['filesystem'], 'apfs')
+
+    def test_svg_uses_actual_target_and_excludes_incomplete_groups(self):
+        from unittest.mock import patch
+        rows = [dict(filesystem='apfs-case-sensitive', profile='byte-heavy',
+                     concurrency=1, pairedGroupComplete=True, backend=backend,
+                     allocationMedianBytes=-4096 if backend == 'candidate' else 1048576,
+                     batchCreateMedianMs=2)
+                for backend in ('git', 'baseline', 'candidate')]
+        with patch.object(snapshot, 'summaries', return_value=iter(rows)):
+            path = self.root / 'chart.svg'
+            snapshot.save_svg({'manifest': self.manifest}, path)
+        svg = path.read_text()
+        self.assertIn('apfs-case-sensitive', svg)
+        self.assertIn('1 planned rounds', svg)
+        self.assertNotIn('Interrupted Btrfs', svg)
+        self.assertIn('-0.0039', svg)
+        with patch.object(snapshot, 'summaries', return_value=iter([])):
+            with self.assertRaisesRegex(ValueError, 'no complete c1'):
+                snapshot.save_svg({'manifest': self.manifest}, self.root/'empty.svg')
+
+    def test_retained_v05_csvs_regenerate_byte_for_byte(self):
+        paths = list(Path(__file__).parent.glob('results/sha256-*/*/2026-11-17/checkout-v05/snapshot.json'))
+        self.assertEqual(len(paths), 4)
+        for index, path in enumerate(paths):
+            with self.subTest(path=str(path)):
+                value = json.loads(path.read_bytes())
+                output = self.root / f'archive-{index}.csv'
+                snapshot.save_csv(value, output)
+                self.assertEqual(output.read_bytes(), path.with_name('summary.csv').read_bytes())
+                artifact_index = json.loads(path.with_name('artifact-index.json').read_bytes())
+                for artifact in artifact_index['artifacts']:
+                    data = path.with_name(artifact['name']).read_bytes()
+                    self.assertEqual(len(data), artifact['bytes'])
+                    self.assertEqual(hashlib.sha256(data).hexdigest(), artifact['sha256'])
+                with tarfile.open(path.with_name('raw-json.tar.gz'), 'r:gz') as archive:
+                    data = archive.extractfile('manifest.json').read()
+                    self.assertEqual(hashlib.sha256(data).hexdigest(), value['manifestSha256'])
+                    self.assertEqual(json.loads(data), value['manifest'])
+                    for run in value['runs']:
+                        if run['sha256'] is None:
+                            continue
+                        data = archive.extractfile(run['name']).read()
+                        self.assertEqual(hashlib.sha256(data).hexdigest(), run['sha256'])
+                        self.assertEqual(json.loads(data), run['result'])
 
     def test_preserves_interrupted_header_and_unverified_creation_errors(self):
         self.point()

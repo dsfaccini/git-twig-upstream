@@ -58,6 +58,22 @@ indivisible comparisons rather than inventing a single build/filesystem identity
 Root `readme.json` selects published comparisons and `readme-details.md` remains
 the generated table consumer, not a run. Existing README/site numbers are unchanged.
 
+Use `coverage_snapshot.py` to retain every frozen outcome and regenerate
+CSV/SVG without rerunning measurements:
+
+```sh
+python3 -B bench/coverage_snapshot.py --manifest RUN/manifest.json \
+  --output ARCHIVE/snapshot.json --csv ARCHIVE/summary.csv --svg ARCHIVE/chart.svg
+python3 -B bench/coverage_snapshot.py --snapshot ARCHIVE/snapshot.json \
+  --csv NEW/summary.csv --svg NEW/chart.svg
+```
+
+Each output must be new. Charts include only complete, stable three-way c1
+groups; CSV retains incomplete groups with explicit flags. Preserve original
+JSON bytes and hashes alongside snapshots, including failed points, and never
+retry them to improve a comparison. An allocation-unstable point may have
+correct checkout bytes but does not certify an allocation comparison.
+
 Adding a target or workload means adding a typed module, registering it, and
 extending the plan/result-gate tests—not copying a campaign shell script.
 Correctness-only VM runs are not performance campaigns and remain separately

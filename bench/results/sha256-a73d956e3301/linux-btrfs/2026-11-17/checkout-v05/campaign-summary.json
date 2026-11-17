@@ -1,0 +1,63 @@
+{
+  "schemaVersion": 1,
+  "target": "linux-btrfs",
+  "status": "failed",
+  "plannedPoints": 72,
+  "observedPoints": 72,
+  "verifiedPoints": 71,
+  "stableVerifiedPoints": 71,
+  "certifiedCreates": 272,
+  "failedPoints": [
+    {
+      "profile": "file-heavy",
+      "concurrency": 16,
+      "worktrees": 16,
+      "round": 2,
+      "backend": "git",
+      "filesystem": "btrfs",
+      "result": "btrfs-file-heavy-c16-r2-git.json",
+      "command": [
+        "/home/leostera/Developer/github.com/leostera/git-twig/feat-v05-parity/target/v05-bench-dc7f720-20261117T163835/bin/twig-real-bench",
+        "--filesystem",
+        "linux-btrfs-image",
+        "--repo",
+        "file-heavy=/home/leostera/Developer/github.com/leostera/git-twig/feat-v05-parity/target/bench-fixtures/run-170133.600-bb95852f-2d3b-4bbc-93ca-832a238bef6c/inputs/files",
+        "--revision",
+        "file-heavy=e8a4059baef846984083e232e5b2aec0fd1ff743",
+        "--backend",
+        "git",
+        "--require-native",
+        "false",
+        "--repeats",
+        "1",
+        "--concurrency",
+        "16",
+        "--worktrees",
+        "16",
+        "--image-gib",
+        "8",
+        "--candidate",
+        "/home/leostera/Developer/github.com/leostera/git-twig/feat-v05-parity/target/v05-bench-dc7f720-20261117T163835/bin/git-twig",
+        "--output",
+        "/home/leostera/Developer/github.com/leostera/git-twig/feat-v05-parity/bench/results/sha256-a73d956e3301/linux-btrfs/2026-11-17/run-170133.600-bb95852f-2d3b-4bbc-93ca-832a238bef6c/btrfs-file-heavy-c16-r2-git.json",
+        "--note",
+        "Checkout campaign round 2, git; adjacent manifest.json records provenance and effective budgets."
+      ],
+      "startedElapsedMs": 992287.059561,
+      "finishedElapsedMs": 1011403.941979,
+      "timeoutSeconds": 179.99727042700002,
+      "deadlineElapsedMs": 1172287.0616950002,
+      "status": "failed",
+      "exitCode": 1,
+      "verified": false,
+      "allocationStable": false,
+      "error": "Process exit 1 / null"
+    }
+  ],
+  "unmeasuredPoints": 0,
+  "completeComparisonCells": 7,
+  "notes": [
+    "Incomplete and unstable comparison cells are retained, not retried, and excluded from comparisons. Small samples do not establish population tails.",
+    "Source-built v0.4.0 baseline, not the published binary archive. Synthetic warm-cache filesystem images, not real-repository, bare-device or cross-host speed claims."
+  ]
+}

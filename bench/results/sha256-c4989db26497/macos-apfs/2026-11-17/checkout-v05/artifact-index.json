@@ -1,0 +1,45 @@
+{
+  "schemaVersion": 1,
+  "artifacts": [
+    {
+      "name": "build-provenance.json",
+      "sha256": "a9f838f62d0edc3b41c8a447d8179054b6dce7a2204430f660d31a6aab6e227c",
+      "bytes": 1624
+    },
+    {
+      "name": "campaign-summary.json",
+      "sha256": "5a47be64ccecf2ac791256995b34a31b4e48e18accc611178607754e842877c4",
+      "bytes": 2465
+    },
+    {
+      "name": "candidate.bundle",
+      "sha256": "a734a75994ca4a44fdadb2cb0aab0c7db91306e9749801ff3ae87c0e64e3f29c",
+      "bytes": 7732
+    },
+    {
+      "name": "chart.svg",
+      "sha256": "6390db74a8326fb75c6be1dde9d2dae67bf0006ed6801a3c48457996a7f0ef09",
+      "bytes": 8923
+    },
+    {
+      "name": "failure-diagnostic.json",
+      "sha256": "3f0712b69b9e7b2e3ec22d1bd9325022da41da40d8ee22335b562663d28e3dfd",
+      "bytes": 1565
+    },
+    {
+      "name": "raw-json.tar.gz",
+      "sha256": "78485086b9490954ebf86c683f86456db0f7d4bbbce48632e28af9a63ab03f10",
+      "bytes": 27276
+    },
+    {
+      "name": "snapshot.json",
+      "sha256": "df08fc6bed79278a6b58b85dee9ee7e4f7feaebcddb279a64f2f4a5ddf230fb3",
+      "bytes": 465999
+    },
+    {
+      "name": "summary.csv",
+      "sha256": "9237d5bd2b8d7dbc9b8d28741ea23c2e0a71a51a92f0ae10eb9c61157cdd2b66",
+      "bytes": 4326
+    }
+  ]
+}

@@ -1,0 +1,71 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="1240" height="485" viewBox="0 0 1240 485">
+<rect width="100%" height="100%" fill="#fff"/>
+<g font-family="monospace" font-size="12" fill="#17212c">
+<text x="30" y="24">Local warm-cache filesystem images: c1 batch medians; 3 planned rounds</text>
+<rect x="30" y="40" width="14" height="14" fill="#7c8696"/><text x="50" y="52">stock Git</text>
+<rect x="250" y="40" width="14" height="14" fill="#5187d2"/><text x="270" y="52">Twig 9f86536</text>
+<rect x="470" y="40" width="14" height="14" fill="#28a179"/><text x="490" y="52">Twig dc7f720</text>
+<text x="35" y="90">xfs: additional allocation after status (MiB)</text>
+<path d="M65 345.0h520" stroke="#e3e7eb"/><text x="13" y="349.0">0.0</text>
+<path d="M65 290.0h520" stroke="#e3e7eb"/><text x="13" y="294.0">37.8</text>
+<path d="M65 235.0h520" stroke="#e3e7eb"/><text x="13" y="239.0">75.6</text>
+<path d="M65 180.0h520" stroke="#e3e7eb"/><text x="13" y="184.0">113.4</text>
+<path d="M65 125.00000000000003h520" stroke="#e3e7eb"/><text x="13" y="129.00000000000003">151.2</text>
+<path d="M65 345.0h520" stroke="#7c8696"/>
+<rect x="65" y="158.61616717017677" width="20" height="186.38383282982323" fill="#7c8696"/><text x="75" y="152.61616717017677" text-anchor="middle" font-size="9">128.08</text>
+<rect x="88" y="158.61616717017677" width="20" height="186.38383282982323" fill="#5187d2"/><text x="98" y="152.61616717017677" text-anchor="middle" font-size="9">128.08</text>
+<rect x="111" y="321.5798038532734" width="20" height="23.420196146726596" fill="#28a179"/><text x="121" y="315.5798038532734" text-anchor="middle" font-size="9">16.09</text>
+<text x="95" y="367" text-anchor="middle" font-size="10">revision</text>
+<rect x="151" y="158.60479814292108" width="20" height="186.39520185707892" fill="#7c8696"/><text x="161" y="152.60479814292108" text-anchor="middle" font-size="9">128.09</text>
+<rect x="174" y="158.55932203389833" width="20" height="186.44067796610167" fill="#5187d2"/><text x="184" y="152.55932203389833" text-anchor="middle" font-size="9">128.12</text>
+<rect x="197" y="344.852202645676" width="20" height="0.5" fill="#28a179"/><text x="207" y="338.852202645676" text-anchor="middle" font-size="9">0.10</text>
+<text x="181" y="367" text-anchor="middle" font-size="10">builtins</text>
+<rect x="237" y="158.61616717017677" width="20" height="186.38383282982323" fill="#7c8696"/><text x="247" y="152.61616717017677" text-anchor="middle" font-size="9">128.08</text>
+<rect x="260" y="158.5820600884097" width="20" height="186.4179399115903" fill="#5187d2"/><text x="270" y="152.5820600884097" text-anchor="middle" font-size="9">128.10</text>
+<rect x="283" y="344.852202645676" width="20" height="0.5" fill="#28a179"/><text x="293" y="338.852202645676" text-anchor="middle" font-size="9">0.10</text>
+<text x="267" y="367" text-anchor="middle" font-size="10">auto CRLF</text>
+<rect x="323" y="158.62753619743248" width="20" height="186.37246380256752" fill="#7c8696"/><text x="333" y="152.62753619743248" text-anchor="middle" font-size="9">128.07</text>
+<rect x="346" y="158.62753619743248" width="20" height="186.37246380256752" fill="#5187d2"/><text x="356" y="152.62753619743248" text-anchor="middle" font-size="9">128.07</text>
+<rect x="369" y="344.92041680921017" width="20" height="0.5" fill="#28a179"/><text x="379" y="338.92041680921017" text-anchor="middle" font-size="9">0.05</text>
+<text x="353" y="367" text-anchor="middle" font-size="10">gitlinks</text>
+<rect x="409" y="158.63890522468816" width="20" height="186.36109477531184" fill="#7c8696"/><text x="419" y="152.63890522468816" text-anchor="middle" font-size="9">128.06</text>
+<rect x="432" y="344.8749407001874" width="20" height="0.5" fill="#5187d2"/><text x="442" y="338.8749407001874" text-anchor="middle" font-size="9">0.09</text>
+<rect x="455" y="344.8749407001874" width="20" height="0.5" fill="#28a179"/><text x="465" y="338.8749407001874" text-anchor="middle" font-size="9">0.09</text>
+<text x="439" y="367" text-anchor="middle" font-size="10">unchanged</text>
+<rect x="495" y="290.79247804485806" width="20" height="54.20752195514194" fill="#7c8696"/><text x="505" y="284.79247804485806" text-anchor="middle" font-size="9">37.25</text>
+<rect x="518" y="337.28043049338476" width="20" height="7.719569506615244" fill="#5187d2"/><text x="528" y="331.28043049338476" text-anchor="middle" font-size="9">5.30</text>
+<rect x="541" y="337.28043049338476" width="20" height="7.719569506615244" fill="#28a179"/><text x="551" y="331.28043049338476" text-anchor="middle" font-size="9">5.30</text>
+<text x="525" y="367" text-anchor="middle" font-size="10">4096 files</text>
+<text x="655" y="90">xfs: batch create CLI wall time (ms)</text>
+<path d="M685 345.0h520" stroke="#e3e7eb"/><text x="633" y="349.0">0.0</text>
+<path d="M685 290.0h520" stroke="#e3e7eb"/><text x="633" y="294.0">511.0</text>
+<path d="M685 235.0h520" stroke="#e3e7eb"/><text x="633" y="239.0">1022.0</text>
+<path d="M685 180.0h520" stroke="#e3e7eb"/><text x="633" y="184.0">1533.0</text>
+<path d="M685 125.0h520" stroke="#e3e7eb"/><text x="633" y="129.0">2043.9</text>
+<path d="M685 345.0h520" stroke="#7c8696"/>
+<rect x="685" y="324.8073901002787" width="20" height="20.192609899721276" fill="#7c8696"/><text x="695" y="318.8073901002787" text-anchor="middle" font-size="9">187.60</text>
+<rect x="708" y="325.7430862320572" width="20" height="19.25691376794282" fill="#5187d2"/><text x="718" y="319.7430862320572" text-anchor="middle" font-size="9">178.91</text>
+<rect x="731" y="278.05932767764676" width="20" height="66.94067232235324" fill="#28a179"/><text x="741" y="272.05932767764676" text-anchor="middle" font-size="9">621.92</text>
+<text x="715" y="367" text-anchor="middle" font-size="10">revision</text>
+<rect x="771" y="325.0519766374504" width="20" height="19.948023362549577" fill="#7c8696"/><text x="781" y="319.0519766374504" text-anchor="middle" font-size="9">185.33</text>
+<rect x="794" y="317.4321005816252" width="20" height="27.567899418374793" fill="#5187d2"/><text x="804" y="311.4321005816252" text-anchor="middle" font-size="9">256.12</text>
+<rect x="817" y="277.8733590946655" width="20" height="67.12664090533451" fill="#28a179"/><text x="827" y="271.8733590946655" text-anchor="middle" font-size="9">623.65</text>
+<text x="801" y="367" text-anchor="middle" font-size="10">builtins</text>
+<rect x="857" y="293.6943638422048" width="20" height="51.30563615779522" fill="#7c8696"/><text x="867" y="287.6943638422048" text-anchor="middle" font-size="9">476.66</text>
+<rect x="880" y="273.5296004226267" width="20" height="71.47039957737331" fill="#5187d2"/><text x="890" y="267.5296004226267" text-anchor="middle" font-size="9">664.00</text>
+<rect x="903" y="306.1317314438406" width="20" height="38.86826855615942" fill="#28a179"/><text x="913" y="300.1317314438406" text-anchor="middle" font-size="9">361.11</text>
+<text x="887" y="367" text-anchor="middle" font-size="10">auto CRLF</text>
+<rect x="943" y="325.9405820357246" width="20" height="19.059417964275383" fill="#7c8696"/><text x="953" y="319.9405820357246" text-anchor="middle" font-size="9">177.07</text>
+<rect x="966" y="320.7397369677997" width="20" height="24.260263032200328" fill="#5187d2"/><text x="976" y="314.7397369677997" text-anchor="middle" font-size="9">225.39</text>
+<rect x="989" y="279.260914635223" width="20" height="65.739085364777" fill="#28a179"/><text x="999" y="273.260914635223" text-anchor="middle" font-size="9">610.76</text>
+<text x="973" y="367" text-anchor="middle" font-size="10">gitlinks</text>
+<rect x="1029" y="325.8862942565023" width="20" height="19.11370574349769" fill="#7c8696"/><text x="1039" y="319.8862942565023" text-anchor="middle" font-size="9">177.58</text>
+<rect x="1052" y="279.87641612429627" width="20" height="65.12358387570373" fill="#5187d2"/><text x="1062" y="273.87641612429627" text-anchor="middle" font-size="9">605.04</text>
+<rect x="1075" y="279.87027541308316" width="20" height="65.12972458691684" fill="#28a179"/><text x="1085" y="273.87027541308316" text-anchor="middle" font-size="9">605.10</text>
+<text x="1059" y="367" text-anchor="middle" font-size="10">unchanged</text>
+<rect x="1115" y="262.3249808930166" width="20" height="82.67501910698343" fill="#7c8696"/><text x="1125" y="256.3249808930166" text-anchor="middle" font-size="9">768.10</text>
+<rect x="1138" y="170.36622918407676" width="20" height="174.63377081592324" fill="#5187d2"/><text x="1148" y="164.36622918407676" text-anchor="middle" font-size="9">1622.46</text>
+<rect x="1161" y="158.55932203389827" width="20" height="186.44067796610173" fill="#28a179"/><text x="1171" y="152.55932203389827" text-anchor="middle" font-size="9">1732.15</text>
+<text x="1145" y="367" text-anchor="middle" font-size="10">4096 files</text>
+<text x="30" y="460">Synthetic fixtures only; complete stable groups only. Small samples do not establish population tails.</text>
+</g></svg>
