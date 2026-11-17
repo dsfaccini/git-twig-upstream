@@ -25,6 +25,10 @@ mod nonregular_coverage;
 #[path = "cases/safety_properties.rs"]
 mod safety_properties;
 
+#[cfg(unix)]
+#[path = "cases/adopt.rs"]
+mod adopt;
+
 static NEXT: AtomicU64 = AtomicU64::new(0);
 struct Fixture {
     root: PathBuf,

@@ -6,6 +6,7 @@ Usage: git twig <command> [options]
 
 Commands:
   new       Create a linked worktree; use -b <branch> or --detach
+  adopt     EXPERIMENT: inspect/prepare existing files; Linux in-place dedupe
   list      List worktrees (--porcelain for machine-readable output)
   remove    Remove a worktree
   move      Move a worktree
@@ -69,6 +70,9 @@ pub fn for_args(args: &[OsString]) -> Option<String> {
     }
     let help = match command {
         "new" => return Some(NEW.into()),
+        "adopt" => {
+            "adopt [--dry-run | --prepare | --dedupe] <linked-worktree>\nExperimental: run from a different donor checkout in the same repository.\nDefault/--dry-run compares current tracked-file bytes without writes.\n--prepare retains private verified clones in Git metadata, without replacing files.\n--dedupe is Linux-only in-place sharing; APFS live replacement is unsupported.\nDirty/staged contents are not restored to HEAD. No physical savings claim."
+        }
         "list" => {
             "list [--verbose] [--porcelain [-z]]\nList worktrees; --porcelain is Git's stable machine-readable format."
         }

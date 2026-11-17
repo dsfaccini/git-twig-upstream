@@ -1,4 +1,5 @@
 //! Native CoW materialization with Git-owned linked-worktree bookkeeping.
+mod adopt;
 mod checkout;
 mod donor;
 mod native;
@@ -19,6 +20,9 @@ use tree::{Entry, Kind};
 
 /// Execute supported creation requests natively; delegate everything else to Git.
 pub fn run(cwd: &Path, args: &[OsString]) -> Result<i32> {
+    if args.first().is_some_and(|arg| arg == "adopt") {
+        return adopt::run(cwd, &args[1..]);
+    }
     ensure!(
         args.first().is_none_or(|arg| arg != "add"),
         "\'add\' has been removed; use \'git twig new\'"
