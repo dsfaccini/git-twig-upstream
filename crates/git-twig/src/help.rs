@@ -28,7 +28,7 @@ Use git twig <command> -h for command help, even outside a repository.
 Git reserves git twig --help for the installed manual; use git twig -h
 or git-twig --help if no manual is installed.
 
-Native CoW requires the source checkout's HEAD and macOS/APFS or Linux reflinks.
+Native CoW reuses matching files from nearby worktrees on APFS or Linux reflinks.
 Other requests and unsupported worktree options use stock Git. Requires Git 2.40+.
 Set TWIG_TRACE=1 to report backend selection to stderr.
 ";
@@ -43,13 +43,14 @@ const NEW: &str = "Usage: git twig new [<git-worktree options>] <path> [<commit>
   --lock           Lock the new worktree (delegates to Git)
   --reason <text>  Explain the lock
 
-Native CoW: use -b <branch> or --detach, with the source checkout's HEAD.
-Other options/revisions delegate to Git. Never overwrite an existing destination.
+Native CoW: use -b <branch> or --detach with the requested revision.
+Nearby worktrees can supply matching files. Unsupported options use stock Git.
+Never overwrite an existing destination.
 
 From the directory containing main/:
   git -C main twig new -b feat/x ../feat-x HEAD
 
-Source and destination must share a clone-capable filesystem. Git metadata must
+The selected donor and destination must share a clone-capable filesystem. Git metadata must
 also be on that filesystem; otherwise creation delegates to Git.
 See git help worktree for the full Git worktree option reference.
 ";

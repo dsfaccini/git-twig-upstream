@@ -18,8 +18,9 @@ Git's worktree implementation, without inheriting local or ignored files.
 .SH COMMANDS
 .TP
 .B new [-b branch | --detach] path [commit]
-Create a worktree. Native copying requires the source checkout's current HEAD;
-other commits and unsupported options delegate to Git.
+Create a worktree. Development builds can select a nearby donor worktree for
+other commits; matching files are verified clones and Git writes the rest.
+Unsupported options delegate to Git. Published v0.3.0 requires the source HEAD.
 .TP
 .B list [--porcelain [-z]]
 List worktrees. Porcelain is Git's stable machine-readable format.
@@ -52,20 +53,21 @@ git -C main twig new -b feat/x ../feat-x HEAD
 .fi
 .PP
 The destination is resolved relative to main, so it is a sibling named feat-x.
-HEAD must name the source checkout's current commit for native copying.
+The requested commit is pinned; donor files never authorize uncommitted content.
 .SH CHECKOUT COVERAGE
 Version 0.4.0 supports common LF policies such as text=auto eol=lf.
 Private candidate bytes are compared to raw target blobs. Git materializes
 files requiring conversion or whose bytes differ; other verified files retain
-sharing. Upgrade older releases for this coverage and the filter-state fix.
-External filters, ident expansion, working-tree encodings, conditional config
-includes and relative attribute-file configuration delegate to stock Git.
+sharing. Upgrade older releases for the released LF-policy and filter-state fixes.
+Development builds materialize builtin ident and encoding exceptions per file.
+External filters, conditional config includes, sparse checkout, submodules and
+relative attribute-file configuration delegate to stock Git.
 Checkout configuration and external attributes must not change during creation.
 .SH STAGING
 Staging is stored under the common Git directory in twigs/staging. Successful
 operations remove their own staging. Failed/interrupted attempts retain diagnostic
 state; inspect reported paths and registrations before retrying or deleting.
-Source, destination and Git metadata must share a clone-capable filesystem for
+The selected donor, destination and Git metadata must share a clone-capable filesystem for
 the native path; unsupported layouts delegate to Git.
 .SH HELP
 Short help works outside repositories:

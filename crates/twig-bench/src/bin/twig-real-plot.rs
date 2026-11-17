@@ -13,7 +13,8 @@ fn main() -> Result<()> {
     ensure!(
         (run["suite"] == "real-apfs-cohort"
             && (run["schemaVersion"] == 1 || run["schemaVersion"] == 2))
-            || (run["suite"] == "real-image-cohort" && run["schemaVersion"] == 3),
+            || (run["suite"] == "real-image-cohort"
+                && matches!(run["schemaVersion"].as_u64(), Some(3 | 4))),
         "unsupported suite/schema"
     );
     let cohorts = run["cohorts"].as_array().context("missing cohorts")?;

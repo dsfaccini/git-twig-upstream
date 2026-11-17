@@ -15,9 +15,10 @@ target/release/twig-fixture target/inputs/file-heavy/main 4096 1024
 
 Use `--repo label=/absolute/path/to/repo` for public real repositories. The harness
 pins HEAD and creates a new seed; original repositories are read-only inputs.
-`--revision label=FULL_OID` overrides the pin. Custom conversion attributes and
-unsupported checkout semantics are outside the native subset; warmup must select
-native CoW or the run fails. Do not remove attributes just to label a modified
+`--revision label=FULL_OID` pins the target. `--donor-revision label=FULL_OID`
+can seed a different source commit. LF policies and builtin ident/encoding
+exceptions are supported; external filters, sparse checkout and submodules remain
+outside the native subset. Do not remove attributes just to label a modified
 fixture an unmodified real repository.
 
 ## Isolated Linux environment
@@ -64,7 +65,9 @@ Backend order alternates. JSON includes every attempt, native selection, exact
 input commit/tree, candidate SHA-256, harness revision/dirty state, versions, CPU,
 kernel, capacity, samples and allocation stabilization observations. Scratch
 append-only completion JSONL preserves interrupted outcomes. Native Twig is
-mandatory; fallback is an error rather than a covert stock-Git measurement.
+mandatory by default, including nonzero verified file-clone counts. Only an
+explicit frozen fallback baseline may use `--require-native false`; its real
+native flags and counts stay in the results, never relabeled as CoW.
 
 Creation is the bounded cohort's wall time through the final CLI completion,
 excluding final coordinator checkpoint/join work. Raw per-operation create latency,
@@ -93,3 +96,40 @@ runs. Do not benchmark alongside the correctness stress suite or other image I/O
 Results describe warm-cache loopback files on the recorded backing filesystem and
 a shared host, not cold-cache or bare-device performance. See
 [RFD0012](../docs/rfds/RFD0012-linux-correctness-and-measurement.md).
+
+## Local coverage and before/after ramp
+
+Freeze the baseline binary before rebuilding the candidate. Commit the harness
+and candidate before running. No source checkout, image, binary or verbose log
+belongs in the committed results.
+
+```sh
+# Inside the unprivileged Linux lab, with mount permission already configured:
+target/release/twig-linux-coverage \
+  --baseline target/baselines/870f52e/git-twig \
+  --baseline-commit 870f52e02f5cf168f17fe5646da7312fc626225f \
+  --output target/linux-coverage/NEW_RUN \
+  --rounds 3 --max-concurrency 16 \
+  --budget-seconds 1800 --point-timeout-seconds 180
+# Smaller staging run: --filesystems xfs --profiles cross-revision,mixed-builtins
+#                         --rounds 1 --max-concurrency 1
+```
+
+The driver rotates stock Git, frozen Twig and candidate positions by round. It
+covers unchanged incompressible data, changed target revisions, mixed builtin
+conversions, automatic-CRLF binary sharing and many-file concurrency levels. A configured ramp cap or budget is
+not a measured capacity ceiling. Every point saves schema-4 raw measurements;
+manifest.json records pins, binary hashes, ordering, correctness, allocation
+stability and any stopping reason. The baseline may delegate where the candidate
+is newly supported; that remains visible rather than being called native CoW.
+
+Warmups have separate Git registries. A different-revision oracle is a separate
+clone outside the measured image/registry, so neither can become a perfect donor
+and inflate apparent coverage. Later measured creates may legitimately reuse an
+earlier completed target. Source and target commits/trees are recorded separately.
+The private-write probe uses the largest nonzero-data file present in both the target and original
+donor, and all original donor files are checked afterwards. Incorrect points stop
+the run without retry; unstable allocation remains data, not a publishable win.
+
+Runs are local only. Updating README/site numbers, pushing or releasing is a
+separate user decision. See [RFD0015](../docs/rfds/RFD0015-linux-donor-coverage.md).

@@ -26,7 +26,12 @@ pub fn hash_private_files(root: &Path, data: &Path, entries: &[&Entry]) -> Resul
             "raw hash input is not a regular entry"
         );
         let path = data.join(&entry.path);
-        let metadata = fs::symlink_metadata(&path)?;
+        let metadata = match fs::symlink_metadata(&path) {
+            Ok(metadata) => metadata,
+            // Cross-revision targets may have no candidate in the selected donor.
+            Err(error) if error.kind() == std::io::ErrorKind::NotFound => continue,
+            Err(error) => return Err(error.into()),
+        };
         ensure!(
             metadata.is_file(),
             "private hash candidate is not a regular file"
@@ -172,6 +177,12 @@ fn quote_stdin_path(path: &[u8], output: &mut Vec<u8>) {
     output.extend_from_slice(b"\"\n");
 }
 
+/// Facts about raw target bytes and their private candidate, not normalized hashes.
+pub struct Comparison {
+    pub equal: bool,
+    pub contains_nul: bool,
+}
+
 pub struct Objects {
     child: Child,
     input: ChildStdin,
@@ -196,7 +207,19 @@ impl Objects {
         })
     }
 
-    pub fn matches(&mut self, data: &Path, entry: &Entry) -> Result<bool> {
+    pub fn compare(&mut self, data: &Path, entry: &Entry) -> Result<Comparison> {
+        // A target-only path has no candidate. Check before requesting an object so
+        // the next comparison cannot consume an undrained header/body.
+        match fs::symlink_metadata(data.join(&entry.path)) {
+            Ok(_) => {}
+            Err(error) if error.kind() == std::io::ErrorKind::NotFound => {
+                return Ok(Comparison {
+                    equal: false,
+                    contains_nul: false,
+                });
+            }
+            Err(error) => return Err(error.into()),
+        }
         writeln!(self.input, "{}", entry.object.as_str())?;
         self.input.flush()?;
         let mut header = String::new();
@@ -250,13 +273,19 @@ impl Drop for Objects {
     }
 }
 
-fn compare(object: &mut impl Read, candidate: &mut dyn Read, mut remaining: u64) -> Result<bool> {
+fn compare(
+    object: &mut impl Read,
+    candidate: &mut dyn Read,
+    mut remaining: u64,
+) -> Result<Comparison> {
     let mut expected = [0; 64 * 1024];
     let mut actual = [0; 64 * 1024];
     let mut equal = true;
+    let mut contains_nul = false;
     while remaining > 0 {
         let size = remaining.min(expected.len() as u64) as usize;
         object.read_exact(&mut expected[..size])?;
+        contains_nul |= expected[..size].contains(&0);
         // Always drain the complete object, even after discovering a mismatch.
         if equal {
             match candidate.read_exact(&mut actual[..size]) {
@@ -267,7 +296,10 @@ fn compare(object: &mut impl Read, candidate: &mut dyn Read, mut remaining: u64)
         }
         remaining -= size as u64;
     }
-    Ok(equal && candidate.read(&mut actual[..1])? == 0)
+    Ok(Comparison {
+        equal: equal && candidate.read(&mut actual[..1])? == 0,
+        contains_nul,
+    })
 }
 
 /// Fail closed when replace refs or grafts could make an object ID mean other bytes.
@@ -336,20 +368,25 @@ mod tests {
     fn compares_raw_bytes_and_drains_mismatches() -> Result<()> {
         for bytes in [b"".as_slice(), b"a", b"a\r\n", b"\0binary", &[7; 140000]] {
             let mut object = std::io::Cursor::new(bytes);
-            assert!(compare(
-                &mut object,
-                &mut std::io::Cursor::new(bytes),
-                bytes.len() as u64
-            )?);
+            assert!(
+                compare(
+                    &mut object,
+                    &mut std::io::Cursor::new(bytes),
+                    bytes.len() as u64
+                )?
+                .equal
+            );
             assert_eq!(object.position(), bytes.len() as u64);
+            let comparison = compare(
+                &mut std::io::Cursor::new(bytes),
+                &mut std::io::Cursor::new(bytes),
+                bytes.len() as u64,
+            )?;
+            assert_eq!(comparison.contains_nul, bytes.contains(&0));
         }
         for candidate in [b"".as_slice(), b"x", b"longer"] {
             let mut object = std::io::Cursor::new(b"a");
-            assert!(!compare(
-                &mut object,
-                &mut std::io::Cursor::new(candidate),
-                1
-            )?);
+            assert!(!compare(&mut object, &mut std::io::Cursor::new(candidate), 1)?.equal);
             assert_eq!(object.position(), 1);
         }
         Ok(())

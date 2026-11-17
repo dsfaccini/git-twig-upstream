@@ -427,7 +427,71 @@ fn copied_worktree_config_keeps_absolute_includes_but_delegates_relative_ones() 
 }
 
 #[test]
-fn expansion_and_encoding_attributes_delegate_before_native_installation() -> Result<()> {
+fn auto_crlf_keeps_verified_nul_blobs_but_still_converts_text() -> Result<()> {
+    for configured in [false, true] {
+        for dirty in [false, true] {
+            let f = Fixture::new()?;
+            if configured {
+                git(&f.source, &["config", "core.autocrlf", "true"])?;
+            } else {
+                fs::write(f.source.join(".gitattributes"), "* text=auto eol=crlf\n")?;
+            }
+            let mut blob = b"binary-looking-late\n".repeat(8000);
+            blob.push(0); // Past multiple comparison buffers; inspect the target, not a prefix.
+            fs::write(f.source.join("binary.bin"), &blob)?;
+            git(&f.source, &["add", "."])?;
+            git(&f.source, &["commit", "-m", "auto binary and text"])?;
+            if dirty {
+                *blob.last_mut().unwrap() = b'x';
+                fs::write(f.source.join("binary.bin"), &blob)?;
+            }
+            let output = compare_stock(&f, &["binary.bin", "hello.txt"], true)?;
+            assert_eq!(fs::read(f.destination().join("hello.txt"))?, CRLF);
+            let plain = if configured { 2 } else { 3 };
+            let trace = String::from_utf8_lossy(&output.stderr);
+            if trace.contains("CoW: verified") {
+                let clones = usize::from(!dirty);
+                let written = plain + usize::from(dirty);
+                assert!(
+                    trace.contains(&format!(
+                        "checkout: {clones} verified file clones, {written} Git-written paths"
+                    )),
+                    "{trace}"
+                );
+            }
+            assert_eq!(fs::read(f.source.join("binary.bin"))?, blob);
+        }
+    }
+    Ok(())
+}
+
+#[test]
+fn forced_text_does_not_get_the_auto_binary_exemption() -> Result<()> {
+    let f = Fixture::new()?;
+    fs::write(
+        f.source.join(".gitattributes"),
+        "binary.bin text eol=crlf\n",
+    )?;
+    fs::write(f.source.join("binary.bin"), b"a\0\nb\n")?;
+    git(&f.source, &["add", "."])?;
+    git(&f.source, &["commit", "-m", "forced binary text"])?;
+    let output = compare_stock(&f, &["binary.bin"], true)?;
+    assert_eq!(
+        fs::read(f.destination().join("binary.bin"))?,
+        b"a\0\r\nb\r\n"
+    );
+    let trace = String::from_utf8_lossy(&output.stderr);
+    if trace.contains("CoW: verified") {
+        assert!(
+            trace.contains("checkout: 3 verified file clones, 1 Git-written paths"),
+            "{trace}"
+        );
+    }
+    Ok(())
+}
+
+#[test]
+fn builtin_conversions_are_hybrid_but_external_filters_still_delegate() -> Result<()> {
     for attributes in [
         "hello.txt ident\n",
         "hello.txt working-tree-encoding=UTF-16LE\n",
@@ -438,8 +502,11 @@ fn expansion_and_encoding_attributes_delegate_before_native_installation() -> Re
         git(&f.source, &["add", ".gitattributes"])?;
         commit_blob(&f, "hello.txt", b"$Id$\n", "100644")?;
         fs::write(f.source.join("hello.txt"), b"$Id$\n")?;
-        let output = compare_stock(&f, &["hello.txt"], false)?;
-        assert!(!String::from_utf8_lossy(&output.stderr).contains("CoW: verified"));
+        let external = attributes.contains("filter");
+        let output = compare_stock(&f, &["hello.txt"], !external)?;
+        if external {
+            assert!(!String::from_utf8_lossy(&output.stderr).contains("CoW: verified"));
+        }
     }
     Ok(())
 }

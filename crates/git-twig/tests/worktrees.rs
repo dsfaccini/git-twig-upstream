@@ -11,6 +11,8 @@ use std::{
 mod checkout_policy;
 #[path = "cases/checkout_races.rs"]
 mod checkout_races;
+#[path = "cases/donor_coverage.rs"]
+mod donor_coverage;
 #[path = "cases/fallback_diagnostics.rs"]
 mod fallback_diagnostics;
 
@@ -844,11 +846,12 @@ fn existing_destination_is_untouched() -> Result<()> {
 }
 
 #[test]
-fn different_commit_uses_git() -> Result<()> {
+fn different_commit_reuses_unchanged_paths() -> Result<()> {
     let f = Fixture::new()?;
     fs::write(f.source.join("hello.txt"), "second\n")?;
     git(&f.source, &["commit", "-am", "second"])?;
-    checked(f.twig(&["new", "--detach", "../feature", "HEAD~1"])?)?;
+    let output = checked(f.twig(&["new", "--detach", "../feature", "HEAD~1"])?)?;
+    native(&output);
     assert_eq!(fs::read(f.destination().join("hello.txt"))?, b"hello\n");
     clean(&f.destination())
 }
@@ -1016,7 +1019,10 @@ fn filters_and_sparse_checkouts_delegate() -> Result<()> {
         if sparse {
             git(&f.source, &["sparse-checkout", "init", "--cone"])?;
         } else {
-            fs::write(f.source.join(".gitattributes"), "*.txt ident\n")?;
+            fs::write(
+                f.source.join(".gitattributes"),
+                "*.txt filter=unconfigured\n",
+            )?;
             git(&f.source, &["add", "."])?;
             git(&f.source, &["commit", "-m", "attributes"])?;
         }

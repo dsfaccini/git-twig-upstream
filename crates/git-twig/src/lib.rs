@@ -1,5 +1,6 @@
 //! Native CoW materialization with Git-owned linked-worktree bookkeeping.
 mod checkout;
+mod donor;
 mod native;
 mod objects;
 mod snapshot;
@@ -44,7 +45,7 @@ fn run_request(cwd: &Path, args: &[OsString], staging: &mut staging::Staging) ->
         }
     } else if args.first().is_some_and(|arg| arg == "add") {
         trace(
-            "stock Git: creation options require Git; native creation supports -b or --detach, a destination, and an optional same-HEAD revision",
+            "stock Git: creation options require Git; native creation supports -b or --detach, a destination, and an optional revision",
         );
     }
     Ok(git(cwd)
@@ -79,7 +80,7 @@ impl AddRequest {
                 return None;
             }
             index += 2;
-        } else if args.get(index)? == "--detach" {
+        } else if matches!(args.get(index)?.to_str(), Some("--detach" | "-d")) {
             index += 1;
         } else {
             // Omitted branch has Git's branch-name inference semantics. Delegate for now.
@@ -143,11 +144,6 @@ fn prepare(cwd: &Path, request: &AddRequest, staging: &mut staging::Staging) -> 
         )?
         .stdout,
     )?;
-    let head = text(checked(git(&root).args(["rev-parse", "HEAD"]))?.stdout)?;
-    ensure!(
-        commit == head,
-        "requested revision differs from source HEAD"
-    );
     ensure!(
         !config_true(&root, "core.sparseCheckout")
             && !config_true(&root, "core.sparseCheckoutCone"),
@@ -213,8 +209,19 @@ fn prepare(cwd: &Path, request: &AddRequest, staging: &mut staging::Staging) -> 
     checkout.initialize(&commit)?;
     let policy = checkout.policy(&entries)?;
     let modes = native::FileModes::new(&stage)?;
+    // Listing peer Git metadata must share the registrar lock: another Twig may
+    // otherwise be between creating its worktree directory and writing commondir.
+    let donor = {
+        let _registration_lock = lock_registration(&root)?;
+        donor::choose(&root, &parent, &entries)?
+    };
+    trace(&format!(
+        "donor: {:?}, {} matching target paths",
+        donor.root,
+        donor.candidates.len()
+    ));
     let snapshot_started = std::time::Instant::now();
-    let directories = snapshot::materialize(&root, &data, &entries, &modes)?;
+    let directories = snapshot::materialize(&donor.root, &data, &donor.candidates, &modes)?;
     let snapshot_elapsed = snapshot_started.elapsed();
     #[cfg(target_os = "macos")]
     trace(&format!("APFS directory clones: {directories}"));
@@ -408,6 +415,7 @@ mod tests {
     fn parses_only_the_supported_subset() {
         assert!(parse(&["add", "-b", "feature", "../feature"]));
         assert!(parse(&["add", "--detach", "../feature", "HEAD"]));
+        assert!(parse(&["add", "-d", "../feature", "HEAD~1"]));
         for words in [
             vec!["add"],
             vec!["add", "-b"],

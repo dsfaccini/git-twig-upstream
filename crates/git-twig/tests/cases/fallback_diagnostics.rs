@@ -91,13 +91,7 @@ fn unsupported_creation_syntax_explains_the_supported_subset() -> Result<()> {
 }
 
 #[test]
-fn revision_and_sparse_checkout_have_distinct_reasons() -> Result<()> {
-    let f = Fixture::new()?;
-    fs::write(f.source.join("hello.txt"), "second\n")?;
-    git(&f.source, &["commit", "-am", "second"])?;
-    let output = checked(f.twig(&["new", "--detach", "../feature", "HEAD~1"])?)?;
-    reason(&output, "requested revision differs from source HEAD");
-    assert_eq!(fs::read(f.destination().join("hello.txt"))?, b"hello\n");
+fn sparse_checkout_has_a_specific_reason() -> Result<()> {
     let f = Fixture::new()?;
     git(&f.source, &["sparse-checkout", "init", "--cone"])?;
     let output = checked(f.add()?)?;

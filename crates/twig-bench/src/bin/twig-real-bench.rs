@@ -46,6 +46,7 @@ struct Repository {
     #[serde(skip)]
     path: PathBuf,
     commit: String,
+    donor_commit: Option<String>,
 }
 #[derive(Serialize)]
 #[serde(rename_all = "camelCase")]
@@ -54,6 +55,7 @@ struct Suite {
     filesystem: Filesystem,
     image_size_gib: Option<u64>,
     warmup: bool,
+    require_native: bool,
     selected_backend: Option<String>,
     suite: String,
     generated_at_unix_ms: u128,
@@ -77,6 +79,8 @@ struct Cohort {
     repository: String,
     source_commit: String,
     source_tree: String,
+    target_commit: String,
+    target_tree: String,
     backend: String,
     repeat: usize,
     tracked_files: usize,
@@ -121,6 +125,8 @@ struct Operation {
     first_status_ms: Option<f64>,
     exit_code: Option<i32>,
     native_cow: bool,
+    verified_clones: Option<usize>,
+    git_written_paths: Option<usize>,
     verified: bool,
     error: Option<String>,
 }
@@ -131,6 +137,7 @@ struct CreationProgress<'a> {
     phase: &'static str,
     repository: &'a str,
     source_commit: &'a str,
+    target_commit: &'a str,
     backend: &'a str,
     repeat: usize,
     expected_operations: usize,
@@ -148,6 +155,7 @@ struct Expected {
 struct CohortOptions {
     filesystem: Filesystem,
     warmup: bool,
+    require_native: bool,
     worktrees: usize,
 }
 
@@ -162,7 +170,7 @@ struct Image {
 fn main() -> Result<()> {
     if env::args().any(|arg| arg == "--help") {
         println!(
-            "twig-real-bench --repo label=/absolute/repo [--repo ...] --concurrency 100 --repeats 3 --output target/real-results/run.json\nSequential example: --worktrees 10 --concurrency 1 --repeats 1\nOptional: --filesystem host (retains fixtures, does not measure allocation), --revision label=COMMIT (after --repo).\nmacOS: --filesystem isolated-image or case-sensitive-image. Linux: --filesystem linux-xfs-image or linux-btrfs-image (mkfs + noninteractive sudo mount/umount required). --image-gib sets capacity (default 8). Linux images/fixtures are retained after unmount; APFS images are disposable.\nOriginal repositories are read-only inputs. Results default to target/ (not published)."
+            "twig-real-bench --repo label=/absolute/repo [--repo ...] --concurrency 100 --repeats 3 --output target/real-results/run.json\nSequential example: --worktrees 10 --concurrency 1 --repeats 1\nOptional: --filesystem host (retains fixtures, does not measure allocation), --revision label=COMMIT (target, after --repo), --donor-revision label=COMMIT (different source HEAD), --require-native false (explicit fallback baseline only).\nmacOS: --filesystem isolated-image or case-sensitive-image. Linux: --filesystem linux-xfs-image or linux-btrfs-image (mkfs + noninteractive sudo mount/umount required). --image-gib sets capacity (default 8). Linux images/fixtures are retained after unmount; APFS images are disposable.\nOriginal repositories are read-only inputs. Results default to target/ (not published)."
         );
         return Ok(());
     }
@@ -180,6 +188,7 @@ fn main() -> Result<()> {
     let mut filesystem = Filesystem::IsolatedImage;
     let mut image_size_gib: u64 = 8;
     let mut warmup = true;
+    let mut require_native = true;
     let mut selected_backend = None;
     let mut run_notes = Vec::new();
     let mut args = env::args().skip(1);
@@ -205,6 +214,7 @@ fn main() -> Result<()> {
                     label: label.into(),
                     path,
                     commit,
+                    donor_commit: None,
                 });
             }
             "--revision" => {
@@ -225,6 +235,25 @@ fn main() -> Result<()> {
                     &["rev-parse", "--verify", &format!("{commit}^{{commit}}")],
                 )?;
             }
+            "--donor-revision" => {
+                let (label, commit) = value
+                    .split_once('=')
+                    .context("donor revision must be label=COMMIT")?;
+                ensure!(
+                    (commit.len() == 40 || commit.len() == 64)
+                        && commit.bytes().all(|b| b.is_ascii_hexdigit()),
+                    "donor revision must be a full commit OID"
+                );
+                let repository = repositories
+                    .iter_mut()
+                    .find(|r| r.label == label)
+                    .context("declare --repo before --donor-revision")?;
+                repository.donor_commit = Some(git_text(
+                    &repository.path,
+                    &["rev-parse", "--verify", &format!("{commit}^{{commit}}")],
+                )?);
+            }
+            "--require-native" => require_native = value.parse()?,
             "--filesystem" => {
                 filesystem = match value.as_str() {
                     "host" => Filesystem::Host,
@@ -312,7 +341,7 @@ fn main() -> Result<()> {
         )?
     };
     let mut suite = Suite {
-        schema_version: 3, filesystem, warmup, selected_backend: selected_backend.clone(), image_size_gib: if filesystem == Filesystem::Host { None } else { Some(image_size_gib) }, suite: "real-image-cohort".into(), generated_at_unix_ms: timestamp,
+        schema_version: 4, filesystem, warmup, require_native, selected_backend: selected_backend.clone(), image_size_gib: if filesystem == Filesystem::Host { None } else { Some(image_size_gib) }, suite: "real-image-cohort".into(), generated_at_unix_ms: timestamp,
         commit: git_text(&cwd, &["rev-parse", "HEAD"])?, dirty: !git_text(&cwd, &["status", "--porcelain"])?.is_empty(),
         candidate_sha256: digest.split_whitespace().next().context("missing candidate hash")?.into(),
         git_version: capture(&cwd, "git", &["--version".into()])?,
@@ -320,11 +349,11 @@ fn main() -> Result<()> {
         cpu, concurrency, worktrees_per_cohort: worktrees, repeats, repositories: repositories.clone(),
         notes: vec![
             "Each image-backed backend/repeat gets a fresh, isolated sparse filesystem image (capacity/format recorded in imageSizeGiB/filesystem). Seed uses git clone --shared --no-checkout plus explicit pinned-commit checkout. Original repositories and object stores are read-only inputs; seed history uses alternates outside image.".into(),
-            if warmup { "One operation warmup per backend; removed before APFS space snapshots, retained on Linux and host. Global/system Git config and hooks disabled for fixture setup; no ignored/untracked dependencies or build output copied. Backend order alternates by repeat.".into() } else { "Operation warmup disabled; seed checkout still warms input objects/files. Global/system Git config and fixture hooks disabled.".into() },
+            if warmup { "One operation warmup per backend in its own seed/registry so it cannot become a measured donor. Removed before APFS snapshots; retained on Linux/host and excluded by the before snapshot. Global/system config and fixture hooks disabled. Backend order alternates by repeat.".into() } else { "Operation warmup disabled; seed checkout still warms input objects/files. Global/system Git config and fixture hooks disabled.".into() },
             "A barrier releases the bounded worker pool simultaneously; each worker starts its next queued create only after its previous CLI returns. worktreesPerCohort is the total count; concurrency is the maximum in flight. Create wall time includes thread startup/barrier and ends at the last CLI completion, excluding final coordinator checkpoint/join work. Per-operation latency measures only that CLI. harnessCpuMsDuringCreate records self CPU (coordinator and worker threads), excluding CLI child CPU. No verification/generation competes with creates. No retries: failures are data.".into(),
             "First git status is measured sequentially after all creates and the initial space snapshot. Full byte/symlink/executable verification follows each first status; its CPU is outside creation timing. A first-status sum is not a concurrent-status wall time.".into(),
             "Allocated space is total minus free blocks from statvfs on the isolated filesystem, sampled after sync until stable (or marked unstable). This includes working files, indexes, retained staging and filesystem metadata, not logical size/du/st_blocks. Host sparse-image allocation is not the metric.".into(),
-            "After initial verification/space measurement, one data-bearing byte in one nonempty regular file per successful checkout (offset and file length recorded) is changed in place. Additional filesystem allocation is sampled; seed file must remain unchanged. APFS images are detached and deleted after saving each cohort; Linux images and fixtures are retained after unmount; no benchmark input paths or source file contents are serialized.".into(),
+            "After initial verification/space measurement, one data-bearing byte in the largest regular target file matching the original donor (offset and file length recorded) is changed in place; if no such data exists, the probe is not applicable. Additional filesystem allocation is sampled; seed file must remain unchanged. APFS images are detached and deleted after saving each cohort; Linux images and fixtures are retained after unmount; no benchmark input paths or source file contents are serialized.".into(),
             "Local warm-cache results. A sparse loopback/disk image is a controlled filesystem, not a claim about native host-volume maximum throughput. Report failures alongside latency and allocation; do not compare unequal successful counts as identical capacity.".into(),
         ], cohorts: vec![], failures: vec![],
     };
@@ -356,6 +385,7 @@ fn main() -> Result<()> {
     if filesystem == Filesystem::Host {
         suite.notes.push("Filesystem=host overrides image setup/cleanup notes: fresh cohort directories and warmup worktrees are retained, no allocation snapshots/deltas are reported, no sync is forced. Use isolated-image runs for space comparisons. Input revisions can be pinned to match earlier image runs.".into());
     }
+    suite.notes.push("Schema 4 records source/donor and target commits/trees separately. Different-revision checkout bytes come from an independent Git oracle outside the measured filesystem and worktree registry. Later measured creates may legitimately reuse earlier completed targets. requireNative=false is only for explicitly named fallback baselines; native flags and clone counts remain recorded, never relabeled.".into());
     suite.notes.extend(run_notes);
     save(&output, &suite)?;
     for repository in &repositories {
@@ -397,6 +427,7 @@ fn main() -> Result<()> {
                         CohortOptions {
                             filesystem,
                             warmup,
+                            require_native,
                             worktrees,
                         },
                     )
@@ -413,6 +444,12 @@ fn main() -> Result<()> {
                                 .map(|bytes| format!("{:.2} MiB", bytes as f64 / 1048576.0))
                                 .unwrap_or_else(|| "unmeasured on shared host filesystem".into())
                         );
+                        if point.failed > 0 {
+                            suite.failures.push(format!(
+                                "{} / {backend} / repeat {repeat}: {} failed or incorrect checkouts",
+                                repository.label, point.failed
+                            ));
+                        }
                         suite.cohorts.push(point);
                     }
                     Err(error) => suite.failures.push(format!(
@@ -572,6 +609,36 @@ impl Image {
     }
 }
 
+fn seed_checkout(repository: &Repository, destination: &Path, commit: &str) -> Result<()> {
+    let parent = destination.parent().context("seed has no parent")?;
+    checked(
+        command("git", parent)
+            .args([
+                "-c",
+                "core.hooksPath=/dev/null",
+                "clone",
+                "--shared",
+                "--no-checkout",
+                "--",
+            ])
+            .arg(&repository.path)
+            .arg(destination)
+            .output()?,
+    )?;
+    checked(
+        command("git", destination)
+            .args([
+                "-c",
+                "core.hooksPath=/dev/null",
+                "checkout",
+                "--detach",
+                commit,
+            ])
+            .output()?,
+    )?;
+    Ok(())
+}
+
 fn cohort(
     repository: &Repository,
     backend: &str,
@@ -583,46 +650,39 @@ fn cohort(
 ) -> Result<Cohort> {
     let filesystem = options.filesystem;
     let seed = mount.join("seed");
-    checked(
-        command("git", mount)
-            .args([
-                "-c",
-                "core.hooksPath=/dev/null",
-                "clone",
-                "--shared",
-                "--no-checkout",
-                "--",
-            ])
-            .arg(&repository.path)
-            .arg(&seed)
-            .output()?,
-    )?;
-    checked(
-        command("git", &seed)
-            .args([
-                "-c",
-                "core.hooksPath=/dev/null",
-                "checkout",
-                "--detach",
-                &repository.commit,
-            ])
-            .output()?,
-    )?;
+    let source_commit = repository
+        .donor_commit
+        .as_deref()
+        .unwrap_or(&repository.commit);
+    seed_checkout(repository, &seed, source_commit)?;
     let tree = git_text(&seed, &["rev-parse", "HEAD^{tree}"])?;
-    let expected = expected_files(&seed)?;
+    let source_expected = expected_files(&seed)?;
+    let oracle = if source_commit == repository.commit {
+        seed.clone()
+    } else {
+        let oracle = mount.with_extension("oracle");
+        seed_checkout(repository, &oracle, &repository.commit)?;
+        oracle
+    };
+    let target_tree = git_text(&oracle, &["rev-parse", "HEAD^{tree}"])?;
+    let expected = expected_files(&oracle)?;
     let logical_bytes = expected.iter().map(|entry| entry.data.len() as u64).sum();
     let mut warmup_cleanup_recovered = false;
     if options.warmup {
+        let warmup_seed = mount.join("warmup-seed");
+        seed_checkout(repository, &warmup_seed, source_commit)?;
         let warmup = create(
-            &seed,
+            &warmup_seed,
             &mount.join("warmup"),
             candidate,
             backend,
+            &repository.commit,
             0,
             Instant::now(),
         );
         ensure!(
-            warmup.error.is_none() && (backend != "twig" || warmup.native_cow),
+            warmup.error.is_none()
+                && (backend != "twig" || !options.require_native || warmup.native_cow),
             "warmup did not use expected backend: {:?}",
             warmup.error
         );
@@ -630,7 +690,7 @@ fn cohort(
             filesystem,
             Filesystem::IsolatedImage | Filesystem::CaseSensitiveImage
         ) {
-            warmup_cleanup_recovered = remove_owned_warmup(&seed, mount)?;
+            warmup_cleanup_recovered = remove_owned_warmup(&warmup_seed, mount)?;
             // Only benchmark-owned warmup staging paths on this disposable image are removed.
             for entry in fs::read_dir(mount)? {
                 let entry = entry?;
@@ -661,6 +721,7 @@ fn cohort(
             let mount = mount.to_path_buf();
             let candidate = candidate.to_path_buf();
             let backend = backend.to_owned();
+            let target_commit = repository.commit.clone();
             let barrier = Arc::clone(&barrier);
             let next = Arc::clone(&next);
             let sender = sender.clone();
@@ -672,7 +733,15 @@ fn cohort(
                         break;
                     }
                     let destination = mount.join(format!("w-{worker}"));
-                    let outcome = create(&seed, &destination, &candidate, &backend, worker, start);
+                    let outcome = create(
+                        &seed,
+                        &destination,
+                        &candidate,
+                        &backend,
+                        &target_commit,
+                        worker,
+                        start,
+                    );
                     if sender.send(outcome).is_err() {
                         break;
                     }
@@ -700,10 +769,11 @@ fn cohort(
             options.worktrees
         );
         let progress = CreationProgress {
-            schema_version: 2,
+            schema_version: 3,
             phase: "creation; verification pending",
             repository: &repository.label,
-            source_commit: &repository.commit,
+            source_commit,
+            target_commit: &repository.commit,
             backend,
             repeat,
             expected_operations: options.worktrees,
@@ -762,7 +832,20 @@ fn cohort(
                 verified_files += 1;
             }
             ensure!(
-                backend != "twig" || operation.native_cow,
+                checked(
+                    command("git", &destination)
+                        .args(["ls-files", "--others", "-z"])
+                        .output()?
+                )?
+                .stdout
+                .is_empty(),
+                "unexpected untracked or ignored checkout contents"
+            );
+            ensure!(
+                backend != "twig"
+                    || !options.require_native
+                    || (operation.native_cow
+                        && operation.verified_clones.is_some_and(|count| count > 0)),
                 "Twig delegated to Git rather than using CoW"
             );
             operation.verified = true;
@@ -774,7 +857,17 @@ fn cohort(
     }
     let status_and_verification_wall_ms = ms(status_start);
     let after_status = filesystem.snapshot(mount)?;
-    let probe = private_write_probe(&expected);
+    // Prefer bytes actually present in the original donor, not a target-only
+    // attributes file: this must exercise isolation of data that could be shared.
+    let source_files: std::collections::BTreeMap<_, _> = source_expected
+        .iter()
+        .map(|entry| (&entry.path, entry))
+        .collect();
+    let probe = private_write_probe(expected.iter().filter(|entry| {
+        source_files
+            .get(&entry.path)
+            .is_some_and(|source| !source.symlink && source.data == entry.data)
+    }));
     if let Some(PrivateWriteProbe {
         entry: first,
         offset,
@@ -817,10 +910,9 @@ fn cohort(
     } else {
         None
     };
-    let source_unchanged = match probe {
-        Some(PrivateWriteProbe { entry, .. }) => fs::read(seed.join(&entry.path))? == entry.data,
-        None => git_text(&seed, &["status", "--porcelain"])?.is_empty(),
-    };
+    let source_unchanged = source_expected
+        .iter()
+        .all(|entry| verify_file(&seed, entry).is_ok());
     ensure!(source_unchanged, "seed changed after private writes");
     for operation in &mut operations {
         if let Some(error) = &mut operation.error {
@@ -835,8 +927,10 @@ fn cohort(
         .count();
     Ok(Cohort {
         repository: repository.label.clone(),
-        source_commit: repository.commit.clone(),
+        source_commit: source_commit.into(),
         source_tree: tree,
+        target_commit: repository.commit.clone(),
+        target_tree,
         backend: backend.into(),
         repeat,
         tracked_files: expected.len(),
@@ -870,11 +964,13 @@ struct PrivateWriteProbe<'a> {
     entry: &'a Expected,
     offset: usize,
 }
-fn private_write_probe(expected: &[Expected]) -> Option<PrivateWriteProbe<'_>> {
+fn private_write_probe<'a>(
+    expected: impl IntoIterator<Item = &'a Expected>,
+) -> Option<PrivateWriteProbe<'a>> {
     expected
-        .iter()
+        .into_iter()
         .filter(|entry| !entry.symlink)
-        .find_map(|entry| {
+        .filter_map(|entry| {
             // A nonzero byte is data-bearing even when the file has sparse zero holes.
             entry
                 .data
@@ -882,6 +978,7 @@ fn private_write_probe(expected: &[Expected]) -> Option<PrivateWriteProbe<'_>> {
                 .position(|byte| *byte != 0)
                 .map(|offset| PrivateWriteProbe { entry, offset })
         })
+        .max_by_key(|probe| probe.entry.data.len())
 }
 fn creation_makespan(operations: &[Operation]) -> f64 {
     operations
@@ -917,11 +1014,30 @@ fn allocation_delta(after: &Option<Space>, before: &Option<Space>) -> Option<i12
         .map(|(after, before)| after.allocated_bytes as i128 - before.allocated_bytes as i128)
 }
 
+#[derive(Debug, PartialEq, Eq)]
+struct CheckoutCounts {
+    verified_clones: usize,
+    git_written_paths: usize,
+}
+
+fn checkout_counts(stderr: &[u8]) -> Option<CheckoutCounts> {
+    String::from_utf8_lossy(stderr).lines().find_map(|line| {
+        let line = line.strip_prefix("git-twig: checkout: ")?;
+        let (clones, rest) = line.split_once(" verified file clones, ")?;
+        let written = rest.strip_suffix(" Git-written paths")?;
+        Some(CheckoutCounts {
+            verified_clones: clones.parse().ok()?,
+            git_written_paths: written.parse().ok()?,
+        })
+    })
+}
+
 fn create(
     seed: &Path,
     destination: &Path,
     candidate: &Path,
     backend: &str,
+    revision: &str,
     worker: usize,
     cohort_start: Instant,
 ) -> Operation {
@@ -936,7 +1052,7 @@ fn create(
     command
         .args([if backend == "git" { "add" } else { "new" }, "--detach"])
         .arg(destination)
-        .arg("HEAD");
+        .arg(revision);
     let start = Instant::now();
     let create_started_at_ms = start.duration_since(cohort_start).as_secs_f64() * 1000.0;
     let output = command.output();
@@ -952,6 +1068,9 @@ fn create(
             exit_code: output.status.code(),
             native_cow: String::from_utf8_lossy(&output.stderr)
                 .contains("CoW: verified tracked files"),
+            verified_clones: checkout_counts(&output.stderr).map(|counts| counts.verified_clones),
+            git_written_paths: checkout_counts(&output.stderr)
+                .map(|counts| counts.git_written_paths),
             verified: false,
             error: if output.status.success() {
                 None
@@ -967,6 +1086,8 @@ fn create(
             first_status_ms: None,
             exit_code: None,
             native_cow: false,
+            verified_clones: None,
+            git_written_paths: None,
             verified: false,
             error: Some(error.to_string()),
         },
@@ -1207,6 +1328,113 @@ fn save(path: &Path, suite: &Suite) -> Result<()> {
 mod tests {
     use super::*;
     #[test]
+    fn checkout_counters_are_not_inferred_from_a_backend_banner() {
+        assert_eq!(
+            checkout_counts(b"git-twig: Linux reflink CoW: verified tracked files\n"),
+            None
+        );
+        assert_eq!(
+            checkout_counts(b"git-twig: checkout: 12 verified file clones, 3 Git-written paths\n"),
+            Some(CheckoutCounts {
+                verified_clones: 12,
+                git_written_paths: 3
+            })
+        );
+        assert_eq!(
+            checkout_counts(b"git-twig: checkout: x verified file clones, 3 Git-written paths\n"),
+            None
+        );
+    }
+
+    #[test]
+    fn cross_revision_oracle_and_warmup_cannot_become_measured_donors() -> Result<()> {
+        let root = Path::new(env!("CARGO_MANIFEST_DIR"))
+            .join("../../target")
+            .join(format!(
+                "bench-contract-{}-{}",
+                std::process::id(),
+                SystemTime::now().duration_since(UNIX_EPOCH)?.as_nanos()
+            ));
+        fs::create_dir_all(&root)?;
+        let root = fs::canonicalize(root)?;
+        let source = root.join("source");
+        fs::create_dir(&source)?;
+        checked(
+            command("git", &source)
+                .args(["init", "-b", "main"])
+                .output()?,
+        )?;
+        for (key, value) in [
+            ("user.name", "Fixture"),
+            ("user.email", "fixture@example.invalid"),
+        ] {
+            checked(
+                command("git", &source)
+                    .args(["config", key, value])
+                    .output()?,
+            )?;
+        }
+        fs::write(source.join("common"), b"before\n")?;
+        fs::write(source.join("stable"), b"shared\n")?;
+        checked(command("git", &source).args(["add", "."]).output()?)?;
+        checked(
+            command("git", &source)
+                .args(["commit", "-m", "A"])
+                .output()?,
+        )?;
+        let donor = git_text(&source, &["rev-parse", "HEAD"])?;
+        fs::write(source.join("common"), b"after!\n")?;
+        fs::write(source.join("new"), b"new target path\n")?;
+        checked(command("git", &source).args(["add", "."]).output()?)?;
+        checked(
+            command("git", &source)
+                .args(["commit", "-m", "B"])
+                .output()?,
+        )?;
+        let target = git_text(&source, &["rev-parse", "HEAD"])?;
+        let repository = Repository {
+            label: "contract".into(),
+            path: source,
+            commit: target.clone(),
+            donor_commit: Some(donor.clone()),
+        };
+        let mount = root.join("mount");
+        fs::create_dir(&mount)?;
+        let point = cohort(
+            &repository,
+            "git",
+            0,
+            1,
+            Path::new("/unused"),
+            &mount,
+            CohortOptions {
+                filesystem: Filesystem::Host,
+                warmup: true,
+                require_native: false,
+                worktrees: 1,
+            },
+        )?;
+        assert_eq!(point.source_commit, donor);
+        assert_eq!(point.target_commit, target);
+        assert_ne!(point.source_tree, point.target_tree);
+        assert!(point.source_unchanged && point.private_write_tested);
+        assert_eq!(point.succeeded, 1);
+        assert_eq!(point.failed, 0);
+        let listing = git_text(&mount.join("seed"), &["worktree", "list", "--porcelain"])?;
+        assert_eq!(
+            listing
+                .lines()
+                .filter(|line| line.starts_with("worktree "))
+                .count(),
+            2
+        );
+        assert!(!listing.contains("warmup"));
+        assert!(!listing.contains("oracle"));
+        assert_eq!(fs::read(mount.join("seed/common"))?, b"before\n");
+        eprintln!("fixture retained: {}", root.display());
+        Ok(())
+    }
+    #[test]
     fn cleanup_runs_even_if_saving_fails_and_both_errors_survive() {
         let cleaned = std::cell::Cell::new(false);
         let result = persist_and_cleanup(
@@ -1244,6 +1472,8 @@ mod tests {
             first_status_ms: None,
             exit_code: Some(0),
             native_cow: false,
+            verified_clones: None,
+            git_written_paths: None,
             verified: false,
             error: None,
         };

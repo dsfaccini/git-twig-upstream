@@ -26,7 +26,8 @@ git -C main twig new -b feat/x ../feat-x HEAD
 git -C main twig list
 ```
 
-Native CoW requires the source checkout\'s current `HEAD`; other revisions use Git.
+Published v0.3.0 requires the source checkout's current `HEAD`. Development builds
+can reuse matching files from nearby worktrees for other revisions too.
 Short help works outside a checkout: `git twig -h` or `git twig new --help`.
 
 For coding agents: `git twig skill` prints the bundled skill.
@@ -36,7 +37,7 @@ Creates ordinary linked worktrees from committed files; local changes and ignore
 files aren't copied. Unsupported filesystems (including typical ext4), options and
 checkout semantics use `git worktree`. Set `TWIG_TRACE=1` to see backend selection.
 
-Source, destination and Git metadata must share a clone-capable filesystem for
+The selected donor, destination and Git metadata must share a clone-capable filesystem for
 native CoW. Twig verifies cloned files against the requested commit; writes are
 private, never hardlinked to source. Staging lives under the common Git directory
 in `twigs/staging` and is removed after success. Failed/interrupted attempts retain
@@ -46,8 +47,10 @@ staging and may leave a partial registered worktree; inspect before retrying.
 
 Version 0.4.0 supports common LF policies such as `text=auto eol=lf`.
 They compare private clones to raw target blobs and let Git write exceptional
-files, retaining sharing for the rest. External filters/encodings still delegate.
-See the [changelog](CHANGELOG.md) for fixes and remaining boundaries.
+files, retaining sharing for the rest. Development builds also choose a donor
+across revisions and let Git write builtin ident/encoding exceptions. External
+filters, sparse checkout and submodules still delegate.
+See the [changelog](CHANGELOG.md) for released fixes and unreleased coverage.
 
 With `TWIG_TRACE=1`, native creation reports verified-clone and Git-written path
 counts. Delegation reports its specific cause; an attribute refusal names the

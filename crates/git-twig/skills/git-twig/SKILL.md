@@ -63,8 +63,9 @@ cd feat-x
 ```
 
 `-C main` selects the source checkout; `../feat-x` is resolved relative to it.
-The fast copy only applies to that checkout\'s current `HEAD`, not an arbitrary
-older commit or another checkout\'s branch. Other revisions use stock Git.
+Published v0.3.0 only shares that checkout's current `HEAD`. Development builds
+can select a nearby donor for another revision and share verified matching files;
+Git writes changed, new or converted paths.
 
 For a detached checkout:
 
@@ -83,15 +84,16 @@ parsing the output in a script.
   files are excluded; tracked secrets are copied like any other tracked file.
   Install dependencies when needed.
 - Native CoW needs macOS/APFS or Linux on Btrfs or reflink-enabled XFS. Source,
-  destination and Git metadata must share a clone-capable filesystem. Creating at the source\'s HEAD
-  is the optimized case. Other requests use stock Git.
+  destination and Git metadata must share a clone-capable filesystem (in development
+  builds, this applies to the selected donor). Unsupported requests use stock Git.
 - CoW shares file data, not writes. It is not a sandbox and is not always faster.
 - To inspect backend selection, set `TWIG_TRACE=1` on the create command.
 - Since v0.4.0, supported LF policies can use native CoW.
   Private candidates are compared to raw target blobs; Git writes exceptional
   files while other files retain sharing. Trace output includes per-path counts.
-  Upgrade older releases to v0.4.0 or newer for this coverage and filter-state fix.
-- External filters, ident expansion and working-tree encodings still delegate.
+  Upgrade older releases to v0.4.0 or newer for the released LF-policy and filter-state fix.
+- Development builds materialize builtin ident/encoding conversions per file.
+  External filters, sparse checkout and submodules still delegate.
   Conditional config includes and relative attribute-file configuration also
   delegate. Relative includes in copied worktree configuration also delegate.
   Do not change repository attributes just to

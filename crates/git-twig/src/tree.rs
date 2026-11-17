@@ -9,6 +9,7 @@ pub enum Kind {
     Submodule,
 }
 
+#[derive(Clone)]
 pub struct Entry {
     pub path: PathBuf,
     pub kind: Kind,
@@ -16,11 +17,11 @@ pub struct Entry {
     pub blob_bytes: Option<u64>,
 }
 
-#[derive(Debug, PartialEq, Eq)]
+#[derive(Clone, Debug, PartialEq, Eq)]
 pub struct ObjectId(String);
 
 impl ObjectId {
-    fn parse(value: &str) -> Result<Self> {
+    pub(crate) fn parse(value: &str) -> Result<Self> {
         ensure!(
             matches!(value.len(), 40 | 64) && value.bytes().all(|b| b.is_ascii_hexdigit()),
             "invalid tree object ID"

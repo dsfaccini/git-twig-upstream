@@ -108,7 +108,7 @@ impl<'a> Checkout<'a> {
         .stdout;
         let actions = parse_attributes(entries, &attributes, &configuration)?;
         Ok(Policy {
-            config,
+            config: checkout_config(&config),
             attributes,
             actions,
         })
@@ -140,22 +140,27 @@ impl<'a> Checkout<'a> {
         let mut files = Vec::new();
         let mut verified = 0;
         for (entry, action) in entries.iter().zip(&policy.actions) {
-            let equal = match (*action, entry.kind) {
+            let retain = match (*action, entry.kind) {
                 (Action::VerifyClone, Kind::File { .. }) => {
                     matches.next().expect("one hash verdict per regular file")
                 }
-                (Action::VerifyClone, Kind::Symlink) => {
+                (Action::VerifyClone, Kind::Symlink)
+                | (Action::VerifyAutoBinary, Kind::File { .. }) => {
                     if symlink_objects.is_none() {
                         symlink_objects = Some(Objects::open(root)?);
                     }
-                    symlink_objects
+                    // Automatic conversion needs the target's full NUL classification;
+                    // ordinary regular files retain the batched unfiltered hash path.
+                    let comparison = symlink_objects
                         .as_mut()
                         .expect("opened object stream")
-                        .matches(self.data, entry)?
+                        .compare(self.data, entry)?;
+                    comparison.equal
+                        && (*action != Action::VerifyAutoBinary || comparison.contains_nul)
                 }
                 _ => false,
             };
-            if equal {
+            if retain {
                 if matches!(entry.kind, Kind::File { .. }) {
                     verified += 1;
                 }
@@ -184,9 +189,21 @@ impl<'a> Checkout<'a> {
     }
 }
 
+// Git legitimately adds branch.<name>.remote/merge/rebase during registration.
+// Those do not affect checkout bytes; branch-conditional includes were already
+// rejected by Configuration::parse. Keep all other keys in the recheck boundary.
+fn checkout_config(bytes: &[u8]) -> Vec<u8> {
+    bytes
+        .split(|byte| *byte == 0)
+        .filter(|field| !field.is_empty() && !field.starts_with(b"branch."))
+        .flat_map(|field| field.iter().copied().chain(std::iter::once(0)))
+        .collect()
+}
+
 #[derive(Debug, Clone, Copy, PartialEq, Eq)]
 enum Action {
     VerifyClone,
+    VerifyAutoBinary,
     GitWrite,
 }
 
@@ -211,6 +228,7 @@ struct Attributes {
     text: Option<Vec<u8>>,
     eol: Option<Vec<u8>>,
     legacy_crlf: bool,
+    builtin_conversion: bool,
 }
 
 fn parse_attributes(
@@ -243,8 +261,8 @@ fn parse_attributes(
         let attribute = &mut attributes[index];
         match row[1] {
             // --all reports explicitly present values, including literal sentinel names.
-            // Conservative: even an explicit -filter/-ident requires stock Git for now.
-            b"filter" | b"ident" | b"working-tree-encoding" => {
+            // External programs must not run in speculative staging or twice on fallback.
+            b"filter" => {
                 anyhow::bail!(
                     "checkout attribute {}={:?} on {:?} requires stock Git",
                     String::from_utf8_lossy(row[1]),
@@ -252,6 +270,7 @@ fn parse_attributes(
                     native::os_string(row[0].to_vec())
                 )
             }
+            b"ident" | b"working-tree-encoding" => attribute.builtin_conversion = true,
             b"text" => attribute.text = Some(row[2].to_vec()),
             b"eol" => attribute.eol = Some(row[2].to_vec()),
             b"crlf" => attribute.legacy_crlf = true,
@@ -264,6 +283,8 @@ fn parse_attributes(
         .map(|(entry, attrs)| {
             if entry.kind == Kind::Symlink || attrs.identity(configuration) {
                 Action::VerifyClone
+            } else if attrs.auto_binary(configuration) {
+                Action::VerifyAutoBinary
             } else {
                 Action::GitWrite
             }
@@ -272,8 +293,21 @@ fn parse_attributes(
 }
 
 impl Attributes {
+    fn auto_binary(&self, config: &Configuration) -> bool {
+        if self.legacy_crlf || self.builtin_conversion {
+            return false;
+        }
+        // Git convert.c skips CRLF conversion for NUL-bearing blobs only in AUTO
+        // modes. Explicit text/eol without text=auto can force conversion even
+        // for binary data. Literal unset/unspecified values remain conservative.
+        self.text.as_deref() == Some(b"auto")
+            || (self.text.is_none()
+                && self.eol.is_none()
+                && matches!(config.autocrlf.as_slice(), b"true" | b"yes" | b"on" | b"1"))
+    }
+
     fn identity(&self, config: &Configuration) -> bool {
-        if self.legacy_crlf {
+        if self.legacy_crlf || self.builtin_conversion {
             return false;
         }
         let text = self.text.as_deref();
