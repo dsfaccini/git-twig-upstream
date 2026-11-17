@@ -277,6 +277,19 @@ fn install(cwd: &Path, args: &[OsString], prepared: Prepared) -> Result<i32> {
     })?;
     // Do not hold the registry lock across user hooks (which may invoke Twig again).
     drop(registration_lock);
+    // read-tree records no stat data, so every status would rehash all tracked files
+    // until one writes the index back; --no-optional-locks callers never do. Git hashes
+    // the installed files here. The index is already correct, so failure only warns.
+    let refresh_started = std::time::Instant::now();
+    match checked(git(&prepared.destination).args(["update-index", "-q", "--refresh"])) {
+        Ok(_) => trace(&format!(
+            "index refresh {:.3}s",
+            refresh_started.elapsed().as_secs_f64()
+        )),
+        Err(error) => {
+            eprintln!("git-twig: worktree created; could not refresh its index: {error:#}")
+        }
+    }
     let zero = "0".repeat(prepared.commit.len());
     let code = git(&prepared.destination)
         .args([

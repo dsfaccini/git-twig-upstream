@@ -828,6 +828,20 @@ fn creates_real_clean_worktree_without_source_hardlinks() -> Result<()> {
 }
 
 #[test]
+fn installed_index_records_stat_data_before_any_status() -> Result<()> {
+    let f = Fixture::new()?;
+    let output = checked(f.add()?)?;
+    native(&output);
+    // diff-files never refreshes: an index without stat data lists every path.
+    assert!(
+        git(&f.destination(), &["diff-files", "--name-only"])?
+            .stdout
+            .is_empty()
+    );
+    clean(&f.destination())
+}
+
+#[test]
 fn dirty_source_produces_clean_commit_checkout() -> Result<()> {
     let f = Fixture::new()?;
     fs::write(f.source.join("hello.txt"), "dirty\n")?;
