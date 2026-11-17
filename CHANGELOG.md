@@ -21,6 +21,9 @@ describe changes from this baseline after they are implemented and verified.
 - Differential revision/donor cases and deliberate comparator corruption controls.
 - Benchmark schema 4: separate donor/target provenance, isolated warmup/oracle
   registries, real verified-clone counts and explicit fallback baselines.
+- Typed benchmark campaigns for Linux XFS/Btrfs and both APFS layouts, with frozen
+  executable identities, resource/deadline guards, retained failures and
+  reproducible CSV/SVG outputs.
 
 ### Experimental
 
@@ -32,6 +35,13 @@ describe changes from this baseline after they are implemented and verified.
   tests include stale-comparison rejection, private writes and dirty/staged data.
   APFS live replacement remains unsupported; preparation is not compaction, and
   reported logical/kernel bytes are not measured exclusive allocation savings.
+- Adoption candidates must be tracked in both checkouts; ignored/untracked donor
+  files are excluded even when the target tracks the same path.
+- `adopt --prepare` rejects filesystems that cannot enforce private scratch
+  permissions before writing candidate contents, retaining only an empty directory.
+- Linux adoption CI independently probes cloning and deduplication, including
+  safe refusal on unsupported filesystems and OverlayFS lower-layer restrictions.
+  exFAT/VFAT coverage remains a regular-file portable subset, not POSIX parity.
 
 External filters on regular files, sparse checkout, conditional config includes and
 relative attribute-file configuration remain conservative whole-request fallbacks.
