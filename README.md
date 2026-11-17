@@ -96,12 +96,12 @@ that changes Git checkout semantics rather than proving the bytes are correct.
 
 | Repo | `git worktree` | `git twig` | Improvement |
 |---|---|---|---|
-| [Workers starter (10 sequential)](bench/results/2026-11-17-final/workers-starter-host.json) | 456ms / 592 KiB | 4.27s / 308 KiB | 9.37× slower / **1.9× less space** |
-| [git-twig (10 sequential)](bench/results/2026-11-17-final/twig-host.json) | 422ms / 5.2 MiB | 4.18s / 508 KiB | 9.91× slower / **10.6× less space** |
-| [Axo](bench/results/2026-11-17-final/axo-host.json) | 400ms / 30.8 MiB | 948ms / 1.2 MiB | 2.37× slower / **26.7× less space** |
-| [Linux kernel](bench/results/2026-11-17-final/linux-images.json) | 40.56s / 1.8 GiB | 31.32s / 44.7 MiB | 1.29× faster / **41.9× less space** |
-| [OpenClaw](bench/results/2026-11-17-final/openclaw-host.json) | 8.58s / 919 MiB | 8.80s / 31.1 MiB | 1.03× slower / **29.5× less space** |
-| [Pulumi docs](bench/results/2026-11-17-issue5/after-host.json) | 4.32s / 1.2 GiB | 3.64s / 7.9 MiB | 1.19× faster / **155.8× less space** |
+| [Workers starter (10 sequential)](bench/results/sha256-428608b8bf13/macos-apfs-mixed/2026-11-17/final/workers-starter-host.json) | 456ms / 592 KiB | 4.27s / 308 KiB | 9.37× slower / **1.9× less space** |
+| [git-twig (10 sequential)](bench/results/sha256-428608b8bf13/macos-apfs-mixed/2026-11-17/final/twig-host.json) | 422ms / 5.2 MiB | 4.18s / 508 KiB | 9.91× slower / **10.6× less space** |
+| [Axo](bench/results/sha256-428608b8bf13/macos-apfs-mixed/2026-11-17/final/axo-host.json) | 400ms / 30.8 MiB | 948ms / 1.2 MiB | 2.37× slower / **26.7× less space** |
+| [Linux kernel](bench/results/sha256-428608b8bf13/macos-apfs-mixed/2026-11-17/final/linux-images.json) | 40.56s / 1.8 GiB | 31.32s / 44.7 MiB | 1.29× faster / **41.9× less space** |
+| [OpenClaw](bench/results/sha256-428608b8bf13/macos-apfs-mixed/2026-11-17/final/openclaw-host.json) | 8.58s / 919 MiB | 8.80s / 31.1 MiB | 1.03× slower / **29.5× less space** |
+| [Pulumi docs](bench/results/multi-build/mixed/2026-11-17/issue5/after-host.json) | 4.32s / 1.2 GiB | 3.64s / 7.9 MiB | 1.19× faster / **155.8× less space** |
 
 Each cell is **creation time / additional disk space**. Batch sizes differ; creation excludes first status. † Includes failed Git attempts. [Setup and raw results](bench/results/readme-details.md).
 

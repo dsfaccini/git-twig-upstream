@@ -1,4 +1,4 @@
-# RFD0019 — Typed benchmark campaigns and result layout
+# RFD0020 — Typed benchmark campaigns and result layout
 
 - Status: implementation contract
 - Author: leostera

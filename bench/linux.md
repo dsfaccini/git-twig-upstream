@@ -162,7 +162,7 @@ The summary includes sample counts; nearest-rank percentiles from small samples
 do not establish population tail latency. Charts use complete groups only.
 
 Runs are local only. Updating README/site numbers, pushing or releasing is a
-separate user decision. See [RFD0015](../docs/rfds/RFD0015-linux-donor-coverage.md).
+separate user decision. See [RFD0016](../docs/rfds/RFD0016-linux-donor-coverage.md).
 
 ## ext4 and OverlayFS compatibility
 
@@ -201,7 +201,7 @@ sudo -n umount "$lab/merged"
 Keep local fixtures after unmount. On failure, inspect retained state before
 retrying. CI creates fresh isolated backing images and always attempts overlay
 unmount before backing-image unmount. See
-[RFD0017](../docs/rfds/RFD0017-filesystem-capability-and-overlay-coverage.md).
+[RFD0018](../docs/rfds/RFD0018-filesystem-capability-and-overlay-coverage.md).
 OpenZFS needs a ZFS-enabled Linux kernel, tools and an owned dataset; absence is
 unverified coverage, not a passing fallback or native-support result.
 
@@ -288,7 +288,7 @@ Use two owned local guests rather than installing ZFS/NFS server modules on the
 shared host. `bench/qemu-filesystem-guest.sh` starts either role with bounded
 software emulation: four vCPUs, 4 GiB RAM and a maximum 1,800-second process
 lifetime. This mode is for correctness/capability, not performance measurements.
-See [RFD0018](../docs/rfds/RFD0018-isolated-zfs-and-nfs-guests.md).
+See [RFD0019](../docs/rfds/RFD0019-isolated-zfs-and-nfs-guests.md).
 
 Prepare a fresh absolute ignored lab directory, an official Ubuntu cloud qcow2
 base verified against its HTTPS SHA256SUMS, two 12-GiB qcow2 root overlays, and

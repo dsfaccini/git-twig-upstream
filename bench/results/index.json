@@ -449,6 +449,481 @@
       "originalPath": "bench/results/2026-11-17-linux-coverage/summary.csv",
       "path": "bench/results/sha256-4884eac9a1e6/linux-mixed/2026-11-17/checkout-coverage/summary.csv",
       "sha256": "b5aa832bbefd5b837ad1fac025666df15254664229785a3615aaf9304bafd33c"
+    },
+    {
+      "originalPath": "bench/results/2026-11-16-apfs/axo-host-axo.svg",
+      "path": "bench/results/sha256-991673619554/macos-apfs-mixed/2026-11-16/apfs-campaign/axo-host-axo.svg",
+      "sha256": "677af650b0ed9af794edaf499f248c20eb5101e313f461edb93be104ba26a22a"
+    },
+    {
+      "originalPath": "bench/results/2026-11-16-apfs/axo-host.json",
+      "path": "bench/results/sha256-991673619554/macos-apfs-mixed/2026-11-16/apfs-campaign/axo-host.json",
+      "sha256": "5742168b363874555be9b1b27bf52cd255d611171d2548e9542b5bd9f1069d93"
+    },
+    {
+      "originalPath": "bench/results/2026-11-16-apfs/axo-host.summary.md",
+      "path": "bench/results/sha256-991673619554/macos-apfs-mixed/2026-11-16/apfs-campaign/axo-host.summary.md",
+      "sha256": "5698610341afcefb44049ca3d59718be9d50dbf6102fd11fbb95fd5dafb6d40c"
+    },
+    {
+      "originalPath": "bench/results/2026-11-16-apfs/axo-images-axo.svg",
+      "path": "bench/results/sha256-991673619554/macos-apfs-mixed/2026-11-16/apfs-campaign/axo-images-axo.svg",
+      "sha256": "a8437e707ede04dec46b5e7c826ac1458d4d442d487ce6764edbe804a43c6b9c"
+    },
+    {
+      "originalPath": "bench/results/2026-11-16-apfs/axo-images.json",
+      "path": "bench/results/sha256-991673619554/macos-apfs-mixed/2026-11-16/apfs-campaign/axo-images.json",
+      "sha256": "afeb63f6e7d7619afa8462a160c59873bc16676dfea82a1d2e7f37f23df56534"
+    },
+    {
+      "originalPath": "bench/results/2026-11-16-apfs/axo-images.summary.md",
+      "path": "bench/results/sha256-991673619554/macos-apfs-mixed/2026-11-16/apfs-campaign/axo-images.summary.md",
+      "sha256": "29060a2e159328e73bf437dc845c9da65b25eed060532382f46a85336e8a8315"
+    },
+    {
+      "originalPath": "bench/results/2026-11-16-apfs/completion.json",
+      "path": "bench/results/sha256-991673619554/macos-apfs-mixed/2026-11-16/apfs-campaign/completion.json",
+      "sha256": "c1f268d74381d83b0be86fb92d5645f60c7cd067759c13cb3b59d6263e0aaf2f"
+    },
+    {
+      "originalPath": "bench/results/2026-11-16-apfs/continuation-1.manifest.json",
+      "path": "bench/results/sha256-991673619554/macos-apfs-mixed/2026-11-16/apfs-campaign/continuation-1.manifest.json",
+      "sha256": "72f630be7bbd8f8c2d717ede160c66b5c17995baf915e2973cdaf4e560ecf2f2"
+    },
+    {
+      "originalPath": "bench/results/2026-11-16-apfs/continuation-2.manifest.json",
+      "path": "bench/results/sha256-991673619554/macos-apfs-mixed/2026-11-16/apfs-campaign/continuation-2.manifest.json",
+      "sha256": "0194b31e13fdff09fc46596b2422b8a2e8884f99c1d26d7fd27efb1dedfd7315"
+    },
+    {
+      "originalPath": "bench/results/2026-11-16-apfs/continuation-3.manifest.json",
+      "path": "bench/results/sha256-991673619554/macos-apfs-mixed/2026-11-16/apfs-campaign/continuation-3.manifest.json",
+      "sha256": "ce6460f6ab9da7409a0e705b3ec6fa05eee67b3e705afebbcabdd434d6c1893b"
+    },
+    {
+      "originalPath": "bench/results/2026-11-16-apfs/failed-attempt-state-2.json",
+      "path": "bench/results/sha256-991673619554/macos-apfs-mixed/2026-11-16/apfs-campaign/failed-attempt-state-2.json",
+      "sha256": "3aabde4e8a5fc60f037f453d05a2d90e3d703936928cf70822b3ab5bd621122a"
+    },
+    {
+      "originalPath": "bench/results/2026-11-16-apfs/failed-attempt-state-3.json",
+      "path": "bench/results/sha256-991673619554/macos-apfs-mixed/2026-11-16/apfs-campaign/failed-attempt-state-3.json",
+      "sha256": "5e421c8f02a27a4b086734080637970324f360086e621d3dec372f6aeed41145"
+    },
+    {
+      "originalPath": "bench/results/2026-11-16-apfs/failed-attempt-state.json",
+      "path": "bench/results/sha256-991673619554/macos-apfs-mixed/2026-11-16/apfs-campaign/failed-attempt-state.json",
+      "sha256": "c92c8e9281e57ca1b819e74678b55c1af8872e223b7521640cdbd368b464655e"
+    },
+    {
+      "originalPath": "bench/results/2026-11-16-apfs/linux-images-retry-1-linux.svg",
+      "path": "bench/results/sha256-991673619554/macos-apfs-mixed/2026-11-16/apfs-campaign/linux-images-retry-1-linux.svg",
+      "sha256": "a81617b125818b2082d36df0634830271f306bfd8885045071b99978c38a0663"
+    },
+    {
+      "originalPath": "bench/results/2026-11-16-apfs/linux-images-retry-1.json",
+      "path": "bench/results/sha256-991673619554/macos-apfs-mixed/2026-11-16/apfs-campaign/linux-images-retry-1.json",
+      "sha256": "96ed08665ffa5f1a62114571ba35eec317ec5d04cf94eda27f70260e3f3ca76e"
+    },
+    {
+      "originalPath": "bench/results/2026-11-16-apfs/linux-images-retry-1.summary.md",
+      "path": "bench/results/sha256-991673619554/macos-apfs-mixed/2026-11-16/apfs-campaign/linux-images-retry-1.summary.md",
+      "sha256": "266110e01a416f8138144792ecdd378d45d981ea023e870aa0a7cdf3f06d4ec2"
+    },
+    {
+      "originalPath": "bench/results/2026-11-16-apfs/linux-images.json",
+      "path": "bench/results/sha256-991673619554/macos-apfs-mixed/2026-11-16/apfs-campaign/linux-images.json",
+      "sha256": "093dd4196ef2903f27329df8bb3e4b0fa4e2424a69a8cbbd6995417cd955bd08"
+    },
+    {
+      "originalPath": "bench/results/2026-11-16-apfs/manifest.json",
+      "path": "bench/results/sha256-991673619554/macos-apfs-mixed/2026-11-16/apfs-campaign/manifest.json",
+      "sha256": "14ac1e99b5cdf3552021ebd107f697e8025e7e3c400c2c72b03ecf9319543e76"
+    },
+    {
+      "originalPath": "bench/results/2026-11-16-apfs/openclaw-host-retry-1-openclaw.svg",
+      "path": "bench/results/sha256-991673619554/macos-apfs-mixed/2026-11-16/apfs-campaign/openclaw-host-retry-1-openclaw.svg",
+      "sha256": "f01f08fe3e3a3da644f946151f2fceab75929111ba54ec465834f604db2f9277"
+    },
+    {
+      "originalPath": "bench/results/2026-11-16-apfs/openclaw-host-retry-1.json",
+      "path": "bench/results/sha256-991673619554/macos-apfs-mixed/2026-11-16/apfs-campaign/openclaw-host-retry-1.json",
+      "sha256": "41567257a4ff8fb4ce562f11ba3ebb44d8c2146aa83fce5b7ce0645b65a46550"
+    },
+    {
+      "originalPath": "bench/results/2026-11-16-apfs/openclaw-host-retry-1.summary.md",
+      "path": "bench/results/sha256-991673619554/macos-apfs-mixed/2026-11-16/apfs-campaign/openclaw-host-retry-1.summary.md",
+      "sha256": "b0d0b4ebfe83395b13ea60e5c52f182b764806a3169744e3266c819411984bba"
+    },
+    {
+      "originalPath": "bench/results/2026-11-16-apfs/openclaw-host.json",
+      "path": "bench/results/sha256-991673619554/macos-apfs-mixed/2026-11-16/apfs-campaign/openclaw-host.json",
+      "sha256": "ebb58fcace50fdae888030dbf678b8afbf50d854ffdf50377a54070444c8d9e6"
+    },
+    {
+      "originalPath": "bench/results/2026-11-16-apfs/openclaw-images-retry-1-openclaw.svg",
+      "path": "bench/results/sha256-991673619554/macos-apfs-mixed/2026-11-16/apfs-campaign/openclaw-images-retry-1-openclaw.svg",
+      "sha256": "0569c9c21947395f736cedada608e9e225e8ade494997d90b7ea4ef94d6967bb"
+    },
+    {
+      "originalPath": "bench/results/2026-11-16-apfs/openclaw-images-retry-1.json",
+      "path": "bench/results/sha256-991673619554/macos-apfs-mixed/2026-11-16/apfs-campaign/openclaw-images-retry-1.json",
+      "sha256": "03afce0ae17a8d1d382cca184960bbcbf6c5aa712eb4cb39f2bed140cd168685"
+    },
+    {
+      "originalPath": "bench/results/2026-11-16-apfs/openclaw-images-retry-1.summary.md",
+      "path": "bench/results/sha256-991673619554/macos-apfs-mixed/2026-11-16/apfs-campaign/openclaw-images-retry-1.summary.md",
+      "sha256": "84a899338530eed63cd1c072715847cce64a16f75553fd565fb85b8190bab243"
+    },
+    {
+      "originalPath": "bench/results/2026-11-16-apfs/openclaw-images.json",
+      "path": "bench/results/sha256-991673619554/macos-apfs-mixed/2026-11-16/apfs-campaign/openclaw-images.json",
+      "sha256": "6a7f045928eb2f02ac3585a2f7d4fcbe92686cffa7624385d76ab18f1845546b"
+    },
+    {
+      "originalPath": "bench/results/2026-11-16-apfs/twig-host-twig.svg",
+      "path": "bench/results/sha256-991673619554/macos-apfs-mixed/2026-11-16/apfs-campaign/twig-host-twig.svg",
+      "sha256": "aaf8308af94f6645303327a70729fba3c83e82ce27e762c3f0a445f44aa4d3eb"
+    },
+    {
+      "originalPath": "bench/results/2026-11-16-apfs/twig-host.json",
+      "path": "bench/results/sha256-991673619554/macos-apfs-mixed/2026-11-16/apfs-campaign/twig-host.json",
+      "sha256": "4dca132acb58e73bb5d1d38de9744a335bf37fdfd449591fd76740f0a92f9888"
+    },
+    {
+      "originalPath": "bench/results/2026-11-16-apfs/twig-host.summary.md",
+      "path": "bench/results/sha256-991673619554/macos-apfs-mixed/2026-11-16/apfs-campaign/twig-host.summary.md",
+      "sha256": "4f390dd8056c24b0a18367e958bee06b8846de6fa8baf58e84136b356298cbe0"
+    },
+    {
+      "originalPath": "bench/results/2026-11-16-apfs/twig-images-twig.svg",
+      "path": "bench/results/sha256-991673619554/macos-apfs-mixed/2026-11-16/apfs-campaign/twig-images-twig.svg",
+      "sha256": "9b4b1cc8eeb50f428b91d3929af641eb3c9021427d8a61a2e753531344b7ad47"
+    },
+    {
+      "originalPath": "bench/results/2026-11-16-apfs/twig-images.json",
+      "path": "bench/results/sha256-991673619554/macos-apfs-mixed/2026-11-16/apfs-campaign/twig-images.json",
+      "sha256": "8e9e3b49e32a3c298e26be6a8a8227394b7cee2d0f73c502c307a038bb58b8b8"
+    },
+    {
+      "originalPath": "bench/results/2026-11-16-apfs/twig-images.summary.md",
+      "path": "bench/results/sha256-991673619554/macos-apfs-mixed/2026-11-16/apfs-campaign/twig-images.summary.md",
+      "sha256": "8c0bdc316eecad7fa94b33b81b0a12f6df6ba1b68bd0bf1b9bf54b98053ee3a2"
+    },
+    {
+      "originalPath": "bench/results/2026-11-16-apfs/workers-starter-host-workers-starter.svg",
+      "path": "bench/results/sha256-991673619554/macos-apfs-mixed/2026-11-16/apfs-campaign/workers-starter-host-workers-starter.svg",
+      "sha256": "c1669a93a18e8b79d43d128b80f5c693a709aa5616433bbcf9b78bd1eca4f05c"
+    },
+    {
+      "originalPath": "bench/results/2026-11-16-apfs/workers-starter-host.json",
+      "path": "bench/results/sha256-991673619554/macos-apfs-mixed/2026-11-16/apfs-campaign/workers-starter-host.json",
+      "sha256": "d9a32b13d5afa168c26dd408894e3b56c3fa9be636d84d7dd6b6e22007f636fa"
+    },
+    {
+      "originalPath": "bench/results/2026-11-16-apfs/workers-starter-host.summary.md",
+      "path": "bench/results/sha256-991673619554/macos-apfs-mixed/2026-11-16/apfs-campaign/workers-starter-host.summary.md",
+      "sha256": "20522bd584d04395ad01d6bf6beadcf057143781ae530438b726536ebc1eb161"
+    },
+    {
+      "originalPath": "bench/results/2026-11-16-apfs/workers-starter-images-workers-starter.svg",
+      "path": "bench/results/sha256-991673619554/macos-apfs-mixed/2026-11-16/apfs-campaign/workers-starter-images-workers-starter.svg",
+      "sha256": "7922ea7fec07a825a13ff197fc80a05bffc3c877c9cb52ee5f13ff61b06c6d5c"
+    },
+    {
+      "originalPath": "bench/results/2026-11-16-apfs/workers-starter-images.json",
+      "path": "bench/results/sha256-991673619554/macos-apfs-mixed/2026-11-16/apfs-campaign/workers-starter-images.json",
+      "sha256": "3e456948140ad2a520693df00cc5e9b7c94dbbb566013439afa7b6abc49b986b"
+    },
+    {
+      "originalPath": "bench/results/2026-11-16-apfs/workers-starter-images.summary.md",
+      "path": "bench/results/sha256-991673619554/macos-apfs-mixed/2026-11-16/apfs-campaign/workers-starter-images.summary.md",
+      "sha256": "ebb13056d30d6aa8f8410e58df2d702851645184478ba918c84fa8a42a0f3d3b"
+    },
+    {
+      "originalPath": "bench/results/2026-11-17-final/axo-host-axo.svg",
+      "path": "bench/results/sha256-428608b8bf13/macos-apfs-mixed/2026-11-17/final/axo-host-axo.svg",
+      "sha256": "4ad078ea46baca6cdc7d92e46de7184ae00f1cfbd5efc00a08811c539c0a9fe0"
+    },
+    {
+      "originalPath": "bench/results/2026-11-17-final/axo-host.json",
+      "path": "bench/results/sha256-428608b8bf13/macos-apfs-mixed/2026-11-17/final/axo-host.json",
+      "sha256": "bcdf0ba111bf9b94a6c909a72999f2b1c02bcbbb57ced062dac48dd02ff4fceb"
+    },
+    {
+      "originalPath": "bench/results/2026-11-17-final/axo-host.summary.md",
+      "path": "bench/results/sha256-428608b8bf13/macos-apfs-mixed/2026-11-17/final/axo-host.summary.md",
+      "sha256": "10fc189720d41a8ec6947b33e4bc525af724f2fc1c9f48230ebf12be5591a238"
+    },
+    {
+      "originalPath": "bench/results/2026-11-17-final/axo-images-axo.svg",
+      "path": "bench/results/sha256-428608b8bf13/macos-apfs-mixed/2026-11-17/final/axo-images-axo.svg",
+      "sha256": "2a18de918fc03c0dca5800cc79ff425b3c018085c959ef6a0d8bf14cd4d06798"
+    },
+    {
+      "originalPath": "bench/results/2026-11-17-final/axo-images.json",
+      "path": "bench/results/sha256-428608b8bf13/macos-apfs-mixed/2026-11-17/final/axo-images.json",
+      "sha256": "5b2b7bef76b11969b54bc81908689ef7df0ef19acf1836db3be75a6d8623d7a7"
+    },
+    {
+      "originalPath": "bench/results/2026-11-17-final/axo-images.summary.md",
+      "path": "bench/results/sha256-428608b8bf13/macos-apfs-mixed/2026-11-17/final/axo-images.summary.md",
+      "sha256": "94bd386d611000bbd47bcc00b3ee0d378c87a3dcaa1531873540dadabb48768a"
+    },
+    {
+      "originalPath": "bench/results/2026-11-17-final/completion.json",
+      "path": "bench/results/sha256-428608b8bf13/macos-apfs-mixed/2026-11-17/final/completion.json",
+      "sha256": "fae5f869dfb66196f5056903408ac5f228a747c2cc48c7f0c556d3c60008800a"
+    },
+    {
+      "originalPath": "bench/results/2026-11-17-final/controller.ts",
+      "path": "bench/results/sha256-428608b8bf13/macos-apfs-mixed/2026-11-17/final/controller.ts",
+      "sha256": "9ac0cb11005adb9965c8a4e90e9ef391277ccb148a5ca6c090f17d8bd4ecadcc"
+    },
+    {
+      "originalPath": "bench/results/2026-11-17-final/linux-images-linux.svg",
+      "path": "bench/results/sha256-428608b8bf13/macos-apfs-mixed/2026-11-17/final/linux-images-linux.svg",
+      "sha256": "650b24dd6cc456ef1a9f1d72a9545b73b479ca2a52d38fa4d00c5143aa625333"
+    },
+    {
+      "originalPath": "bench/results/2026-11-17-final/linux-images.json",
+      "path": "bench/results/sha256-428608b8bf13/macos-apfs-mixed/2026-11-17/final/linux-images.json",
+      "sha256": "cb53b16997b8d07f0cab53b82772bb3b4c7a79e513086587580b5cfc10263038"
+    },
+    {
+      "originalPath": "bench/results/2026-11-17-final/linux-images.summary.md",
+      "path": "bench/results/sha256-428608b8bf13/macos-apfs-mixed/2026-11-17/final/linux-images.summary.md",
+      "sha256": "2b58254ede942fce8491c3d9c32b68a4d745d64ad258ebc7f7c99f73e27a44fa"
+    },
+    {
+      "originalPath": "bench/results/2026-11-17-final/manifest.json",
+      "path": "bench/results/sha256-428608b8bf13/macos-apfs-mixed/2026-11-17/final/manifest.json",
+      "sha256": "932d983e5a44c9866776600ae48fa8b70e7ba0c9847ef9555d10b069efa0680e"
+    },
+    {
+      "originalPath": "bench/results/2026-11-17-final/openclaw-host-openclaw.svg",
+      "path": "bench/results/sha256-428608b8bf13/macos-apfs-mixed/2026-11-17/final/openclaw-host-openclaw.svg",
+      "sha256": "bcf58e6e2d160a550eb5040bba08e453b70b8e334ff2354973ce634ecabc86ad"
+    },
+    {
+      "originalPath": "bench/results/2026-11-17-final/openclaw-host.json",
+      "path": "bench/results/sha256-428608b8bf13/macos-apfs-mixed/2026-11-17/final/openclaw-host.json",
+      "sha256": "b28d239d9b5effd3e6650468956b0e308277d104ec27e4c9a02c78b076c28969"
+    },
+    {
+      "originalPath": "bench/results/2026-11-17-final/openclaw-host.summary.md",
+      "path": "bench/results/sha256-428608b8bf13/macos-apfs-mixed/2026-11-17/final/openclaw-host.summary.md",
+      "sha256": "8ec9d719ef294ec9b86486371e161a913db2b199aa14f290e6d97067481e6fa7"
+    },
+    {
+      "originalPath": "bench/results/2026-11-17-final/openclaw-images-openclaw.svg",
+      "path": "bench/results/sha256-428608b8bf13/macos-apfs-mixed/2026-11-17/final/openclaw-images-openclaw.svg",
+      "sha256": "71df1f72e04dca2d06eaa733fbdcb43d14c0491197f199b805bf73edf7fc6200"
+    },
+    {
+      "originalPath": "bench/results/2026-11-17-final/openclaw-images.json",
+      "path": "bench/results/sha256-428608b8bf13/macos-apfs-mixed/2026-11-17/final/openclaw-images.json",
+      "sha256": "77b32e0f6e3e7a0e21c7a9665b0290f1be551f29e041b274cf5da749e0503725"
+    },
+    {
+      "originalPath": "bench/results/2026-11-17-final/openclaw-images.summary.md",
+      "path": "bench/results/sha256-428608b8bf13/macos-apfs-mixed/2026-11-17/final/openclaw-images.summary.md",
+      "sha256": "1670acd1c60dbd779392b7c9a6e8347e876a1f6b5cb7caedee937ae3d8cc8fb0"
+    },
+    {
+      "originalPath": "bench/results/2026-11-17-final/source-archive.json",
+      "path": "bench/results/sha256-428608b8bf13/macos-apfs-mixed/2026-11-17/final/source-archive.json",
+      "sha256": "cc30d361d4f18f49e379a01fc8b19b6af4c67a50450682bb65af3173dd78358f"
+    },
+    {
+      "originalPath": "bench/results/2026-11-17-final/state.json",
+      "path": "bench/results/sha256-428608b8bf13/macos-apfs-mixed/2026-11-17/final/state.json",
+      "sha256": "fae5f869dfb66196f5056903408ac5f228a747c2cc48c7f0c556d3c60008800a"
+    },
+    {
+      "originalPath": "bench/results/2026-11-17-final/twig-host-twig.svg",
+      "path": "bench/results/sha256-428608b8bf13/macos-apfs-mixed/2026-11-17/final/twig-host-twig.svg",
+      "sha256": "62a0230ebd5b2bd3e052e5eb36a8c7ca742ead4662b5376be8a5034d6deeb2bf"
+    },
+    {
+      "originalPath": "bench/results/2026-11-17-final/twig-host.json",
+      "path": "bench/results/sha256-428608b8bf13/macos-apfs-mixed/2026-11-17/final/twig-host.json",
+      "sha256": "05d91a2f2458b274c217d3ad3bd3f4c8263c6fa516fae8228cb4034c37d1295c"
+    },
+    {
+      "originalPath": "bench/results/2026-11-17-final/twig-host.summary.md",
+      "path": "bench/results/sha256-428608b8bf13/macos-apfs-mixed/2026-11-17/final/twig-host.summary.md",
+      "sha256": "69ae5462b0a8622bb7463de4895ab646b616a05e7cdf0401d9e7e04eeb642022"
+    },
+    {
+      "originalPath": "bench/results/2026-11-17-final/twig-images-twig.svg",
+      "path": "bench/results/sha256-428608b8bf13/macos-apfs-mixed/2026-11-17/final/twig-images-twig.svg",
+      "sha256": "99de43bdbf9a4e7e299fc60846c69a521f389f8a3242b0b981b62fbc37af9dd1"
+    },
+    {
+      "originalPath": "bench/results/2026-11-17-final/twig-images.json",
+      "path": "bench/results/sha256-428608b8bf13/macos-apfs-mixed/2026-11-17/final/twig-images.json",
+      "sha256": "b5bf730c1f6601de2706d22f3703814ee6885a254973794fb4a61837f6834c21"
+    },
+    {
+      "originalPath": "bench/results/2026-11-17-final/twig-images.summary.md",
+      "path": "bench/results/sha256-428608b8bf13/macos-apfs-mixed/2026-11-17/final/twig-images.summary.md",
+      "sha256": "7aec29db161822242bbbac1aeed6793dbb8d479f0278a3475c5b0618e2e7eba9"
+    },
+    {
+      "originalPath": "bench/results/2026-11-17-final/workers-starter-host-workers-starter.svg",
+      "path": "bench/results/sha256-428608b8bf13/macos-apfs-mixed/2026-11-17/final/workers-starter-host-workers-starter.svg",
+      "sha256": "74b3ac6881ac46ef6f09f576324e99d1b90a965712c1596b57d0d9bff6b99a64"
+    },
+    {
+      "originalPath": "bench/results/2026-11-17-final/workers-starter-host.json",
+      "path": "bench/results/sha256-428608b8bf13/macos-apfs-mixed/2026-11-17/final/workers-starter-host.json",
+      "sha256": "a43220168c2b03ca134ff61c02b27f463a2fb8f8a10c3db299337ae74a094012"
+    },
+    {
+      "originalPath": "bench/results/2026-11-17-final/workers-starter-host.summary.md",
+      "path": "bench/results/sha256-428608b8bf13/macos-apfs-mixed/2026-11-17/final/workers-starter-host.summary.md",
+      "sha256": "d3c9d1b8cdeb8636afc7c60f5155816559bd8bb841a9a37464acf39e5ddf1d91"
+    },
+    {
+      "originalPath": "bench/results/2026-11-17-final/workers-starter-images-workers-starter.svg",
+      "path": "bench/results/sha256-428608b8bf13/macos-apfs-mixed/2026-11-17/final/workers-starter-images-workers-starter.svg",
+      "sha256": "793b738e89f9e44bdf4ab56357fc25074c6f7cabc9b0a98430683c2b81ada176"
+    },
+    {
+      "originalPath": "bench/results/2026-11-17-final/workers-starter-images.json",
+      "path": "bench/results/sha256-428608b8bf13/macos-apfs-mixed/2026-11-17/final/workers-starter-images.json",
+      "sha256": "6d0de2b48b748b7e1808bfe2726e5803714ec800ceda1f5277e8320c84817885"
+    },
+    {
+      "originalPath": "bench/results/2026-11-17-final/workers-starter-images.summary.md",
+      "path": "bench/results/sha256-428608b8bf13/macos-apfs-mixed/2026-11-17/final/workers-starter-images.summary.md",
+      "sha256": "f4a86d6b1fb082d4dd17f0b3988760af74f153393ff569d3137baf7fdf80ce55"
+    },
+    {
+      "originalPath": "bench/results/2026-11-17-issue5/after-host-pulumi.svg",
+      "path": "bench/results/multi-build/mixed/2026-11-17/issue5/after-host-pulumi.svg",
+      "sha256": "b05f5a766c7a6716a09840ab7125cc3e7d48b8b2076da04fa780f0646b0d18cc"
+    },
+    {
+      "originalPath": "bench/results/2026-11-17-issue5/after-host.json",
+      "path": "bench/results/multi-build/mixed/2026-11-17/issue5/after-host.json",
+      "sha256": "c4bb1bb2d26ee3a06ec0b17ae7de56f2de2b3d617d7b58840582c118b083f308"
+    },
+    {
+      "originalPath": "bench/results/2026-11-17-issue5/after-host.summary.md",
+      "path": "bench/results/multi-build/mixed/2026-11-17/issue5/after-host.summary.md",
+      "sha256": "9f9112bcd27bfe64ee4b621691a64b1ad9e53a379f106392873354b7a44fcd52"
+    },
+    {
+      "originalPath": "bench/results/2026-11-17-issue5/after-images-pulumi.svg",
+      "path": "bench/results/multi-build/mixed/2026-11-17/issue5/after-images-pulumi.svg",
+      "sha256": "afb8b349ace8e0ee2ba47b99ba0ee7cfd5b283752c66f2e117689432c2f05832"
+    },
+    {
+      "originalPath": "bench/results/2026-11-17-issue5/after-images.json",
+      "path": "bench/results/multi-build/mixed/2026-11-17/issue5/after-images.json",
+      "sha256": "f5e973b29992706389ae6332fb9367d6261b708e53e23e420a81fd8a8f658742"
+    },
+    {
+      "originalPath": "bench/results/2026-11-17-issue5/after-images.summary.md",
+      "path": "bench/results/multi-build/mixed/2026-11-17/issue5/after-images.summary.md",
+      "sha256": "381bcc67780be79359f61789f7048b009e062ffadd80b86d411cd9615e48ff69"
+    },
+    {
+      "originalPath": "bench/results/2026-11-17-issue5/before-host-pulumi.svg",
+      "path": "bench/results/multi-build/mixed/2026-11-17/issue5/before-host-pulumi.svg",
+      "sha256": "7544879e0edfa83df5421dc958063dc9fa9bb7f253154ff9162ccf74c5ec5540"
+    },
+    {
+      "originalPath": "bench/results/2026-11-17-issue5/before-host.json",
+      "path": "bench/results/multi-build/mixed/2026-11-17/issue5/before-host.json",
+      "sha256": "7d812edec6b532eaa481f71134aedb0dd8b6b25e5ba791d63d275343e68e30a3"
+    },
+    {
+      "originalPath": "bench/results/2026-11-17-issue5/before-host.summary.md",
+      "path": "bench/results/multi-build/mixed/2026-11-17/issue5/before-host.summary.md",
+      "sha256": "f49e95009a92a8ddc4004fd536b72cb2dc9a7d97935a626490ded717f7201716"
+    },
+    {
+      "originalPath": "bench/results/2026-11-17-issue5/before-images-pulumi.svg",
+      "path": "bench/results/multi-build/mixed/2026-11-17/issue5/before-images-pulumi.svg",
+      "sha256": "065422589f894346fffbf52b8efcb926c1334ce55d4c4fe2061357fbe660344e"
+    },
+    {
+      "originalPath": "bench/results/2026-11-17-issue5/before-images.json",
+      "path": "bench/results/multi-build/mixed/2026-11-17/issue5/before-images.json",
+      "sha256": "f4c9f633ffd272a771156a13cd530ce6a02464ccbdbcdbc20594f17a19c00767"
+    },
+    {
+      "originalPath": "bench/results/2026-11-17-issue5/before-images.summary.md",
+      "path": "bench/results/multi-build/mixed/2026-11-17/issue5/before-images.summary.md",
+      "sha256": "c5ed7d7d9cb72d16fd3c2413ab5299c974ad16fd3e377a6480a9b102c4561672"
+    },
+    {
+      "originalPath": "bench/results/2026-11-17-issue5/candidate-sources.bundle",
+      "path": "bench/results/multi-build/mixed/2026-11-17/issue5/candidate-sources.bundle",
+      "sha256": "0d9ec5e5887e4f765fe77b94ccbfc300e6128f326c9d6791009f7e88e0efd5d2"
+    },
+    {
+      "originalPath": "bench/results/2026-11-17-issue5/completion.json",
+      "path": "bench/results/multi-build/mixed/2026-11-17/issue5/completion.json",
+      "sha256": "5f8d35320de465e3835b13c15851629fb3249a7aef764732f70ad5b1af085b05"
+    },
+    {
+      "originalPath": "bench/results/2026-11-17-issue5/linux-validation/linux-btrfs-recheck.log",
+      "path": "bench/results/multi-build/mixed/2026-11-17/issue5/linux-validation/linux-btrfs-recheck.log",
+      "sha256": "d7e1a8c1987cdf56b6ac51a55726b74acaff201b5dd88a472c75260ebf52bf83"
+    },
+    {
+      "originalPath": "bench/results/2026-11-17-issue5/linux-validation/linux-btrfs.log",
+      "path": "bench/results/multi-build/mixed/2026-11-17/issue5/linux-validation/linux-btrfs.log",
+      "sha256": "03e6449363f73328f1b8a5fe37458af080bdf0e231e0e3e4b6fcf90c475a564a"
+    },
+    {
+      "originalPath": "bench/results/2026-11-17-issue5/linux-validation/linux-host-recheck.log",
+      "path": "bench/results/multi-build/mixed/2026-11-17/issue5/linux-validation/linux-host-recheck.log",
+      "sha256": "5b9ba64854b8a5cf0fd6b7e7ce259552783188740a67b7d1a47a43f6e89fd5d0"
+    },
+    {
+      "originalPath": "bench/results/2026-11-17-issue5/linux-validation/linux-host.log",
+      "path": "bench/results/multi-build/mixed/2026-11-17/issue5/linux-validation/linux-host.log",
+      "sha256": "003aae2b603136027a77b43182ee04bc67d6da9b6567692771c3b5f4027d8c18"
+    },
+    {
+      "originalPath": "bench/results/2026-11-17-issue5/linux-validation/linux-xfs-recheck.log",
+      "path": "bench/results/multi-build/mixed/2026-11-17/issue5/linux-validation/linux-xfs-recheck.log",
+      "sha256": "24252380674c9be99a12fc389347296e586c85e47ca6e77ead0cefab96c5efce"
+    },
+    {
+      "originalPath": "bench/results/2026-11-17-issue5/linux-validation/linux-xfs.log",
+      "path": "bench/results/multi-build/mixed/2026-11-17/issue5/linux-validation/linux-xfs.log",
+      "sha256": "88b2afd6dc5e625440ad72ba87cde3211858cb40a35edfac5c438402022777c8"
+    },
+    {
+      "originalPath": "bench/results/2026-11-17-issue5/linux-validation/manifest.json",
+      "path": "bench/results/multi-build/mixed/2026-11-17/issue5/linux-validation/manifest.json",
+      "sha256": "2fb9ce855ad69d305507c1c4fedb0a513f527ae3647ad92fea2a0253e48e900b"
+    },
+    {
+      "originalPath": "bench/results/2026-11-17-issue5/linux-validation/recheck-success.txt",
+      "path": "bench/results/multi-build/mixed/2026-11-17/issue5/linux-validation/recheck-success.txt",
+      "sha256": "431992cbdf832bfaba33a20fdaeb0b04ffeb61e18bf7f22219e69a7654c0ebce"
+    },
+    {
+      "originalPath": "bench/results/2026-11-17-issue5/linux-validation/success.txt",
+      "path": "bench/results/multi-build/mixed/2026-11-17/issue5/linux-validation/success.txt",
+      "sha256": "0d7d939fec20d3a5aaae3e0b8215d9a461fb399bff96020ddfe66e19039b7e4c"
+    },
+    {
+      "originalPath": "bench/results/2026-11-17-issue5/manifest.json",
+      "path": "bench/results/multi-build/mixed/2026-11-17/issue5/manifest.json",
+      "sha256": "d71a30086539be60c950bddf58f0a18ec06b74e4421f9146714c604e0f1334b6"
+    },
+    {
+      "originalPath": "bench/results/2026-11-17-issue5/summary.json",
+      "path": "bench/results/multi-build/mixed/2026-11-17/issue5/summary.json",
+      "sha256": "5f5f9c76e581dd7fee75f9bf5c7625029aa915f31a46432b609d53ab5ef6f989"
     }
   ]
 }

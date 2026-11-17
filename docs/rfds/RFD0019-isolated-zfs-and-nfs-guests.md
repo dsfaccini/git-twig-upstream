@@ -1,4 +1,4 @@
-# RFD0018 — Isolated ZFS and NFS test guests
+# RFD0019 — Isolated ZFS and NFS test guests
 
 - Status: implementation contract
 - Author: leostera
@@ -9,7 +9,7 @@
 Test OpenZFS and NFSv4.2 inside two disposable local Linux guests rather than
 installing filesystem/server modules into the development host or using paid
 cloud resources. The server owns separate new virtual data disks for ZFS and XFS;
-the client mounts explicit NFSv4.2 exports. This extends RFD0017's capability and
+the client mounts explicit NFSv4.2 exports. This extends RFD0018's capability and
 checkout contracts without assuming that either filesystem supports FICLONE.
 
 The local host lacks a usable KVM device. QEMU software emulation is acceptable

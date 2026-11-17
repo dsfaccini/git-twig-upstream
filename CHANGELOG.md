@@ -4,6 +4,28 @@ This log starts with one consolidated entry for the feature set available in
 v0.3.0, including features introduced in earlier releases. Future entries will
 describe changes from this baseline after they are implemented and verified.
 
+## Unreleased
+
+### Added
+
+- Bounded same-filesystem donor selection across target revisions, while keeping
+  private raw-byte verification and source indexes unchanged.
+- Git-written builtin ident/encoding exceptions without losing other sharing.
+- Verified NUL-bearing blobs stay shared under automatic CRLF policies; forced
+  text conversion and dirty donor bytes still go through Git.
+- Branch tracking setup no longer appears as a conversion-policy change.
+- Gitlink directories no longer disable sharing for other files. Initialized
+  donor submodules are never copied or recursively checked out.
+- Conversion rules on symlinks/gitlinks do not disable unrelated sharing, and
+  core.symlinks=false only delegates when the target has symlink entries.
+- Differential revision/donor cases and deliberate comparator corruption controls.
+- Benchmark schema 4: separate donor/target provenance, isolated warmup/oracle
+  registries, real verified-clone counts and explicit fallback baselines.
+
+External filters on regular files, sparse checkout, conditional config includes and
+relative attribute-file configuration remain conservative whole-request fallbacks.
+Braiding and re-sharing existing worktrees are not included.
+
 ## [0.4.0] — 2026-11-17
 
 ### Fixed
@@ -40,23 +62,10 @@ describe changes from this baseline after they are implemented and verified.
   attribute precedence, dirty policies, mapped donors, private writes, SHA-256
   repositories, unusual paths and policy changes during creation.
 - CI coverage for the minimum supported Git 2.40 on macOS and Linux.
-- Bounded same-filesystem donor selection across target revisions, while keeping
-  private raw-byte verification and source indexes unchanged.
-- Git-written builtin ident/encoding exceptions without losing other sharing.
-- Verified NUL-bearing blobs stay shared under automatic CRLF policies; forced
-  text conversion and dirty donor bytes still go through Git.
-- Branch tracking setup no longer appears as a conversion-policy change.
-- Gitlink directories no longer disable sharing for other files. Initialized
-  donor submodules are never copied or recursively checked out.
-- Conversion rules on symlinks/gitlinks do not disable unrelated sharing, and
-  core.symlinks=false only delegates when the target has symlink entries.
-- Differential revision/donor cases and deliberate comparator corruption controls.
-- Benchmark schema 4: separate donor/target provenance, isolated warmup/oracle
-  registries, real verified-clone counts and explicit fallback baselines.
-
-External filters on regular files, sparse checkout, conditional config includes and
-relative attribute-file configuration remain conservative whole-request fallbacks.
-Braiding and re-sharing existing worktrees are not included.
+External filters, ident expansion, working-tree encodings, conditional config
+includes and relative attribute-file configuration remain conservative
+whole-request fallbacks. Other-revision cloning, braiding and re-sharing are
+not included.
 
 ## [0.3.0] — 2026-11-16
 

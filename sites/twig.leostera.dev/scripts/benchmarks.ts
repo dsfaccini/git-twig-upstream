@@ -108,13 +108,13 @@ export const sources = [
   {
     name: "Linux kernel",
     repository: "linux",
-    file: "2026-11-17-final/linux-images.json",
+    file: "sha256-428608b8bf13/macos-apfs-mixed/2026-11-17/final/linux-images.json",
   },
-  { name: "Pulumi docs", repository: "pulumi", file: "2026-11-17-issue5/after-images.json" },
-  { name: "OpenClaw", repository: "openclaw", file: "2026-11-17-final/openclaw-images.json" },
-  { name: "Axo", repository: "axo", file: "2026-11-17-final/axo-images.json" },
-  { name: "git-twig", repository: "twig", file: "2026-11-17-final/twig-images.json" },
-  { name: "Workers starter", repository: "workers-starter", file: "2026-11-17-final/workers-starter-images.json" },
+  { name: "Pulumi docs", repository: "pulumi", file: "multi-build/mixed/2026-11-17/issue5/after-images.json" },
+  { name: "OpenClaw", repository: "openclaw", file: "sha256-428608b8bf13/macos-apfs-mixed/2026-11-17/final/openclaw-images.json" },
+  { name: "Axo", repository: "axo", file: "sha256-428608b8bf13/macos-apfs-mixed/2026-11-17/final/axo-images.json" },
+  { name: "git-twig", repository: "twig", file: "sha256-428608b8bf13/macos-apfs-mixed/2026-11-17/final/twig-images.json" },
+  { name: "Workers starter", repository: "workers-starter", file: "sha256-428608b8bf13/macos-apfs-mixed/2026-11-17/final/workers-starter-images.json" },
 ];
 
 export function benchmarkFile(file: string): URL {

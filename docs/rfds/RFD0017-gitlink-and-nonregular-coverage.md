@@ -1,4 +1,4 @@
-# RFD0016 — Gitlinks and nonregular checkout entries
+# RFD0017 — Gitlinks and nonregular checkout entries
 
 - Status: implementation snapshot
 - Author: leostera
@@ -10,7 +10,7 @@ A gitlink should not force unrelated large files to be copied. Match ordinary
 `git worktree add` without recursion: share verified regular files and links,
 while Git creates empty submodule directories and indexes their commit IDs. Never
 clone or initialize an existing donor submodule. This replaces the gitlink
-whole-request exclusion in RFD0015, not the exclusions for sparse checkout,
+whole-request exclusion in RFD0016, not the exclusions for sparse checkout,
 external conversion of regular files, or unsafe hooks/configuration.
 
 Git's checkout-index implementation can create gitlink directories without

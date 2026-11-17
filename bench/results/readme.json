@@ -3,38 +3,38 @@
     {
       "name": "Workers starter (10 sequential)",
       "repository": "workers-starter",
-      "timing": "bench/results/2026-11-17-final/workers-starter-host.json",
-      "allocation": "bench/results/2026-11-17-final/workers-starter-images.json"
+      "timing": "bench/results/sha256-428608b8bf13/macos-apfs-mixed/2026-11-17/final/workers-starter-host.json",
+      "allocation": "bench/results/sha256-428608b8bf13/macos-apfs-mixed/2026-11-17/final/workers-starter-images.json"
     },
     {
       "name": "git-twig (10 sequential)",
       "repository": "twig",
-      "timing": "bench/results/2026-11-17-final/twig-host.json",
-      "allocation": "bench/results/2026-11-17-final/twig-images.json"
+      "timing": "bench/results/sha256-428608b8bf13/macos-apfs-mixed/2026-11-17/final/twig-host.json",
+      "allocation": "bench/results/sha256-428608b8bf13/macos-apfs-mixed/2026-11-17/final/twig-images.json"
     },
     {
       "name": "Axo",
       "repository": "axo",
-      "timing": "bench/results/2026-11-17-final/axo-host.json",
-      "allocation": "bench/results/2026-11-17-final/axo-images.json"
+      "timing": "bench/results/sha256-428608b8bf13/macos-apfs-mixed/2026-11-17/final/axo-host.json",
+      "allocation": "bench/results/sha256-428608b8bf13/macos-apfs-mixed/2026-11-17/final/axo-images.json"
     },
     {
       "name": "Linux kernel",
       "repository": "linux",
-      "timing": "bench/results/2026-11-17-final/linux-images.json",
-      "allocation": "bench/results/2026-11-17-final/linux-images.json"
+      "timing": "bench/results/sha256-428608b8bf13/macos-apfs-mixed/2026-11-17/final/linux-images.json",
+      "allocation": "bench/results/sha256-428608b8bf13/macos-apfs-mixed/2026-11-17/final/linux-images.json"
     },
     {
       "name": "OpenClaw",
       "repository": "openclaw",
-      "timing": "bench/results/2026-11-17-final/openclaw-host.json",
-      "allocation": "bench/results/2026-11-17-final/openclaw-images.json"
+      "timing": "bench/results/sha256-428608b8bf13/macos-apfs-mixed/2026-11-17/final/openclaw-host.json",
+      "allocation": "bench/results/sha256-428608b8bf13/macos-apfs-mixed/2026-11-17/final/openclaw-images.json"
     },
     {
       "name": "Pulumi docs",
       "repository": "pulumi",
-      "timing": "bench/results/2026-11-17-issue5/after-host.json",
-      "allocation": "bench/results/2026-11-17-issue5/after-images.json"
+      "timing": "bench/results/multi-build/mixed/2026-11-17/issue5/after-host.json",
+      "allocation": "bench/results/multi-build/mixed/2026-11-17/issue5/after-images.json"
     }
   ],
   "notes": [
@@ -46,6 +46,6 @@
     "The frozen executable implements the final regular-file verifier at source 2dabb9c before the version-only release bump and still reports 0.3.0. It is not the published v0.3.0 binary. Source IDs, binary SHA-256 values, input pins and complete provenance accompany the raw results. Exact source commits for both campaigns are retained in candidate-sources.bundle, based on public commit c4e85fb.",
     "The issue-5 comparison additionally retains six pre-optimization Twig creates. All 18 issue-5 measured creates verified successfully. The reporter's two-minute baseline was not reproduced on this Mac; the local before/after comparison is not proof that the reporter had the same bottleneck. See its generated summary and raw runs.",
     "The final harness has a separately hashed recovery for Git's partial Directory-not-empty cleanup of benchmark-owned disposable warmup fixtures. It runs outside measurement, records each recovery and verifies registration cleanup before the allocation baseline. No failed measured operation is silently retried.",
-    "The initial pre-optimization 3,780-create campaign and its failed setup attempts remain archived under bench/results/2026-11-16-apfs; November 15 results remain under 2026-11-15-real. Neither is silently overwritten or used as the optimized candidate's headline timing. See the final campaign manifest and completion record, plus the separate issue-5 manifest and summary."
+    "The initial pre-optimization 3,780-create campaign and its failed setup attempts remain archived under bench/results/sha256-991673619554/macos-apfs-mixed/2026-11-16/apfs-campaign; November 15 results are indexed in bench/results/index.json. Neither is silently overwritten or used as the optimized candidate's headline timing. See the final campaign manifest and completion record, plus the separate issue-5 manifest and summary."
   ]
 }

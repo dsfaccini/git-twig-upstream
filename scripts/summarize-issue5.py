@@ -4,7 +4,7 @@ import json
 import pathlib
 import statistics
 
-root = pathlib.Path("bench/results/2026-11-17-issue5")
+root = pathlib.Path("bench/results/multi-build/mixed/2026-11-17/issue5")
 summary = {
     "schemaVersion": 1,
     "inputCommit": "430261138aa08539cd598b9269bfe8f82fd49b78",

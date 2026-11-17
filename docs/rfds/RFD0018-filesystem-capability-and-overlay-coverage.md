@@ -1,4 +1,4 @@
-# RFD0017 — Filesystem capability and OverlayFS coverage
+# RFD0018 — Filesystem capability and OverlayFS coverage
 
 - Status: implementation snapshot
 - Author: leostera
@@ -11,7 +11,7 @@ checkout correctness coverage to ext4 and OverlayFS backed by ext4, reflink-enab
 XFS and Btrfs, plus Linux NTFS through the separate ntfs3 and ntfs-3g drivers. OverlayFS is a distinct filesystem layer: its backing filesystem
 alone does not certify that cloning works through the mounted view. OpenZFS,
 NFSv4.2 and bcachefs remain unverified until an appropriate environment exists.
-This extends the executable contracts in RFD0011, RFD0012 and RFD0015 without
+This extends the executable contracts in RFD0011, RFD0012 and RFD0016 without
 changing the production clone primitive or relaxing raw-byte verification.
 
 ## Guide-level contract

@@ -1,4 +1,4 @@
-# RFD0015 — Linux donor coverage and differential controls
+# RFD0016 — Linux donor coverage and differential controls
 
 - Status: implementation snapshot
 - Author: leostera
@@ -101,7 +101,7 @@ pairs as a win. The aim is additional allocation saved, not promised lower laten
 The local [snapshot](../../bench/results/sha256-4884eac9a1e6/linux-mixed/2026-11-17/checkout-coverage/snapshot.json)
 and generated CSV support the disk-first decision for these synthetic fixtures:
 two sequential cross-revision creates allocate 16.09 MiB rather than 128.08 MiB
-(XFS) or 128.31 MiB (Btrfs). Builtin, automatic-CRLF and RFD0016 gitlink cases
+(XFS) or 128.31 MiB (Btrfs). Builtin, automatic-CRLF and RFD0017 gitlink cases
 avoid nearly all duplicated large-file data. Keep raw verification despite its
 cost: cross-revision batch time rises from 180.56 to 376.89 ms on XFS, and
 286.95 to 470.45 ms on Btrfs versus the frozen baseline. Unchanged-file sharing
