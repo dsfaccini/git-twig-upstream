@@ -18,13 +18,14 @@ Git's worktree implementation, without inheriting local or ignored files.
 .SH COMMANDS
 .TP
 .B new [-b branch | --detach] path [commit]
-Create a worktree. Development builds can select a nearby donor worktree for
+Create a worktree. Since v0.5.0, Twig can select a nearby donor worktree for
 other commits; matching files are verified clones and Git writes the rest.
-Unsupported options delegate to Git. Published v0.3.0 requires the source HEAD.
+Unsupported options delegate to Git.
 .TP
 .B adopt [--dry-run | --prepare | --dedupe] linked-worktree
 Experimental existing-worktree sharing, run from another donor checkout in the
-same repository. Default and --dry-run inspect matching current tracked bytes.
+same repository. Default and --dry-run inspect matching current bytes of regular
+files tracked in both checkouts.
 --prepare retains verified private clones without replacing existing files.
 Linux --dedupe uses in-place kernel comparison/sharing; APFS live replacement
 is unsupported. Neither logical matching bytes nor ioctl bytes measure exclusive
@@ -67,7 +68,7 @@ Version 0.4.0 supports common LF policies such as text=auto eol=lf.
 Private candidate bytes are compared to raw target blobs. Git materializes
 files requiring conversion or whose bytes differ; other verified files retain
 sharing. Upgrade older releases for the released LF-policy and filter-state fixes.
-Development builds materialize builtin ident and encoding exceptions per file.
+Since v0.5.0, Twig materializes builtin ident and encoding exceptions per file.
 Git creates empty gitlink directories without copying or initializing donor
 submodules. Conversion rules do not rewrite symlink text or gitlink directories.
 External filters on regular files, conditional config includes, sparse checkout

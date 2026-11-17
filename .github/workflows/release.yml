@@ -45,19 +45,22 @@ jobs:
     steps:
       - uses: actions/checkout@v4
         with:
-          ref: main
+          ref: ${{ github.ref_name }}
       - uses: actions/download-artifact@v4
         with:
           path: dist
           merge-multiple: true
       - run: |
-          sha256sum dist/*.tar.gz > dist/SHA256SUMS
-          python3 scripts/release-formula.py "${GITHUB_REF_NAME#v}" dist > Formula/git-twig.rb
-          cp Formula/git-twig.rb dist/git-twig.rb
+          python3 scripts/check-release-version.py "${GITHUB_REF_NAME#v}"
+          (cd dist && sha256sum *.tar.gz) > dist/SHA256SUMS
+          python3 scripts/release-formula.py "${GITHUB_REF_NAME#v}" dist > dist/git-twig.rb
           python3 scripts/release-notes.py "${GITHUB_REF_NAME#v}" > "$RUNNER_TEMP/release-notes.md"
           gh release create "$GITHUB_REF_NAME" dist/* --verify-tag --notes-file "$RUNNER_TEMP/release-notes.md"
           git config user.name "github-actions[bot]"
           git config user.email "41898282+github-actions[bot]@users.noreply.github.com"
+          git fetch origin main
+          git switch -c "formula-${GITHUB_REF_NAME}" origin/main
+          cp dist/git-twig.rb Formula/git-twig.rb
           git add Formula/git-twig.rb
           git commit -m "chore: update Homebrew formula for $GITHUB_REF_NAME"
           git push origin HEAD:main

@@ -1,16 +1,15 @@
-# Existing-worktree adoption prototype
+# Experimental existing-worktree adoption
 
-This is an experimental command in development main, not released v0.4. Build and
-use the development binary explicitly; do not replace your installed stable Twig:
+Available since v0.5.0. Run from a distinct donor checkout; the target must be an
+existing linked worktree of the same repository:
 
 ```sh
-CARGO_TARGET_DIR=target/build cargo build --release -p git-twig --locked
-# Run from the donor checkout; target is an existing linked worktree of that repo.
-/absolute/path/to/git-twig/target/build/release/git-twig adopt --dry-run ../existing
+git twig --version
+git twig adopt --dry-run ../existing
 ```
 
 Default mode is read-only inspection. It compares current raw bytes at the same
-tracked paths, including dirty files, without refreshing the index. Different,
+paths tracked in both checkouts, including dirty files, without refreshing the index. Different,
 missing, empty, symlinked, multiply-linked or cross-device files are skipped.
 Eligible logical bytes are NOT an estimate of physical space reclaimed: files
 may already share blocks.
@@ -28,7 +27,7 @@ rolled back, and neither file's contents are restored or overwritten. Syscall
 bytes are reported separately from matching logical bytes and are not exclusive
 physical allocation savings. No timing or allocation benchmark is included.
 
-The prototype considers one explicitly selected donor (the invoking checkout),
+The command considers one explicitly selected donor (the invoking checkout),
 not all potential donors or content at other paths. It never creates branches,
 changes registration, deletes scratch, edits Git configuration, or force-adopts.
 Run only in trusted local repositories. Inspection is not a durable certificate

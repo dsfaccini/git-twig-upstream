@@ -50,7 +50,7 @@ git twig --version
 
 - `new`: create an ordinary linked worktree. Supported requests use native CoW;
   other requests use Git's normal checkout.
-- `adopt` (experimental development command, absent in released v0.4): inspect
+- `adopt` (experimental since v0.5.0): inspect
   existing linked worktrees for matching current bytes. See the adoption section;
   it is not automatic cleanup or a session manager.
 - `list`: show worktrees in human-readable form. `--porcelain` is Git's stable
@@ -77,7 +77,7 @@ git twig --version
 Standard Git worktree options are passed through. Use `git worktree <command> -h`
 for the full options of a delegated command (`new` uses Git's `add` options).
 Do not invent additional Twig commands or flags. Check subcommand help before
-using development features: released v0.4 has no `adopt`, and no `setup` command
+using newer features: releases before v0.5 have no `adopt`, and no `setup` command
 or lifecycle-hook manager is shipped.
 
 ## Create a workspace
@@ -90,8 +90,8 @@ cd feat-x
 ```
 
 `-C main` selects the source checkout; `../feat-x` is resolved relative to it.
-Published v0.3.0 only shares that checkout's current `HEAD`. Development builds
-can select a nearby donor for another revision and share verified matching files;
+Since v0.5.0, Twig can select a nearby donor for another revision and share
+verified matching files;
 Git writes changed, new or converted paths.
 
 For a detached checkout:
@@ -141,7 +141,7 @@ git -C main twig adopt --dry-run ../existing
 ```
 
 Inspection does not replace files or refresh the index. It compares same-path
-tracked regular files by their current raw bytes, not HEAD or clean status.
+regular files tracked in both checkouts by their current raw bytes, not HEAD or clean status.
 Dirty and staged work must survive unchanged. Missing, different, empty,
 symlinked, multiply-linked and cross-device candidates are skipped. Report these
 limits rather than promising all worktree bytes can be shared.
@@ -165,15 +165,15 @@ branches, index, permissions and registration intact. No agent hook is required.
   files are excluded; tracked secrets are copied like any other tracked file.
   Install dependencies when needed.
 - Native CoW needs macOS/APFS or Linux on Btrfs or reflink-enabled XFS. Source,
-  destination and Git metadata must share a clone-capable filesystem (in development
-  builds, this applies to the selected donor). Unsupported requests use stock Git.
+  destination and Git metadata must share a clone-capable filesystem; this applies
+  to the selected donor, not necessarily the invoking checkout. Unsupported requests use stock Git.
 - CoW shares file data, not writes. It is not a sandbox and is not always faster.
 - To inspect backend selection, set `TWIG_TRACE=1` on the create command.
 - Since v0.4.0, supported LF policies can use native CoW.
   Private candidates are compared to raw target blobs; Git writes exceptional
   files while other files retain sharing. Trace output includes per-path counts.
   Upgrade older releases to v0.4.0 or newer for the released LF-policy and filter-state fix.
-- Development builds materialize builtin ident/encoding conversions per file.
+- Since v0.5.0, Twig materializes builtin ident/encoding conversions per file.
   Git creates empty submodule directories without copying or initializing donor
   submodules. External filters on regular files and sparse checkout still delegate.
   Conditional config includes and relative attribute-file configuration also
