@@ -195,13 +195,56 @@ fn registration_failure_and_abrupt_exit_preserve_recoverable_state() -> Result<(
     Ok(())
 }
 
+#[test]
+fn interrupts_before_registration_remove_staging() -> Result<()> {
+    use std::os::unix::process::ExitStatusExt;
+    for (action, signal) in [
+        (r#"kill -INT "$PPID""#, libc::SIGINT),
+        (r#"kill -TERM "$PPID""#, libc::SIGTERM),
+        // A terminal interrupt reaches the whole process group, including Git.
+        ("kill -INT 0", libc::SIGINT),
+    ] {
+        let f = Fixture::new()?;
+        #[cfg(target_os = "linux")]
+        if !linux_reflinks_available(&f)? {
+            continue;
+        }
+        let before = inventory(&f.source)?;
+        let output = during_verification(&f, action)?;
+        let stderr = String::from_utf8_lossy(&output.stderr);
+        assert_eq!(output.status.signal(), Some(signal), "{action}: {stderr}");
+        assert!(f.root.join("interrupted").is_dir(), "{action}: {stderr}");
+        assert!(!stderr.contains("stock Git"), "{action}: {stderr}");
+        assert!(f.stages()?.is_empty(), "{action}: {stderr}");
+        f.assert_no_sibling_stages()?;
+        assert!(fs::symlink_metadata(f.destination()).is_err());
+        assert_eq!(registration_count(&f)?, 1);
+        assert_eq!(inventory(&f.source)?, before);
+    }
+    Ok(())
+}
+
+/// Signal Twig once, while Git hashes private clones before registration.
+fn during_verification(f: &Fixture, action: &str) -> Result<Output> {
+    with_git_wrapper(
+        f,
+        &format!(
+            r#"#!/bin/sh
+for arg in "$@"; do
+  if [ "$arg" = "hash-object" ] && mkdir "$TWIG_TEST_INTERRUPTED" 2>/dev/null; then
+    {action}
+  fi
+done
+exec "$TWIG_TEST_REAL_GIT" "$@"
+"#
+        ),
+    )
+}
+
 fn after_registration(f: &Fixture, action: &str) -> Result<Output> {
-    let bin = f.root.join("bin");
-    fs::create_dir(&bin)?;
-    let wrapper = bin.join("git");
-    fs::write(
-        &wrapper,
-        format!(
+    with_git_wrapper(
+        f,
+        &format!(
             r#"#!/bin/sh
 if [ -f "$TWIG_TEST_LATE_FAILURE" ]; then
   for arg in "$@"; do
@@ -224,7 +267,15 @@ fi
 exit "$status"
 "#
         ),
-    )?;
+    )
+}
+
+/// Run `git twig new` with a wrapper script ahead of the real `git` on PATH.
+fn with_git_wrapper(f: &Fixture, script: &str) -> Result<Output> {
+    let bin = f.root.join("bin");
+    fs::create_dir(&bin)?;
+    let wrapper = bin.join("git");
+    fs::write(&wrapper, script)?;
     fs::set_permissions(wrapper, fs::Permissions::from_mode(0o755))?;
     let real_git = String::from_utf8(git_path(&f.source)?)?;
     let path = std::env::join_paths(std::iter::once(bin).chain(std::env::split_paths(
@@ -237,6 +288,7 @@ exit "$status"
         .env("TWIG_TEST_REAL_GIT", real_git.trim())
         .env("TWIG_TEST_MARKER", f.root.join("marker"))
         .env("TWIG_TEST_LATE_FAILURE", f.root.join("late-failure"))
+        .env("TWIG_TEST_INTERRUPTED", f.root.join("interrupted"))
         .env("TWIG_TEST_SOURCE", &f.source)
         .env("TWIG_TEST_DESTINATION", f.destination());
     bounded_output(child)

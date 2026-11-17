@@ -9,6 +9,12 @@ describe changes from this baseline after they are implemented and verified.
 The v0.5 preview expands file sharing to more revisions and checkout policies,
 and adds experimental tools for existing worktrees. v0.4.0 is still the latest release.
 
+### Fixed
+
+- SIGINT, SIGTERM or SIGHUP before registration removes this invocation's staging,
+  which bulk directory clones can briefly fill with ignored files, and starts no
+  stock Git fallback. Later interrupts still retain staging; SIGKILL cannot be handled.
+
 ### Added
 
 - Bounded same-filesystem donor selection across target revisions, while keeping
