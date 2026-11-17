@@ -1,4 +1,42 @@
-# Real repositories: concurrent creation and APFS allocation
+# Real repositories: CLI creation and filesystem allocation
+
+## Frozen release refresh
+
+`bench/real.ts` orchestrates a new-only campaign with the existing Rust worker.
+It supports `linux-xfs`, `linux-btrfs`, `macos-apfs-case-sensitive` and
+`macos-host`. Inputs are a local JSON catalog with `schemaVersion: 1` and a
+`repositories` array. Each repository declares `label`, absolute `path`, full
+`revision`, `worktrees`, `imageGiB`, and `hostTiming` (false for the kernel).
+
+```sh
+bun bench/real.ts --target linux-xfs \
+  --candidate /frozen/published/git-twig --candidate-commit RELEASE_COMMIT \
+  --binary-dir /frozen/bin --inputs /local/inputs.json \
+  --environment 'lab and backing storage description'
+```
+
+The v0.5 refresh compares the published release binary with stock Git, using
+three paired rounds, concurrency one and warmup enabled. Workers starter and
+git-twig create ten worktrees per cohort; Axo, kernel, OpenClaw and Pulumi create
+one. Repository pins remain those of the v0.4 published comparisons. Inputs and
+release assets are prepared before measurement; no application/dependency code
+is run. Source objects are read-only inputs, not copied ignored build trees.
+
+The default limits are two hours per campaign, thirty minutes per repository
+job, 128 GiB minimum free host space and 160 GiB maximum observed host growth.
+They are configurable and recorded in each manifest. Run only one campaign per
+backing disk; no competing builds or tests. Host timing and image allocation are
+separate campaigns, never interchangeable observations. Kernel timing requires a
+case-sensitive filesystem image, not the normal case-insensitive host volume.
+
+Results use exclusive RFD0020 build/target/date/run directories. Pending jobs and
+failures persist, binaries and harness must remain frozen, and failed measurements
+are never retried. Summary JSON retains unstable allocation, negative deltas,
+operation percentiles, first-status latency and harness CPU headroom. Unstable
+allocation is not certified comparative space evidence. Small samples do not
+establish population tail latency. These commands never update the website.
+
+## Standalone worker
 
 This suite measures a cohort of real CLI processes, not an internal copier.
 Run on macOS from this repository root, with permission to mount and delete
