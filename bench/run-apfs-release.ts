@@ -38,18 +38,26 @@ const plannedJobs = inputs.flatMap(input => {
 });
 const previous = continuation === "continue" ? JSON.parse(readFileSync(resolve(run, "state.json"), "utf8")) : null;
 if (previous && previous.phase !== "failed") throw new Error("Only a stopped failed campaign can be continued");
+let continuationId = 1;
+while (existsSync(resolve(run, `continuation-${continuationId}.manifest.json`))) continuationId++;
+const previousManifest = continuationId > 1 ? `continuation-${continuationId - 1}.manifest.json` : "manifest.json";
+const snapshotName = `failed-attempt-state-${continuationId}.json`;
 const jobs = previous ? plannedJobs
-  .filter(job => !previous.completed.some((done: any) => done.file === job.file && done.exitCode === 0))
-  .map(job => ({ ...job, file: existsSync(resolve(run, job.file)) ? job.file.replace(".json", "-retry-1.json") : job.file })) : plannedJobs;
+  .filter(job => !previous.completed.some((done: any) => done.file.replace(/-retry-\d+(?=\.json$)/, "") === job.file && done.exitCode === 0))
+  .map(job => {
+    let file = job.file, attempt = 0;
+    while (existsSync(resolve(run, file))) file = job.file.replace(".json", `-retry-${++attempt}.json`);
+    return { ...job, file };
+  }) : plannedJobs;
 if (previous) {
-  const snapshot = resolve(run, "failed-attempt-state.json");
+  const snapshot = resolve(run, snapshotName);
   if (existsSync(snapshot)) throw new Error("Refusing to overwrite prior failure snapshot");
   writeFileSync(snapshot, JSON.stringify(previous, null, 2) + "\n");
 }
 const manifest = {
   schemaVersion: 1, generatedAt: new Date().toISOString(), runnerCommit: text(["git", "rev-parse", "HEAD"]), dirty: false,
   candidateSourceCommit: "47c92163c3ca8b59eee76fa546f86eef826780a7",
-  continuationOf: previous ? { manifestSha256: sha(resolve(run, "manifest.json")), state: "failed-attempt-state.json", reason: "Retain failed setup attempt; rerun the entire incomplete job on fresh images using identical frozen binaries." } : null,
+  continuationOf: previous ? { manifestSha256: sha(resolve(run, previousManifest)), state: snapshotName, reason: "Retain failed setup attempt; rerun the entire incomplete job on fresh images using identical frozen binaries." } : null,
   candidateVersion: text([resolve(bin, "git-twig"), "--version"]),
   binaries: Object.fromEntries(["git-twig", "twig-real-bench", "git"].map(name => [name, { sha256: sha(resolve(bin, name)) }])),
   baseline: text([resolve(bin, "git"), "--version"]), platform: text(["sw_vers"]), cpu: text(["sysctl", "-n", "machdep.cpu.brand_string"]),
@@ -65,7 +73,7 @@ const manifest = {
     "All raw failures are retained. No retries or automatic exclusion of failed observations. Final verification, native selection and private writes are outside creation timing.",
   ],
 };
-const manifestPath = resolve(run, previous ? "continuation-1.manifest.json" : "manifest.json");
+const manifestPath = resolve(run, previous ? `continuation-${continuationId}.manifest.json` : "manifest.json");
 if (existsSync(manifestPath)) throw new Error("Refusing to overwrite campaign manifest");
 writeFileSync(manifestPath, JSON.stringify(manifest, null, 2) + "\n");
 let phase = "running";
