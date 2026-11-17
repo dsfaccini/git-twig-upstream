@@ -6,6 +6,12 @@ describe changes from this baseline after they are implemented and verified.
 
 ## Unreleased
 
+### Fixed
+
+- SIGINT, SIGTERM or SIGHUP before registration removes this invocation's staging,
+  which bulk directory clones can briefly fill with ignored files, and starts no
+  stock Git fallback. Later interrupts still retain staging; SIGKILL cannot be handled.
+
 ## [0.5.0] — 2026-11-17
 
 Share unchanged files across revisions and more checkout policies, and inspect

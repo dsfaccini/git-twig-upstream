@@ -5,6 +5,7 @@ mod donor;
 mod native;
 mod objects;
 mod registry;
+mod signals;
 mod snapshot;
 mod staging;
 mod tree;
@@ -36,17 +37,27 @@ pub fn run(cwd: &Path, args: &[OsString]) -> Result<i32> {
     let args = &git_args;
     let mut staging = staging::Staging::default();
     let result = run_request(cwd, args, &mut staging);
+    // A deferred signal stops creation before registration or fallback, so nothing refers
+    // to this staging. Remove it: bulk directory clones can hold ignored files.
+    if let Some(signal) = signals::resume() {
+        staging.cleanup("interrupted before registration");
+        signals::raise(signal);
+    }
     if matches!(result, Ok(0)) {
-        staging.cleanup();
+        staging.cleanup("command succeeded");
     }
     result
 }
 
 fn run_request(cwd: &Path, args: &[OsString], staging: &mut staging::Staging) -> Result<i32> {
     if let Some(request) = AddRequest::parse(args) {
+        signals::defer();
         match prepare(cwd, &request, staging) {
             Ok(prepared) => return install(cwd, args, prepared),
-            Err(error) => trace(&format!("stock Git: {error:#}")),
+            Err(error) => {
+                ensure!(signals::resume().is_none(), "interrupted before fallback");
+                trace(&format!("stock Git: {error:#}"));
+            }
         }
     } else if args.first().is_some_and(|arg| arg == "add") {
         trace(
@@ -229,6 +240,10 @@ fn prepare(cwd: &Path, request: &AddRequest, staging: &mut staging::Staging) -> 
     trace(&format!("APFS directory clones: {directories}"));
     #[cfg(not(target_os = "macos"))]
     let _ = directories;
+    ensure!(
+        signals::received().is_none(),
+        "interrupted before verification"
+    );
     let verification_started = std::time::Instant::now();
     checkout.repair(&root, &entries, &policy)?;
     trace(&format!(
@@ -260,6 +275,11 @@ fn install(cwd: &Path, args: &[OsString], prepared: Prepared) -> Result<i32> {
     prepared.policy.ensure_same(
         &checkout::Checkout::new(&prepared.root, &data, &index)?.policy(&prepared.entries)?,
     )?;
+    // Registered state is retained for inspection: from here signals terminate as before.
+    ensure!(
+        signals::resume().is_none(),
+        "interrupted before registration"
+    );
     // Preserve Git's branch validation and registration. No fallback after this mutation.
     let status = git(cwd)
         .args(["worktree", "add", "--no-checkout"])
