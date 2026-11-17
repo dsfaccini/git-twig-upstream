@@ -116,52 +116,98 @@ def save_csv(snapshot, path):
 def save_svg(snapshot, path):
     from html import escape
     rows = [r for r in summaries(snapshot) if r['pairedGroupComplete'] and r['concurrency'] == 1]
-    if not rows:
-        raise ValueError('no complete c1 groups for chart')
-    filesystems = sorted({r['filesystem'] for r in rows})
-    profiles = ['cross-revision', 'mixed-builtins', 'auto-crlf', 'submodules', 'byte-heavy', 'file-heavy']
-    labels = ['revision', 'builtins', 'auto CRLF', 'gitlinks', 'unchanged', '4096 files']
-    backends = [('git', '#7c8696'), ('baseline', '#5187d2'), ('candidate', '#28a179')]
-    height = 120 + 365 * len(filesystems)
-    rounds = snapshot['manifest']['config']['rounds']
-    parts = [f'<svg xmlns="http://www.w3.org/2000/svg" width="1240" height="{height}" viewBox="0 0 1240 {height}">',
-             '<rect width="100%" height="100%" fill="#fff"/>',
-             '<g font-family="monospace" font-size="12" fill="#17212c">',
-             f'<text x="30" y="24">Local warm-cache filesystem images: c1 batch medians; {escape(str(rounds))} planned rounds</text>']
-    for i, (backend, color) in enumerate(backends):
-        identity = snapshot['manifest'].get(backend, {})
+    filesystems = sorted({row['filesystem'] for row in rows})
+    if not filesystems:
+        raise ValueError('no complete stable c1 comparisons to plot')
+
+    profiles = [('cross-revision', 'Cross-revision'), ('mixed-builtins', 'Builtin conversions'),
+                ('auto-crlf', 'Auto CRLF'), ('submodules', 'Submodules'),
+                ('byte-heavy', 'Unchanged bytes'), ('file-heavy', '4,096 small files')]
+    backends = [('git', '#98a2b3'), ('baseline', '#5789c7'), ('candidate', '#3a9d5d')]
+    filesystem_names = {'apfs': 'APFS · default', 'apfs-sensitive': 'APFS · case-sensitive', 'apfs-case-sensitive': 'APFS · case-sensitive',
+                        'xfs': 'XFS', 'btrfs': 'Btrfs'}
+    manifest = snapshot['manifest']
+    points = manifest['points']
+    verified = sum(point['verified'] for point in points)
+    unstable = sum(point['verified'] and not point['allocationStable'] for point in points)
+    section_height = 630
+    canvas_height = 200 + len(filesystems) * section_height
+    style = """text{font-family:Inter,ui-sans-serif,system-ui,-apple-system,sans-serif;fill:#101828}
+.title{font-size:26px;font-weight:700}.sub{font-size:15px;fill:#475467}
+.tick{font-size:13px;fill:#667085}.label{font-size:15px;font-weight:600;fill:#344054}
+.section{font-size:16px;font-weight:700}.legend{font-size:15px}
+.value{font-size:13px;font-weight:600;fill:#344054}
+.fail{font-size:14px;font-weight:600;fill:#b54708}
+.grid{stroke:#eaecf0}.range{stroke:#344054;stroke-width:1.5;opacity:.55}"""
+    parts = [f'<svg xmlns="http://www.w3.org/2000/svg" width="1200" height="{canvas_height}" viewBox="0 0 1200 {canvas_height}">',
+             f'<style>{style}</style>', f'<rect width="1200" height="{canvas_height}" fill="#fff"/>',
+             '<text x="48" y="40" class="title">Twig · checkout time and disk allocation</text>',
+             '<text x="48" y="66" class="sub">Warm-cache filesystem images · cohort medians · one create at a time · lower is better</text>']
+    failed = sum(not point['verified'] for point in points)
+    status = f"{'Run completed' if manifest['status'] == 'completed' else 'Run stopped'} · {verified} verified points"
+    if unstable:
+        status += f" · {unstable} unstable allocation {'observation' if unstable == 1 else 'observations'} retained"
+    if failed:
+        status += f" · {failed} failed/unfinished {'point' if failed == 1 else 'points'}; incomplete groups not compared"
+    parts.append(f'<text x="48" y="90" class="{"fail" if manifest["status"] != "completed" or unstable else "sub"}">{escape(status)}</text>')
+    for index, (backend, color) in enumerate(backends):
+        identity = manifest.get(backend, {})
         revision = identity.get('sourceCommit') or identity.get('sha256', '')
-        name = 'stock Git' if backend == 'git' else f'Twig {revision[:7]}'
-        parts.append(f'<rect x="{30+i*220}" y="40" width="14" height="14" fill="{color}"/><text x="{50+i*220}" y="52">{escape(name)}</text>')
+        name = 'stock Git' if backend == 'git' else f'Twig {backend} · {revision[:7]}'
+        x = 48 + index * 260
+        parts.append(f'<rect x="{x}" y="112" width="26" height="14" rx="3" fill="{color}"/><text x="{x+36}" y="125" class="legend">{escape(name)}</text>')
+
+    def duration(ms):
+        return f'{ms/1000:.2f} s' if ms >= 1000 else f'{ms:.0f} ms'
+
+    def allocation(value):
+        return f'{value/1048576:.2f} MiB' if value >= 1048576 else f'{value/1024:.1f} KiB'
+
     for fs_index, filesystem in enumerate(filesystems):
-        for metric_index, (metric, divisor, title) in enumerate([
-                ('allocationMedianBytes', 1048576, 'additional allocation after status (MiB)'),
-                ('batchCreateMedianMs', 1, 'batch create CLI wall time (ms)')]):
-            x0, y0 = 65 + metric_index * 620, 345 + fs_index * 365
-            selected = {(r['profile'], r['backend']): r[metric]/divisor for r in rows if r['filesystem'] == filesystem}
-            lower = min(min(selected.values()) * 1.18, 0)
-            upper = max(max(selected.values()) * 1.18, 1e-9)
-            scale = 220 / (upper - lower)
-            zero = y0 + lower * scale
-            parts.append(f'<text x="{x0-30}" y="{y0-255}">{escape(filesystem)}: {title}</text>')
+        top = 170 + fs_index * section_height
+        selected = {(r['profile'], r['backend']): r for r in rows if r['filesystem'] == filesystem}
+        visible = [(profile, label) for profile, label in profiles if all((profile, backend) in selected for backend, _ in backends)]
+        parts.append(f'<text x="48" y="{top}" class="section">{escape(filesystem_names.get(filesystem, filesystem))}</text>')
+        for metric, bar_x, value_x, title, formatter in [
+                ('batchCreateMedianMs', 250, 650, 'Creation time', duration),
+                ('allocationMedianBytes', 775, 1175, 'Additional allocation', allocation)]:
+            scale_key = 'allocationMaxBytes' if metric == 'allocationMedianBytes' else metric
+            upper = max(max(row[scale_key] for row in selected.values()) * 1.08, 1)
+            lower = min(0, min(row['allocationMinBytes'] for row in selected.values())) * 1.08 if metric == 'allocationMedianBytes' else 0
+            scale = 280 / (upper - lower)
+            zero_x = bar_x - lower * scale
+            parts.append(f'<text x="{bar_x}" y="{top}" class="section">{title}</text>')
             for tick in range(5):
-                value = lower + (upper-lower)*tick/4
-                y = y0 - (value-lower)*scale
-                parts.append(f'<path d="M{x0} {y}h520" stroke="#e3e7eb"/><text x="{x0-52}" y="{y+4}">{value:.1f}</text>')
-            parts.append(f'<path d="M{x0} {zero}h520" stroke="#7c8696"/>')
-            for i, (profile, label) in enumerate(zip(profiles, labels)):
-                if any((profile, backend) not in selected for backend, _ in backends):
-                    continue
-                for j, (backend, color) in enumerate(backends):
-                    value = selected[(profile, backend)]
-                    x = x0 + i*86 + j*23
-                    y = y0 - (value-lower)*scale
-                    bar_y, bar_height = min(y, zero), max(abs(y-zero), 0.5)
-                    label_y = bar_y-6 if value >= 0 else bar_y+bar_height+12
-                    label_value = f"{value:.4f}" if 0 < abs(value) < 0.01 else f"{value:.2f}"
-                    parts.append(f'<rect x="{x}" y="{bar_y}" width="20" height="{bar_height}" fill="{color}"/><text x="{x+10}" y="{label_y}" text-anchor="middle" font-size="9">{label_value}</text>')
-                parts.append(f'<text x="{x0+i*86+30}" y="{y0+22}" text-anchor="middle" font-size="10">{label}</text>')
-    parts.extend([f'<text x="30" y="{height-25}">Synthetic fixtures only; complete stable groups only. Small samples do not establish population tails.</text>', '</g></svg>'])
+                x = bar_x + 280 * tick / 4
+                parts.append(f'<path d="M{x:.1f} {top+18}V{top+len(visible)*88+4}" class="grid"/>')
+                parts.append(f'<text x="{x:.1f}" y="{top+len(visible)*88+24}" text-anchor="middle" class="tick">{escape(formatter(lower+(upper-lower)*tick/4))}</text>')
+            for index, (profile, _) in enumerate(visible):
+                row_y = top + 22 + index * 88
+                for backend_index, (backend, color) in enumerate(backends):
+                    row = selected[(profile, backend)]
+                    value = row[metric]
+                    y = row_y + backend_index * 21
+                    width = abs(value * scale)
+                    if value != 0:
+                        start_x = zero_x - max(width, 2) if value < 0 else zero_x
+                        parts.append(f'<rect x="{start_x:.1f}" y="{y}" width="{max(width,2):.1f}" height="16" rx="3" fill="{color}"/>')
+                    if metric == 'allocationMedianBytes':
+                        low = row['allocationMinBytes']
+                        high = row['allocationMaxBytes']
+                        if low != high:
+                            x1, x2 = zero_x+low*scale, zero_x+high*scale
+                            parts.append(f'<path d="M{x1:.1f} {y+8}H{x2:.1f}" class="range"/>')
+                    parts.append(f'<text x="{value_x}" y="{y+13}" text-anchor="end" class="value">{escape(formatter(value))}</text>')
+        for index, (profile, label) in enumerate(visible):
+            row_y = top + 22 + index * 88
+            row = selected[(profile, 'candidate')]
+            rounds = row['verifiedPoints']
+            parts.append(f'<text x="48" y="{row_y+26}" class="label">{escape(label)}</text>')
+            parts.append(f'<text x="48" y="{row_y+47}" class="tick">{row["worktrees"]} creates · {rounds} {"round" if rounds == 1 else "rounds"}</text>')
+
+    parts.extend([f'<text x="48" y="{canvas_height-52}" class="sub">Each column uses one linear scale per filesystem. Allocation includes metadata and indexes after first status.</text>',
+                  f'<text x="48" y="{canvas_height-28}" class="sub">Synthetic workloads on a shared host. CSV retains every level, unstable observation and incomplete group.</text>',
+                  '</svg>'])
     with path.open('x') as handle:
         handle.write('\n'.join(parts) + '\n')
 
@@ -182,7 +228,7 @@ def main():
         snapshot = collect(args.manifest, args.interrupted_progress)
     else:
         snapshot, _ = read_json(args.snapshot)
-        if snapshot.get('schemaVersion') != 1 or snapshot.get('kind') != 'linux-coverage-snapshot':
+        if snapshot.get('schemaVersion') != 1 or snapshot.get('kind') not in ('linux-coverage-snapshot', 'checkout-coverage-snapshot', 'filesystem-coverage-snapshot'):
             raise ValueError('unsupported snapshot schema')
     if args.output:
         args.output.parent.mkdir(parents=True, exist_ok=True)

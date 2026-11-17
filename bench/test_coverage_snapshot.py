@@ -46,18 +46,19 @@ class SnapshotTests(unittest.TestCase):
         rows = [dict(filesystem='apfs-case-sensitive', profile='byte-heavy',
                      concurrency=1, pairedGroupComplete=True, backend=backend,
                      allocationMedianBytes=-4096 if backend == 'candidate' else 1048576,
-                     batchCreateMedianMs=2)
+                     allocationMinBytes=-4096, allocationMaxBytes=1048576,
+                     batchCreateMedianMs=2, worktrees=2, verifiedPoints=1)
                 for backend in ('git', 'baseline', 'candidate')]
         with patch.object(snapshot, 'summaries', return_value=iter(rows)):
             path = self.root / 'chart.svg'
             snapshot.save_svg({'manifest': self.manifest}, path)
         svg = path.read_text()
-        self.assertIn('apfs-case-sensitive', svg)
-        self.assertIn('1 planned rounds', svg)
+        self.assertIn('APFS · case-sensitive', svg)
+        self.assertIn('1 round', svg)
         self.assertNotIn('Interrupted Btrfs', svg)
-        self.assertIn('-0.0039', svg)
+        self.assertIn('-4.0 KiB', svg)
         with patch.object(snapshot, 'summaries', return_value=iter([])):
-            with self.assertRaisesRegex(ValueError, 'no complete c1'):
+            with self.assertRaisesRegex(ValueError, 'no complete stable c1'):
                 snapshot.save_svg({'manifest': self.manifest}, self.root/'empty.svg')
 
     def test_retained_v05_csvs_regenerate_byte_for_byte(self):
@@ -148,6 +149,39 @@ class SnapshotTests(unittest.TestCase):
         value = snapshot.collect(self.write())
         self.assertIsNone(value['runs'][0]['result'])
         self.assertEqual(list(snapshot.summaries(value)), [])
+
+
+    def test_svg_uses_actual_apfs_target_not_hardcoded_linux_labels(self):
+        self.manifest['config']['target'] = {'os': 'darwin'}
+        cohort = dict(createWallMs=10, createsPerSecond=200, growthAfterStatusBytes=4096,
+                      harnessCpuMsDuringCreate=1, operations=[dict(createMs=4, firstStatusMs=1,
+                      nativeCow=True, verifiedClones=1, gitWrittenPaths=0)] * 2)
+        for backend in ('git', 'baseline', 'candidate'):
+            name = backend + '.json'
+            point = dict(filesystem='apfs-sensitive', profile='byte-heavy', concurrency=1,
+                         worktrees=2, round=0, backend=backend, result=name,
+                         verified=True, allocationStable=True)
+            self.manifest['points'].append(point)
+            result = dict(self.result, candidateSha256='old' if backend == 'baseline' else 'new',
+                          cohorts=[cohort])
+            (self.root / name).write_text(json.dumps(result))
+        value = snapshot.collect(self.write())
+        svg = self.root / 'chart.svg'
+        snapshot.save_svg(value, svg)
+        text = svg.read_text()
+        import xml.etree.ElementTree as xml
+        chart = xml.fromstring(text)
+        footer = next(node for node in chart.iter() if (node.text or '').startswith('Synthetic workloads'))
+        self.assertEqual(float(footer.attrib['y']), float(chart.attrib['height']) - 28)
+        self.assertGreater(float(footer.attrib['y']), 367)
+        self.assertIn('APFS · case-sensitive', text)
+        self.assertIn('font-family:Inter', text)
+        self.assertIn('Creation time', text)
+        self.assertIn('Additional allocation', text)
+        self.assertIn('2 creates · 1 round', text)
+        self.assertNotIn('Interrupted Btrfs', text)
+        self.assertNotIn('btrfs:', text)
+        self.assertEqual(value['kind'], 'checkout-coverage-snapshot')
 
     def test_percentiles_are_nearest_rank_not_interpolated_tail_estimates(self):
         self.assertEqual(snapshot.percentile([4, 1, 3, 2], 50), 2)
