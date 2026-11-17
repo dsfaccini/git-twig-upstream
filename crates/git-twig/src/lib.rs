@@ -69,6 +69,7 @@ fn trace(message: &str) {
 
 #[derive(Debug)]
 struct AddRequest {
+    branch: Option<OsString>,
     destination: PathBuf,
     revision: OsString,
 }
@@ -79,11 +80,13 @@ impl AddRequest {
             return None;
         }
         let mut index = 1;
+        let mut branch = None;
         if args.get(index)? == "-b" {
-            let branch = args.get(index + 1)?;
-            if branch.is_empty() || branch.to_string_lossy().starts_with('-') {
+            let name = args.get(index + 1)?;
+            if name.is_empty() || name.to_string_lossy().starts_with('-') {
                 return None;
             }
+            branch = Some(name.clone());
             index += 2;
         } else if matches!(args.get(index)?.to_str(), Some("--detach" | "-d")) {
             index += 1;
@@ -104,6 +107,7 @@ impl AddRequest {
             return None;
         }
         Some(Self {
+            branch,
             destination: destination.into(),
             revision,
         })
@@ -149,6 +153,9 @@ fn prepare(cwd: &Path, request: &AddRequest, staging: &mut staging::Staging) -> 
         )?
         .stdout,
     )?;
+    if let Some(branch) = &request.branch {
+        ensure_new_branch(&root, branch)?;
+    }
     ensure!(
         !config_true(&root, "core.sparseCheckout")
             && !config_true(&root, "core.sparseCheckoutCone"),
@@ -249,6 +256,24 @@ fn prepare(cwd: &Path, request: &AddRequest, staging: &mut staging::Staging) -> 
         entries,
         policy,
     })
+}
+
+/// Git refuses an invalid or existing branch before registering anything. Leave
+/// that refusal to Git now, rather than discover it after staging a checkout
+/// that failure handling would then retain.
+fn ensure_new_branch(root: &Path, branch: &OsString) -> Result<()> {
+    let name = git(root)
+        .args(["check-ref-format", "--branch"])
+        .arg(branch)
+        .output()?;
+    ensure!(name.status.success(), "branch name {branch:?} is not valid");
+    let reference = format!("refs/heads/{}", text(name.stdout)?);
+    let exists = git(root)
+        .args(["show-ref", "--verify", "--quiet", &reference])
+        .status()?
+        .success();
+    ensure!(!exists, "branch {branch:?} already exists");
+    Ok(())
 }
 
 fn install(cwd: &Path, args: &[OsString], prepared: Prepared) -> Result<i32> {

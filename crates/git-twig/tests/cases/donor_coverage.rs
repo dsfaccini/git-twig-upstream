@@ -356,3 +356,38 @@ fn chooses_a_better_linked_donor_without_trusting_its_dirty_bytes() -> Result<()
     assert_eq!(fs::read(near.join("b"))?, b"first\n");
     Ok(())
 }
+
+/// Git lists a separated main checkout by its Git directory's parent, which is
+/// not where the files are. The checkout Twig runs in is still a donor.
+#[test]
+fn separate_git_directories_share_from_the_real_checkout() -> Result<()> {
+    let f = Fixture::new()?;
+    let checkout = f.root.join("separate/main");
+    fs::create_dir_all(&checkout)?;
+    let metadata = f.root.join("metadata.git");
+    checked(
+        command("git", &f.root)
+            .env("GIT_TEMPLATE_DIR", "")
+            .args(["init", "-b", "main", "--separate-git-dir"])
+            .arg(&metadata)
+            .arg(&checkout)
+            .output()?,
+    )?;
+    git(&checkout, &["config", "user.name", "Fixture"])?;
+    git(
+        &checkout,
+        &["config", "user.email", "fixture@example.invalid"],
+    )?;
+    fs::create_dir(checkout.join("tree"))?;
+    fs::write(checkout.join("tree/file"), "nested\n")?;
+    // Names that also exist inside a Git directory must come from the checkout.
+    fs::write(checkout.join("description"), "tracked\n")?;
+    git(&checkout, &["add", "."])?;
+    git(&checkout, &["commit", "-m", "seed"])?;
+    let output = checked(twig(&checkout, &["new", "--detach", "../feature"])?)?;
+    native(&output);
+    let destination = f.root.join("separate/feature");
+    assert_eq!(fs::read(destination.join("tree/file"))?, b"nested\n");
+    assert_eq!(fs::read(destination.join("description"))?, b"tracked\n");
+    clean(&destination)
+}

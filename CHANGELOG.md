@@ -13,6 +13,12 @@ describe changes from this baseline after they are implemented and verified.
   to stock Git, which fetches absent blobs in one batch.
 - On macOS, new worktrees no longer inherit the donor's extended attributes
   (including quarantine) or BSD flags such as hidden and immutable.
+- A branch name Git would refuse (already existing or invalid) is refused before
+  any checkout is staged, so a mistyped command no longer retains a full clone.
+- Repositories with a separate Git directory, including submodules, share from
+  the checkout Twig runs in rather than always delegating to Git.
+- Staging is removed even when a tracked path is too long under the staging
+  prefix, or (exFAT) when `._name` companion files vanish during removal.
 - Immutable donor files, tracked or ignored, no longer force a fallback and
   leave undeletable staging that retained ignored bytes under Git metadata.
 

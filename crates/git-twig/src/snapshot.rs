@@ -170,6 +170,22 @@ fn normalize(
 }
 
 pub(super) fn remove_private_tree(path: &Path, kind: fs::FileType) -> Result<()> {
+    match remove_entry(path, kind) {
+        // A tracked path Git can reach relative to its checkout may exceed PATH_MAX
+        // under the staging prefix. The standard library removes relative to open
+        // directories, without following symlinks, so no path grows that long.
+        Err(error) if too_long(&error) && kind.is_dir() => Ok(fs::remove_dir_all(path)?),
+        result => result,
+    }
+}
+
+fn too_long(error: &anyhow::Error) -> bool {
+    error
+        .downcast_ref::<std::io::Error>()
+        .is_some_and(|error| error.kind() == std::io::ErrorKind::InvalidFilename)
+}
+
+fn remove_entry(path: &Path, kind: fs::FileType) -> Result<()> {
     if kind.is_dir() {
         // Only owned staging/cloned entries reach here. Never follow a symlink.
         #[cfg(unix)]
@@ -179,11 +195,16 @@ pub(super) fn remove_private_tree(path: &Path, kind: fs::FileType) -> Result<()>
         })?;
         for child in fs::read_dir(path)? {
             let child = child?;
-            remove_private_tree(&child.path(), child.file_type()?)?;
+            remove_entry(&child.path(), child.file_type()?)?;
         }
         fs::remove_dir(path)?;
     } else {
-        unlocked(path, || fs::remove_file(path))?;
+        unlocked(path, || match fs::remove_file(path) {
+            // Absence is the goal. exFAT's `._name` companions vanish with their
+            // file after the directory listing already named them.
+            Err(error) if error.kind() == std::io::ErrorKind::NotFound => Ok(()),
+            result => result,
+        })?;
     }
     Ok(())
 }

@@ -69,6 +69,17 @@ fn parse(bytes: &[u8]) -> Result<Vec<Worktree>> {
 pub fn choose(root: &Path, parent: &Path, target: &[Entry]) -> Result<Donor> {
     let listing = checked(git(root).args(["worktree", "list", "--porcelain", "-z"]))?.stdout;
     let mut worktrees = parse(&listing)?;
+    // Git derives the main checkout's path from its Git directory, so a separated
+    // one is listed where no checkout exists. The checkout Twig runs in is real.
+    worktrees.retain(|tree| fs::symlink_metadata(tree.root.join(".git")).is_ok());
+    if !worktrees.iter().any(|tree| tree.root == root) {
+        let head = checked(git(root).args(["rev-parse", "--verify", "HEAD^{commit}"]))?.stdout;
+        worktrees.push(Worktree {
+            root: root.to_path_buf(),
+            head: Some(ObjectId::parse(std::str::from_utf8(&head)?.trim_end())?),
+            usable: true,
+        });
+    }
     worktrees.sort_by_key(|worktree| worktree.root != root);
     let clonable = target
         .iter()

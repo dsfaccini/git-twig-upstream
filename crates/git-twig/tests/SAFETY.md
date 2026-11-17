@@ -30,6 +30,11 @@ for the current revision, at most one batch when target blobs are absent.
 attributes and BSD flags with a stock worktree, and require immutable tracked or
 ignored donor files to leave neither flags in the target nor retained staging.
 
+The same file covers scratch removal for paths beyond PATH_MAX under the staging
+prefix, branch names Git refuses before registration, and (ignored, attaches a
+disk image) exFAT companion files. `cases/donor_coverage.rs` covers a separate
+Git directory, where Git lists the main checkout at a path holding no checkout.
+
 These are finite generated cases, not exhaustive proofs or a randomized shrinking
 framework. The generation seed and fixture are retained. Parallel launch varies
 scheduling but does not force every interleaving. The registration fault injection

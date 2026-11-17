@@ -28,7 +28,7 @@ mod partial_clones;
 #[path = "cases/safety_properties.rs"]
 mod safety_properties;
 
-#[cfg(target_os = "macos")]
+#[cfg(unix)]
 #[path = "cases/staging_cleanup.rs"]
 mod staging_cleanup;
 
@@ -606,7 +606,11 @@ fn git_c_main_layout_creates_a_sibling_from_head() -> Result<()> {
 fn linked_source_retains_failed_staging_in_the_common_git_directory() -> Result<()> {
     let f = Fixture::new()?;
     checked(f.add()?)?;
-    let output = twig(&f.destination(), &["new", "-b", "main", "../third", "HEAD"])?;
+    // A refusal only Git's registration discovers: `main` blocks `main/nested`.
+    let output = twig(
+        &f.destination(),
+        &["new", "-b", "main/nested", "../third", "HEAD"],
+    )?;
     assert!(!output.status.success());
     assert_eq!(f.stages()?.len(), 1);
     assert!(f.destination().join(".git").is_file());
@@ -794,7 +798,8 @@ fn successful_dirty_source_repair_cleans_its_staging() -> Result<()> {
 fn failed_create_retains_private_staging_in_git_metadata() -> Result<()> {
     use std::os::unix::fs::PermissionsExt;
     let f = Fixture::new()?;
-    let output = f.twig(&["new", "-b", "main", "../feature", "HEAD"])?;
+    // A refusal only Git's registration discovers: `main` blocks `main/nested`.
+    let output = f.twig(&["new", "-b", "main/nested", "../feature", "HEAD"])?;
     assert!(!output.status.success());
     let stages = f.stages()?;
     assert_eq!(stages.len(), 1);
