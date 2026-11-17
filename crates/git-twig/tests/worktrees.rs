@@ -21,6 +21,10 @@ mod filesystem_coverage;
 #[path = "cases/nonregular_coverage.rs"]
 mod nonregular_coverage;
 
+#[cfg(unix)]
+#[path = "cases/safety_properties.rs"]
+mod safety_properties;
+
 static NEXT: AtomicU64 = AtomicU64::new(0);
 struct Fixture {
     root: PathBuf,
