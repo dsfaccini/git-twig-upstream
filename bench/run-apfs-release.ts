@@ -33,9 +33,9 @@ const inputs = [
 ];
 for (const input of inputs) text(["git", "-C", input.path, "cat-file", "-e", `${input.commit}^{commit}`]);
 const plannedJobs = inputs.flatMap(input => {
-  const large = ["linux", "openclaw"].includes(input.name);
+  const count = ["workers-starter", "twig"].includes(input.name) ? 10 : 1;
   const modes = input.name === "linux" ? ["case-sensitive-image"] : ["host", "case-sensitive-image"];
-  return modes.map(mode => ({ input, mode, count: large ? 10 : 100, concurrency: large ? 1 : 100, repeats: 3, capacity: input.name === "linux" ? 32 : input.name === "openclaw" ? 24 : 16, file: `${input.name}-${mode === "host" ? "host" : "images"}.json` }));
+  return modes.map(mode => ({ input, mode, count, concurrency: 1, repeats: 3, capacity: input.name === "linux" ? 32 : input.name === "openclaw" ? 24 : 16, file: `${input.name}-${mode === "host" ? "host" : "images"}.json` }));
 });
 const previous = continuation === "continue" ? JSON.parse(readFileSync(resolve(run, "state.json"), "utf8")) : null;
 if (previous && previous.phase !== "failed") throw new Error("Only a stopped failed campaign can be continued");
@@ -57,7 +57,7 @@ if (previous) {
 }
 const manifest = {
   schemaVersion: 1, generatedAt: new Date().toISOString(), runnerCommit: text(["git", "rev-parse", "HEAD"]), dirty: false,
-  candidateSourceCommit: "47c92163c3ca8b59eee76fa546f86eef826780a7",
+  candidateSourceCommit: "2dabb9c975e3dd1c1767957d10cc29b166f8cea7",
   continuationOf: previous ? { manifestSha256: sha(resolve(run, previousManifest)), state: snapshotName, reason: "Retain failed setup attempt; rerun the entire incomplete job on fresh images using identical frozen binaries." } : null,
   candidateVersion: text([resolve(bin, "git-twig"), "--version"]),
   binaries: Object.fromEntries(["git-twig", harnessName, "git"].map(name => [name, { sha256: sha(resolve(bin, name)) }])),
@@ -69,7 +69,7 @@ const manifest = {
     "Release candidate, not a published v0.4.0 binary; source commit and binary digests identify the implementation, version string remains 0.3.0.",
     "Stock Git baseline and candidate use the same pinned tree per pair. Prior four workload revisions are preserved. OpenClaw retains its original attributes.",
     "Warm caches on a shared Mac; no competing builds/tests initiated by this controller. Background apps are not stopped. No cold-cache or general speed claim.",
-    "100-way/100-worktree cohorts for Workers/git-twig/Axo; ten sequential creates for kernel/OpenClaw. Three paired repetitions and one warmup per backend/repetition.",
+    "Final post-performance-fix refresh: ten sequential creates for Workers/git-twig; one create per cohort for Axo/kernel/OpenClaw. Three paired repetitions and one warmup per backend/repetition. Counts differ from the archived pre-optimization campaign; no high-concurrency throughput claim.",
     "Host timing and isolated-image allocation are separate measurements. Kernel timing/allocation both use case-sensitive APFS images.",
     "Filesystem image allocations include metadata/indexes and are not exclusive per-file block counts. Isolated images are disposable; host fixtures retained.",
     "All raw failures are retained. No retries or automatic exclusion of failed observations. Final verification, native selection and private writes are outside creation timing.",
