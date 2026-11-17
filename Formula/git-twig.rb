@@ -22,7 +22,7 @@ class GitTwig < Formula
   on_linux do
     on_intel do
       url "https://github.com/leostera/git-twig/releases/download/v0.4.0/git-twig-v0.4.0-x86_64-unknown-linux-gnu.tar.gz"
-      sha256 "ebe7083855a87804405c53c94357004b2baad5f8cc265edc5b16afb6b00336c5"
+      sha256 "6a4ed57d54244d36f8be38a68f7093c69bd7637553fff45fd21dc4ff536d0266"
     end
   end
 
