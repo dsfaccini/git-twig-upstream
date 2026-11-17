@@ -72,6 +72,58 @@ jobs:
           echo "$RUNNER_TEMP/git-minimum/bin" >> "$GITHUB_PATH"
       - run: git --version
       - run: cargo test --workspace --locked
+  overlay-filesystems:
+    runs-on: ubuntu-latest
+    strategy:
+      matrix:
+        backing: [ext4, xfs, btrfs]
+    steps:
+      - uses: actions/checkout@v4
+      - uses: dtolnay/rust-toolchain@stable
+      - uses: Swatinem/rust-cache@v2
+      - run: cargo build --workspace --locked
+      - name: Prepare isolated backing filesystem and lower fixture
+        run: |
+          sudo apt-get update
+          sudo apt-get install -y e2fsprogs xfsprogs btrfs-progs
+          root="$RUNNER_TEMP/overlay-lab"
+          mkdir "$root"
+          truncate -s 1G "$root/backing.img"
+          case '${{ matrix.backing }}' in
+            ext4) mkfs.ext4 -q "$root/backing.img" ;;
+            xfs) mkfs.xfs -q -m reflink=1 "$root/backing.img" ;;
+            btrfs) mkfs.btrfs -q "$root/backing.img" ;;
+          esac
+          mkdir "$root/backing"
+          sudo mount -o loop "$root/backing.img" "$root/backing"
+          sudo chown "$(id -u):$(id -g)" "$root/backing"
+          mkdir "$root/backing/"{lower,upper,work,merged}
+          target/debug/twig-overlay-fixture "$root/backing/lower/case"
+          sudo mount -t overlay overlay -o "lowerdir=$root/backing/lower,upperdir=$root/backing/upper,workdir=$root/backing/work" "$root/backing/merged"
+      - name: Check backing filesystem and fresh upper-layer checkouts
+        run: |
+          root="$RUNNER_TEMP/overlay-lab/backing"
+          if [ '${{ matrix.backing }}' != ext4 ]; then
+            export TWIG_TEST_REQUIRE_NATIVE=1
+          fi
+          TWIG_TEST_FIXTURE_ROOT="$root/plain-fixtures" cargo test -p git-twig --locked
+          TWIG_TEST_FIXTURE_ROOT="$root/merged/upper-fixtures" cargo test -p git-twig --locked
+      - name: Check lower-layer copy-up, private writes and source preservation
+        env:
+          TWIG_TEST_OVERLAY_LOWER_CASE: ${{ runner.temp }}/overlay-lab/backing/merged/case
+          TWIG_TEST_OVERLAY_LOWER_ORACLE: ${{ runner.temp }}/overlay-lab/backing/lower/case
+        run: |
+          if [ '${{ matrix.backing }}' != ext4 ]; then
+            export TWIG_TEST_REQUIRE_NATIVE=1
+          fi
+          cargo test -p git-twig --test worktrees --locked -- \
+            --exact filesystem_coverage::overlay_lower_layer_checkout_matches_git_without_mutating_lower_inputs
+      - name: Unmount owned filesystems
+        if: always()
+        run: |
+          root="$RUNNER_TEMP/overlay-lab/backing"
+          if mountpoint -q "$root/merged"; then sudo umount "$root/merged"; fi
+          if mountpoint -q "$root"; then sudo umount "$root"; fi
   msrv:
     runs-on: ubuntu-latest
     steps:

@@ -15,6 +15,9 @@ mod checkout_races;
 mod donor_coverage;
 #[path = "cases/fallback_diagnostics.rs"]
 mod fallback_diagnostics;
+#[cfg(target_os = "linux")]
+#[path = "cases/filesystem_coverage.rs"]
+mod filesystem_coverage;
 #[path = "cases/nonregular_coverage.rs"]
 mod nonregular_coverage;
 

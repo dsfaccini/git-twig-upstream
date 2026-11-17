@@ -155,3 +155,44 @@ do not establish population tail latency. Charts use complete groups only.
 
 Runs are local only. Updating README/site numbers, pushing or releasing is a
 separate user decision. See [RFD0015](../docs/rfds/RFD0015-linux-donor-coverage.md).
+
+## ext4 and OverlayFS compatibility
+
+These are correctness checks, not allocation/latency benchmarks. The checkout
+matrix can run on any owned fixture directory using `TWIG_TEST_FIXTURE_ROOT`.
+Use `TWIG_TEST_REQUIRE_NATIVE=1` only after independently checking that the layout
+supports `cp --reflink=always`; do not set it (even to an empty string) for ext4.
+
+For OverlayFS choose a new absolute `lab` path on the backing filesystem being
+tested. Use ext4, reflink-enabled XFS or Btrfs; overlay upperdir/workdir must share
+a filesystem. Mounting requires Linux CAP_SYS_ADMIN or noninteractive sudo.
+Never change lowerdir behind a mounted overlay. Prepare the fixture first:
+
+```sh
+cargo build --workspace --locked
+lab=/absolute/owned/new-overlay-lab
+mkdir "$lab"
+mkdir "$lab/"{lower,upper,work,merged}
+target/debug/twig-overlay-fixture "$lab/lower/case"
+sudo -n mount -t overlay overlay -o "lowerdir=$lab/lower,upperdir=$lab/upper,workdir=$lab/work" "$lab/merged"
+
+# Upper-layer repositories: full differential/argument/policy suite.
+TWIG_TEST_FIXTURE_ROOT="$lab/merged/fresh-fixtures" cargo test -p git-twig --locked
+
+# Lower-layer repository: Twig goes first, then a Git-vs-Twig oracle; HEAD and
+# HEAD^, builtin conversions, modes, links, private writes, and source/lower
+# index/config/HEAD/data preservation. Use a fresh case for each Git version.
+TWIG_TEST_OVERLAY_LOWER_CASE="$lab/merged/case" \
+TWIG_TEST_OVERLAY_LOWER_ORACLE="$lab/lower/case" \
+cargo test -p git-twig --test worktrees --locked \
+  filesystem_coverage::overlay_lower_layer_checkout_matches_git_without_mutating_lower_inputs -- --exact
+
+sudo -n umount "$lab/merged"
+```
+
+Keep local fixtures after unmount. On failure, inspect retained state before
+retrying. CI creates fresh isolated backing images and always attempts overlay
+unmount before backing-image unmount. See
+[RFD0017](../docs/rfds/RFD0017-filesystem-capability-and-overlay-coverage.md).
+OpenZFS needs a ZFS-enabled Linux kernel, tools and an owned dataset; absence is
+unverified coverage, not a passing fallback or native-support result.

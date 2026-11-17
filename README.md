@@ -32,7 +32,8 @@ Short help works outside a checkout: `git twig -h` or `git twig new --help`.
 
 For coding agents: `git twig skill` prints the bundled skill.
 
-Native CoW supports macOS/APFS and Linux on Btrfs or reflink-enabled XFS.
+Native CoW is verified on macOS/APFS and Linux Btrfs/reflink-enabled XFS,
+including the tested OverlayFS layouts below.
 Creates ordinary linked worktrees from committed files; local changes and ignored
 files aren't copied. Unsupported filesystems (including typical ext4), options and
 checkout semantics use `git worktree`. Set `TWIG_TRACE=1` to see backend selection.
@@ -42,6 +43,30 @@ native CoW. Twig verifies cloned files against the requested commit; writes are
 private, never hardlinked to source. Staging lives under the common Git directory
 in `twigs/staging` and is removed after success. Failed/interrupted attempts retain
 staging and may leave a partial registered worktree; inspect before retrying.
+
+## Filesystem support
+
+| Platform | Filesystem | CoW / fallback | Verification |
+|---|---|---|---|
+| macOS | APFS | Native `clonefile` | Tests, CI and allocation benchmarks |
+| Linux | Btrfs | Native `FICLONE` | Tests, CI and allocation benchmarks |
+| Linux | XFS with `reflink=1` | Native `FICLONE` | Tests, CI and allocation benchmarks |
+| Linux | Typical ext4 | Stock Git fallback; no reflink savings | Full checkout test matrix |
+| Linux | XFS with `reflink=0` | Stock Git fallback expected | Not separately verified |
+| Linux | OverlayFS over ext4 | Stock Git fallback | Checkout matrix and lower-layer preservation tests |
+| Linux | OverlayFS over reflink-enabled XFS / Btrfs | Native `FICLONE` in tested layouts | Checkout matrix, copy-up and private-write tests |
+| Linux | OpenZFS | Requires usable Linux block-cloning support | Not verified |
+| Linux | NFSv4.2 | Depends on client/server clone support | Not verified |
+| Linux | bcachefs | Exploratory; no support claim | Not verified |
+
+Linux uses the actual clone operation, not a filesystem-name allowlist. Clone
+refusals before registration fall back to stock Git; failures after registration
+retain partial state for inspection. An accepted clone does not guarantee useful
+disk savings, especially for tiny files. Verification covers the tested setups,
+not every kernel, mount option or checkout policy. OverlayFS coverage includes
+fresh upper-layer repositories and repositories seeded in lowerdir before mount;
+it is not an allocation benchmark. See [Linux test setup](bench/linux.md).
+Checkout policy coverage below is separate from filesystem capability.
 
 ## Checkout policies
 
