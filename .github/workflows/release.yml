@@ -55,7 +55,7 @@ jobs:
           (cd dist && sha256sum *.tar.gz) > dist/SHA256SUMS
           python3 scripts/release-formula.py "${GITHUB_REF_NAME#v}" dist > dist/git-twig.rb
           python3 scripts/release-notes.py "${GITHUB_REF_NAME#v}" > "$RUNNER_TEMP/release-notes.md"
-          gh release create "$GITHUB_REF_NAME" dist/* --verify-tag --notes-file "$RUNNER_TEMP/release-notes.md"
+          gh release create "$GITHUB_REF_NAME" dist/* --verify-tag --title "$GITHUB_REF_NAME" --notes-file "$RUNNER_TEMP/release-notes.md"
           git config user.name "github-actions[bot]"
           git config user.email "41898282+github-actions[bot]@users.noreply.github.com"
           git fetch origin main
