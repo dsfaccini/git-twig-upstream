@@ -1,0 +1,69 @@
+name: rebuild Linux release archive
+on:
+  workflow_dispatch:
+    inputs:
+      tag:
+        description: Existing stable release tag to rebuild from unchanged source
+        required: true
+        type: string
+permissions:
+  contents: read
+jobs:
+  build:
+    runs-on: ubuntu-22.04
+    steps:
+      - uses: actions/checkout@v4
+        with:
+          ref: ${{ inputs.tag }}
+      - uses: dtolnay/rust-toolchain@stable
+      - uses: Swatinem/rust-cache@v2
+      - name: Build tagged source with the LTS glibc baseline
+        env:
+          TARGET_TAG: ${{ inputs.tag }}
+        run: |
+          python3 scripts/check-release-version.py "${TARGET_TAG#v}"
+          cargo test --workspace --locked
+          cargo build --release --locked -p git-twig --target x86_64-unknown-linux-gnu
+          mkdir package dist
+          cp target/x86_64-unknown-linux-gnu/release/git-twig LICENSE README.md CHANGELOG.md crates/git-twig/man/git-twig.1 package/
+          tar -czf "dist/git-twig-${TARGET_TAG}-x86_64-unknown-linux-gnu.tar.gz" -C package .
+          python3 -c 'import json,os,subprocess,pathlib; pathlib.Path("dist/build-info.json").write_text(json.dumps({"tag":os.environ["TARGET_TAG"],"sourceCommit":subprocess.check_output(["git","rev-parse","HEAD"],text=True).strip(),"baseline":"Ubuntu 22.04 / glibc 2.35"},indent=2)+"\n")'
+      - name: Require clean CLI output on older glibc
+        run: |
+          docker run --name glibc-compat -v "$PWD/package:/artifact:ro" debian:bookworm-slim sh -ec '
+            /artifact/git-twig --version > /tmp/version 2>/tmp/error
+            test ! -s /tmp/error
+            PATH=/no/git /artifact/git-twig skill > /tmp/skill 2>/tmp/error
+            test ! -s /tmp/error
+          '
+      - uses: actions/upload-artifact@v4
+        with:
+          name: rebuilt-linux
+          path: dist/*
+  publish:
+    needs: build
+    runs-on: ubuntu-22.04
+    environment: release
+    permissions:
+      contents: write
+    steps:
+      - uses: actions/checkout@v4
+        with:
+          ref: main
+          fetch-depth: 0
+      - uses: actions/download-artifact@v4
+        with:
+          name: rebuilt-linux
+          path: dist
+      - name: Preserve superseded assets and publish the verified rebuild
+        env:
+          TARGET_TAG: ${{ inputs.tag }}
+          GH_TOKEN: ${{ github.token }}
+        run: |
+          python3 scripts/check-release-version.py "${TARGET_TAG#v}"
+          python3 scripts/publish-linux-rebuild.py
+          git config user.name "github-actions[bot]"
+          git config user.email "41898282+github-actions[bot]@users.noreply.github.com"
+          git add Formula/git-twig.rb
+          git commit -m "chore: update Linux archive checksum for $TARGET_TAG"
+          git push origin HEAD:main

@@ -21,7 +21,14 @@ builds macOS arm64/x86_64 and Linux x86_64 archives (including `git-twig.1`),
 SHA256SUMS and a stable Homebrew formula. It creates a GitHub release and updates the same repository's
 Formula/git-twig.rb. Native CoW supports macOS/APFS and Linux on Btrfs or
 reflink-enabled XFS; unsupported filesystems delegate to Git. macOS binaries are
-not signed/notarized yet.
+not signed/notarized yet. Linux prebuilt archives are built on Ubuntu 22.04
+(glibc 2.35); source installs remain available for other libc environments.
+
+To repair an existing Linux archive without changing its source tag, dispatch
+`rebuild-linux.yml`. It checks older-glibc CLI output, requires the release
+environment approval, and preserves superseded assets under unique names rather
+than deleting them. The replacement checksum list and Homebrew formula are
+published together.
 
 Homebrew needs the explicit remote because the repository is not named
 homebrew-git-twig:
