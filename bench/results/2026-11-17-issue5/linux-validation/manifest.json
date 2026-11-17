@@ -1,0 +1,14 @@
+{
+  "sourceCommit": "2dabb9c975e3dd1c1767957d10cc29b166f8cea7",
+  "rust": "1.95.0",
+  "git": "2.40.0",
+  "environment": "linux/amd64 Rust container on Apple Silicon Docker VM; correctness evidence, not native-CPU performance evidence",
+  "strictClippy": true,
+  "workspaceTests": true,
+  "nativeRequiredFilesystems": [
+    "XFS",
+    "Btrfs"
+  ],
+  "integrationTestsPerFilesystem": 67,
+  "setupCorrection": "Initial container host run failed solely because no man viewer was installed. Installed man-db, then reran the host workspace suite and both native filesystems successfully; no product code change for that setup failure."
+}

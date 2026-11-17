@@ -35,6 +35,13 @@ const suite = z.discriminatedUnion("schemaVersion", [
     schemaVersion: z.literal(2),
     filesystem: z.enum(["isolated-image", "case-sensitive-image"]),
   }),
+  z.object({
+    ...suiteFields,
+    schemaVersion: z.literal(3),
+    filesystem: z.enum(["isolated-image", "case-sensitive-image"]),
+    dirty: z.literal(false),
+    failures: z.array(z.string()).length(0),
+  }),
 ]);
 const header = z.object({ repository: z.string() });
 
@@ -101,24 +108,25 @@ export const sources = [
   {
     name: "Linux kernel",
     repository: "linux",
-    file: "kernel-directory10.json",
+    file: "linux-images-retry-1.json",
   },
-  { name: "Axo", repository: "axo", file: "images.json" },
-  { name: "git-twig", repository: "twig", file: "images.json" },
-  { name: "Workers starter", repository: "workers-starter", file: "workers-starter-images-complete.json" },
+  { name: "OpenClaw", repository: "openclaw", file: "openclaw-images-retry-1.json" },
+  { name: "Axo", repository: "axo", file: "axo-images.json" },
+  { name: "git-twig", repository: "twig", file: "twig-images.json" },
+  { name: "Workers starter", repository: "workers-starter", file: "workers-starter-images.json" },
 ];
 
 export function loadBenchmarks(): DiskComparison[] {
   return sources.map(({ name, repository, file }) => {
     const path = new URL(
-      `../../../bench/results/2026-11-15-real/${file}`,
+      `../../../bench/results/2026-11-16-apfs/${file}`,
       import.meta.url,
     );
     return summarize(
       JSON.parse(readFileSync(path, "utf8")),
       repository,
       name,
-      `https://github.com/leostera/git-twig/blob/main/bench/results/2026-11-15-real/${file}`,
+      `https://github.com/leostera/git-twig/blob/main/bench/results/2026-11-16-apfs/${file}`,
     );
   });
 }

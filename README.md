@@ -42,13 +42,12 @@ private, never hardlinked to source. Staging lives under the common Git director
 in `twigs/staging` and is removed after success. Failed/interrupted attempts retain
 staging and may leave a partial registered worktree; inspect before retrying.
 
-## Unreleased checkout improvements
+## Checkout policies
 
-Development builds support common LF policies such as `text=auto eol=lf`.
+Version 0.4.0 supports common LF policies such as `text=auto eol=lf`.
 They compare private clones to raw target blobs and let Git write exceptional
 files, retaining sharing for the rest. External filters/encodings still delegate.
-These changes are not in the published v0.3.0 release; see the
-[changelog](CHANGELOG.md) for fixes and remaining boundaries.
+See the [changelog](CHANGELOG.md) for fixes and remaining boundaries.
 
 With `TWIG_TRACE=1`, native creation reports verified-clone and Git-written path
 counts. Delegation reports its specific cause; an attribute refusal names the
@@ -64,10 +63,11 @@ that changes Git checkout semantics rather than proving the bytes are correct.
 
 | Repo | `git worktree` | `git twig` | Improvement |
 |---|---|---|---|
-| [Workers starter](bench/results/2026-11-15-real/workers-starter-host.json) | 1.94s / 6.0 MiB | 6.41s / 3.7 MiB | 3.30× slower / **1.6× less space** |
-| [git-twig](bench/results/2026-11-15-real/host.json)† | 4.90s / 53.0 MiB | 10.13s / 7.1 MiB | 2.07× slower / **7.5× less space** |
-| [Axo](bench/results/2026-11-15-real/host.json) | 4m40s / 3.0 GiB | 2m19s / 165 MiB | 2.02× faster / **18.8× less space** |
-| [Linux kernel (10 sequential)](bench/results/2026-11-15-real/kernel-directory10.json) | 3m15s / 18.3 GiB | 4m32s / 549 MiB | 1.40× slower / **34.2× less space** |
+| [Workers starter](bench/results/2026-11-16-apfs/workers-starter-host.json) | 1.79s / 6.0 MiB | 12.94s / 3.1 MiB | 7.22× slower / **1.9× less space** |
+| [git-twig](bench/results/2026-11-16-apfs/twig-host.json) | 6.73s / 52.9 MiB | 14.29s / 5.3 MiB | 2.12× slower / **10.1× less space** |
+| [Axo](bench/results/2026-11-16-apfs/axo-host.json) | 4m39s / 3.0 GiB | 50.72s / 116 MiB | 5.50× faster / **26.8× less space** |
+| [Linux kernel (10 sequential)](bench/results/2026-11-16-apfs/linux-images-retry-1.json) | 3m20s / 18.3 GiB | 3m59s / 447 MiB | 1.20× slower / **42.0× less space** |
+| [OpenClaw (10 sequential)](bench/results/2026-11-16-apfs/openclaw-host-retry-1.json) | 1m22s / 9.0 GiB | 2m03s / 308 MiB | 1.50× slower / **29.8× less space** |
 
 Each cell is **creation time / additional disk space**. Batch sizes differ; creation excludes first status. † Includes failed Git attempts. [Setup and raw results](bench/results/readme-details.md).
 

@@ -15,7 +15,7 @@ function benchmarkData(): Plugin {
       for (const { file } of sources)
         this.addWatchFile(
           new URL(
-            `../../bench/results/2026-11-15-real/${file}`,
+            `../../bench/results/2026-11-16-apfs/${file}`,
             import.meta.url,
           ).pathname,
         );
