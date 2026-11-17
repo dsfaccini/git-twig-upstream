@@ -1,5 +1,5 @@
 import { execFileSync } from "node:child_process";
-import { mkdir, readFile } from "node:fs/promises";
+import { mkdir, readFile, statfs } from "node:fs/promises";
 import { basename, join } from "node:path";
 import type { parse } from "./config.ts";
 import { environment, execute } from "./process.ts";
@@ -99,7 +99,7 @@ export async function campaign(
       donorCommit: string | null;
     }[],
     notes: [
-      "Shared-host warm-cache loopback measurements, not bare-device or universal speed claims.",
+      "Shared-host warm-cache filesystem-image measurements, not bare-device, host-volume or universal speed claims.",
       "No retries. Complete paired groups only. Rust owns timing, allocation, full byte verification and private-write probes.",
       "Binary source commits are operator declarations; SHA-256 identifies the measured bytes.",
       `Operator-provided environment: ${config.environment}`,
@@ -116,6 +116,12 @@ export async function campaign(
   const effective = () =>
     Math.max(0, Math.min(config.pointTimeoutSeconds * 1000, remaining()));
   async function unchanged() {
+    const space = await statfs(root);
+    const freeGiB = (space.bavail * space.bsize) / 2 ** 30;
+    invariant(
+      freeGiB >= config.minimumFreeGiB,
+      `Free disk ${freeGiB.toFixed(2)} GiB is below ${config.minimumFreeGiB} GiB; no further work launched`,
+    );
     invariant(
       git(root, ["rev-parse", "HEAD"]) === commit &&
         (config.exploratory || git(root, ["status", "--porcelain"]) === ""),
@@ -127,6 +133,7 @@ export async function campaign(
   await persist();
   console.log(`results: ${output}`);
   try {
+    await unchanged();
     const scratchParent = join(root, "target/bench-fixtures");
     await mkdir(scratchParent, { recursive: true });
     const scratch = join(scratchParent, basename(output));

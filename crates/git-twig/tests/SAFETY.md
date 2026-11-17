@@ -29,7 +29,8 @@ framework. The generation seed and fixture are retained. Parallel launch varies
 scheduling but does not force every interleaving. The registration fault injection
 is deterministic and has a process-group watchdog; no sleeps select the boundary.
 Existing `checkout_races.rs` covers attribute changes before/after registration,
-dirty filter policy, and macOS writable mappings. Existing worktree/checkout-policy
+dirty filter policy, and writable mappings on Unix. The mapped-donor case must
+also run on required-native Linux XFS/Btrfs, not only on APFS. Existing worktree/checkout-policy
 tests remain part of the same suite.
 
 ## Interpretation

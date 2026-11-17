@@ -2,9 +2,11 @@ import { resolve } from "node:path";
 import { invariant } from "./results.ts";
 import xfs from "../linux-xfs/target.ts";
 import btrfs from "../linux-btrfs/target.ts";
+import apfs from "../macos-apfs/target.ts";
+import apfsCaseSensitive from "../macos-apfs-case-sensitive/target.ts";
 import { profiles, type Fixture } from "../suites/checkout.ts";
 
-export const targets = [xfs, btrfs];
+export const targets = [xfs, btrfs, apfs, apfsCaseSensitive];
 export interface Config {
   target: (typeof targets)[number];
   baseline: string;
@@ -16,6 +18,7 @@ export interface Config {
   maxConcurrency: number;
   budgetSeconds: number;
   pointTimeoutSeconds: number;
+  minimumFreeGiB: number;
   profiles: Fixture["label"][];
   exploratory: boolean;
   environment: string;
@@ -35,6 +38,7 @@ export function parse(args: string[], cwd: string): Config {
     "max-concurrency",
     "budget-seconds",
     "point-timeout-seconds",
+    "minimum-free-gib",
     "profiles",
     "environment",
   ];
@@ -57,7 +61,10 @@ export function parse(args: string[], cwd: string): Config {
   const value = (key: string, fallback?: string) =>
     values.get("--" + key) ?? fallback;
   const target = targets.find((t) => t.name === value("target"));
-  invariant(target, "--target must be linux-xfs or linux-btrfs");
+  invariant(
+    target,
+    `--target must be one of ${targets.map((t) => t.name).join(", ")}`,
+  );
   invariant(value("suite", "checkout") === "checkout", "Unknown suite");
   invariant(value("baseline"), "--baseline is required");
   invariant(
@@ -98,6 +105,7 @@ export function parse(args: string[], cwd: string): Config {
     maxConcurrency: integer("max-concurrency", 16, 128),
     budgetSeconds: integer("budget-seconds", 1800, 86400),
     pointTimeoutSeconds: integer("point-timeout-seconds", 180, 86400),
+    minimumFreeGiB: integer("minimum-free-gib", 16, 1048576),
     profiles: selected as Fixture["label"][],
     exploratory,
     environment: value(

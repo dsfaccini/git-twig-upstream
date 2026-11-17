@@ -2,7 +2,7 @@ import { expect, test } from "bun:test";
 import { mkdtemp, mkdir, readFile, writeFile } from "node:fs/promises";
 import { tmpdir } from "node:os";
 import { join } from "node:path";
-import { execFileSync } from "node:child_process";
+import { execFileSync, spawnSync } from "node:child_process";
 import { parse } from "../lib/config.ts";
 import { campaign } from "../lib/campaign.ts";
 import { allocate, digest } from "../lib/results.ts";
@@ -28,6 +28,8 @@ test("selectors reject unknowns, duplicates, bad budgets and traversal", () => {
     ["--profiles", "byte-heavy,byte-heavy"],
     ["--rounds", "0"],
     ["--max-concurrency", "129"],
+    ["--minimum-free-gib", "0"],
+    ["--minimum-free-gib", "1.5"],
     ["--wat", "1"],
     ["--rounds", "1", "--rounds", "2"],
     ["--candidate-commit", "abc"],
@@ -36,6 +38,35 @@ test("selectors reject unknowns, duplicates, bad budgets and traversal", () => {
   expect(() =>
     parse(["--target", "../../escape", "--baseline", "x"], "/repo"),
   ).toThrow();
+});
+test("APFS targets preserve their distinct worker filesystems", () => {
+  for (const [target, filesystem] of [
+    ["macos-apfs", "isolated-image"],
+    ["macos-apfs-case-sensitive", "case-sensitive-image"],
+  ] as const) {
+    const config = parse(
+      [
+        "--target",
+        target!,
+        "--baseline",
+        "/baseline",
+        "--environment",
+        "owned Mac",
+        "--minimum-free-gib",
+        "128",
+      ],
+      "/repo",
+    );
+    expect(config.target.os).toBe("darwin");
+    expect(config.target.workerFilesystem).toBe(filesystem);
+    expect(config.minimumFreeGiB).toBe(128);
+    const { raw, expected } = valid();
+    raw.filesystem = filesystem!;
+    expected.filesystem = filesystem!;
+    expect(verify(raw, expected)).toBe(true);
+    expected.filesystem = "wrong-image";
+    expect(() => verify(raw, expected)).toThrow();
+  }
 });
 test("three rounds rotate each variant through each position", () => {
   const points = plan(["byte-heavy"], 3, 16);
@@ -180,13 +211,18 @@ test("a timeout kills owned descendants even after their leader exits", async ()
   const pid = Number(await readFile(join(root, "pid"), "utf8"));
   // An orphan can briefly remain as a zombie until the OS reaps it; it must not execute.
   for (let attempt = 0; attempt < 100; attempt++) {
-    try {
-      const state = await readFile(`/proc/${pid}/stat`, "utf8");
-      if (state.split(") ")[1]![0] === "Z") return;
-    } catch (error) {
-      if ((error as NodeJS.ErrnoException).code === "ENOENT") return;
-      throw error;
-    }
+    // /proc does not exist on macOS: ENOENT there never proved child termination.
+    const inspection = spawnSync(
+      "/bin/ps",
+      ["-o", "stat=", "-p", String(pid)],
+      {
+        encoding: "utf8",
+      },
+    );
+    if (inspection.error) throw inspection.error;
+    if (inspection.status === 1 && inspection.stdout.trim() === "") return;
+    expect(inspection.status).toBe(0);
+    if (inspection.stdout.trim().startsWith("Z")) return;
     await Bun.sleep(10);
   }
   throw new Error("Owned descendant still executing after KILL");
@@ -264,7 +300,7 @@ const s={stable:true,allocatedBytes:4096,totalBytes:100000,observedAllocatedByte
   const config = parse(
     [
       "--target",
-      "linux-xfs",
+      process.platform === "darwin" ? "macos-apfs" : "linux-xfs",
       "--baseline",
       "baseline",
       "--profiles",
@@ -274,47 +310,68 @@ const s={stable:true,allocatedBytes:4096,totalBytes:100000,observedAllocatedByte
       "--exploratory",
       "--budget-seconds",
       "5",
+      "--minimum-free-gib",
+      "1",
     ],
     root,
   );
   return { root, config };
 }
-// Campaign enforces the target OS even with fake workers. These exercise the
-// Linux-only target; portable planner/process tests above still run everywhere.
-const linuxTest = process.platform === "linux" ? test : test.skip;
-for (const mode of ["pass", "fail", "mutate"] as const)
-  linuxTest(`end-to-end fake worker ${mode} preserves results without retry`, async () => {
-    const { root, config } = await fakeLab(mode);
-    const manifestPath = await campaign(
-      root,
-      config,
-      new AbortController().signal,
-    );
-    const manifest = JSON.parse(await readFile(manifestPath, "utf8"));
-    expect(manifest.status).toBe(mode === "pass" ? "completed" : "failed");
-    expect(manifest.points.length).toBe(
-      mode === "pass" ? 3 : mode === "fail" ? 2 : 1,
-    );
-    expect(
-      manifest.points.every((p: any) => p.finishedElapsedMs !== null),
-    ).toBe(true);
-    expect(manifest.candidate.sha256).toBe(
-      mode === "mutate"
-        ? manifest.candidate.sha256
-        : await digest(config.candidate),
-    );
-  });
-linuxTest("pending point is durable before interruption; remaining deadline is recorded", async () => {
-  const { root, config } = await fakeLab("hang");
-  const controller = new AbortController();
-  const timer = setTimeout(() => controller.abort(), 400);
-  const path = await campaign(root, config, controller.signal);
-  clearTimeout(timer);
+// Fake workers exercise the local OS adapter; real filesystem claims require
+// the separately gated native-image measurements.
+const campaignTest = test;
+test("free-space guard retains a failed manifest without launching preparation", async () => {
+  const { root, config } = await fakeLab("pass");
+  config.minimumFreeGiB = 1048576;
+  const path = await campaign(root, config, new AbortController().signal);
   const manifest = JSON.parse(await readFile(path, "utf8"));
-  expect(manifest.status).toBe("interrupted");
-  expect(manifest.points.length).toBe(1);
-  expect(manifest.points[0].verified).toBe(false);
-  expect(manifest.points[0].timeoutSeconds).toBeLessThanOrEqual(
-    config.budgetSeconds,
+  expect(manifest.status).toBe("failed");
+  expect(manifest.points).toEqual([]);
+  expect(manifest.stopReason).toContain("Free disk");
+  await expect(
+    readFile(join(path, "../prepare.log"), "utf8"),
+  ).rejects.toThrow();
+});
+for (const mode of ["pass", "fail", "mutate"] as const)
+  campaignTest(
+    `end-to-end fake worker ${mode} preserves results without retry`,
+    async () => {
+      const { root, config } = await fakeLab(mode);
+      const manifestPath = await campaign(
+        root,
+        config,
+        new AbortController().signal,
+      );
+      const manifest = JSON.parse(await readFile(manifestPath, "utf8"));
+      expect(manifest.status).toBe(mode === "pass" ? "completed" : "failed");
+      expect(manifest.points.length).toBe(
+        mode === "pass" ? 3 : mode === "fail" ? 2 : 1,
+      );
+      expect(
+        manifest.points.every((p: any) => p.finishedElapsedMs !== null),
+      ).toBe(true);
+      expect(manifest.candidate.sha256).toBe(
+        mode === "mutate"
+          ? manifest.candidate.sha256
+          : await digest(config.candidate),
+      );
+    },
   );
-}, 20000);
+campaignTest(
+  "pending point is durable before interruption; remaining deadline is recorded",
+  async () => {
+    const { root, config } = await fakeLab("hang");
+    const controller = new AbortController();
+    const timer = setTimeout(() => controller.abort(), 400);
+    const path = await campaign(root, config, controller.signal);
+    clearTimeout(timer);
+    const manifest = JSON.parse(await readFile(path, "utf8"));
+    expect(manifest.status).toBe("interrupted");
+    expect(manifest.points.length).toBe(1);
+    expect(manifest.points[0].verified).toBe(false);
+    expect(manifest.points[0].timeoutSeconds).toBeLessThanOrEqual(
+      config.budgetSeconds,
+    );
+  },
+  20000,
+);

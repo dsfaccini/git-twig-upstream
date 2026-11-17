@@ -19,10 +19,11 @@ Options:
   --max-concurrency N          default 16, maximum 128
   --budget-seconds N           default 1800, includes preparation
   --point-timeout-seconds N    default 180, capped by remaining budget
+  --minimum-free-gib N         default 16, checked before preparation and each point
   --environment TEXT           required lab/backing storage description unless exploratory
   --exploratory                allow dirty checkout; never publishable
 
-Results: bench/results/sha256-<candidate>/linux-<fs>/<UTC-date>/run-<time>/
+Results: bench/results/sha256-<candidate>/<os-fs>/<UTC-date>/run-<time>/
 Fixtures/images stay under ignored target/. Nothing is pushed or deployed.
 `;
 

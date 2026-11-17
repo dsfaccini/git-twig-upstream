@@ -5,8 +5,9 @@
 Use Bun 1.3+ to select a target and suite. Targets are small typed modules under
 `bench/{os}-{fs}/`; scheduling and provenance live in `lib/`, workload plans in
 `suites/`. Rust workers retain timing, allocation, full raw-byte verification and
-private-write checks. The first orchestrated suite is Linux `checkout` on XFS and
-Btrfs; other existing measurement tools below remain independently usable.
+private-write checks. The `checkout` suite runs on Linux XFS/Btrfs and macOS
+APFS/default and case-sensitive images. Other existing measurement tools below
+remain independently usable.
 
 ```sh
 bun install --cwd bench --frozen-lockfile
@@ -18,6 +19,12 @@ bun bench/run.ts run --target linux-xfs --suite checkout \
 bun test bench/tests
 bun run --cwd bench typecheck
 ```
+
+Select `--target macos-apfs` or `--target macos-apfs-case-sensitive` on a Mac.
+Image measurements are separate from host-volume timing. Set `--minimum-free-gib`
+to the host reserve (default 16); the runner stops before preparation or the next
+point if it would start below that reserve. A single bounded point can still
+consume space, so budget image capacities and run one campaign per backing disk.
 
 Build release workers first with `cargo build --release --workspace --locked`.
 See [Linux setup and safety constraints](linux.md). Commit the harness before

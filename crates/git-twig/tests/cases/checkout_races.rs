@@ -118,7 +118,7 @@ fn dirty_attribute_filters_are_never_executed_during_native_preparation() -> Res
     Ok(())
 }
 
-#[cfg(target_os = "macos")]
+#[cfg(unix)]
 #[test]
 fn writable_mapped_donor_edits_are_not_inherited() -> Result<()> {
     use std::os::fd::AsRawFd;

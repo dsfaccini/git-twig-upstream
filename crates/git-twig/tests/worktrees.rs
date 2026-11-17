@@ -50,10 +50,16 @@ impl Fixture {
         let root = fs::canonicalize(root)?;
         let source = root.join("source");
         fs::create_dir(&source)?;
-        git(
-            &source,
-            &["init", &format!("--object-format={format}"), "-b", "main"],
+        checked(
+            command("git", &source)
+                .env("GIT_TEMPLATE_DIR", "")
+                .args(["init", &format!("--object-format={format}"), "-b", "main"])
+                .output()?,
         )?;
+        // Tests own these metadata directories; do not depend on installed or
+        // inherited Git templates (which can also carry executable hooks).
+        fs::create_dir_all(source.join(".git/info"))?;
+        fs::create_dir_all(source.join(".git/hooks"))?;
         git(&source, &["config", "user.name", "Fixture"])?;
         git(
             &source,
@@ -97,6 +103,17 @@ impl Fixture {
         Ok(())
     }
 }
+#[test]
+fn fixtures_own_hook_and_attribute_directories_without_git_templates() -> Result<()> {
+    let f = Fixture::new()?;
+    for name in ["hooks", "info"] {
+        let directory = f.source.join(".git").join(name);
+        assert!(directory.is_dir());
+        assert_eq!(fs::read_dir(directory)?.count(), 0);
+    }
+    clean(&f.source)
+}
+
 fn command(program: impl AsRef<std::ffi::OsStr>, cwd: &Path) -> Command {
     let mut c = Command::new(program);
     c.current_dir(cwd)
