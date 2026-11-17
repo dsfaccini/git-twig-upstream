@@ -9,6 +9,7 @@ if (!runArg || !mainArg || !axoArg) throw new Error("bun bench/run-apfs-release.
 const cwd = process.cwd();
 const run = resolve(runArg), main = resolve(mainArg), axo = resolve(axoArg);
 const bin = resolve(run, "bin");
+const harnessName = existsSync(resolve(bin, "twig-real-bench-cleanup-fix")) ? "twig-real-bench-cleanup-fix" : "twig-real-bench";
 const text = (args: string[]) => {
   const p = Bun.spawnSync(args, { cwd, stdout: "pipe", stderr: "pipe" });
   if (p.exitCode) throw new Error(new TextDecoder().decode(p.stderr));
@@ -59,11 +60,12 @@ const manifest = {
   candidateSourceCommit: "47c92163c3ca8b59eee76fa546f86eef826780a7",
   continuationOf: previous ? { manifestSha256: sha(resolve(run, previousManifest)), state: snapshotName, reason: "Retain failed setup attempt; rerun the entire incomplete job on fresh images using identical frozen binaries." } : null,
   candidateVersion: text([resolve(bin, "git-twig"), "--version"]),
-  binaries: Object.fromEntries(["git-twig", "twig-real-bench", "git"].map(name => [name, { sha256: sha(resolve(bin, name)) }])),
+  binaries: Object.fromEntries(["git-twig", harnessName, "git"].map(name => [name, { sha256: sha(resolve(bin, name)) }])),
   baseline: text([resolve(bin, "git"), "--version"]), platform: text(["sw_vers"]), cpu: text(["sysctl", "-n", "machdep.cpu.brand_string"]),
   config: jobs.map(({ input, ...job }) => ({ repository: input.name, sourceCommit: input.commit, ...job })),
   limits: { minimumHostFreeGiB: 128, disposableImageCapacityGiB: 32, concurrentCampaignJobs: 1 },
   notes: [
+    "Warmup cleanup fix, when selected by harness name, only changes pre-measurement cleanup; recovery is recorded per cohort. Original harness and all failed attempts are retained.",
     "Release candidate, not a published v0.4.0 binary; source commit and binary digests identify the implementation, version string remains 0.3.0.",
     "Stock Git baseline and candidate use the same pinned tree per pair. Prior four workload revisions are preserved. OpenClaw retains its original attributes.",
     "Warm caches on a shared Mac; no competing builds/tests initiated by this controller. Background apps are not stopped. No cold-cache or general speed claim.",
@@ -93,7 +95,7 @@ try {
     if (state() < 128) throw new Error("Minimum host free-space guard");
     const output = resolve(run, job.file);
     if (existsSync(output)) throw new Error(`Refusing to overwrite ${output}`);
-    const args = [resolve(bin, "twig-real-bench"), "--repo", `${job.input.name}=${job.input.path}`, "--revision", `${job.input.name}=${job.input.commit}`, "--candidate", resolve(bin, "git-twig"), "--filesystem", job.mode, "--image-gib", String(job.capacity), "--worktrees", String(job.count), "--concurrency", String(job.concurrency), "--repeats", String(job.repeats), "--warmup", "true", "--output", output];
+    const args = [resolve(bin, harnessName), "--repo", `${job.input.name}=${job.input.path}`, "--revision", `${job.input.name}=${job.input.commit}`, "--candidate", resolve(bin, "git-twig"), "--filesystem", job.mode, "--image-gib", String(job.capacity), "--worktrees", String(job.count), "--concurrency", String(job.concurrency), "--repeats", String(job.repeats), "--warmup", "true", "--output", output];
     console.log(new Date().toISOString(), "START", current);
     const log = openSync(resolve(run, job.file.replace(".json", ".log")), "wx");
     const child = Bun.spawn(args, { cwd, env: environment, stdin: "ignore", stdout: log, stderr: log });
