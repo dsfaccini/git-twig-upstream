@@ -147,20 +147,70 @@ fn generated_dirty_donors_match_stock_and_keep_private_writes_isolated() -> Resu
 
 #[test]
 fn registration_failure_and_abrupt_exit_preserve_recoverable_state() -> Result<()> {
-    for action in ["exit 91", "kill -KILL \"$PPID\"; exit 92"] {
+    for action in [
+        "exit 91",
+        "kill -KILL \"$PPID\"; exit 92",
+        "touch \"$TWIG_TEST_LATE_FAILURE\"",
+    ] {
         let f = Fixture::new()?;
         #[cfg(target_os = "linux")]
         if !linux_reflinks_available(&f)? {
             continue;
         }
         let before = inventory(&f.source)?;
-        let bin = f.root.join("bin");
-        fs::create_dir(&bin)?;
-        let wrapper = bin.join("git");
-        fs::write(
-            &wrapper,
-            format!(
-                r#"#!/bin/sh
+        let output = after_registration(&f, action)?;
+        assert!(!output.status.success());
+        assert_eq!(fs::read(f.root.join("marker"))?, b"registered\n");
+        assert_eq!(inventory(&f.source)?, before);
+        assert!(f.destination().join(".git").is_file());
+        let stages = f.stages()?;
+        assert_eq!(stages.len(), 1);
+        let retained = inventory(&stages[0])?;
+        assert!(!retained.is_empty());
+        let partial = inventory(&f.destination())?;
+        if action.contains("LATE_FAILURE") {
+            assert_eq!(partial, before);
+            let stderr = String::from_utf8_lossy(&output.stderr);
+            assert!(
+                stderr.contains("injected index installation failure"),
+                "{stderr}"
+            );
+            assert!(stderr.contains("partial worktree retained"), "{stderr}");
+        } else {
+            assert!(partial.is_empty());
+        }
+        assert!(
+            !f.twig(&["new", "--detach", "../feature", "HEAD"])?
+                .status
+                .success()
+        );
+        assert_eq!(inventory(&f.destination())?, partial);
+        checked(f.twig(&["new", "--detach", "../retry", "HEAD"])?)?;
+        assert_eq!(inventory(&f.root.join("retry"))?, before);
+        assert_eq!(inventory(&stages[0])?, retained);
+        assert_eq!(f.stages()?, stages);
+        assert_eq!(inventory(&f.source)?, before);
+        assert_eq!(registration_count(&f)?, 3);
+    }
+    Ok(())
+}
+
+fn after_registration(f: &Fixture, action: &str) -> Result<Output> {
+    let bin = f.root.join("bin");
+    fs::create_dir(&bin)?;
+    let wrapper = bin.join("git");
+    fs::write(
+        &wrapper,
+        format!(
+            r#"#!/bin/sh
+if [ -f "$TWIG_TEST_LATE_FAILURE" ]; then
+  for arg in "$@"; do
+    if [ "$arg" = "read-tree" ]; then
+      printf 'injected index installation failure\n' >&2
+      exit 93
+    fi
+  done
+fi
 "$TWIG_TEST_REAL_GIT" "$@"
 status=$?
 if [ "$status" = 0 ]; then
@@ -173,53 +223,113 @@ if [ "$status" = 0 ]; then
 fi
 exit "$status"
 "#
-            ),
+        ),
+    )?;
+    fs::set_permissions(wrapper, fs::Permissions::from_mode(0o755))?;
+    let real_git = String::from_utf8(git_path(&f.source)?)?;
+    let path = std::env::join_paths(std::iter::once(bin).chain(std::env::split_paths(
+        &std::env::var_os("PATH").unwrap_or_default(),
+    )))?;
+    let mut child = command(env!("CARGO_BIN_EXE_git-twig"), &f.source);
+    child
+        .args(["new", "--detach", "../feature", "HEAD"])
+        .env("PATH", path)
+        .env("TWIG_TEST_REAL_GIT", real_git.trim())
+        .env("TWIG_TEST_MARKER", f.root.join("marker"))
+        .env("TWIG_TEST_LATE_FAILURE", f.root.join("late-failure"))
+        .env("TWIG_TEST_SOURCE", &f.source)
+        .env("TWIG_TEST_DESTINATION", f.destination());
+    bounded_output(child)
+}
+
+#[test]
+fn registration_races_never_install_unverified_or_overwrite_foreign_data() -> Result<()> {
+    for scenario in [
+        "donor-write",
+        "destination-file",
+        "destination-symlink",
+        "head-move",
+    ] {
+        let f = Fixture::new()?;
+        #[cfg(target_os = "linux")]
+        if !linux_reflinks_available(&f)? {
+            continue;
+        }
+        git(
+            &f.source,
+            &["commit", "--allow-empty", "-m", "second commit"],
         )?;
-        fs::set_permissions(wrapper, fs::Permissions::from_mode(0o755))?;
-        let real_git = String::from_utf8(git_path(&f.source)?)?;
-        let path = std::env::join_paths(std::iter::once(bin).chain(std::env::split_paths(
-            &std::env::var_os("PATH").unwrap_or_default(),
-        )))?;
-        let mut child = command(env!("CARGO_BIN_EXE_git-twig"), &f.source);
-        child
-            .args(["new", "--detach", "../feature", "HEAD"])
-            .env("PATH", path)
-            .env("TWIG_TEST_REAL_GIT", real_git.trim())
-            .env("TWIG_TEST_MARKER", f.root.join("marker"));
-        let output = bounded_output(child)?;
-        assert!(!output.status.success());
+        let before = inventory(&f.source)?;
+        let target = git(&f.source, &["rev-parse", "HEAD"])?.stdout;
+        let action = match scenario {
+            "donor-write" => r#"printf 'concurrent donor edit\n' > "$TWIG_TEST_SOURCE/hello.txt""#,
+            "destination-file" => r#"printf 'foreign data\n' > "$TWIG_TEST_DESTINATION/hello.txt""#,
+            "destination-symlink" => {
+                r#"ln -s "$TWIG_TEST_SOURCE/hello.txt" "$TWIG_TEST_DESTINATION/hello.txt""#
+            }
+            "head-move" => {
+                r#""$TWIG_TEST_REAL_GIT" -C "$TWIG_TEST_DESTINATION" update-ref HEAD HEAD^"#
+            }
+            _ => unreachable!(),
+        };
+        let output = after_registration(&f, action)?;
         assert_eq!(fs::read(f.root.join("marker"))?, b"registered\n");
+        assert_eq!(registration_count(&f)?, 2);
+        if scenario == "donor-write" {
+            checked(output)?;
+            assert_eq!(inventory(&f.destination())?, before);
+            let mut expected = before;
+            expected.insert(
+                PathBuf::from("hello.txt"),
+                Entry::File {
+                    bytes: b"concurrent donor edit\n".to_vec(),
+                    executable: false,
+                },
+            );
+            assert_eq!(inventory(&f.source)?, expected);
+            assert!(f.stages()?.is_empty());
+            continue;
+        }
+        assert!(!output.status.success(), "scenario={scenario}");
+        let stderr = String::from_utf8(output.stderr)?;
+        assert!(stderr.contains("partial worktree retained"), "{stderr}");
         assert_eq!(inventory(&f.source)?, before);
-        assert!(f.destination().join(".git").is_file());
-        let stages = f.stages()?;
-        assert_eq!(stages.len(), 1);
-        let retained = inventory(&stages[0])?;
-        assert!(!retained.is_empty());
-        // A failed destination cannot be overwritten, and a fresh retry must not
-        // consume or clean another invocation's retained private staging.
+        assert_eq!(git(&f.source, &["rev-parse", "HEAD"])?.stdout, target);
+        assert_eq!(f.stages()?.len(), 1);
+        match scenario {
+            "destination-file" => assert_eq!(
+                fs::read(f.destination().join("hello.txt"))?,
+                b"foreign data\n"
+            ),
+            "destination-symlink" => assert_eq!(
+                fs::read_link(f.destination().join("hello.txt"))?,
+                f.source.join("hello.txt")
+            ),
+            "head-move" => {
+                assert!(inventory(&f.destination())?.is_empty());
+                assert_eq!(
+                    git(&f.destination(), &["rev-parse", "HEAD"])?.stdout,
+                    git(&f.source, &["rev-parse", "HEAD^"])?.stdout
+                );
+            }
+            _ => unreachable!(),
+        }
+        let retained = inventory(&f.stages()?[0])?;
         let partial = inventory(&f.destination())?;
-        assert!(
-            !f.twig(&["new", "--detach", "../feature", "HEAD"])?
-                .status
-                .success()
-        );
-        assert_eq!(inventory(&f.destination())?, partial);
         checked(f.twig(&["new", "--detach", "../retry", "HEAD"])?)?;
         assert_eq!(inventory(&f.root.join("retry"))?, before);
-        assert_eq!(inventory(&stages[0])?, retained);
-        assert_eq!(f.stages()?, stages);
-        assert_eq!(inventory(&f.source)?, before);
-        let registrations = git(&f.source, &["worktree", "list", "--porcelain"])?;
-        assert_eq!(
-            registrations
-                .stdout
-                .split(|b| *b == b'\n')
-                .filter(|line| line.starts_with(b"worktree "))
-                .count(),
-            3
-        );
+        assert_eq!(inventory(&f.destination())?, partial);
+        assert_eq!(inventory(&f.stages()?[0])?, retained);
     }
     Ok(())
+}
+
+fn registration_count(f: &Fixture) -> Result<usize> {
+    Ok(git(&f.source, &["worktree", "list", "--porcelain"])?
+        .stdout
+        .split(|b| *b == b'\n')
+        .filter(|line| line.starts_with(b"worktree "))
+        .count())
 }
 
 #[test]

@@ -18,7 +18,10 @@ independent reflink probe prevents silently testing fallback instead.
 | No hardlinks to donor | Compare device/inode pairs for every surviving source regular file |
 | Existing destinations stay untouched | Nonempty directory, file, symlink, dangling symlink; compare user inventory, outside sentinel, and Git registration |
 | One owner per destination | Four CLI calls launched from a barrier, with shared or distinct destinations; exact success/registration counts and contents |
-| Failure does not erase recovery evidence | Git wrapper performs real registration then fails, or SIGKILLs Twig; inspect retained partial destination and staging |
+| Failure does not erase recovery evidence | Git wrapper performs real registration then fails or SIGKILLs Twig; also fails final read-tree after files are installed; inspect retained partial destination and staging |
+| Verified private snapshots survive donor edits | Mutate donor immediately after registration; target remains equal to original stock contents, donor edit survives |
+| Destination interference stops installation | Insert foreign file or source-pointing symlink after registration; neither it nor its target is overwritten |
+| HEAD movement invalidates installation | Move detached destination HEAD after registration; reject installation before any target files are moved |
 | Retrying cannot consume another invocation's scratch | Reject reuse of partial destination; succeed at fresh destination; compare retained staging before/after and exact registrations |
 
 These are finite generated cases, not exhaustive proofs or a randomized shrinking
@@ -45,8 +48,8 @@ do not claim to fix or reproduce issue #5's two-minute slowdown.
 
 - Deterministic failure at each individual installation/repair step, not only
   registration and the existing policy boundaries.
-- Concurrent donor mutation and externally-created destination races, synchronized
-  at exact ownership transitions.
+- Concurrent donor mutation during cloning/hashing (post-verification mutation is
+  covered), and destination races within individual rename/check transitions.
 - Full mode, ACL, extended-attribute, immutable-file, and Unicode/case-collision
   semantics on both case-sensitive and default APFS.
 - Separate-volume/external-drive cases, ENOSPC and injected I/O failures using
