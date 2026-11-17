@@ -55,6 +55,84 @@ pub fn clone_path(_: &Path, _: &Path) -> Result<()> {
     bail!("native cloning requires macOS or Linux")
 }
 
+/// clonefile(2) copies BSD flags and extended attributes along with the bytes.
+/// A Git checkout has neither, and immutable flags would also make the private
+/// clone impossible to chmod, replace or remove.
+#[cfg(target_os = "macos")]
+pub fn discard_donor_metadata(path: &Path) -> Result<()> {
+    clear_user_flags(path)?;
+    let c_path = c_path(path)?;
+    let mut names = vec![0u8; 4096];
+    let length = loop {
+        // SAFETY: the buffer is live and its exact capacity is passed alongside.
+        let length = unsafe {
+            libc::listxattr(
+                c_path.as_ptr(),
+                names.as_mut_ptr().cast(),
+                names.len(),
+                libc::XATTR_NOFOLLOW,
+            )
+        };
+        if length >= 0 {
+            break length as usize;
+        }
+        let error = std::io::Error::last_os_error();
+        anyhow::ensure!(error.raw_os_error() == Some(libc::ERANGE), error);
+        names.resize(names.len() * 4, 0);
+    };
+    for name in names[..length].split_inclusive(|byte| *byte == 0) {
+        // The system stamps provenance on files this process creates as well, and
+        // owns it: stock checkouts carry it too.
+        if name == b"com.apple.provenance\0" {
+            continue;
+        }
+        let name = std::ffi::CStr::from_bytes_with_nul(name)?;
+        // SAFETY: both strings are live and NUL-terminated; never follow a symlink.
+        let result =
+            unsafe { libc::removexattr(c_path.as_ptr(), name.as_ptr(), libc::XATTR_NOFOLLOW) };
+        if result != 0 {
+            return Err(std::io::Error::last_os_error().into());
+        }
+    }
+    Ok(())
+}
+
+#[cfg(not(target_os = "macos"))]
+pub fn discard_donor_metadata(_: &Path) -> Result<()> {
+    // Linux reflinks create new inodes: only the bytes come from the donor.
+    Ok(())
+}
+
+/// Clear the flags an owner may set (immutable, append-only, hidden, nodump,
+/// opaque). System flags and filesystem-managed ones are left for the kernel.
+#[cfg(target_os = "macos")]
+pub fn clear_user_flags(path: &Path) -> Result<()> {
+    use std::os::macos::fs::MetadataExt;
+    const DONOR_FLAGS: u32 =
+        libc::UF_NODUMP | libc::UF_IMMUTABLE | libc::UF_APPEND | libc::UF_OPAQUE | libc::UF_HIDDEN;
+    let flags = std::fs::symlink_metadata(path)?.st_flags();
+    if flags & DONOR_FLAGS == 0 {
+        return Ok(());
+    }
+    let c_path = c_path(path)?;
+    // SAFETY: the path is a live NUL-terminated string; lchflags never follows links.
+    if unsafe { libc::lchflags(c_path.as_ptr(), flags & !DONOR_FLAGS) } != 0 {
+        return Err(std::io::Error::last_os_error().into());
+    }
+    Ok(())
+}
+
+#[cfg(not(target_os = "macos"))]
+pub fn clear_user_flags(_: &Path) -> Result<()> {
+    Ok(())
+}
+
+#[cfg(target_os = "macos")]
+fn c_path(path: &Path) -> Result<std::ffi::CString> {
+    use std::os::unix::ffi::OsStrExt;
+    Ok(std::ffi::CString::new(path.as_os_str().as_bytes())?)
+}
+
 /// Discover effective creation permissions without changing the process-global umask.
 pub struct FileModes {
     regular: std::fs::Permissions,

@@ -127,7 +127,13 @@ impl<'a> Checkout<'a> {
         Ok(())
     }
 
-    pub fn repair(&self, root: &Path, entries: &[Entry], policy: &Policy) -> Result<()> {
+    pub fn repair(
+        &self,
+        root: &Path,
+        entries: &[Entry],
+        policy: &Policy,
+        lazy: bool,
+    ) -> Result<()> {
         let regular: Vec<_> = entries
             .iter()
             .zip(&policy.actions)
@@ -168,6 +174,13 @@ impl<'a> Checkout<'a> {
                 }
                 continue;
             }
+            // checkout-index asks a promisor remote for one blob per path. Only
+            // Git's own checkout batches, so leave absent blobs to it.
+            ensure!(
+                !lazy || entry.kind == Kind::Submodule,
+                "partial clone: Git must write {:?}, and stock Git fetches absent blobs in one batch",
+                entry.path
+            );
             if entry
                 .path
                 .file_name()

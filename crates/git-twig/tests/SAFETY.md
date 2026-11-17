@@ -24,6 +24,12 @@ independent reflink probe prevents silently testing fallback instead.
 | HEAD movement invalidates installation | Move detached destination HEAD after registration; reject installation before any target files are moved |
 | Retrying cannot consume another invocation's scratch | Reject reuse of partial destination; succeed at fresh destination; compare retained staging before/after and exact registrations |
 
+`cases/partial_clones.rs` counts promisor fetches in Git's own event trace: none
+for the current revision, at most one batch when target blobs are absent.
+`cases/donor_metadata.rs` and `cases/staging_cleanup.rs` (macOS) compare extended
+attributes and BSD flags with a stock worktree, and require immutable tracked or
+ignored donor files to leave neither flags in the target nor retained staging.
+
 These are finite generated cases, not exhaustive proofs or a randomized shrinking
 framework. The generation seed and fixture are retained. Parallel launch varies
 scheduling but does not force every interleaving. The registration fault injection
@@ -78,8 +84,8 @@ and OpenZFS/NFS remain outside this local-filesystem adoption matrix.
   registration and the existing policy boundaries.
 - Concurrent donor mutation during cloning/hashing (post-verification mutation is
   covered), and destination races within individual rename/check transitions.
-- Full mode, ACL, extended-attribute, immutable-file, and Unicode/case-collision
-  semantics on both case-sensitive and default APFS.
+- Full mode, ACL and Unicode/case-collision semantics on both case-sensitive and
+  default APFS; system-owned flags and attributes; Linux immutable attributes.
 - Separate-volume/external-drive cases, ENOSPC and injected I/O failures using
   disposable volumes; never fill a user's main disk.
 - Larger generated inventories with replayable randomness and shrinking, while

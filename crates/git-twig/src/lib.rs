@@ -173,8 +173,12 @@ fn prepare(cwd: &Path, request: &AddRequest, staging: &mut staging::Staging) -> 
     let destination = parent.join(destination.file_name().context("destination has no name")?);
     objects::ensure_literal_objects(&root)?;
     checkout::ensure_relocatable_worktree_config(&root)?;
+    // Blob sizes bound verification work, but asking for them would fetch every
+    // absent blob of a partial clone one at a time.
+    let lazy = objects::fetches_lazily(&root)?;
+    let listing = if lazy { "-rz" } else { "-rlz" };
     let entries = tree::parse(
-        &checked(git(&root).args(["ls-tree", "-rlz", "--full-tree", &commit]))?.stdout,
+        &checked(git(&root).args(["ls-tree", listing, "--full-tree", &commit]))?.stdout,
     )?;
     // These semantics are owned by Git, not by the CoW materializer.
     if entries.iter().any(|entry| entry.kind == Kind::Symlink)
@@ -230,7 +234,7 @@ fn prepare(cwd: &Path, request: &AddRequest, staging: &mut staging::Staging) -> 
     #[cfg(not(target_os = "macos"))]
     let _ = directories;
     let verification_started = std::time::Instant::now();
-    checkout.repair(&root, &entries, &policy)?;
+    checkout.repair(&root, &entries, &policy, lazy)?;
     trace(&format!(
         "native preparation: snapshot {:.3}s; raw verification/repair {:.3}s; total {:.3}s",
         snapshot_elapsed.as_secs_f64(),

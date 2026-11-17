@@ -6,6 +6,16 @@ describe changes from this baseline after they are implemented and verified.
 
 ## Unreleased
 
+### Fixed
+
+- Blobless partial clones no longer fetch one blob per file. Tree listings stop
+  asking for blob sizes, and a target that needs blobs written by Git is left
+  to stock Git, which fetches absent blobs in one batch.
+- On macOS, new worktrees no longer inherit the donor's extended attributes
+  (including quarantine) or BSD flags such as hidden and immutable.
+- Immutable donor files, tracked or ignored, no longer force a fallback and
+  leave undeletable staging that retained ignored bytes under Git metadata.
+
 ## [0.5.0] — 2026-11-17
 
 Share unchanged files across revisions and more checkout policies, and inspect

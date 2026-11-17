@@ -52,12 +52,15 @@ pub fn parse(bytes: &[u8]) -> Result<Vec<Entry>> {
             let mode = fields.next().context("missing tree mode")?;
             let object_type = fields.next().context("missing tree object type")?;
             let object = ObjectId::parse(fields.next().context("missing tree object ID")?)?;
-            let size = fields.next().context("missing tree object size")?;
-            let blob_bytes = if mode == "160000" {
-                ensure!(size == "-", "unexpected gitlink object size");
-                None
-            } else {
-                Some(size.parse::<u64>().context("invalid blob size")?)
+            // `ls-tree -l` adds a size, and asks a promisor remote for every
+            // absent blob to learn it. Inventories listed without -l have none.
+            let blob_bytes = match fields.next() {
+                None => None,
+                Some(size) if mode == "160000" => {
+                    ensure!(size == "-", "unexpected gitlink object size");
+                    None
+                }
+                Some(size) => Some(size.parse::<u64>().context("invalid blob size")?),
             };
             ensure!(fields.next().is_none(), "extra tree header fields");
             ensure!(
@@ -111,5 +114,15 @@ mod tests {
         }
         assert!(parse(format!("100644 blob {object} 6\tx").as_bytes()).is_err());
         assert!(parse(format!("100644 blob {} 6\tx\0", "0".repeat(64)).as_bytes()).is_ok());
+    }
+    #[test]
+    fn sizes_are_optional_but_never_invented() {
+        let object = "0".repeat(40);
+        let sized = parse(format!("100644 blob {object} 6\tx\0").as_bytes()).unwrap();
+        assert_eq!(sized[0].blob_bytes, Some(6));
+        let unsized_ = parse(format!("100644 blob {object}\tx\0").as_bytes()).unwrap();
+        assert_eq!(unsized_[0].blob_bytes, None);
+        let gitlink = parse(format!("160000 commit {object}\tx\0").as_bytes()).unwrap();
+        assert_eq!(gitlink[0].blob_bytes, None);
     }
 }

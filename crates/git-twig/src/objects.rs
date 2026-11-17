@@ -38,7 +38,11 @@ pub fn hash_private_files(root: &Path, data: &Path, entries: &[&Entry]) -> Resul
         );
         // A dirty sparse/oversized donor must not turn validation into hashing
         // terabytes that cannot possibly match the target's known blob length.
-        if Some(metadata.len()) != entry.blob_bytes {
+        // Without a known length (partial clones) the hash itself is the verdict.
+        if entry
+            .blob_bytes
+            .is_some_and(|bytes| bytes != metadata.len())
+        {
             continue;
         }
         total = total.saturating_add(metadata.len());
@@ -300,6 +304,28 @@ fn compare(
         equal: equal && candidate.read(&mut actual[..1])? == 0,
         contains_nul,
     })
+}
+
+/// Whether absent objects are fetched on demand from a promisor remote. Git then
+/// fetches once per object unless the caller batches, as its own checkout does.
+pub fn fetches_lazily(root: &Path) -> Result<bool> {
+    let output = git(root)
+        .args([
+            "config",
+            "--get-regexp",
+            r"^(extensions\.partialclone|remote\..*\.(promisor|partialclonefilter))$",
+        ])
+        .output()?;
+    // Exit status 1 means no such key. Any configured value is treated as partial.
+    if output.status.code() == Some(1) {
+        return Ok(false);
+    }
+    ensure!(
+        output.status.success(),
+        "Git failed: {}",
+        String::from_utf8_lossy(&output.stderr)
+    );
+    Ok(!output.stdout.is_empty())
 }
 
 /// Fail closed when replace refs or grafts could make an object ID mean other bytes.

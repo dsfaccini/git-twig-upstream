@@ -139,6 +139,8 @@ fn normalize(
     actual: fs::FileType,
     modes: &native::FileModes,
 ) -> Result<()> {
+    // Before anything else: an immutable clone refuses the changes below.
+    native::discard_donor_metadata(path)?;
     match node {
         Node::Directory(expected) => {
             ensure!(actual.is_dir(), "cloned directory changed type");
@@ -171,19 +173,31 @@ pub(super) fn remove_private_tree(path: &Path, kind: fs::FileType) -> Result<()>
     if kind.is_dir() {
         // Only owned staging/cloned entries reach here. Never follow a symlink.
         #[cfg(unix)]
-        {
+        unlocked(path, || {
             use std::os::unix::fs::PermissionsExt;
-            fs::set_permissions(path, fs::Permissions::from_mode(0o700))?;
-        }
+            fs::set_permissions(path, fs::Permissions::from_mode(0o700))
+        })?;
         for child in fs::read_dir(path)? {
             let child = child?;
             remove_private_tree(&child.path(), child.file_type()?)?;
         }
         fs::remove_dir(path)?;
     } else {
-        fs::remove_file(path)?;
+        unlocked(path, || fs::remove_file(path))?;
     }
     Ok(())
+}
+
+/// Cloned donor entries keep the donor's immutable flags, which refuse removal.
+/// Pay for unlocking only when an operation is actually refused.
+fn unlocked(path: &Path, operation: impl Fn() -> std::io::Result<()>) -> Result<()> {
+    match operation() {
+        Err(error) if error.kind() == std::io::ErrorKind::PermissionDenied => {
+            native::clear_user_flags(path)?;
+            Ok(operation()?)
+        }
+        result => Ok(result?),
+    }
 }
 
 #[cfg(test)]

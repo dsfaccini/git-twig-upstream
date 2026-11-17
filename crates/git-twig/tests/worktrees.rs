@@ -21,9 +21,20 @@ mod filesystem_coverage;
 #[path = "cases/nonregular_coverage.rs"]
 mod nonregular_coverage;
 
+#[path = "cases/partial_clones.rs"]
+mod partial_clones;
+
 #[cfg(unix)]
 #[path = "cases/safety_properties.rs"]
 mod safety_properties;
+
+#[cfg(target_os = "macos")]
+#[path = "cases/staging_cleanup.rs"]
+mod staging_cleanup;
+
+#[cfg(target_os = "macos")]
+#[path = "cases/donor_metadata.rs"]
+mod donor_metadata;
 
 #[cfg(unix)]
 #[path = "cases/adopt.rs"]

@@ -82,7 +82,7 @@ pub fn choose(root: &Path, parent: &Path, target: &[Entry]) -> Result<Donor> {
         .take(CANDIDATE_LIMIT)
     {
         let head = worktree.head.expect("eligible worktree has HEAD");
-        let inventory = checked(git(root).args(["ls-tree", "-rlz", "--full-tree", head.as_str()]))
+        let inventory = checked(git(root).args(["ls-tree", "-rz", "--full-tree", head.as_str()]))
             .and_then(|out| tree::parse(&out.stdout));
         let Ok(inventory) = inventory else { continue };
         let source: BTreeMap<_, _> = inventory.iter().map(|entry| (&entry.path, entry)).collect();
