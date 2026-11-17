@@ -108,25 +108,27 @@ export const sources = [
   {
     name: "Linux kernel",
     repository: "linux",
-    file: "linux-images-retry-1.json",
+    file: "2026-11-17-final/linux-images.json",
   },
-  { name: "OpenClaw", repository: "openclaw", file: "openclaw-images-retry-1.json" },
-  { name: "Axo", repository: "axo", file: "axo-images.json" },
-  { name: "git-twig", repository: "twig", file: "twig-images.json" },
-  { name: "Workers starter", repository: "workers-starter", file: "workers-starter-images.json" },
+  { name: "Pulumi docs", repository: "pulumi", file: "2026-11-17-issue5/after-images.json" },
+  { name: "OpenClaw", repository: "openclaw", file: "2026-11-17-final/openclaw-images.json" },
+  { name: "Axo", repository: "axo", file: "2026-11-17-final/axo-images.json" },
+  { name: "git-twig", repository: "twig", file: "2026-11-17-final/twig-images.json" },
+  { name: "Workers starter", repository: "workers-starter", file: "2026-11-17-final/workers-starter-images.json" },
 ];
+
+export function benchmarkFile(file: string): URL {
+  return new URL(`../../../bench/results/${file}`, import.meta.url);
+}
 
 export function loadBenchmarks(): DiskComparison[] {
   return sources.map(({ name, repository, file }) => {
-    const path = new URL(
-      `../../../bench/results/2026-11-16-apfs/${file}`,
-      import.meta.url,
-    );
+    const path = benchmarkFile(file);
     return summarize(
       JSON.parse(readFileSync(path, "utf8")),
       repository,
       name,
-      `https://github.com/leostera/git-twig/blob/main/bench/results/2026-11-16-apfs/${file}`,
+      `https://github.com/leostera/git-twig/blob/main/bench/results/${file}`,
     );
   });
 }

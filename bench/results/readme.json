@@ -1,45 +1,51 @@
 {
   "entries": [
     {
-      "name": "Workers starter",
+      "name": "Workers starter (10 sequential)",
       "repository": "workers-starter",
-      "timing": "bench/results/2026-11-16-apfs/workers-starter-host.json",
-      "allocation": "bench/results/2026-11-16-apfs/workers-starter-images.json"
+      "timing": "bench/results/2026-11-17-final/workers-starter-host.json",
+      "allocation": "bench/results/2026-11-17-final/workers-starter-images.json"
     },
     {
-      "name": "git-twig",
+      "name": "git-twig (10 sequential)",
       "repository": "twig",
-      "timing": "bench/results/2026-11-16-apfs/twig-host.json",
-      "allocation": "bench/results/2026-11-16-apfs/twig-images.json"
+      "timing": "bench/results/2026-11-17-final/twig-host.json",
+      "allocation": "bench/results/2026-11-17-final/twig-images.json"
     },
     {
       "name": "Axo",
       "repository": "axo",
-      "timing": "bench/results/2026-11-16-apfs/axo-host.json",
-      "allocation": "bench/results/2026-11-16-apfs/axo-images.json"
+      "timing": "bench/results/2026-11-17-final/axo-host.json",
+      "allocation": "bench/results/2026-11-17-final/axo-images.json"
     },
     {
-      "name": "Linux kernel (10 sequential)",
+      "name": "Linux kernel",
       "repository": "linux",
-      "timing": "bench/results/2026-11-16-apfs/linux-images-retry-1.json",
-      "allocation": "bench/results/2026-11-16-apfs/linux-images-retry-1.json"
+      "timing": "bench/results/2026-11-17-final/linux-images.json",
+      "allocation": "bench/results/2026-11-17-final/linux-images.json"
     },
     {
-      "name": "OpenClaw (10 sequential)",
+      "name": "OpenClaw",
       "repository": "openclaw",
-      "timing": "bench/results/2026-11-16-apfs/openclaw-host-retry-1.json",
-      "allocation": "bench/results/2026-11-16-apfs/openclaw-images-retry-1.json"
+      "timing": "bench/results/2026-11-17-final/openclaw-host.json",
+      "allocation": "bench/results/2026-11-17-final/openclaw-images.json"
+    },
+    {
+      "name": "Pulumi docs",
+      "repository": "pulumi",
+      "timing": "bench/results/2026-11-17-issue5/after-host.json",
+      "allocation": "bench/results/2026-11-17-issue5/after-images.json"
     }
   ],
   "notes": [
-    "Warm-cache observations on a shared Apple M1 Ultra Mac using Git 2.56.1; three paired rounds per workload/backend/environment. These are not cold-cache results or universal speed guarantees.",
-    "Every completed cohort independently verified bytes, executable modes, symlink targets, native Twig selection, and source isolation after private writes. The nine complete jobs contain 3,780 verified measured creates with zero failures; warmups are additional and not timed.",
-    "Workers starter, git-twig and Axo each create 100 worktrees with up to 100 in flight. Kernel and OpenClaw each create ten worktrees sequentially. Prior workload commits are preserved; the git-twig workload is the same historical tree, not the latest project checkout.",
-    "Host-APFS timing and isolated case-sensitive APFS allocation are separate runs with identical pinned inputs and candidate binary. Kernel time and allocation both use the same case-sensitive-image cohorts. Do not compare absolute workload times as if counts and environments were identical.",
-    "OpenClaw is pinned at 410c0dda40702e25263b49b8b7d0786a5e49e366 with its text=auto eol=lf attributes unchanged. No OpenClaw application or dependencies were run. Every created Twig worktree selected native CoW.",
-    "The frozen candidate implements the v0.4 checkout changes at source 47c9216 before the version-only release bump; its executable still reports 0.3.0. Candidate SHA-256 and all input pins are in each raw run and the campaign manifests. Do not confuse it with the published v0.3.0 binary.",
-    "All setup failures remain versioned: linux-images.json stopped at second-round warmup cleanup, openclaw-host.json had no measured cohorts because its new bare input lacked a branch reference, and openclaw-images.json stopped at second-round warmup cleanup. These incomplete attempts are not headline data; no measured creation was retried. The full kernel and OpenClaw jobs were rerun under new filenames.",
-    "The final OpenClaw allocation job uses a separately hashed harness with an owned-warmup cleanup recovery outside measurement. It recovers only Git's partial Directory-not-empty deletion on disposable fixtures, asserts the warmup registration is gone before the baseline, and records warmupCleanupRecovered per cohort (one recovery). Timed creation/verification/allocation logic and the candidate binary are unchanged. Original binaries, failed attempts and continuation provenance are retained.",
-    "The original November 15 measurements remain archived under bench/results/2026-11-15-real; they are not silently overwritten or combined into this rerun. See the [campaign manifest](bench/results/2026-11-16-apfs/manifest.json) and [completion record](bench/results/2026-11-16-apfs/completion.json)."
+    "Warm-cache observations on a shared Apple M1 Ultra Mac using Git 2.56.1; three paired rounds per workload/backend/environment. These are not cold-cache results, load-saturation tests or universal speed guarantees.",
+    "The headline runs contain 282 verified measured creates with zero failures, independently checking raw bytes, executable modes, symlink targets, native Twig selection and source isolation after private writes. Warmups are additional and not counted as measured creates.",
+    "Workers starter and the historical git-twig workload each create ten worktrees sequentially. Axo, Linux kernel, OpenClaw and Pulumi docs each create one worktree per cohort. This refresh targets sequential creation latency after the verifier optimization, not the archived campaign's 100-way throughput. Counts and environments differ; do not compare absolute row times as identical operations.",
+    "Host-APFS timing and isolated case-sensitive APFS allocation use separate runs with identical pinned input revisions and candidate binary. Kernel time and allocation both come from case-sensitive-image cohorts. Image capacity is recorded in raw runs (Pulumi 8 GiB; other workloads 16–32 GiB). Creation excludes subsequent first-status cost, which is reported separately in the details.",
+    "OpenClaw remains pinned at 410c0dda40702e25263b49b8b7d0786a5e49e366 with text=auto eol=lf attributes unchanged. Pulumi docs uses the full-history object store at 430261138aa08539cd598b9269bfe8f82fd49b78 with its markdown eol=lf rules unchanged. No application code or dependencies from either project were executed.",
+    "The frozen executable implements the final regular-file verifier at source 2dabb9c before the version-only release bump and still reports 0.3.0. It is not the published v0.3.0 binary. Source IDs, binary SHA-256 values, input pins and complete provenance accompany the raw results. Exact source commits for both campaigns are retained in candidate-sources.bundle, based on public commit c4e85fb.",
+    "The issue-5 comparison additionally retains six pre-optimization Twig creates. All 18 issue-5 measured creates verified successfully. The reporter's two-minute baseline was not reproduced on this Mac; the local before/after comparison is not proof that the reporter had the same bottleneck. See its generated summary and raw runs.",
+    "The final harness has a separately hashed recovery for Git's partial Directory-not-empty cleanup of benchmark-owned disposable warmup fixtures. It runs outside measurement, records each recovery and verifies registration cleanup before the allocation baseline. No failed measured operation is silently retried.",
+    "The initial pre-optimization 3,780-create campaign and its failed setup attempts remain archived under bench/results/2026-11-16-apfs; November 15 results remain under 2026-11-15-real. Neither is silently overwritten or used as the optimized candidate's headline timing. See the final campaign manifest and completion record, plus the separate issue-5 manifest and summary."
   ]
 }

@@ -68,7 +68,7 @@ test("onboards an agent and shows source-backed space savings", async ({
     page.getByRole("heading", { name: "Linux kernel", exact: true }),
   ).toBeVisible();
   await expect(page.locator(".disk-chart")).toHaveCount(1);
-  await expect(page.locator(".repo-group")).toHaveCount(5);
+  await expect(page.locator(".repo-group")).toHaveCount(6);
   expect(
     await page.evaluate(
       () => document.documentElement.scrollWidth <= innerWidth,

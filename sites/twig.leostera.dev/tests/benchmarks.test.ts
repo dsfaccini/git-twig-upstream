@@ -5,6 +5,7 @@ test("uses verified checked-in allocation measurements", () => {
   const data = loadBenchmarks();
   expect(data.map((d) => d.name)).toEqual([
     "Linux kernel",
+    "Pulumi docs",
     "OpenClaw",
     "Axo",
     "git-twig",

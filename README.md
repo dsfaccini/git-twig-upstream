@@ -63,11 +63,12 @@ that changes Git checkout semantics rather than proving the bytes are correct.
 
 | Repo | `git worktree` | `git twig` | Improvement |
 |---|---|---|---|
-| [Workers starter](bench/results/2026-11-16-apfs/workers-starter-host.json) | 1.79s / 6.0 MiB | 12.94s / 3.1 MiB | 7.22× slower / **1.9× less space** |
-| [git-twig](bench/results/2026-11-16-apfs/twig-host.json) | 6.73s / 52.9 MiB | 14.29s / 5.3 MiB | 2.12× slower / **10.1× less space** |
-| [Axo](bench/results/2026-11-16-apfs/axo-host.json) | 4m39s / 3.0 GiB | 50.72s / 116 MiB | 5.50× faster / **26.8× less space** |
-| [Linux kernel (10 sequential)](bench/results/2026-11-16-apfs/linux-images-retry-1.json) | 3m20s / 18.3 GiB | 3m59s / 447 MiB | 1.20× slower / **42.0× less space** |
-| [OpenClaw (10 sequential)](bench/results/2026-11-16-apfs/openclaw-host-retry-1.json) | 1m22s / 9.0 GiB | 2m03s / 308 MiB | 1.50× slower / **29.8× less space** |
+| [Workers starter (10 sequential)](bench/results/2026-11-17-final/workers-starter-host.json) | 456ms / 592 KiB | 4.27s / 308 KiB | 9.37× slower / **1.9× less space** |
+| [git-twig (10 sequential)](bench/results/2026-11-17-final/twig-host.json) | 422ms / 5.2 MiB | 4.18s / 508 KiB | 9.91× slower / **10.6× less space** |
+| [Axo](bench/results/2026-11-17-final/axo-host.json) | 400ms / 30.8 MiB | 948ms / 1.2 MiB | 2.37× slower / **26.7× less space** |
+| [Linux kernel](bench/results/2026-11-17-final/linux-images.json) | 40.56s / 1.8 GiB | 31.32s / 44.7 MiB | 1.29× faster / **41.9× less space** |
+| [OpenClaw](bench/results/2026-11-17-final/openclaw-host.json) | 8.58s / 919 MiB | 8.80s / 31.1 MiB | 1.03× slower / **29.5× less space** |
+| [Pulumi docs](bench/results/2026-11-17-issue5/after-host.json) | 4.32s / 1.2 GiB | 3.64s / 7.9 MiB | 1.19× faster / **155.8× less space** |
 
 Each cell is **creation time / additional disk space**. Batch sizes differ; creation excludes first status. † Includes failed Git attempts. [Setup and raw results](bench/results/readme-details.md).
 

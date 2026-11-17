@@ -255,31 +255,44 @@ fn parallel_raw_hashing_preserves_order_formats_and_dirty_file_repairs() -> Resu
     for format in ["sha1", "sha256"] {
         let f = Fixture::with_object_format(format)?;
         fs::create_dir(f.source.join("files"))?;
-        let bytes = vec![b'x'; 128 * 1024];
-        for index in 0..512 {
-            fs::write(f.source.join(format!("files/{index:04}")), &bytes)?;
+        let content = |index: usize| {
+            let mut bytes = vec![b'x'; 128 * 1024];
+            bytes[..8].copy_from_slice(&(index as u64).to_le_bytes());
+            bytes
+        };
+        // Keep >512 eligible files and >64 MiB even after rejecting a dirty
+        // length mismatch. Distinct object IDs make reordered results visible.
+        for index in 0..520 {
+            fs::write(f.source.join(format!("files/{index:04}")), content(index))?;
         }
         git(&f.source, &["add", "."])?;
         git(&f.source, &["commit", "-m", "parallel raw verification"])?;
-        fs::write(f.source.join("files/0001"), vec![b'y'; bytes.len()])?;
+        fs::write(f.source.join("files/0001"), vec![b'y'; 128 * 1024])?;
         fs::OpenOptions::new()
             .append(true)
             .open(f.source.join("files/0002"))?
             .write_all(b"extra")?;
         let output = checked(f.add()?)?;
         native(&output);
-        for index in 0..512 {
+        let trace = String::from_utf8_lossy(&output.stderr);
+        if trace.contains("raw verification:") {
+            let workers = std::thread::available_parallelism()
+                .map_or(1, usize::from)
+                .min(4);
+            assert!(trace.contains(&format!("raw verification: {workers} Git hash workers")));
+        }
+        for index in 0..520 {
             assert_eq!(
                 fs::read(f.destination().join(format!("files/{index:04}")))?,
-                bytes
+                content(index)
             );
         }
         assert_eq!(
             fs::read(f.source.join("files/0001"))?,
-            vec![b'y'; bytes.len()]
+            vec![b'y'; 128 * 1024]
         );
         fs::write(f.destination().join("files/0500"), "private")?;
-        assert_eq!(fs::read(f.source.join("files/0500"))?, bytes);
+        assert_eq!(fs::read(f.source.join("files/0500"))?, content(500));
     }
     Ok(())
 }
