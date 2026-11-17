@@ -77,3 +77,5 @@ Parallel hashing can contend with other agents and concurrent creates; the bound
 is deliberately small and small repositories do not spawn extra workers. It is
 not a universal latency win. A new worktree's fresh index can still make its first
 status expensive; verified-index reuse is separate work and not silently enabled.
+Installation subsequently refreshes that index with Git's `update-index -q --refresh`
+(#9): creation gains one Git hashing pass, and the first status needs only stat checks.
