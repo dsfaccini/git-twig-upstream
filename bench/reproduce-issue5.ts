@@ -2,7 +2,7 @@
 /** Faithful direct-source CLI comparison, not a harness-created shared seed. */
 import { createHash } from "node:crypto";
 import { existsSync, mkdirSync, readFileSync, writeFileSync, renameSync, openSync, closeSync, lstatSync, readdirSync, readlinkSync, readSync, appendFileSync, statfsSync } from "node:fs";
-import { resolve, join } from "node:path";
+import { resolve, join, basename } from "node:path";
 import { loadavg } from "node:os";
 const [runArg, sourceArg, v03Arg, reportedArg, v04Arg] = process.argv.slice(2);
 if (![runArg,sourceArg,v03Arg,reportedArg,v04Arg].every(Boolean)) throw new Error("RUN SOURCE V03 REPORTED870 V04 required");
@@ -35,9 +35,12 @@ const records=new TextDecoder("utf8",{fatal:true}).decode(raw.stdout).split("\0"
  return {mode:mode!,name};
 });
 if(records.length!==14811)throw new Error("Unexpected file count");
-const points=join(source,"..","reproduction-points");if(existsSync(points))throw new Error("Point directory exists");mkdirSync(points);
+const sourcePaths=inventory(source);
+const trackedNames=new Set(records.map(r=>r.name));
+const ignoredFiles=sourcePaths.filter(name=>!trackedNames.has(name)).map(name=>({name,sha256:hash(join(source,name))}));
+const points=join(source,"..","reproduction-points-"+basename(run));if(existsSync(points))throw new Error("Point directory exists");mkdirSync(points);
 const attrs=readFileSync(join(source,".gitattributes"));
-const metadata={schemaVersion:1,generatedAt:new Date().toISOString(),harnessCommit:capture([git,"rev-parse","HEAD"],process.cwd()),dirty:false,reportedCompiler:capture(["rustup","run","1.99.1","rustc","--version"]),inputCommit:pin,sourceDirectory:source,sourceObjectStore:capture([git,"count-objects","-vH"]),sourceAlternatesPresent:existsSync(join(source,".git/objects/info/alternates")),attributes:attrs.toString(),trackedFiles:records.length,environment:{os:capture(["sw_vers"]),cpu:capture(["sysctl","-n","machdep.cpu.brand_string"]),git:capture([git,"--version"])},arms,config:{repeats:3,concurrency:1,warmup:"No discarded first-use point; all first calls retained separately by repeat index. Later repeats are warm observations.",timeout:"No automatic kill; retain partial state for investigation.",reproductionCriterion:{reportedSeconds:120,reportedGitSeconds:6,flagSlowdownRatio:10,flagSeconds:60,flagGitMaximumSeconds:10}},notes:["Actual public v0.3 and v0.4 archives; exact reported870 source compiled with Rust1.99.1. v0.3 is expected to delegate for original attributes, not exhibit the reported native slowdown.","Ordinary full remote clone with local object pack, outside ignored target directory; no shared-clone alternates. Original attributes preserved.","Source and worktrees are on real host APFS. Mac M1Ultra/macOS26.5 differs from reporter M3Max/macOS26.5.2. No competing controlled builds or fetches during measurement; shared Mac background activity remains possible.","Create timing excludes independent byte/mode/inventory/source-isolation checks. All fixtures and stderr/time resource logs retained. No rm, cleanup or measured retry.","No container performance claim and no recreation of a private repository from its published size alone."]};
+const metadata={schemaVersion:1,generatedAt:new Date().toISOString(),harnessCommit:capture([git,"rev-parse","HEAD"],process.cwd()),dirty:false,reportedCompiler:capture(["rustup","run","1.99.1","rustc","--version"]),inputCommit:pin,sourceDirectory:source,sourceObjectStore:capture([git,"count-objects","-vH"]),sourceAlternatesPresent:existsSync(join(source,".git/objects/info/alternates")),attributes:attrs.toString(),trackedFiles:records.length,ignoredSourceFiles:ignoredFiles.length,ignoredSourceInventorySHA256:createHash("sha256").update(JSON.stringify(ignoredFiles)).digest("hex"),environment:{os:capture(["sw_vers"]),cpu:capture(["sysctl","-n","machdep.cpu.brand_string"]),git:capture([git,"--version"])},arms,config:{repeats:3,concurrency:1,warmup:"No discarded first-use point; all first calls retained separately by repeat index. Later repeats are warm observations.",timeout:"No automatic kill; retain partial state for investigation.",reproductionCriterion:{reportedSeconds:120,reportedGitSeconds:6,flagSlowdownRatio:10,flagSeconds:60,flagGitMaximumSeconds:10}},notes:["Actual public v0.3 and v0.4 archives; exact reported870 source compiled with Rust1.99.1. v0.3 is expected to delegate for original attributes, not exhibit the reported native slowdown.","Ordinary full remote clone with local object pack, outside ignored target directory; no shared-clone alternates. Original attributes preserved.","Source and worktrees are on real host APFS. Mac M1Ultra/macOS26.5 differs from reporter M3Max/macOS26.5.2. No competing controlled builds or fetches during measurement; shared Mac background activity remains possible.","Create timing excludes independent byte/mode/inventory/source-isolation checks. All fixtures and stderr/time resource logs retained. No rm, cleanup or measured retry.","No container performance claim and no recreation of a private repository from its published size alone."]};
 writeFileSync(join(run,"manifest.json"),JSON.stringify(metadata,null,2)+"\n");
 const results:any[]=[];let phase="running",current="",pid:number|null=null;let golden="";
 function save(error?:string){writeFileSync(join(run,"state.tmp"),JSON.stringify({schemaVersion:1,phase,current,pid,supervisorPid:process.pid,updatedAt:new Date().toISOString(),results,error},null,2)+"\n");renameSync(join(run,"state.tmp"),join(run,"state.json"));}
@@ -48,7 +51,9 @@ function compareFiles(a:string,b:string){
 }
 function inventory(root:string,relative=""):string[]{return readdirSync(join(root,relative)).flatMap(name=>{if(!relative&&name===".git")return[];const path=join(relative,name);return lstatSync(join(root,path)).isDirectory()?inventory(root,path):[path];}).sort();}
 function verify(destination:string){
- if(JSON.stringify(inventory(destination))!==JSON.stringify(records.map(r=>r.name).sort()))throw new Error("Extra/missing paths");
+ const expectedPaths=destination===source?sourcePaths:records.map(r=>r.name).sort();
+ if(JSON.stringify(inventory(destination))!==JSON.stringify(expectedPaths))throw new Error("Extra/missing paths");
+ if(destination===source)for(const ignored of ignoredFiles)if(hash(join(source,ignored.name))!==ignored.sha256)throw new Error("Ignored source changed");
  for(const entry of records){const a=join(golden,entry.name),b=join(destination,entry.name),s=lstatSync(b);
   if(entry.mode==="120000"){if(!s.isSymbolicLink()||!readlinkSync(a,{encoding:"buffer"}).equals(readlinkSync(b,{encoding:"buffer"})))throw new Error("Symlink mismatch");}
   else{if((s.mode&0o111)!==(entry.mode==="100755"?0o111:0))throw new Error("Executable mode mismatch");compareFiles(a,b);const original=lstatSync(join(source,entry.name));if(destination!==source&&s.dev===original.dev&&s.ino===original.ino)throw new Error("Source hardlink");}

@@ -1,0 +1,337 @@
+{
+  "schemaVersion": 1,
+  "phase": "finished",
+  "current": "released-v04-r2",
+  "pid": null,
+  "supervisorPid": 98997,
+  "updatedAt": "2026-11-17T08:04:51.744Z",
+  "results": [
+    {
+      "arm": "git",
+      "repeat": 0,
+      "args": [
+        "/opt/homebrew/bin/git",
+        "worktree",
+        "add",
+        "--detach",
+        "/Users/leostera/Developer/github.com/leostera/git-twig/exp-issue5-reproduction-fixtures/reproduction-points/git-r0",
+        "HEAD"
+      ],
+      "exitCode": 0,
+      "elapsedMs": 5219.6165,
+      "loadBefore": [
+        25.076171875,
+        21.54296875,
+        22.57958984375
+      ],
+      "loadAfter": [
+        24.26904296875,
+        21.43408203125,
+        22.53515625
+      ],
+      "nativeCow": false,
+      "verified": true,
+      "sourceUnchanged": true,
+      "privateWriteIsolated": true
+    },
+    {
+      "arm": "released-v03",
+      "repeat": 0,
+      "args": [
+        "/Users/leostera/Developer/github.com/leostera/git-twig/main/target/issue5-reproduction-2026-11-17/bin/git-twig-v03",
+        "new",
+        "--detach",
+        "/Users/leostera/Developer/github.com/leostera/git-twig/exp-issue5-reproduction-fixtures/reproduction-points/released-v03-r0",
+        "HEAD"
+      ],
+      "exitCode": 0,
+      "elapsedMs": 4425.483833,
+      "loadBefore": [
+        24.2470703125,
+        21.4765625,
+        22.54345703125
+      ],
+      "loadAfter": [
+        23.26611328125,
+        21.31884765625,
+        22.4814453125
+      ],
+      "nativeCow": false,
+      "verified": true,
+      "sourceUnchanged": true,
+      "privateWriteIsolated": true
+    },
+    {
+      "arm": "reported-870-rust1991",
+      "repeat": 0,
+      "args": [
+        "/Users/leostera/Developer/github.com/leostera/git-twig/main/target/issue5-reproduction-2026-11-17/bin/git-twig-870-rust1991",
+        "new",
+        "--detach",
+        "/Users/leostera/Developer/github.com/leostera/git-twig/exp-issue5-reproduction-fixtures/reproduction-points/reported-870-rust1991-r0",
+        "HEAD"
+      ],
+      "exitCode": 0,
+      "elapsedMs": 5751.165333000001,
+      "loadBefore": [
+        22.20361328125,
+        21.130859375,
+        22.408203125
+      ],
+      "loadAfter": [
+        21.14599609375,
+        20.92919921875,
+        22.32958984375
+      ],
+      "nativeCow": true,
+      "verified": true,
+      "sourceUnchanged": true,
+      "privateWriteIsolated": true
+    },
+    {
+      "arm": "released-v04",
+      "repeat": 0,
+      "args": [
+        "/Users/leostera/Developer/github.com/leostera/git-twig/main/target/issue5-reproduction-2026-11-17/bin/git-twig-v04",
+        "new",
+        "--detach",
+        "/Users/leostera/Developer/github.com/leostera/git-twig/exp-issue5-reproduction-fixtures/reproduction-points/released-v04-r0",
+        "HEAD"
+      ],
+      "exitCode": 0,
+      "elapsedMs": 3430.1884589999972,
+      "loadBefore": [
+        19.93310546875,
+        20.68115234375,
+        22.23388671875
+      ],
+      "loadAfter": [
+        20.25830078125,
+        20.73583984375,
+        22.244140625
+      ],
+      "nativeCow": true,
+      "verified": true,
+      "sourceUnchanged": true,
+      "privateWriteIsolated": true
+    },
+    {
+      "arm": "released-v04",
+      "repeat": 1,
+      "args": [
+        "/Users/leostera/Developer/github.com/leostera/git-twig/main/target/issue5-reproduction-2026-11-17/bin/git-twig-v04",
+        "new",
+        "--detach",
+        "/Users/leostera/Developer/github.com/leostera/git-twig/exp-issue5-reproduction-fixtures/reproduction-points/released-v04-r1",
+        "HEAD"
+      ],
+      "exitCode": 0,
+      "elapsedMs": 3463.970708999994,
+      "loadBefore": [
+        19.5166015625,
+        20.57373046875,
+        22.17822265625
+      ],
+      "loadAfter": [
+        20.11572265625,
+        20.68017578125,
+        22.2060546875
+      ],
+      "nativeCow": true,
+      "verified": true,
+      "sourceUnchanged": true,
+      "privateWriteIsolated": true
+    },
+    {
+      "arm": "reported-870-rust1991",
+      "repeat": 1,
+      "args": [
+        "/Users/leostera/Developer/github.com/leostera/git-twig/main/target/issue5-reproduction-2026-11-17/bin/git-twig-870-rust1991",
+        "new",
+        "--detach",
+        "/Users/leostera/Developer/github.com/leostera/git-twig/exp-issue5-reproduction-fixtures/reproduction-points/reported-870-rust1991-r1",
+        "HEAD"
+      ],
+      "exitCode": 0,
+      "elapsedMs": 5651.997583000004,
+      "loadBefore": [
+        19.97607421875,
+        20.62548828125,
+        22.16845703125
+      ],
+      "loadAfter": [
+        19.6572265625,
+        20.54833984375,
+        22.1318359375
+      ],
+      "nativeCow": true,
+      "verified": true,
+      "sourceUnchanged": true,
+      "privateWriteIsolated": true
+    },
+    {
+      "arm": "released-v03",
+      "repeat": 1,
+      "args": [
+        "/Users/leostera/Developer/github.com/leostera/git-twig/main/target/issue5-reproduction-2026-11-17/bin/git-twig-v03",
+        "new",
+        "--detach",
+        "/Users/leostera/Developer/github.com/leostera/git-twig/exp-issue5-reproduction-fixtures/reproduction-points/released-v03-r1",
+        "HEAD"
+      ],
+      "exitCode": 0,
+      "elapsedMs": 4257.576667000001,
+      "loadBefore": [
+        19.0439453125,
+        20.40625,
+        22.072265625
+      ],
+      "loadAfter": [
+        18.9599609375,
+        20.3662109375,
+        22.04833984375
+      ],
+      "nativeCow": false,
+      "verified": true,
+      "sourceUnchanged": true,
+      "privateWriteIsolated": true
+    },
+    {
+      "arm": "git",
+      "repeat": 1,
+      "args": [
+        "/opt/homebrew/bin/git",
+        "worktree",
+        "add",
+        "--detach",
+        "/Users/leostera/Developer/github.com/leostera/git-twig/exp-issue5-reproduction-fixtures/reproduction-points/git-r1",
+        "HEAD"
+      ],
+      "exitCode": 0,
+      "elapsedMs": 4424.334333999999,
+      "loadBefore": [
+        18.322265625,
+        20.21044921875,
+        21.9833984375
+      ],
+      "loadAfter": [
+        17.41552734375,
+        19.99072265625,
+        21.8955078125
+      ],
+      "nativeCow": false,
+      "verified": true,
+      "sourceUnchanged": true,
+      "privateWriteIsolated": true
+    },
+    {
+      "arm": "git",
+      "repeat": 2,
+      "args": [
+        "/opt/homebrew/bin/git",
+        "worktree",
+        "add",
+        "--detach",
+        "/Users/leostera/Developer/github.com/leostera/git-twig/exp-issue5-reproduction-fixtures/reproduction-points/git-r2",
+        "HEAD"
+      ],
+      "exitCode": 0,
+      "elapsedMs": 4085.253834000003,
+      "loadBefore": [
+        16.4208984375,
+        19.74169921875,
+        21.79638671875
+      ],
+      "loadAfter": [
+        17.587890625,
+        19.92822265625,
+        21.85009765625
+      ],
+      "nativeCow": false,
+      "verified": true,
+      "sourceUnchanged": true,
+      "privateWriteIsolated": true
+    },
+    {
+      "arm": "released-v03",
+      "repeat": 2,
+      "args": [
+        "/Users/leostera/Developer/github.com/leostera/git-twig/main/target/issue5-reproduction-2026-11-17/bin/git-twig-v03",
+        "new",
+        "--detach",
+        "/Users/leostera/Developer/github.com/leostera/git-twig/exp-issue5-reproduction-fixtures/reproduction-points/released-v03-r2",
+        "HEAD"
+      ],
+      "exitCode": 0,
+      "elapsedMs": 4371.333207999996,
+      "loadBefore": [
+        17.94091796875,
+        19.96240234375,
+        21.8505859375
+      ],
+      "loadAfter": [
+        17.94091796875,
+        19.96240234375,
+        21.8505859375
+      ],
+      "nativeCow": false,
+      "verified": true,
+      "sourceUnchanged": true,
+      "privateWriteIsolated": true
+    },
+    {
+      "arm": "reported-870-rust1991",
+      "repeat": 2,
+      "args": [
+        "/Users/leostera/Developer/github.com/leostera/git-twig/main/target/issue5-reproduction-2026-11-17/bin/git-twig-870-rust1991",
+        "new",
+        "--detach",
+        "/Users/leostera/Developer/github.com/leostera/git-twig/exp-issue5-reproduction-fixtures/reproduction-points/reported-870-rust1991-r2",
+        "HEAD"
+      ],
+      "exitCode": 0,
+      "elapsedMs": 5713.247000000003,
+      "loadBefore": [
+        17.9814453125,
+        19.89892578125,
+        21.80517578125
+      ],
+      "loadAfter": [
+        16.86181640625,
+        19.634765625,
+        21.70068359375
+      ],
+      "nativeCow": true,
+      "verified": true,
+      "sourceUnchanged": true,
+      "privateWriteIsolated": true
+    },
+    {
+      "arm": "released-v04",
+      "repeat": 2,
+      "args": [
+        "/Users/leostera/Developer/github.com/leostera/git-twig/main/target/issue5-reproduction-2026-11-17/bin/git-twig-v04",
+        "new",
+        "--detach",
+        "/Users/leostera/Developer/github.com/leostera/git-twig/exp-issue5-reproduction-fixtures/reproduction-points/released-v04-r2",
+        "HEAD"
+      ],
+      "exitCode": 0,
+      "elapsedMs": 3540.587375000003,
+      "loadBefore": [
+        17.59326171875,
+        19.740234375,
+        21.7255859375
+      ],
+      "loadAfter": [
+        17.38525390625,
+        19.6611328125,
+        21.68603515625
+      ],
+      "nativeCow": true,
+      "verified": true,
+      "sourceUnchanged": true,
+      "privateWriteIsolated": true
+    }
+  ]
+}

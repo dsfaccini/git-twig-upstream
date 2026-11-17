@@ -1,0 +1,26 @@
+git-twig: private staging: /Users/leostera/Developer/github.com/leostera/git-twig/exp-issue5-reproduction-fixtures/docs/.git/twigs/staging/.git-twig-stage-99183-0 (retained if creation fails)
+git-twig: APFS directory clones: 20
+git-twig: raw verification: 4 Git hash workers, 1255510318 bytes
+git-twig: checkout: 14811 verified file clones, 0 Git-written paths
+git-twig: native preparation: snapshot 0.937s; raw verification/repair 1.973s; total 3.214s
+git-twig: APFS CoW: verified tracked files
+Preparing worktree (detached HEAD 430261138a)
+git-twig: shared repository: /Users/leostera/Developer/github.com/leostera/git-twig/exp-issue5-reproduction-fixtures/docs
+        3.42 real         3.37 user         2.23 sys
+           109101056  maximum resident set size
+                   0  average shared memory size
+                   0  average unshared data size
+                   0  average unshared stack size
+               38880  page reclaims
+               72557  page faults
+                   0  swaps
+                   0  block input operations
+                   0  block output operations
+                   0  messages sent
+                   0  messages received
+                   0  signals received
+               11254  voluntary context switches
+               50584  involuntary context switches
+          9018670360  instructions retired
+          3266877689  cycles elapsed
+            23708032  peak memory footprint

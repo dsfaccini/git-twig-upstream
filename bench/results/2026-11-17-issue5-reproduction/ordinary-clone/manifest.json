@@ -1,0 +1,68 @@
+{
+  "schemaVersion": 1,
+  "generatedAt": "2026-11-17T08:02:45.788Z",
+  "harnessCommit": "c15e1103aa14fc4332871c74374ee04937273755",
+  "dirty": false,
+  "reportedCompiler": "rustc 1.99.1 (58cf8f9c3 2026-10-13)",
+  "inputCommit": "430261138aa08539cd598b9269bfe8f82fd49b78",
+  "sourceDirectory": "/Users/leostera/Developer/github.com/leostera/git-twig/exp-issue5-reproduction-fixtures/docs",
+  "sourceObjectStore": "count: 0\nsize: 0 bytes\nin-pack: 928368\npacks: 1\nsize-pack: 2.70 GiB\nprune-packable: 0\ngarbage: 0\nsize-garbage: 0 bytes",
+  "sourceAlternatesPresent": false,
+  "attributes": "*.md text eol=lf\n",
+  "trackedFiles": 14811,
+  "environment": {
+    "os": "ProductName:\t\tmacOS\nProductVersion:\t\t26.5\nBuildVersion:\t\t25F71",
+    "cpu": "Apple M1 Ultra",
+    "git": "git version 2.56.1"
+  },
+  "arms": [
+    {
+      "name": "git",
+      "binary": "/opt/homebrew/bin/git",
+      "native": false,
+      "version": "git version 2.56.1",
+      "sha256": "b5eaefb829ec3b61176f83ed7fddc333a9d92e762ec4e558f55baadc4314297d"
+    },
+    {
+      "name": "released-v03",
+      "binary": "/Users/leostera/Developer/github.com/leostera/git-twig/main/target/issue5-reproduction-2026-11-17/bin/git-twig-v03",
+      "native": false,
+      "version": "git-twig 0.3.0",
+      "sha256": "aeda55824313d6c536f78abba22bda0790b05f14ed800afd503bdc536bbdc727"
+    },
+    {
+      "name": "reported-870-rust1991",
+      "binary": "/Users/leostera/Developer/github.com/leostera/git-twig/main/target/issue5-reproduction-2026-11-17/bin/git-twig-870-rust1991",
+      "native": true,
+      "version": "git-twig 0.3.0",
+      "sha256": "ea7abf64cbe85a71a5f0514f76d794cd532771ed4cb3015db393f9d52625d0a7"
+    },
+    {
+      "name": "released-v04",
+      "binary": "/Users/leostera/Developer/github.com/leostera/git-twig/main/target/issue5-reproduction-2026-11-17/bin/git-twig-v04",
+      "native": true,
+      "version": "git-twig 0.4.0",
+      "sha256": "ad3bda055fcc63e592d5600eb30f31af70d955a8163a77c955b1a4f0bdb9fc8a"
+    }
+  ],
+  "config": {
+    "repeats": 3,
+    "concurrency": 1,
+    "warmup": "No discarded first-use point; all first calls retained separately by repeat index. Later repeats are warm observations.",
+    "timeout": "No automatic kill; retain partial state for investigation.",
+    "reproductionCriterion": {
+      "reportedSeconds": 120,
+      "reportedGitSeconds": 6,
+      "flagSlowdownRatio": 10,
+      "flagSeconds": 60,
+      "flagGitMaximumSeconds": 10
+    }
+  },
+  "notes": [
+    "Actual public v0.3 and v0.4 archives; exact reported870 source compiled with Rust1.99.1. v0.3 is expected to delegate for original attributes, not exhibit the reported native slowdown.",
+    "Ordinary full remote clone with local object pack, outside ignored target directory; no shared-clone alternates. Original attributes preserved.",
+    "Source and worktrees are on real host APFS. Mac M1Ultra/macOS26.5 differs from reporter M3Max/macOS26.5.2. No competing controlled builds or fetches during measurement; shared Mac background activity remains possible.",
+    "Create timing excludes independent byte/mode/inventory/source-isolation checks. All fixtures and stderr/time resource logs retained. No rm, cleanup or measured retry.",
+    "No container performance claim and no recreation of a private repository from its published size alone."
+  ]
+}
