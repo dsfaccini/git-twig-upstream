@@ -105,14 +105,15 @@ belongs in the committed results.
 
 ```sh
 # Inside the unprivileged Linux lab, with mount permission already configured:
-target/release/twig-linux-coverage \
+bun bench/run.ts run --target linux-xfs --suite checkout \
   --baseline target/baselines/870f52e/git-twig \
   --baseline-commit 870f52e02f5cf168f17fe5646da7312fc626225f \
-  --output target/linux-coverage/NEW_RUN \
   --rounds 3 --max-concurrency 16 \
-  --budget-seconds 1800 --point-timeout-seconds 180
-# Smaller staging run: --filesystems xfs --profiles cross-revision,mixed-builtins
-#                         --rounds 1 --max-concurrency 1
+  --budget-seconds 1800 --point-timeout-seconds 180 \
+  --environment 'Describe the lab, backing filesystem and storage here'
+# Repeat with --target linux-btrfs as a separate bounded campaign.
+# Smaller staging run: --profiles cross-revision,mixed-builtins --rounds 1
+# Add --exploratory only for non-publishable dirty-checkout debugging.
 ```
 
 The driver rotates stock Git, frozen Twig and candidate positions by round. It
@@ -121,7 +122,14 @@ conversions, automatic-CRLF binary sharing, nonrecursive gitlinks and many-file
 concurrency levels. A configured ramp cap or budget is
 not a measured capacity ceiling. Every point saves schema-4 raw measurements;
 manifest.json records pins, binary hashes, ordering, correctness, allocation
-stability and any stopping reason. The baseline may delegate where the candidate
+stability and any stopping reason. The TypeScript runner calls Rust's
+`twig-coverage-fixture` for deterministic input preparation and `twig-real-bench`
+for each measured point; Rust still owns timing and byte verification.
+Results are automatically allocated under
+`bench/results/sha256-<candidate>/linux-<fs>/<UTC-date>/run-<time>-<id>/`.
+These ignored run directories cannot dirty later points. The total budget now
+includes preparation. Pending point metadata is saved before launch, and signals
+terminate the owned process group. No mount or deployment permissions are installed. The baseline may delegate where the candidate
 is newly supported; that remains visible rather than being called native CoW.
 
 Warmups have separate Git registries. A different-revision oracle is a separate
@@ -140,7 +148,7 @@ is not counted as worktree payload.
 
 Collect a compact snapshot (raw JSON measurements and interrupted diagnostics,
 not source files/images) with `python3 bench/coverage_snapshot.py --manifest
-target/linux-coverage/<run>/manifest.json --output <snapshot.json> --csv
+bench/results/<build>/<target>/<date>/<run>/manifest.json --output <snapshot.json> --csv
 <summary.csv>`. Add `--interrupted-progress <retained-image>.creation.jsonl`
 when exactly one point was interrupted. Rebuild the CSV or local SVG without
 uncommitted raw files using `--snapshot <snapshot.json> --csv <new-summary.csv>
@@ -273,3 +281,53 @@ Before unmounting a local tmpfs, archive its fixtures into a new owned ignored
 `target/` directory using a permissions-preserving copy. Then unmount owned test
 filesystems only, retaining images/logs. CI's temporary runner is disposable;
 its cleanup unmounts the owned filesystem even after a failed test.
+
+## Isolated OpenZFS and NFSv4.2 guests
+
+Use two owned local guests rather than installing ZFS/NFS server modules on the
+shared host. `bench/qemu-filesystem-guest.sh` starts either role with bounded
+software emulation: four vCPUs, 4 GiB RAM and a maximum 1,800-second process
+lifetime. This mode is for correctness/capability, not performance measurements.
+See [RFD0018](../docs/rfds/RFD0018-isolated-zfs-and-nfs-guests.md).
+
+Prepare a fresh absolute ignored lab directory, an official Ubuntu cloud qcow2
+base verified against its HTTPS SHA256SUMS, two 12-GiB qcow2 root overlays, and
+empty 16-GiB ZFS / 8-GiB XFS virtual disks. The launcher expects `server.qcow2`,
+`client.qcow2`, `zfs-data.qcow2`, `xfs-data.qcow2` and NoCloud seed images named
+`server-seed.img` / `client-seed.img`. It refuses missing disks and an existing
+monitor socket. No host block device is forwarded. The OS disk has an explicit
+boot index so blank data disks cannot take boot priority.
+
+Seeds must create an unprivileged UID-1000 user, locked passwords, and a generated
+lab-only SSH authorized key. Keep the private key in ignored owned storage;
+never put it in repository files or tool output. Management NICs use DHCP; match
+the launcher's second-NIC MACs to static 198.18.0.1/24 (server) and
+198.18.0.2/24 (client), with no default route on that NIC. SSH forwards bind only
+127.0.0.1 ports 24022/24023; test NICs connect through local UDP ports 24101/24102.
+Verify per-instance SSH host fingerprints from the owned serial logs rather than
+disabling host-key checks. A new cloud-init instance may rotate its host key.
+
+In the server guest install kernel-compatible `zfsutils-linux`, `xfsprogs` and
+`nfs-kernel-server`; in the client install `nfs-common`. Verify guest virtual-disk
+serials `twig_zfs_data` and `twig_xfs_data` before formatting or creating a pool.
+Use separate ZFS datasets for same-dataset and cross-dataset controls, compression
+off, and explicit ACL/xattr/block-cloning properties. Use an XFS reflink-enabled
+export as an independent NFS backing control. Bind nfsd only to 198.18.0.1,
+disable NFSv3/UDP, and restrict root-squashed exports to 198.18.0.2. Mount with
+explicit `vers=4.2,proto=tcp` and record the negotiated mount/export options.
+
+Probe fresh and synced source data separately. OpenZFS 2.2.2 can return EAGAIN
+for dirty TXG data even when synced source cloning works. The independent
+correctness-test probe syncs its fixture filesystem first; production Twig does
+not issue a global sync or silently retry a failed clone. It retains safe Git
+fallback behavior. A positive primitive probe is not a complete checkout result.
+
+Copy test binaries and their compiled absolute CLI path into the guests, or build
+inside them. If relocating a minimum Git installation, configure its exec/template
+paths: missing git-submodule/templates are provisioning failures, not filesystem
+or Twig results. Keep full/partial test logs and exact exit codes, never label a
+timed-out suite successful. Hard NFS mounts can leave processes waiting after a
+client timeout; bound the whole guest too, retain images and shut it down cleanly
+when possible. Network restart/failure and server-side allocation experiments are
+separate slices after baseline correctness. No public exports or paid cloud
+resources are required.

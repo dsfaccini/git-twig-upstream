@@ -173,7 +173,15 @@ fn native(output: &Output) {
 #[cfg(target_os = "linux")]
 fn linux_reflinks_available(f: &Fixture) -> Result<bool> {
     // Probe independently with coreutils, not Twig, so a broken backend cannot
-    // disguise itself as an unsupported filesystem.
+    // disguise itself as an unsupported filesystem. Commit this filesystem's
+    // dirty data first: ZFS may transiently refuse cloning an uncommitted TXG.
+    // This is a correctness-test precondition, not production sync or benchmark timing.
+    checked(
+        command("sync", &f.source)
+            .arg("-f")
+            .arg(&f.source)
+            .output()?,
+    )?;
     let output = command("cp", &f.source)
         .arg("--reflink=always")
         .arg(f.source.join("hello.txt"))

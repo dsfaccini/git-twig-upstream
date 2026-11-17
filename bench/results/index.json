@@ -1,0 +1,454 @@
+{
+  "schemaVersion": 1,
+  "kind": "historical-result-archive",
+  "notes": [
+    "Original bytes are unchanged; originalPath resolves embedded historical links. Harness commit is not candidate build identity. Unattributed means no reliable candidate binary hash. Mixed campaigns retain all pairing and interruption records."
+  ],
+  "artifacts": [
+    {
+      "originalPath": "bench/results/2026-11-15-byte-heavy-baseline.json",
+      "path": "bench/results/unattributed/macos-unspecified/2026-11-15/byte-heavy-baseline/2026-11-15-byte-heavy-baseline.json",
+      "sha256": "107719007d31ac1ff14d0e11cfd751a7c48b98a9a9b64ef1893a51091f7611fc"
+    },
+    {
+      "originalPath": "bench/results/2026-11-15-byte-heavy-baseline.summary.md",
+      "path": "bench/results/unattributed/macos-unspecified/2026-11-15/byte-heavy-baseline/2026-11-15-byte-heavy-baseline.summary.md",
+      "sha256": "1b3a6b136945d639598ebae156fad112cc364d83fa28c17f37b58284f3003bde"
+    },
+    {
+      "originalPath": "bench/results/2026-11-15-byte-heavy-baseline.svg",
+      "path": "bench/results/unattributed/macos-unspecified/2026-11-15/byte-heavy-baseline/2026-11-15-byte-heavy-baseline.svg",
+      "sha256": "4cbb9c94101d2768540e75442356c5dd1de494d57b5a1ed73419eaec1a57137a"
+    },
+    {
+      "originalPath": "bench/results/2026-11-15-file-heavy-registration-lock.json",
+      "path": "bench/results/sha256-360c21cb9186/macos-unspecified/2026-11-15/file-heavy-registration-lock/2026-11-15-file-heavy-registration-lock.json",
+      "sha256": "19fc240361cdf6b7149bf5b0a09d22b860f9202b1ae4004f7746467d30402775"
+    },
+    {
+      "originalPath": "bench/results/2026-11-15-file-heavy-registration-lock.summary.md",
+      "path": "bench/results/sha256-360c21cb9186/macos-unspecified/2026-11-15/file-heavy-registration-lock/2026-11-15-file-heavy-registration-lock.summary.md",
+      "sha256": "bfd0bc1ed6fa6c989b4676b961abc15758dac45dba09929ed99438433a1d2542"
+    },
+    {
+      "originalPath": "bench/results/2026-11-15-file-heavy-registration-lock.svg",
+      "path": "bench/results/sha256-360c21cb9186/macos-unspecified/2026-11-15/file-heavy-registration-lock/2026-11-15-file-heavy-registration-lock.svg",
+      "sha256": "cb6e260e2d7a908e0f381716fc8cfc37b2ec88504d8ec3d875c5d9c267b0fadf"
+    },
+    {
+      "originalPath": "bench/results/2026-11-15-mixed-baseline.json",
+      "path": "bench/results/unattributed/macos-unspecified/2026-11-15/mixed-baseline/2026-11-15-mixed-baseline.json",
+      "sha256": "e8cba45558d2f8aaf5e93c26667ae447b752bb5487417ef4c971e73094e266df"
+    },
+    {
+      "originalPath": "bench/results/2026-11-15-mixed-baseline.summary.md",
+      "path": "bench/results/unattributed/macos-unspecified/2026-11-15/mixed-baseline/2026-11-15-mixed-baseline.summary.md",
+      "sha256": "b779397a840f907fd69ea101f364a1f94dcdf28c83d289c13315b8607c922485"
+    },
+    {
+      "originalPath": "bench/results/2026-11-15-mixed-baseline.svg",
+      "path": "bench/results/unattributed/macos-unspecified/2026-11-15/mixed-baseline/2026-11-15-mixed-baseline.svg",
+      "sha256": "c5c8116ca20dc99676b40dfe32e537391d5ce4baf649baa79d4df52c17ef6ed5"
+    },
+    {
+      "originalPath": "bench/results/2026-11-15-mixed-registration-lock.json",
+      "path": "bench/results/sha256-360c21cb9186/macos-unspecified/2026-11-15/mixed-registration-lock/2026-11-15-mixed-registration-lock.json",
+      "sha256": "74340ce32e10598f0caa94addf3a726ef2264b3a3b6f91f67a0c2dec86324c6e"
+    },
+    {
+      "originalPath": "bench/results/2026-11-15-mixed-registration-lock.summary.md",
+      "path": "bench/results/sha256-360c21cb9186/macos-unspecified/2026-11-15/mixed-registration-lock/2026-11-15-mixed-registration-lock.summary.md",
+      "sha256": "1f1d47ad221dd019659263947627a9a069ee919b18ab5942d338e1206bab85f2"
+    },
+    {
+      "originalPath": "bench/results/2026-11-15-mixed-registration-lock.svg",
+      "path": "bench/results/sha256-360c21cb9186/macos-unspecified/2026-11-15/mixed-registration-lock/2026-11-15-mixed-registration-lock.svg",
+      "sha256": "456b4bfabc34b636b3b426f089d62e64f80a3eb7458fb66955cd883948130c55"
+    },
+    {
+      "originalPath": "bench/results/2026-11-15-mixed-v2.json",
+      "path": "bench/results/sha256-51e21596eaf1/macos-unspecified/2026-11-15/mixed-v2/2026-11-15-mixed-v2.json",
+      "sha256": "4c6f2e18934a0cc2233f04793e7950d0ef35b48bc46e340676fd12608b6677a4"
+    },
+    {
+      "originalPath": "bench/results/2026-11-15-mixed-v2.summary.md",
+      "path": "bench/results/sha256-51e21596eaf1/macos-unspecified/2026-11-15/mixed-v2/2026-11-15-mixed-v2.summary.md",
+      "sha256": "da625db328b7a3524745c2dc7ab4df244c1181ec61b59538df8eb461a4f912a9"
+    },
+    {
+      "originalPath": "bench/results/2026-11-15-mixed-v2.svg",
+      "path": "bench/results/sha256-51e21596eaf1/macos-unspecified/2026-11-15/mixed-v2/2026-11-15-mixed-v2.svg",
+      "sha256": "ac2d00319f0f61be8f6bc0466340a90d90befab13b14728325fa6a4de1ff7691"
+    },
+    {
+      "originalPath": "bench/results/2026-11-15-real/empty-directory-host-empty.svg",
+      "path": "bench/results/sha256-a1431f8601d8/macos-apfs-host/2026-11-15/empty-directory-host/empty-directory-host-empty.svg",
+      "sha256": "035a151f51a449890a416c4c9794397291e2275e26d673f4e8e2a03802f367ab"
+    },
+    {
+      "originalPath": "bench/results/2026-11-15-real/empty-directory-host.json",
+      "path": "bench/results/sha256-a1431f8601d8/macos-apfs-host/2026-11-15/empty-directory-host/empty-directory-host.json",
+      "sha256": "08f33e805dd9634ab59be7a2533e12d38f87c20e3a1f11fbdb8c6d63822bec90"
+    },
+    {
+      "originalPath": "bench/results/2026-11-15-real/empty-directory-host.summary.md",
+      "path": "bench/results/sha256-a1431f8601d8/macos-apfs-host/2026-11-15/empty-directory-host/empty-directory-host.summary.md",
+      "sha256": "38b6b834921c5f63a7c832c906f55afebafbf3a3177ba73376bd67905da0722d"
+    },
+    {
+      "originalPath": "bench/results/2026-11-15-real/empty-directory-images-empty.svg",
+      "path": "bench/results/sha256-a1431f8601d8/macos-apfs-image/2026-11-15/empty-directory-images/empty-directory-images-empty.svg",
+      "sha256": "88a8cd8ca2116c72a51d267d61f4fa008a74d0ccf5838650125b159b92e3d41d"
+    },
+    {
+      "originalPath": "bench/results/2026-11-15-real/empty-directory-images.json",
+      "path": "bench/results/sha256-a1431f8601d8/macos-apfs-image/2026-11-15/empty-directory-images/empty-directory-images.json",
+      "sha256": "1bdb53ba6b472af30742b91795532d3edd62965f2a3ff5a20426da5c9aebd91d"
+    },
+    {
+      "originalPath": "bench/results/2026-11-15-real/empty-directory-images.summary.md",
+      "path": "bench/results/sha256-a1431f8601d8/macos-apfs-image/2026-11-15/empty-directory-images/empty-directory-images.summary.md",
+      "sha256": "d5d4fca65ee101c65bcb1c2caf0ba3a86579856b501e88b6b4d2fe7bfdd2e182"
+    },
+    {
+      "originalPath": "bench/results/2026-11-15-real/empty-host.json",
+      "path": "bench/results/sha256-65efbfe49fac/macos-apfs-host/2026-11-15/empty-host/empty-host.json",
+      "sha256": "097a1fe07f7998ffa16caa460dfebb81f6cac06ef30eb47f696611812df7c916"
+    },
+    {
+      "originalPath": "bench/results/2026-11-15-real/host-stop.json",
+      "path": "bench/results/sha256-65efbfe49fac/macos-apfs-host/2026-11-15/host/host-stop.json",
+      "sha256": "b54cf188bf7670c2c399b651b9ca27924caba1fc77e3065dc8aea43644cf1b6f"
+    },
+    {
+      "originalPath": "bench/results/2026-11-15-real/host.json",
+      "path": "bench/results/sha256-65efbfe49fac/macos-apfs-host/2026-11-15/host/host.json",
+      "sha256": "bd783a9b3ef2e5a8e29d9a61efd3411720f5e1e01d9db2aad412c3c868fbf702"
+    },
+    {
+      "originalPath": "bench/results/2026-11-15-real/images-stop.json",
+      "path": "bench/results/sha256-65efbfe49fac/macos-apfs-image/2026-11-15/images/images-stop.json",
+      "sha256": "93550c5ced1c2d4115b19f16e9be2ca53b948a52747936ead983549f4d6cb518"
+    },
+    {
+      "originalPath": "bench/results/2026-11-15-real/images.json",
+      "path": "bench/results/sha256-65efbfe49fac/macos-apfs-image/2026-11-15/images/images.json",
+      "sha256": "7ceb7e84c4e859d5f81001db5b3003eeabe784242bb71b8454067d13e49feca5"
+    },
+    {
+      "originalPath": "bench/results/2026-11-15-real/kernel-directory-comparison.json",
+      "path": "bench/results/multi-build/macos-apfs-case-sensitive-image/2026-11-15/kernel-directory-comparison/kernel-directory-comparison.json",
+      "sha256": "c344c4a9deaa538b133c8dc290116efdd52b68a514c3f595f1fb00ab24e7b619"
+    },
+    {
+      "originalPath": "bench/results/2026-11-15-real/kernel-directory-comparison.summary.md",
+      "path": "bench/results/multi-build/macos-apfs-case-sensitive-image/2026-11-15/kernel-directory-comparison/kernel-directory-comparison.summary.md",
+      "sha256": "8390917eb4a4bed1597d2343247516c1eff995945032dfac6a5f560d78761f71"
+    },
+    {
+      "originalPath": "bench/results/2026-11-15-real/kernel-directory-comparison.svg",
+      "path": "bench/results/multi-build/macos-apfs-case-sensitive-image/2026-11-15/kernel-directory-comparison/kernel-directory-comparison.svg",
+      "sha256": "3408ff810960289a17659fa6d028c74a9e60a429af96fc3a85424a8450ea8197"
+    },
+    {
+      "originalPath": "bench/results/2026-11-15-real/kernel-directory10-linux.svg",
+      "path": "bench/results/sha256-a1431f8601d8/macos-apfs-case-sensitive-image/2026-11-15/kernel-directory10/kernel-directory10-linux.svg",
+      "sha256": "b8e636e8b9d1d544359713d11370949c22d88d81fdbaea247bb52eb252e404e1"
+    },
+    {
+      "originalPath": "bench/results/2026-11-15-real/kernel-directory10.json",
+      "path": "bench/results/sha256-a1431f8601d8/macos-apfs-case-sensitive-image/2026-11-15/kernel-directory10/kernel-directory10.json",
+      "sha256": "2e48eeb56581d21e9c4f959b8103a92b76a1bbcd983ea09c71e753dec49828ba"
+    },
+    {
+      "originalPath": "bench/results/2026-11-15-real/kernel-directory10.provenance.json",
+      "path": "bench/results/sha256-a1431f8601d8/macos-apfs-case-sensitive-image/2026-11-15/kernel-directory10/kernel-directory10.provenance.json",
+      "sha256": "db28610cc61c1e686e1ace77c5bbb0e3f4d2f679dc5a98ea299ecbf4f719a756"
+    },
+    {
+      "originalPath": "bench/results/2026-11-15-real/kernel-directory10.summary.md",
+      "path": "bench/results/sha256-a1431f8601d8/macos-apfs-case-sensitive-image/2026-11-15/kernel-directory10/kernel-directory10.summary.md",
+      "sha256": "5238f106cbd07f23c9ad2d0e2033ea02fd96de49e1a13be4d7e019b63803816b"
+    },
+    {
+      "originalPath": "bench/results/2026-11-15-real/kernel-git-interrupted-run.json",
+      "path": "bench/results/sha256-65efbfe49fac/macos-apfs-case-sensitive-image/2026-11-15/kernel-git-interrupted-run/kernel-git-interrupted-run.json",
+      "sha256": "07a0156baf2444cdce577620e9918ded071e67e0644b6e17363b5dec9df71579"
+    },
+    {
+      "originalPath": "bench/results/2026-11-15-real/kernel-git-user-interrupted.json",
+      "path": "bench/results/sha256-65efbfe49fac/macos-apfs-case-sensitive-image/2026-11-15/kernel-git-interrupted-run/kernel-git-user-interrupted.json",
+      "sha256": "d0484a05b098273f086407f9aeffe2ab1863f94882c18de9f43d7130e82df637"
+    },
+    {
+      "originalPath": "bench/results/2026-11-15-real/kernel-input.json",
+      "path": "bench/results/unattributed/macos-unspecified/2026-11-15/shared-diagnostics/kernel-input.json",
+      "sha256": "7f67f4f61b1776cf728f6aeed675f40759fae683924e100719ef5159df1e3d5b"
+    },
+    {
+      "originalPath": "bench/results/2026-11-15-real/kernel-n1-event.json",
+      "path": "bench/results/sha256-65efbfe49fac/macos-apfs-case-sensitive-image/2026-11-15/kernel-n1/kernel-n1-event.json",
+      "sha256": "2208c1d6ce4922dac5e86112b633aa8c62f568b987b43cd4f75aa74df4814e3b"
+    },
+    {
+      "originalPath": "bench/results/2026-11-15-real/kernel-n1.json",
+      "path": "bench/results/sha256-65efbfe49fac/macos-apfs-case-sensitive-image/2026-11-15/kernel-n1/kernel-n1.json",
+      "sha256": "12699b7dd45028a7ca6dd340e17c7dde53f592901ad9fbd0062d3fcbb7ea50af"
+    },
+    {
+      "originalPath": "bench/results/2026-11-15-real/kernel-n100-git-event.json",
+      "path": "bench/results/sha256-65efbfe49fac/macos-apfs-case-sensitive-image/2026-11-15/kernel-n100-git/kernel-n100-git-event.json",
+      "sha256": "0797caa1604f172fa724c4fc4eef625ba775f211d6bbfc224097537c07a4f9b7"
+    },
+    {
+      "originalPath": "bench/results/2026-11-15-real/kernel-n100-git.json",
+      "path": "bench/results/sha256-65efbfe49fac/macos-apfs-case-sensitive-image/2026-11-15/kernel-n100-git/kernel-n100-git.json",
+      "sha256": "74bc705e9027f2146aa721e8531e21e69d633f3f8c3746e9f8f8fca659889af0"
+    },
+    {
+      "originalPath": "bench/results/2026-11-15-real/kernel-n100-twig-event.json",
+      "path": "bench/results/sha256-65efbfe49fac/macos-apfs-case-sensitive-image/2026-11-15/kernel-n100-twig/kernel-n100-twig-event.json",
+      "sha256": "9f6a5c0b6654bdf4eec9be741636377b64dcb3fc32f99aade432bd48205ed813"
+    },
+    {
+      "originalPath": "bench/results/2026-11-15-real/kernel-n100-twig.json",
+      "path": "bench/results/sha256-65efbfe49fac/macos-apfs-case-sensitive-image/2026-11-15/kernel-n100-twig/kernel-n100-twig.json",
+      "sha256": "71d4dce41a2ccd418ea7bdcd822acbf982c9edef3c283c3a2712233875636ef9"
+    },
+    {
+      "originalPath": "bench/results/2026-11-15-real/kernel-per-file10-linux.svg",
+      "path": "bench/results/sha256-65efbfe49fac/macos-apfs-case-sensitive-image/2026-11-15/kernel-per-file10/kernel-per-file10-linux.svg",
+      "sha256": "b71cbabc5390f7a173f2e914f68e8f3ebfa2824b45e87f5f16f5299e5152d635"
+    },
+    {
+      "originalPath": "bench/results/2026-11-15-real/kernel-per-file10.json",
+      "path": "bench/results/sha256-65efbfe49fac/macos-apfs-case-sensitive-image/2026-11-15/kernel-per-file10/kernel-per-file10.json",
+      "sha256": "2082ed41136d461eeab5482e4f63d5eafdd8556d51fff965dd8b5dee27217209"
+    },
+    {
+      "originalPath": "bench/results/2026-11-15-real/kernel-per-file10.summary.md",
+      "path": "bench/results/sha256-65efbfe49fac/macos-apfs-case-sensitive-image/2026-11-15/kernel-per-file10/kernel-per-file10.summary.md",
+      "sha256": "ca91c3cc49d1bb9251a6e79f1f889f8630980c18eda7cb8fb05dc56b447de1c2"
+    },
+    {
+      "originalPath": "bench/results/2026-11-15-real/kernel-profile-release-samples/73365.stderr",
+      "path": "bench/results/unattributed/macos-unspecified/2026-11-15/kernel-profile-release/kernel-profile-release-samples/73365.stderr",
+      "sha256": "1557b58478cfabe1dea3a4d5700b11c417b3da1ebaa00df68103d3b71d71b8f0"
+    },
+    {
+      "originalPath": "bench/results/2026-11-15-real/kernel-profile-release-samples/73365.txt",
+      "path": "bench/results/unattributed/macos-unspecified/2026-11-15/kernel-profile-release/kernel-profile-release-samples/73365.txt",
+      "sha256": "5bb9000554e3a892dd317d8ff320d2121930efd8e003cbaafba2b15e224b0a14"
+    },
+    {
+      "originalPath": "bench/results/2026-11-15-real/kernel-profile-release-samples/76712.stderr",
+      "path": "bench/results/unattributed/macos-unspecified/2026-11-15/kernel-profile-release/kernel-profile-release-samples/76712.stderr",
+      "sha256": "21904d5f0e421dc937599a4ab295d0476a98f371ef57ecbf89d5e9fa53ceb402"
+    },
+    {
+      "originalPath": "bench/results/2026-11-15-real/kernel-profile-release-samples/76712.txt",
+      "path": "bench/results/unattributed/macos-unspecified/2026-11-15/kernel-profile-release/kernel-profile-release-samples/76712.txt",
+      "sha256": "d6d2ade1c06febfac4b06ed10bf4c79c6c692c99fcb27ccb298ba4b780c0d7b6"
+    },
+    {
+      "originalPath": "bench/results/2026-11-15-real/kernel-profile-release-samples/77173.stderr",
+      "path": "bench/results/unattributed/macos-unspecified/2026-11-15/kernel-profile-release/kernel-profile-release-samples/77173.stderr",
+      "sha256": "80d7c068083062d6924272721c4e724e40fa61d8e9b17f8b1acbf77dc0584f92"
+    },
+    {
+      "originalPath": "bench/results/2026-11-15-real/kernel-profile-release-samples/77173.txt",
+      "path": "bench/results/unattributed/macos-unspecified/2026-11-15/kernel-profile-release/kernel-profile-release-samples/77173.txt",
+      "sha256": "9dd304f0bf9147cd6b2a4d2d790790b7d79b1050fe2d327cde00b9805d3c6519"
+    },
+    {
+      "originalPath": "bench/results/2026-11-15-real/kernel-profile-release-samples/81097.stderr",
+      "path": "bench/results/unattributed/macos-unspecified/2026-11-15/kernel-profile-release/kernel-profile-release-samples/81097.stderr",
+      "sha256": "c6322e983e1e066563bbd1c7f31ab9199a07a02476ff965e4e6eca8ec563f37f"
+    },
+    {
+      "originalPath": "bench/results/2026-11-15-real/kernel-profile-release-samples/81097.txt",
+      "path": "bench/results/unattributed/macos-unspecified/2026-11-15/kernel-profile-release/kernel-profile-release-samples/81097.txt",
+      "sha256": "5d7c02773d1321e461582c1e990a445fcf7ac09155332bf771c112373e69b69e"
+    },
+    {
+      "originalPath": "bench/results/2026-11-15-real/kernel-profile-release-samples/81591.stderr",
+      "path": "bench/results/unattributed/macos-unspecified/2026-11-15/kernel-profile-release/kernel-profile-release-samples/81591.stderr",
+      "sha256": "82eb21ef2f13ea57318d970ff05b0ab7dc7c9346f25b6703ad2045cdc04e33c0"
+    },
+    {
+      "originalPath": "bench/results/2026-11-15-real/kernel-profile-release-samples/81591.txt",
+      "path": "bench/results/unattributed/macos-unspecified/2026-11-15/kernel-profile-release/kernel-profile-release-samples/81591.txt",
+      "sha256": "00cc98699459a91d20f7d40f519ace83cc382f83554611565431c0e16c8cdfc4"
+    },
+    {
+      "originalPath": "bench/results/2026-11-15-real/kernel-profile-release-samples/81656.stderr",
+      "path": "bench/results/unattributed/macos-unspecified/2026-11-15/kernel-profile-release/kernel-profile-release-samples/81656.stderr",
+      "sha256": "736d9058044b02fd51cbd404a504f64e28559e1297a9797c1787413099dec093"
+    },
+    {
+      "originalPath": "bench/results/2026-11-15-real/kernel-profile-release-samples/81656.txt",
+      "path": "bench/results/unattributed/macos-unspecified/2026-11-15/kernel-profile-release/kernel-profile-release-samples/81656.txt",
+      "sha256": "d8e21b19920a1fb8b9eee40acaddcfaf6c7809f2f58af95038008d3ffb21dd34"
+    },
+    {
+      "originalPath": "bench/results/2026-11-15-real/kernel-profile-release-samples/85581.stderr",
+      "path": "bench/results/unattributed/macos-unspecified/2026-11-15/kernel-profile-release/kernel-profile-release-samples/85581.stderr",
+      "sha256": "5c65ad9362d34167634602e40dfb57ab25c21adb9da89996411a4c74796bd426"
+    },
+    {
+      "originalPath": "bench/results/2026-11-15-real/kernel-profile-release-samples/85581.txt",
+      "path": "bench/results/unattributed/macos-unspecified/2026-11-15/kernel-profile-release/kernel-profile-release-samples/85581.txt",
+      "sha256": "ccca591789dc8b5a85b510d22a3f85155416195e1e26f047e13dac832517804b"
+    },
+    {
+      "originalPath": "bench/results/2026-11-15-real/kernel-profile-release-samples/87874.stderr",
+      "path": "bench/results/unattributed/macos-unspecified/2026-11-15/kernel-profile-release/kernel-profile-release-samples/87874.stderr",
+      "sha256": "89ba86f05d03c7bbabc2e39d622ee4c3b48e33120398f9e7b6fd70a9af2af7bc"
+    },
+    {
+      "originalPath": "bench/results/2026-11-15-real/kernel-profile-release-samples/87874.txt",
+      "path": "bench/results/unattributed/macos-unspecified/2026-11-15/kernel-profile-release/kernel-profile-release-samples/87874.txt",
+      "sha256": "cf1438fb8aa843ac70cc04ea7bdabfa5821b195b194b85d599031d661fc8266a"
+    },
+    {
+      "originalPath": "bench/results/2026-11-15-real/kernel-profile-release-samples/91327.stderr",
+      "path": "bench/results/unattributed/macos-unspecified/2026-11-15/kernel-profile-release/kernel-profile-release-samples/91327.stderr",
+      "sha256": "69c9d654bef3c2c502753e1b2f5076e64d5c2fb987278b5d774593c4784318f1"
+    },
+    {
+      "originalPath": "bench/results/2026-11-15-real/kernel-profile-release-samples/91327.txt",
+      "path": "bench/results/unattributed/macos-unspecified/2026-11-15/kernel-profile-release/kernel-profile-release-samples/91327.txt",
+      "sha256": "3ecf420db8ef47b77ba1ddffcf19121f6b409316294ff0995eee4cf25a518748"
+    },
+    {
+      "originalPath": "bench/results/2026-11-15-real/kernel-profile-release-samples/91751.stderr",
+      "path": "bench/results/unattributed/macos-unspecified/2026-11-15/kernel-profile-release/kernel-profile-release-samples/91751.stderr",
+      "sha256": "76f83438021c0869e73c77e1e2f0e69aa06e43ab32f235dc16a38b21cc95bb85"
+    },
+    {
+      "originalPath": "bench/results/2026-11-15-real/kernel-profile-release-samples/91751.txt",
+      "path": "bench/results/unattributed/macos-unspecified/2026-11-15/kernel-profile-release/kernel-profile-release-samples/91751.txt",
+      "sha256": "1b215964fcabcbc760185822f3a675446420f19e4d05ac300f3fd8f9ddc38b33"
+    },
+    {
+      "originalPath": "bench/results/2026-11-15-real/kernel-profile-release-samples/first-status-82535.stderr",
+      "path": "bench/results/unattributed/macos-unspecified/2026-11-15/kernel-profile-release/kernel-profile-release-samples/first-status-82535.stderr",
+      "sha256": "fd9f7cd27440dbab8af43095b9b2679729fae171c9ce52ce448cca0bc8496be5"
+    },
+    {
+      "originalPath": "bench/results/2026-11-15-real/kernel-profile-release-samples/first-status-82535.txt",
+      "path": "bench/results/unattributed/macos-unspecified/2026-11-15/kernel-profile-release/kernel-profile-release-samples/first-status-82535.txt",
+      "sha256": "b9ad49256467027aeab1705e3cb6f67cacbc227fefce67fd8673433be63c53ab"
+    },
+    {
+      "originalPath": "bench/results/2026-11-15-real/kernel-profile-release-samples/first-status-86203.stderr",
+      "path": "bench/results/unattributed/macos-unspecified/2026-11-15/kernel-profile-release/kernel-profile-release-samples/first-status-86203.stderr",
+      "sha256": "fa3e356ed93976565948492cfe084d0faf2a45969c52a19f50fd39d46af87dbe"
+    },
+    {
+      "originalPath": "bench/results/2026-11-15-real/kernel-profile-release-samples/first-status-88482.stderr",
+      "path": "bench/results/unattributed/macos-unspecified/2026-11-15/kernel-profile-release/kernel-profile-release-samples/first-status-88482.stderr",
+      "sha256": "d3fdc55a352701d95d0fcbc98ba9fc2b416f7dcde4bf51da5b3c495bd757587b"
+    },
+    {
+      "originalPath": "bench/results/2026-11-15-real/kernel-profile-release-samples/first-status-92226.stderr",
+      "path": "bench/results/unattributed/macos-unspecified/2026-11-15/kernel-profile-release/kernel-profile-release-samples/first-status-92226.stderr",
+      "sha256": "8630701347bedabe5591e6c068871fbb966752049faf693be5d7b0ffe283a731"
+    },
+    {
+      "originalPath": "bench/results/2026-11-15-real/kernel-profile-release-samples/first-status-92226.txt",
+      "path": "bench/results/unattributed/macos-unspecified/2026-11-15/kernel-profile-release/kernel-profile-release-samples/first-status-92226.txt",
+      "sha256": "cc0dc314df2850426fbbfaaa17966a0b52fa2906278bcd63a61f352739e6e7d0"
+    },
+    {
+      "originalPath": "bench/results/2026-11-15-real/kernel-profile-release.analysis.json",
+      "path": "bench/results/unattributed/macos-unspecified/2026-11-15/kernel-profile-release/kernel-profile-release.analysis.json",
+      "sha256": "2558c6aa6e21ff5edda441cb776fd965e7bc1474f46e7c439b8876a7fa4ba1e0"
+    },
+    {
+      "originalPath": "bench/results/2026-11-15-real/kernel-profile-release.json",
+      "path": "bench/results/unattributed/macos-unspecified/2026-11-15/kernel-profile-release/kernel-profile-release.json",
+      "sha256": "93e638b080e2a27ea5d80342e8a1e9ebdf964cdcee22bce753364c158a274927"
+    },
+    {
+      "originalPath": "bench/results/2026-11-15-real/kernel-profile-release.summary.md",
+      "path": "bench/results/unattributed/macos-unspecified/2026-11-15/kernel-profile-release/kernel-profile-release.summary.md",
+      "sha256": "7de9d0a2bf4daaa7b30a08227da5c21020ccc194f8eae7e991b9cd55d0c1dd23"
+    },
+    {
+      "originalPath": "bench/results/2026-11-15-real/kernel-profile-release.svg",
+      "path": "bench/results/unattributed/macos-unspecified/2026-11-15/kernel-profile-release/kernel-profile-release.svg",
+      "sha256": "38b8235b70ddd6d2a6c6581a2a2f2ac73cb0056c6dfc742e2d5ee6e01943bab6"
+    },
+    {
+      "originalPath": "bench/results/2026-11-15-real/kernel-profile-release.trace2.jsonl",
+      "path": "bench/results/unattributed/macos-unspecified/2026-11-15/kernel-profile-release/kernel-profile-release.trace2.jsonl",
+      "sha256": "873bf7e4509694bae75a7977c15d36edbca6deb3f84f5231c27166b656d5ada3"
+    },
+    {
+      "originalPath": "bench/results/2026-11-15-real/kernel-sequential10-linux.svg",
+      "path": "bench/results/sha256-65efbfe49fac/macos-apfs-case-sensitive-image/2026-11-15/kernel-sequential10/kernel-sequential10-linux.svg",
+      "sha256": "22da442184d373f7013cac2c88cdbe29211152c36097076b063c4606277931d0"
+    },
+    {
+      "originalPath": "bench/results/2026-11-15-real/kernel-sequential10.json",
+      "path": "bench/results/sha256-65efbfe49fac/macos-apfs-case-sensitive-image/2026-11-15/kernel-sequential10/kernel-sequential10.json",
+      "sha256": "294f76e38519e89cd4a537118a80729cabd55c677c8883fe985faf9d4a5c10a5"
+    },
+    {
+      "originalPath": "bench/results/2026-11-15-real/kernel-sequential10.summary.md",
+      "path": "bench/results/sha256-65efbfe49fac/macos-apfs-case-sensitive-image/2026-11-15/kernel-sequential10/kernel-sequential10.summary.md",
+      "sha256": "b1d0ecc548946b1607785c52d1e1b83fbf4a3c4107c0c116ddb437b9f797b2c7"
+    },
+    {
+      "originalPath": "bench/results/2026-11-15-real/kernel-twig-user-interrupted.json",
+      "path": "bench/results/unattributed/macos-unspecified/2026-11-15/shared-diagnostics/kernel-twig-user-interrupted.json",
+      "sha256": "f99bbd67e5be5742b80788777ebd4a452b5138f403ed7e1f932d7fd9ac0697c1"
+    },
+    {
+      "originalPath": "bench/results/2026-11-15-real/workers-starter-host.json",
+      "path": "bench/results/sha256-7040b45ada54/macos-apfs-host/2026-11-15/workers-starter-host/workers-starter-host.json",
+      "sha256": "71e9ebc5f9837bbd9a7652de24abc04425f944f41fcb8baae05f10fb796a3e28"
+    },
+    {
+      "originalPath": "bench/results/2026-11-15-real/workers-starter-images-complete.json",
+      "path": "bench/results/sha256-7040b45ada54/macos-apfs-image/2026-11-15/workers-starter-images-complete/workers-starter-images-complete.json",
+      "sha256": "a33f95b16bcaaf00d015a2c9d212806a73ac6e2b77a2a8b3511e88fe0e944482"
+    },
+    {
+      "originalPath": "bench/results/2026-11-15-real/workers-starter-images.json",
+      "path": "bench/results/sha256-7040b45ada54/macos-apfs-image/2026-11-15/workers-starter-images/workers-starter-images.json",
+      "sha256": "3a67ede60ad55b4275697453af17acedb983f52adf829becdc35b4cde6b770b4"
+    },
+    {
+      "originalPath": "bench/results/2026-11-16-linux-checkout-policy/btrfs-text-auto.json",
+      "path": "bench/results/sha256-0fb26d717319/linux-btrfs/2026-11-16/checkout-policy/btrfs-text-auto.json",
+      "sha256": "a9c8f4726cb721b838083fc78dc0fc8014e78d4e12f235c79842ce9990293a0b"
+    },
+    {
+      "originalPath": "bench/results/2026-11-16-linux-checkout-policy/btrfs.json",
+      "path": "bench/results/sha256-0fb26d717319/linux-btrfs/2026-11-16/checkout-policy/btrfs.json",
+      "sha256": "2744e57848d7454086819ba046149c74a33ce20111ef222f7dd1af19a880f1d7"
+    },
+    {
+      "originalPath": "bench/results/2026-11-16-linux-checkout-policy/xfs-text-auto.json",
+      "path": "bench/results/sha256-0fb26d717319/linux-xfs/2026-11-16/checkout-policy/xfs-text-auto.json",
+      "sha256": "3eb3be79573e4defe40afd18014b7819cf49c9f3508ab975ee5dfb8f89704dd9"
+    },
+    {
+      "originalPath": "bench/results/2026-11-16-linux-checkout-policy/xfs.json",
+      "path": "bench/results/sha256-0fb26d717319/linux-xfs/2026-11-16/checkout-policy/xfs.json",
+      "sha256": "48f962d7ebf55a1e687e74034bea387293506d2f779be0caeb5d703608c97c20"
+    },
+    {
+      "originalPath": "bench/results/2026-11-17-linux-coverage/snapshot.json",
+      "path": "bench/results/sha256-4884eac9a1e6/linux-mixed/2026-11-17/checkout-coverage/snapshot.json",
+      "sha256": "ddb9b724e8be7461cf17493fa78c4ad47dee743e9f3e699a64a1426d8cafa849"
+    },
+    {
+      "originalPath": "bench/results/2026-11-17-linux-coverage/summary.csv",
+      "path": "bench/results/sha256-4884eac9a1e6/linux-mixed/2026-11-17/checkout-coverage/summary.csv",
+      "sha256": "b5aa832bbefd5b837ad1fac025666df15254664229785a3615aaf9304bafd33c"
+    }
+  ]
+}

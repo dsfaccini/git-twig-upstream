@@ -64,10 +64,10 @@ and Git content verification. No speedup is assumed before the release compariso
 
 ## Recorded comparison
 
-The [frozen executable provenance](../../bench/results/2026-11-15-real/kernel-directory10.provenance.json),
-[fresh per-file baseline](../../bench/results/2026-11-15-real/kernel-per-file10.json),
-[Git/directory pair](../../bench/results/2026-11-15-real/kernel-directory10.json), and
-[generated comparison](../../bench/results/2026-11-15-real/kernel-directory-comparison.svg)
+The [frozen executable provenance](../../bench/results/sha256-a1431f8601d8/macos-apfs-case-sensitive-image/2026-11-15/kernel-directory10/kernel-directory10.provenance.json),
+[fresh per-file baseline](../../bench/results/sha256-65efbfe49fac/macos-apfs-case-sensitive-image/2026-11-15/kernel-per-file10/kernel-per-file10.json),
+[Git/directory pair](../../bench/results/sha256-a1431f8601d8/macos-apfs-case-sensitive-image/2026-11-15/kernel-directory10/kernel-directory10.json), and
+[generated comparison](../../bench/results/multi-build/macos-apfs-case-sensitive-image/2026-11-15/kernel-directory-comparison/kernel-directory-comparison.svg)
 record the uninstrumented experiment. Every checkout passed independent content,
 mode and symlink verification; sources remained unchanged and owned images were
 removed. The directory candidate was faster than the fresh per-file candidate in

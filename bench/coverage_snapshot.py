@@ -19,8 +19,10 @@ def collect(manifest_path, interrupted_progress=None):
     manifest, digest = read_json(manifest_path)
     if manifest['schemaVersion'] not in (1, 2):
         raise ValueError('unsupported campaign schema')
-    if manifest['status'] == 'running':
+    if manifest['status'] in ('preparing', 'running'):
         raise ValueError('campaign is still running')
+    if manifest.get('exploratory', False):
+        raise ValueError('exploratory campaign is not a publishable snapshot')
     runs = []
     for point in manifest['points']:
         name = point['result']

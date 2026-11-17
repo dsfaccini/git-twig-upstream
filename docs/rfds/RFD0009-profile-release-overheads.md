@@ -61,9 +61,9 @@ performance comparison. No optimization or broad compatibility change is include
 
 ## Recorded findings and next decision
 
-The [versioned capture](../../bench/results/2026-11-15-real/kernel-profile-release.json),
-[generated elapsed breakdown](../../bench/results/2026-11-15-real/kernel-profile-release.svg)
-and [Trace2 events](../../bench/results/2026-11-15-real/kernel-profile-release.trace2.jsonl)
+The [versioned capture](../../bench/results/unattributed/macos-unspecified/2026-11-15/kernel-profile-release/kernel-profile-release.json),
+[generated elapsed breakdown](../../bench/results/unattributed/macos-unspecified/2026-11-15/kernel-profile-release/kernel-profile-release.svg)
+and [Trace2 events](../../bench/results/unattributed/macos-unspecified/2026-11-15/kernel-profile-release/kernel-profile-release.trace2.jsonl)
 back these findings. All recorded creates passed independent verification and source
 isolation checks. Original samplers succeeded; supplementary short Git-status
 attachments that ended before sampling are retained as failures, not invented data.

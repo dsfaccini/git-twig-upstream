@@ -1,5 +1,63 @@
 # Local CLI benchmarks
 
+## Typed campaigns and result archives
+
+Use Bun 1.3+ to select a target and suite. Targets are small typed modules under
+`bench/{os}-{fs}/`; scheduling and provenance live in `lib/`, workload plans in
+`suites/`. Rust workers retain timing, allocation, full raw-byte verification and
+private-write checks. The first orchestrated suite is Linux `checkout` on XFS and
+Btrfs; other existing measurement tools below remain independently usable.
+
+```sh
+bun install --cwd bench --frozen-lockfile
+bun bench/run.ts list
+bun bench/run.ts run --target linux-xfs --suite checkout \
+  --baseline target/baselines/870f52e/git-twig \
+  --profiles cross-revision,mixed-builtins --rounds 1 --max-concurrency 1 \
+  --budget-seconds 300 --environment 'owned lab, ext4-backed loopback images'
+bun test bench/tests
+bun run --cwd bench typecheck
+```
+
+Build release workers first with `cargo build --release --workspace --locked`.
+See [Linux setup and safety constraints](linux.md). Commit the harness before
+measuring. `--exploratory` explicitly permits a dirty checkout, not a publishable
+run. The runner never infers a candidate commit from the harness checkout:
+optional full source OIDs are operator declarations; executable SHA-256 is the
+identity of the actual measured bytes.
+
+Each campaign gets a new directory automatically:
+
+```text
+results/<build>/<os-fs>/<UTC-date>/<campaign>/
+  manifest.json                  # identities, plan, pending/final outcomes
+  preparation.json               # preparation command and budget
+  *.json                         # original Rust measurement results
+  *.log                          # stdout/stderr, including failures
+```
+
+New builds use `sha256-<12-hex-prefix>` directory names and retain the full hashes
+in manifests. Same-time runs get unique IDs and never overwrite an existing run.
+In-progress `run-*` directories are ignored so writing results does not dirty the
+measured checkout. Promote only reviewed compact data explicitly with `git add -f`;
+never add fixtures, images, credentials or verbose private logs. Nothing is pushed,
+released or deployed by this runner. Fixture/image data stays under `target/`.
+
+Historical artifacts have been moved without changing their bytes. The archive
+[index](results/index.json) records every original path, canonical path and hash;
+it also resolves paths embedded inside immutable historical files. `unattributed`
+means candidate identity was not recorded; `multi-build` and `linux-mixed` preserve
+indivisible comparisons rather than inventing a single build/filesystem identity.
+Root `readme.json` selects published comparisons and `readme-details.md` remains
+the generated table consumer, not a run. Existing README/site numbers are unchanged.
+
+Adding a target or workload means adding a typed module, registering it, and
+extending the plan/result-gate tests—not copying a campaign shell script.
+Correctness-only VM runs are not performance campaigns and remain separately
+retained under `target/vm-lab/`. Emulation timings are never benchmark evidence.
+
+## Standalone synthetic measurements
+
 For real repositories, 100-way cohorts, and isolated APFS allocation measurements,
 see [real-repository benchmarks](real-repositories.md).
 
@@ -10,8 +68,8 @@ not a promise.
 
 ```sh
 cargo build --release --workspace
-cargo run --release -p twig-bench -- --files 64 --bytes 262144 --samples 3 --concurrency 1,2,4 --output bench/results/mixed.json
-cargo run --release -p twig-bench --bin twig-plot -- bench/results/mixed.json
+cargo run --release -p twig-bench -- --files 64 --bytes 262144 --samples 3 --concurrency 1,2,4 --output target/bench-results/mixed.json
+cargo run --release -p twig-bench --bin twig-plot -- target/bench-results/mixed.json
 ```
 
 Run from the repository root with the release git-twig already built.

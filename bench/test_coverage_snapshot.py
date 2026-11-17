@@ -62,6 +62,15 @@ class SnapshotTests(unittest.TestCase):
         with self.assertRaisesRegex(ValueError, 'still running'):
             snapshot.collect(self.write())
 
+    def test_rejects_live_preparation_and_exploratory_campaigns(self):
+        self.manifest['status'] = 'preparing'
+        with self.assertRaisesRegex(ValueError, 'still running'):
+            snapshot.collect(self.write())
+        self.manifest['status'] = 'completed'
+        self.manifest['exploratory'] = True
+        with self.assertRaisesRegex(ValueError, 'not a publishable snapshot'):
+            snapshot.collect(self.write())
+
     def test_rejects_redirected_or_mutated_result_identity(self):
         point = self.point(result='../elsewhere.json')
         with self.assertRaisesRegex(ValueError, 'unsafe result'):

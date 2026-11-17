@@ -10,7 +10,7 @@ Keep clone/verification parallel, but serialize optimized Twig worktree registra
 and installation per shared Git directory using an OS file lock. At concurrency
 16, the schema-v2 mixed run recorded Git failing to read a peer worktree's
 commondir while that peer was being registered. See the raw failed run in
-[bench/results](../../bench/results/2026-11-15-mixed-v2.json).
+[bench/results](../../bench/results/sha256-51e21596eaf1/macos-unspecified/2026-11-15/mixed-v2/2026-11-15-mixed-v2.json).
 This is a failed operation, not evidence of incorrect acknowledged file contents.
 Do not hide it or claim a clean concurrency-16 result for that revision.
 

@@ -98,7 +98,7 @@ Ramp concurrency within a named time/disk budget; retain partial runs and failur
 Do not repeat the unbounded kernel loopback-stall experiment or publish incomplete
 pairs as a win. The aim is additional allocation saved, not promised lower latency.
 
-The local [snapshot](../../bench/results/2026-11-17-linux-coverage/snapshot.json)
+The local [snapshot](../../bench/results/sha256-4884eac9a1e6/linux-mixed/2026-11-17/checkout-coverage/snapshot.json)
 and generated CSV support the disk-first decision for these synthetic fixtures:
 two sequential cross-revision creates allocate 16.09 MiB rather than 128.08 MiB
 (XFS) or 128.31 MiB (Btrfs). Builtin, automatic-CRLF and RFD0016 gitlink cases

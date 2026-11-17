@@ -1,3 +1,8 @@
 /target/
 /crates/*/target/
 .DS_Store
+/bench/node_modules/
+/bench/results/**/run-*/
+/bench/node_modules/
+# In-progress campaigns must not dirty later measured points. Promote selected data explicitly.
+/bench/results/**/run-*/
