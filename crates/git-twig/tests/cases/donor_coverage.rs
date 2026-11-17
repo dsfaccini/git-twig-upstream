@@ -4,12 +4,13 @@ use std::collections::BTreeMap;
 
 #[derive(Clone, Debug, PartialEq, Eq)]
 enum File {
+    Directory,
     Regular { bytes: Vec<u8>, executable: bool },
     Link(PathBuf),
 }
 
 #[derive(Clone, Debug, PartialEq, Eq)]
-struct Snapshot {
+pub(super) struct Snapshot {
     files: BTreeMap<PathBuf, File>,
     head: Vec<u8>,
     index: Vec<u8>,
@@ -17,7 +18,7 @@ struct Snapshot {
 }
 
 impl Snapshot {
-    fn capture(root: &Path) -> Result<Self> {
+    pub(super) fn capture(root: &Path) -> Result<Self> {
         let mut files = BTreeMap::new();
         inventory(root, root, &mut files)?;
         Ok(Self {
@@ -54,6 +55,7 @@ fn inventory(root: &Path, directory: &Path, files: &mut BTreeMap<PathBuf, File>)
         let path = child.path();
         let kind = child.file_type()?;
         if kind.is_dir() {
+            files.insert(path.strip_prefix(root)?.into(), File::Directory);
             inventory(root, &path, files)?;
             continue;
         }
@@ -107,7 +109,15 @@ fn comparator_matches_git_and_detects_injected_differences() -> Result<()> {
     let actual = Snapshot::capture(&f.root.join("control"))?;
     assert!(expected.differences(&actual).is_empty());
     for mutation in [
-        "bytes", "missing", "extra", "mode", "link", "HEAD", "index", "status",
+        "bytes",
+        "missing",
+        "extra",
+        "mode",
+        "link",
+        "directory",
+        "HEAD",
+        "index",
+        "status",
     ] {
         let mut broken = actual.clone();
         match mutation {
@@ -141,6 +151,9 @@ fn comparator_matches_git_and_detects_injected_differences() -> Result<()> {
                 broken
                     .files
                     .insert("hello.txt".into(), File::Link("hello\n".into()));
+            }
+            "directory" => {
+                broken.files.insert("hello.txt".into(), File::Directory);
             }
             "HEAD" => broken.head.push(b'x'),
             "index" => broken.index.push(b'x'),
@@ -200,6 +213,11 @@ fn revisions_added_paths_and_dirty_staged_donors_match_stock_git() -> Result<()>
                 fs::write(f.source.join("common"), "staged donor bytes\n")?;
                 git(&f.source, &["add", "common"])?;
                 fs::write(f.source.join("common"), "unstaged donor bytes\n")?;
+                if target_revision == "HEAD" {
+                    git(&f.source, &["update-index", "--assume-unchanged", "common"])?;
+                } else if source_revision == "HEAD" {
+                    git(&f.source, &["update-index", "--skip-worktree", "common"])?;
+                }
                 let source_files = {
                     let mut files = BTreeMap::new();
                     inventory(&f.source, &f.source, &mut files)?;

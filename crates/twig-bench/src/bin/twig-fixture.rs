@@ -1,6 +1,7 @@
 //! Deterministic, incompressible committed inputs for CLI benchmarks.
 use anyhow::{Context, Result, ensure};
-use std::{env, fs, path::PathBuf, process::Command};
+use std::{env, fs, path::PathBuf};
+use twig_bench::command;
 
 fn main() -> Result<()> {
     let args: Vec<_> = env::args_os().skip(1).collect();
@@ -48,11 +49,7 @@ fn main() -> Result<()> {
             "deterministic benchmark fixture",
         ],
     ] {
-        let output = Command::new("git")
-            .current_dir(&path)
-            .env("GIT_CONFIG_NOSYSTEM", "1")
-            .env("GIT_CONFIG_GLOBAL", "/dev/null")
-            .env("XDG_CONFIG_HOME", "/nonexistent/twig-bench")
+        let output = command("git", &path)
             .env("GIT_AUTHOR_DATE", "2026-11-15T00:00:00Z")
             .env("GIT_COMMITTER_DATE", "2026-11-15T00:00:00Z")
             .args(["-c", "core.hooksPath=/dev/null"])

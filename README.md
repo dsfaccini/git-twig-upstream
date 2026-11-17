@@ -49,7 +49,8 @@ Version 0.4.0 supports common LF policies such as `text=auto eol=lf`.
 They compare private clones to raw target blobs and let Git write exceptional
 files, retaining sharing for the rest. Development builds also choose a donor
 across revisions and let Git write builtin ident/encoding exceptions. External
-filters, sparse checkout and submodules still delegate.
+filters and sparse checkout still delegate. Submodules are Git-written empty
+directories, never copied or recursively initialized from a donor.
 See the [changelog](CHANGELOG.md) for released fixes and unreleased coverage.
 
 With `TWIG_TRACE=1`, native creation reports verified-clone and Git-written path

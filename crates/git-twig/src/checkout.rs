@@ -87,6 +87,8 @@ impl<'a> Checkout<'a> {
                 "core.filemode=true",
                 "-c",
                 "core.symlinks=true",
+                "-c",
+                "submodule.recurse=false",
             ]);
         command
     }
@@ -258,6 +260,12 @@ fn parse_attributes(
             .get(row[0])
             .context("attributes for unknown path")?;
         ensure!(seen.insert((index, row[1])), "duplicate Git attribute");
+        // Git does not run blob conversions for symlink text or gitlink
+        // directories. These attributes are observable but cannot authorize a
+        // filter invocation on such an entry.
+        if !matches!(entries[index].kind, Kind::File { .. }) {
+            continue;
+        }
         let attribute = &mut attributes[index];
         match row[1] {
             // --all reports explicitly present values, including literal sentinel names.
@@ -281,7 +289,9 @@ fn parse_attributes(
         .iter()
         .zip(attributes)
         .map(|(entry, attrs)| {
-            if entry.kind == Kind::Symlink || attrs.identity(configuration) {
+            if entry.kind == Kind::Submodule {
+                Action::GitWrite
+            } else if entry.kind == Kind::Symlink || attrs.identity(configuration) {
                 Action::VerifyClone
             } else if attrs.auto_binary(configuration) {
                 Action::VerifyAutoBinary

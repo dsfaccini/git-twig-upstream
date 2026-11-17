@@ -171,16 +171,13 @@ fn prepare(cwd: &Path, request: &AddRequest, staging: &mut staging::Staging) -> 
     let entries = tree::parse(
         &checked(git(&root).args(["ls-tree", "-rlz", "--full-tree", &commit]))?.stdout,
     )?;
-    ensure!(
-        !entries.iter().any(|entry| entry.kind == Kind::Submodule),
-        "submodules require stock Git"
-    );
     // These semantics are owned by Git, not by the CoW materializer.
-    if git(&root)
-        .args(["config", "--bool", "--get", "core.symlinks"])
-        .output()?
-        .stdout
-        == b"false\n"
+    if entries.iter().any(|entry| entry.kind == Kind::Symlink)
+        && git(&root)
+            .args(["config", "--bool", "--get", "core.symlinks"])
+            .output()?
+            .stdout
+            == b"false\n"
     {
         anyhow::bail!("core.symlinks=false requires stock Git");
     }
@@ -338,7 +335,12 @@ fn finish_install(prepared: &Prepared) -> Result<()> {
         );
         fs::rename(entry.path(), target)?;
     }
-    checked(git(&prepared.destination).args(["read-tree", &prepared.commit]))?;
+    checked(git(&prepared.destination).args([
+        "-c",
+        "submodule.recurse=false",
+        "read-tree",
+        &prepared.commit,
+    ]))?;
     trace(&format!("shared repository: {}", prepared.root.display()));
     Ok(())
 }

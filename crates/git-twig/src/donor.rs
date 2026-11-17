@@ -70,6 +70,10 @@ pub fn choose(root: &Path, parent: &Path, target: &[Entry]) -> Result<Donor> {
     let listing = checked(git(root).args(["worktree", "list", "--porcelain", "-z"]))?.stdout;
     let mut worktrees = parse(&listing)?;
     worktrees.sort_by_key(|worktree| worktree.root != root);
+    let clonable = target
+        .iter()
+        .filter(|entry| entry.kind != Kind::Submodule)
+        .count();
     let mut best: Option<Donor> = None;
     for worktree in worktrees
         .into_iter()
@@ -95,12 +99,12 @@ pub fn choose(root: &Path, parent: &Path, target: &[Entry]) -> Result<Donor> {
             .as_ref()
             .is_none_or(|old| candidates.len() > old.candidates.len())
         {
-            let complete = candidates.len() == target.len();
+            let complete = candidates.len() == clonable;
             best = Some(Donor {
                 root: worktree.root,
                 candidates,
             });
-            // No later donor can beat a complete tree match; ties prefer this one.
+            // No later donor can beat all clonable paths; ties prefer this one.
             if complete {
                 break;
             }

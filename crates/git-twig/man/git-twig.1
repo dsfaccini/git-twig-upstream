@@ -60,8 +60,10 @@ Private candidate bytes are compared to raw target blobs. Git materializes
 files requiring conversion or whose bytes differ; other verified files retain
 sharing. Upgrade older releases for the released LF-policy and filter-state fixes.
 Development builds materialize builtin ident and encoding exceptions per file.
-External filters, conditional config includes, sparse checkout, submodules and
-relative attribute-file configuration delegate to stock Git.
+Git creates empty gitlink directories without copying or initializing donor
+submodules. Conversion rules do not rewrite symlink text or gitlink directories.
+External filters on regular files, conditional config includes, sparse checkout
+and relative attribute-file configuration delegate to stock Git.
 Checkout configuration and external attributes must not change during creation.
 .SH STAGING
 Staging is stored under the common Git directory in twigs/staging. Successful

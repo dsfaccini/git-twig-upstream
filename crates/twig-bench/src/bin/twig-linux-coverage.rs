@@ -10,6 +10,7 @@ use std::{
     process::Command,
     time::{Instant, SystemTime, UNIX_EPOCH},
 };
+use twig_bench::command;
 
 #[derive(Serialize)]
 #[serde(rename_all = "camelCase")]
@@ -104,16 +105,6 @@ struct Manifest {
     stop_reason: Option<String>,
 }
 
-fn command(program: impl AsRef<std::ffi::OsStr>, cwd: &Path) -> Command {
-    let mut command = Command::new(program);
-    command
-        .current_dir(cwd)
-        .env("GIT_CONFIG_NOSYSTEM", "1")
-        .env("GIT_CONFIG_GLOBAL", "/dev/null")
-        .env("GIT_ATTR_NOSYSTEM", "1")
-        .env("GIT_TERMINAL_PROMPT", "0");
-    command
-}
 fn checked(command: &mut Command) -> Result<String> {
     let result = command.output()?;
     ensure!(
@@ -217,6 +208,44 @@ fn fixtures(root: &Path, binaries: &Path) -> Result<Vec<Fixture>> {
     fs::write(auto.join(".gitattributes"), "* text=auto eol=crlf\n")?;
     fs::write(auto.join("doc.txt"), "text must become CRLF\n")?;
     let auto_commit = commit(&auto, "fixture: binary sharing with auto CRLF text")?;
+    let module = inputs.join("module-template");
+    fs::create_dir(&module)?;
+    git(&module, &["init", "-b", "main"])?;
+    fs::write(
+        module.join("library"),
+        "nested module data is not checked out\n",
+    )?;
+    commit(&module, "fixture: nested module")?;
+    let submodules = inputs.join("submodules");
+    clone_input(&bytes, &submodules)?;
+    checked(
+        command("git", &submodules)
+            .args([
+                "-c",
+                "core.hooksPath=/dev/null",
+                "-c",
+                "protocol.file.allow=always",
+                "submodule",
+                "add",
+                "--",
+            ])
+            .arg(&module)
+            .arg("sub"),
+    )?;
+    git(
+        &submodules,
+        &[
+            "config",
+            "--file",
+            ".gitmodules",
+            "submodule.sub.url",
+            "../module-template",
+        ],
+    )?;
+    let submodule_commit = commit(
+        &submodules,
+        "fixture: gitlink with shared application files",
+    )?;
     // New capability scenarios go first; expensive many-file ramps come last.
     Ok(vec![
         Fixture {
@@ -235,6 +264,12 @@ fn fixtures(root: &Path, binaries: &Path) -> Result<Vec<Fixture>> {
             label: "auto-crlf".into(),
             path: auto,
             target_commit: auto_commit,
+            donor_commit: None,
+        },
+        Fixture {
+            label: "submodules".into(),
+            path: submodules,
+            target_commit: submodule_commit,
             donor_commit: None,
         },
         Fixture {
@@ -352,6 +387,7 @@ fn main() -> Result<()> {
             "cross-revision".into(),
             "mixed-builtins".into(),
             "auto-crlf".into(),
+            "submodules".into(),
             "byte-heavy".into(),
             "file-heavy".into(),
         ],
@@ -360,7 +396,7 @@ fn main() -> Result<()> {
     while let Some(arg) = args.next() {
         if arg == "--help" {
             println!(
-                "twig-linux-coverage --baseline FROZEN_TWIG --output NEW_DIRECTORY [--candidate TWIG] [--rounds 3] [--max-concurrency 16] [--budget-seconds 1800] [--point-timeout-seconds 180] [--baseline-commit FULL_OID] [--filesystems xfs,btrfs] [--profiles cross-revision,mixed-builtins,auto-crlf,byte-heavy,file-heavy]"
+                "twig-linux-coverage --baseline FROZEN_TWIG --output NEW_DIRECTORY [--candidate TWIG] [--rounds 3] [--max-concurrency 16] [--budget-seconds 1800] [--point-timeout-seconds 180] [--baseline-commit FULL_OID] [--filesystems xfs,btrfs] [--profiles cross-revision,mixed-builtins,auto-crlf,submodules,byte-heavy,file-heavy]"
             );
             return Ok(());
         }
@@ -408,6 +444,7 @@ fn main() -> Result<()> {
                 "cross-revision",
                 "mixed-builtins",
                 "auto-crlf",
+                "submodules",
                 "byte-heavy",
                 "file-heavy"
             ]
@@ -455,9 +492,14 @@ fn main() -> Result<()> {
             "Local shared-host, warm-cache, ext4-backed loopback allocation measurements; not bare-device or universal speed claims. All fixture/image/source data is retained. No network, release or publication operation.".into(),
             "Baseline and candidate are frozen by binary SHA-256. Fixture source/target commits are pinned. Three variants rotate position by round; each has an isolated filesystem, oracle and warmup registry. Each point is one unretried measured cohort; all raw samples and failures are retained.".into(),
             "Baseline Twig may delegate and is explicitly marked requireNative=false; this never relabels fallback as native. Candidate requires real nonzero verified clone counts as well as raw byte/link/mode verification and source immutability. Final allocation, not the backend banner, establishes disk savings.".into(),
-            "Concurrency is bounded by configured levels/time budget, not a measured maximum. The five fixtures are synthetic and deterministic (twig-fixture xorshift seed 0x4d595df4d0f33173); changed/mixed inputs are explicitly derived, not unmodified real repositories. No kernel workload is included in this bounded ramp.".into(),
+            "Concurrency is bounded by configured levels/time budget, not a measured maximum. The six fixtures are synthetic and deterministic (twig-fixture xorshift seed 0x4d595df4d0f33173); changed/mixed inputs are explicitly derived, not unmodified real repositories. No kernel workload is included in this bounded ramp.".into(),
         ],
     };
+    if let Ok(environment) = env::var("TWIG_BENCH_ENVIRONMENT") {
+        manifest
+            .notes
+            .push(format!("Operator-provided environment: {environment}"));
+    }
     manifest
         .fixtures
         .retain(|fixture| manifest.config.profiles.contains(&fixture.label));

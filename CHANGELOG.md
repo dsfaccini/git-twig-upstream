@@ -46,11 +46,15 @@ describe changes from this baseline after they are implemented and verified.
 - Verified NUL-bearing blobs stay shared under automatic CRLF policies; forced
   text conversion and dirty donor bytes still go through Git.
 - Branch tracking setup no longer appears as a conversion-policy change.
+- Gitlink directories no longer disable sharing for other files. Initialized
+  donor submodules are never copied or recursively checked out.
+- Conversion rules on symlinks/gitlinks do not disable unrelated sharing, and
+  core.symlinks=false only delegates when the target has symlink entries.
 - Differential revision/donor cases and deliberate comparator corruption controls.
 - Benchmark schema 4: separate donor/target provenance, isolated warmup/oracle
   registries, real verified-clone counts and explicit fallback baselines.
 
-External filters, sparse checkout, submodules, conditional config includes and
+External filters on regular files, sparse checkout, conditional config includes and
 relative attribute-file configuration remain conservative whole-request fallbacks.
 Braiding and re-sharing existing worktrees are not included.
 

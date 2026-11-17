@@ -6,11 +6,12 @@ use std::{
     fs::{self, OpenOptions},
     io::Write,
     path::{Path, PathBuf},
-    process::{Command, Output},
+    process::Output,
     sync::Arc,
     thread,
     time::{Instant, SystemTime, UNIX_EPOCH},
 };
+use twig_bench::command;
 
 #[derive(Clone, Serialize)]
 struct Config {
@@ -384,15 +385,6 @@ fn verify_files(fixture: &Fixture, name: &str, result: &mut Operation) -> Result
 }
 fn ms(start: Instant) -> f64 {
     start.elapsed().as_secs_f64() * 1000.0
-}
-fn command(program: impl AsRef<std::ffi::OsStr>, cwd: &Path) -> Command {
-    let mut command = Command::new(program);
-    command
-        .current_dir(cwd)
-        .env("GIT_CONFIG_NOSYSTEM", "1")
-        .env("GIT_CONFIG_GLOBAL", "/dev/null")
-        .env("TWIG_TRACE", "1");
-    command
 }
 fn checked(output: Output) -> Result<Output> {
     ensure!(

@@ -15,6 +15,8 @@ mod checkout_races;
 mod donor_coverage;
 #[path = "cases/fallback_diagnostics.rs"]
 mod fallback_diagnostics;
+#[path = "cases/nonregular_coverage.rs"]
+mod nonregular_coverage;
 
 static NEXT: AtomicU64 = AtomicU64::new(0);
 struct Fixture {

@@ -17,6 +17,7 @@ use std::{
     thread,
     time::{Duration, Instant, SystemTime, UNIX_EPOCH},
 };
+use twig_bench::command;
 
 #[derive(Clone, Copy, PartialEq, Eq, Serialize)]
 #[serde(rename_all = "kebab-case")]
@@ -147,9 +148,26 @@ struct CreationProgress<'a> {
 
 struct Expected {
     path: PathBuf,
-    data: Vec<u8>,
-    symlink: bool,
-    executable: bool,
+    contents: Contents,
+}
+enum Contents {
+    File { data: Vec<u8>, executable: bool },
+    Symlink(Vec<u8>),
+    GitlinkDirectory,
+}
+impl Expected {
+    fn regular_bytes(&self) -> Option<&[u8]> {
+        match &self.contents {
+            Contents::File { data, .. } => Some(data),
+            _ => None,
+        }
+    }
+    fn logical_bytes(&self) -> u64 {
+        match &self.contents {
+            Contents::File { data, .. } | Contents::Symlink(data) => data.len() as u64,
+            Contents::GitlinkDirectory => 0,
+        }
+    }
 }
 #[derive(Clone, Copy)]
 struct CohortOptions {
@@ -630,6 +648,8 @@ fn seed_checkout(repository: &Repository, destination: &Path, commit: &str) -> R
             .args([
                 "-c",
                 "core.hooksPath=/dev/null",
+                "-c",
+                "submodule.recurse=false",
                 "checkout",
                 "--detach",
                 commit,
@@ -666,7 +686,7 @@ fn cohort(
     };
     let target_tree = git_text(&oracle, &["rev-parse", "HEAD^{tree}"])?;
     let expected = expected_files(&oracle)?;
-    let logical_bytes = expected.iter().map(|entry| entry.data.len() as u64).sum();
+    let logical_bytes = expected.iter().map(Expected::logical_bytes).sum();
     let mut warmup_cleanup_recovered = false;
     if options.warmup {
         let warmup_seed = mount.join("warmup-seed");
@@ -864,12 +884,16 @@ fn cohort(
         .map(|entry| (&entry.path, entry))
         .collect();
     let probe = private_write_probe(expected.iter().filter(|entry| {
-        source_files
-            .get(&entry.path)
-            .is_some_and(|source| !source.symlink && source.data == entry.data)
+        source_files.get(&entry.path).is_some_and(|source| {
+            source
+                .regular_bytes()
+                .zip(entry.regular_bytes())
+                .is_some_and(|(source, target)| source == target)
+        })
     }));
     if let Some(PrivateWriteProbe {
         entry: first,
+        data,
         offset,
     }) = probe
     {
@@ -883,7 +907,7 @@ fn cohort(
             let write = (|| -> Result<()> {
                 let mut file = OpenOptions::new().write(true).open(destination)?;
                 file.seek(SeekFrom::Start(offset as u64))?;
-                file.write_all(&[first.data[offset] ^ 0xff])?;
+                file.write_all(&[data[offset] ^ 0xff])?;
                 let status = command("git", &mount.join(format!("w-{}", operation.worker)))
                     .args([
                         "-c",
@@ -946,7 +970,7 @@ fn cohort(
         source_unchanged,
         private_write_tested: probe.is_some(),
         warmup_cleanup_recovered,
-        private_write_file_bytes: probe.map(|probe| probe.entry.data.len()),
+        private_write_file_bytes: probe.map(|probe| probe.data.len()),
         private_write_offset: probe.map(|probe| probe.offset),
         growth_after_create_bytes: allocation_delta(&after_create, &before),
         growth_after_status_bytes: allocation_delta(&after_status, &before),
@@ -962,6 +986,7 @@ fn cohort(
 #[derive(Clone, Copy)]
 struct PrivateWriteProbe<'a> {
     entry: &'a Expected,
+    data: &'a [u8],
     offset: usize,
 }
 fn private_write_probe<'a>(
@@ -969,16 +994,18 @@ fn private_write_probe<'a>(
 ) -> Option<PrivateWriteProbe<'a>> {
     expected
         .into_iter()
-        .filter(|entry| !entry.symlink)
         .filter_map(|entry| {
             // A nonzero byte is data-bearing even when the file has sparse zero holes.
-            entry
-                .data
-                .iter()
+            let data = entry.regular_bytes()?;
+            data.iter()
                 .position(|byte| *byte != 0)
-                .map(|offset| PrivateWriteProbe { entry, offset })
+                .map(|offset| PrivateWriteProbe {
+                    entry,
+                    data,
+                    offset,
+                })
         })
-        .max_by_key(|probe| probe.entry.data.len())
+        .max_by_key(|probe| probe.data.len())
 }
 fn creation_makespan(operations: &[Operation]) -> f64 {
     operations
@@ -1096,53 +1123,68 @@ fn create(
 
 fn expected_files(seed: &Path) -> Result<Vec<Expected>> {
     use std::os::unix::{ffi::OsStringExt, fs::PermissionsExt};
-    let paths = checked(command("git", seed).args(["ls-files", "-z"]).output()?)?.stdout;
-    paths
-        .split(|byte| *byte == 0)
-        .filter(|path| !path.is_empty())
-        .map(|path| {
-            let path = PathBuf::from(OsString::from_vec(path.to_vec()));
-            let absolute = seed.join(&path);
-            let metadata = fs::symlink_metadata(&absolute)?;
-            let symlink = metadata.file_type().is_symlink();
-            let data = if symlink {
+    let listing = checked(
+        command("git", seed)
+            .args(["ls-files", "--stage", "-z"])
+            .output()?,
+    )?
+    .stdout;
+    listing.split(|byte| *byte == 0).filter(|record| !record.is_empty()).map(|record| {
+        let tab = record.iter().position(|byte| *byte == b'\t').context("missing index path")?;
+        let mut header = std::str::from_utf8(&record[..tab])?.split(' ');
+        let mode = header.next().context("missing index mode")?;
+        let object = header.next().context("missing index object")?;
+        ensure!((object.len() == 40 || object.len() == 64) && object.bytes().all(|b| b.is_ascii_hexdigit()), "invalid index object");
+        ensure!(header.next() == Some("0") && header.next().is_none(), "unmerged or malformed index");
+        let path = PathBuf::from(OsString::from_vec(record[tab + 1..].to_vec()));
+        ensure!(!path.as_os_str().is_empty() && path.components().all(|part| matches!(part, std::path::Component::Normal(name) if !name.eq_ignore_ascii_case(".git"))), "unsafe benchmark path");
+        let absolute = seed.join(&path);
+        let metadata = fs::symlink_metadata(&absolute)?;
+        let contents = match mode {
+            "100644" | "100755" => {
+                ensure!(metadata.is_file(), "expected regular file");
+                Contents::File { data: fs::read(&absolute)?, executable: metadata.permissions().mode() & 0o100 != 0 }
+            }
+            "120000" => {
                 use std::os::unix::ffi::OsStrExt;
-                fs::read_link(&absolute)?.as_os_str().as_bytes().to_vec()
-            } else {
-                ensure!(
-                    metadata.is_file(),
-                    "submodules/special files are not supported in this suite"
-                );
-                fs::read(&absolute)?
-            };
-            Ok(Expected {
-                path,
-                data,
-                symlink,
-                executable: metadata.permissions().mode() & 0o100 != 0,
-            })
-        })
-        .collect()
+                ensure!(metadata.file_type().is_symlink(), "expected symlink");
+                Contents::Symlink(fs::read_link(&absolute)?.as_os_str().as_bytes().to_vec())
+            }
+            "160000" => {
+                ensure!(metadata.is_dir() && fs::read_dir(&absolute)?.next().is_none(), "expected uninitialized gitlink directory");
+                Contents::GitlinkDirectory
+            }
+            _ => anyhow::bail!("unsupported benchmark index mode"),
+        };
+        Ok(Expected { path, contents })
+    }).collect()
 }
 fn verify_file(root: &Path, entry: &Expected) -> Result<()> {
     use std::os::unix::{ffi::OsStrExt, fs::PermissionsExt};
     let absolute = root.join(&entry.path);
     let metadata = fs::symlink_metadata(&absolute)?;
-    ensure!(
-        metadata.file_type().is_symlink() == entry.symlink,
-        "entry type differs"
-    );
-    if entry.symlink {
-        ensure!(
-            fs::read_link(absolute)?.as_os_str().as_bytes() == entry.data,
-            "symlink differs"
-        );
-    } else {
-        ensure!(fs::read(absolute)? == entry.data, "file bytes differ");
-        ensure!(
-            (metadata.permissions().mode() & 0o100 != 0) == entry.executable,
-            "executable bit differs"
-        );
+    match &entry.contents {
+        Contents::File { data, executable } => {
+            ensure!(metadata.is_file(), "regular file changed type");
+            ensure!(fs::read(absolute)? == *data, "file bytes differ");
+            ensure!(
+                (metadata.permissions().mode() & 0o100 != 0) == *executable,
+                "executable bit differs"
+            );
+        }
+        Contents::Symlink(target) => {
+            ensure!(metadata.file_type().is_symlink(), "symlink changed type");
+            ensure!(
+                fs::read_link(absolute)?.as_os_str().as_bytes() == target,
+                "symlink differs"
+            );
+        }
+        Contents::GitlinkDirectory => {
+            ensure!(
+                metadata.is_dir() && fs::read_dir(absolute)?.next().is_none(),
+                "gitlink directory is missing, changed type or populated"
+            );
+        }
     }
     Ok(())
 }
@@ -1280,17 +1322,6 @@ fn privileged(program: &str) -> Command {
     }
 }
 
-fn command(program: impl AsRef<std::ffi::OsStr>, cwd: &Path) -> Command {
-    let mut command = Command::new(program);
-    command
-        .current_dir(cwd)
-        .env("GIT_CONFIG_NOSYSTEM", "1")
-        .env("GIT_CONFIG_GLOBAL", "/dev/null")
-        .env("XDG_CONFIG_HOME", "/nonexistent/twig-bench")
-        .env("GIT_TERMINAL_PROMPT", "0")
-        .env("TWIG_TRACE", "1");
-    command
-}
 fn checked(output: Output) -> Result<Output> {
     ensure!(
         output.status.success(),
@@ -1449,17 +1480,49 @@ mod tests {
         assert!(error.contains("disk full") && error.contains("busy mount"));
     }
     #[test]
+    fn gitlink_directories_must_be_empty_and_are_never_followed() -> Result<()> {
+        let root = Path::new(env!("CARGO_MANIFEST_DIR"))
+            .join("../../target")
+            .join(format!(
+                "gitlink-check-{}-{}",
+                std::process::id(),
+                SystemTime::now().duration_since(UNIX_EPOCH)?.as_nanos()
+            ));
+        fs::create_dir_all(root.join("sub"))?;
+        let directory = Expected {
+            path: "sub".into(),
+            contents: Contents::GitlinkDirectory,
+        };
+        assert_eq!(directory.logical_bytes(), 0);
+        assert!(private_write_probe([&directory]).is_none());
+        verify_file(&root, &directory)?;
+        fs::write(root.join("sub/private"), "must not be copied\n")?;
+        assert!(verify_file(&root, &directory).is_err());
+        #[cfg(unix)]
+        {
+            std::os::unix::fs::symlink("sub", root.join("link"))?;
+            let link = Expected {
+                path: "link".into(),
+                contents: Contents::GitlinkDirectory,
+            };
+            assert!(verify_file(&root, &link).is_err());
+        }
+        Ok(())
+    }
+
+    #[test]
     fn private_writes_skip_empty_and_sparse_holes() {
         let entry = |data| Expected {
             path: "file".into(),
-            data,
-            symlink: false,
-            executable: false,
+            contents: Contents::File {
+                data,
+                executable: false,
+            },
         };
         let entries = [entry(vec![]), entry(vec![0, 0, 42])];
         let probe = private_write_probe(&entries).unwrap();
         assert_eq!(probe.offset, 2);
-        assert_eq!(probe.entry.data.len(), 3);
+        assert_eq!(probe.data.len(), 3);
         assert!(private_write_probe(&[entry(vec![]), entry(vec![0; 32])]).is_none());
     }
     #[test]

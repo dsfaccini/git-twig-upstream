@@ -46,7 +46,7 @@ fn environment_overrides_are_named_and_trace_is_opt_in() -> Result<()> {
     clean(&f.destination())?;
 
     let f = Fixture::new()?;
-    git(&f.source, &["config", "core.symlinks", "false"])?;
+    git(&f.source, &["sparse-checkout", "init", "--cone"])?;
     let output = checked(
         command(env!("CARGO_BIN_EXE_git-twig"), &f.source)
             .args(["new", "--detach", "../feature"])
@@ -128,6 +128,12 @@ fn hooks_and_disabled_symlinks_are_identified() -> Result<()> {
         clean(&f.destination())?;
     }
     let f = Fixture::new()?;
+    #[cfg(unix)]
+    {
+        std::os::unix::fs::symlink("hello.txt", f.source.join("link"))?;
+        git(&f.source, &["add", "link"])?;
+        git(&f.source, &["commit", "-m", "real symlink"])?;
+    }
     git(&f.source, &["config", "core.symlinks", "false"])?;
     let output = checked(f.add()?)?;
     reason(&output, "core.symlinks=false requires stock Git");
@@ -136,7 +142,7 @@ fn hooks_and_disabled_symlinks_are_identified() -> Result<()> {
 }
 
 #[test]
-fn gitlinks_are_reported_as_submodules() -> Result<()> {
+fn gitlinks_are_git_written_empty_directories() -> Result<()> {
     let f = Fixture::new()?;
     let oid = String::from_utf8(git(&f.source, &["rev-parse", "HEAD"])?.stdout)?;
     git(
@@ -152,7 +158,9 @@ fn gitlinks_are_reported_as_submodules() -> Result<()> {
     )?;
     git(&f.source, &["commit", "-m", "gitlink"])?;
     let output = checked(f.add()?)?;
-    reason(&output, "submodules require stock Git");
+    native(&output);
+    assert!(f.destination().join("sub").is_dir());
+    assert!(fs::read_dir(f.destination().join("sub"))?.next().is_none());
     clean(&f.destination())?;
     Ok(())
 }

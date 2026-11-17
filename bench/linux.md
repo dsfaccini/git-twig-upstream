@@ -17,8 +17,8 @@ Use `--repo label=/absolute/path/to/repo` for public real repositories. The harn
 pins HEAD and creates a new seed; original repositories are read-only inputs.
 `--revision label=FULL_OID` pins the target. `--donor-revision label=FULL_OID`
 can seed a different source commit. LF policies and builtin ident/encoding
-exceptions are supported; external filters, sparse checkout and submodules remain
-outside the native subset. Do not remove attributes just to label a modified
+exceptions and default nonrecursive gitlink directories are supported; regular-file
+external filters and sparse checkout remain outside the native subset. Do not remove attributes just to label a modified
 fixture an unmodified real repository.
 
 ## Isolated Linux environment
@@ -117,7 +117,8 @@ target/release/twig-linux-coverage \
 
 The driver rotates stock Git, frozen Twig and candidate positions by round. It
 covers unchanged incompressible data, changed target revisions, mixed builtin
-conversions, automatic-CRLF binary sharing and many-file concurrency levels. A configured ramp cap or budget is
+conversions, automatic-CRLF binary sharing, nonrecursive gitlinks and many-file
+concurrency levels. A configured ramp cap or budget is
 not a measured capacity ceiling. Every point saves schema-4 raw measurements;
 manifest.json records pins, binary hashes, ordering, correctness, allocation
 stability and any stopping reason. The baseline may delegate where the candidate
@@ -130,6 +131,12 @@ earlier completed target. Source and target commits/trees are recorded separatel
 The private-write probe uses the largest nonzero-data file present in both the target and original
 donor, and all original donor files are checked afterwards. Incorrect points stop
 the run without retry; unstable allocation remains data, not a publishable win.
+
+Benchmark subprocesses explicitly clear inherited Git repository/index redirects,
+injected config and trace destinations, and disable external template/config
+inheritance. This isolation applies to benchmark fixtures, not production Twig.
+Empty gitlink directories are checked for type and emptiness; nested module data
+is not counted as worktree payload.
 
 Runs are local only. Updating README/site numbers, pushing or releasing is a
 separate user decision. See [RFD0015](../docs/rfds/RFD0015-linux-donor-coverage.md).

@@ -93,7 +93,8 @@ parsing the output in a script.
   files while other files retain sharing. Trace output includes per-path counts.
   Upgrade older releases to v0.4.0 or newer for the released LF-policy and filter-state fix.
 - Development builds materialize builtin ident/encoding conversions per file.
-  External filters, sparse checkout and submodules still delegate.
+  Git creates empty submodule directories without copying or initializing donor
+  submodules. External filters on regular files and sparse checkout still delegate.
   Conditional config includes and relative attribute-file configuration also
   delegate. Relative includes in copied worktree configuration also delegate.
   Do not change repository attributes just to
