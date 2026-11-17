@@ -124,6 +124,39 @@ jobs:
           root="$RUNNER_TEMP/overlay-lab/backing"
           if mountpoint -q "$root/merged"; then sudo umount "$root/merged"; fi
           if mountpoint -q "$root"; then sudo umount "$root"; fi
+  ntfs-filesystems:
+    runs-on: ubuntu-latest
+    strategy:
+      matrix:
+        driver: [ntfs3, ntfs-3g]
+    steps:
+      - uses: actions/checkout@v4
+      - uses: dtolnay/rust-toolchain@stable
+      - uses: Swatinem/rust-cache@v2
+      - name: Prepare isolated NTFS image
+        run: |
+          sudo apt-get update
+          sudo apt-get install -y ntfs-3g
+          root="$RUNNER_TEMP/ntfs-lab"
+          mkdir "$root"
+          truncate -s 1G "$root/volume.img"
+          mkfs.ntfs -F -Q -L TwigTest "$root/volume.img"
+          mkdir "$root/mount"
+          if [ '${{ matrix.driver }}' = ntfs3 ]; then
+            sudo mount -t ntfs3 -o "loop,uid=$(id -u),gid=$(id -g),acl" "$root/volume.img" "$root/mount"
+          else
+            sudo ntfs-3g "$root/volume.img" "$root/mount" -o permissions,allow_other
+            sudo chown "$(id -u):$(id -g)" "$root/mount"
+          fi
+      - name: Verify checkout and filesystem-restricted pathname behavior
+        env:
+          TWIG_TEST_FIXTURE_ROOT: ${{ runner.temp }}/ntfs-lab/mount/fixtures
+        run: cargo test -p git-twig --locked
+      - name: Unmount owned NTFS image
+        if: always()
+        run: |
+          root="$RUNNER_TEMP/ntfs-lab"
+          if mountpoint -q "$root/mount"; then sudo umount "$root/mount"; fi
   msrv:
     runs-on: ubuntu-latest
     steps:

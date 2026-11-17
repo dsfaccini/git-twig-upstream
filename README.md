@@ -55,6 +55,8 @@ staging and may leave a partial registered worktree; inspect before retrying.
 | Linux | XFS with `reflink=0` | Stock Git fallback expected | Not separately verified |
 | Linux | OverlayFS over ext4 | Stock Git fallback | Checkout matrix and lower-layer preservation tests |
 | Linux | OverlayFS over reflink-enabled XFS / Btrfs | Native `FICLONE` in tested layouts | Checkout matrix, copy-up and private-write tests |
+| Linux | NTFS (`ntfs3`, ACL-enabled) | Stock Git fallback; no reflink savings | Checkout matrix; UTF-8 name restrictions apply |
+| Linux | NTFS (`ntfs-3g`, permissions enabled) | Stock Git fallback; no reflink savings | Checkout matrix; UTF-8 name restrictions apply |
 | Linux | OpenZFS | Requires usable Linux block-cloning support | Not verified |
 | Linux | NFSv4.2 | Depends on client/server clone support | Not verified |
 | Linux | bcachefs | Exploratory; no support claim | Not verified |

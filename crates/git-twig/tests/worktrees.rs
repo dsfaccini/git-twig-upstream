@@ -367,25 +367,19 @@ fn reference_and_index_hooks_can_reenter_without_registrar_deadlock() -> Result<
 
 #[cfg(unix)]
 #[test]
-fn non_utf8_empty_large_and_sparse_files_have_private_writes() -> Result<()> {
-    use std::{
-        io::{Seek, SeekFrom, Write},
-        os::unix::ffi::OsStringExt,
-    };
+fn empty_large_and_sparse_files_have_private_writes() -> Result<()> {
+    use std::io::{Seek, SeekFrom, Write};
     let f = Fixture::new()?;
-    // APFS requires valid Unicode names; Linux exercises the raw-byte path here.
-    let name = std::ffi::OsString::from_vec(if cfg!(target_os = "macos") {
-        b"unicode-file-shapes".to_vec()
-    } else {
-        b"non-utf8-\xff".to_vec()
-    });
-    fs::create_dir(f.source.join(&name))?;
-    fs::write(f.source.join(&name).join("empty"), b"")?;
+    // File shapes must be exercised even when the filesystem rejects raw-byte
+    // names (APFS and Linux NTFS with UTF-8 pathname conversion, for example).
+    let name = "unicode-file-shapes";
+    fs::create_dir(f.source.join(name))?;
+    fs::write(f.source.join(name).join("empty"), b"")?;
     fs::write(
-        f.source.join(&name).join("large"),
+        f.source.join(name).join("large"),
         vec![0x5a; 2 * 1024 * 1024],
     )?;
-    let mut sparse = fs::File::create(f.source.join(&name).join("sparse"))?;
+    let mut sparse = fs::File::create(f.source.join(name).join("sparse"))?;
     sparse.set_len(16 * 1024 * 1024)?;
     sparse.seek(SeekFrom::Start(8 * 1024 * 1024))?;
     sparse.write_all(b"middle")?;
@@ -395,8 +389,8 @@ fn non_utf8_empty_large_and_sparse_files_have_private_writes() -> Result<()> {
     let output = checked(f.add()?)?;
     native(&output);
     for file in ["empty", "large", "sparse"] {
-        let source = f.source.join(&name).join(file);
-        let target = f.destination().join(&name).join(file);
+        let source = f.source.join(name).join(file);
+        let target = f.destination().join(name).join(file);
         let expected = fs::read(&source)?;
         assert_eq!(fs::read(&target)?, expected);
         fs::OpenOptions::new()

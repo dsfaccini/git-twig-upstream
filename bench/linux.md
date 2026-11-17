@@ -196,3 +196,38 @@ unmount before backing-image unmount. See
 [RFD0017](../docs/rfds/RFD0017-filesystem-capability-and-overlay-coverage.md).
 OpenZFS needs a ZFS-enabled Linux kernel, tools and an owned dataset; absence is
 unverified coverage, not a passing fallback or native-support result.
+
+## NTFS on Linux
+
+Test kernel `ntfs3` and FUSE `ntfs-3g` independently; neither tested configuration
+accepts the reflink probe. This establishes fallback correctness, not Windows
+compatibility or NTFS disk-sharing benefits. Install `ntfs-3g` for its formatter
+and FUSE driver. Use a fresh owned image for each driver, never a real NTFS volume:
+
+```sh
+lab=/absolute/owned/new-ntfs-lab
+mkdir "$lab"
+truncate -s 1G "$lab/volume.img"
+mkfs.ntfs -F -Q -L TwigTest "$lab/volume.img"
+mkdir "$lab/mount"
+# Kernel driver, when available:
+sudo -n mount -t ntfs3 -o "loop,uid=$(id -u),gid=$(id -g),acl" "$lab/volume.img" "$lab/mount"
+# Or, on a separately formatted image, the FUSE driver:
+# sudo -n ntfs-3g "$lab/volume.img" "$lab/mount" -o permissions,allow_other
+# sudo -n chown "$(id -u):$(id -g)" "$lab/mount"
+
+TWIG_TEST_FIXTURE_ROOT="$lab/mount/fixtures" cargo test -p git-twig --locked
+sudo -n umount "$lab/mount"
+```
+
+Do not set `TWIG_TEST_REQUIRE_NATIVE` for these fallback configurations. The
+mounts intentionally enable POSIX permissions: results do not cover arbitrary
+uid/umask/no-permissions mounts. Record the driver, kernel/tool version and mount
+options separately. Retain local images and fixture/log data after unmount.
+
+Linux NTFS with UTF-8 pathname conversion rejects invalid-UTF-8 names. The
+raw-path test inserts such a name directly into the Git index, then requires
+Twig to match stock Git's failure and cleanup. It does not silently skip the
+path or relabel the filesystem restriction as a successful checkout. File-shape
+private-write tests use representable names so empty/large/sparse coverage is
+still exercised on these filesystems.

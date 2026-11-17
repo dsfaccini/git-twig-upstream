@@ -8,7 +8,7 @@
 
 Keep Linux cloning capability-driven, not a filesystem-name allowlist. Extend
 checkout correctness coverage to ext4 and OverlayFS backed by ext4, reflink-enabled
-XFS and Btrfs. OverlayFS is a distinct filesystem layer: its backing filesystem
+XFS and Btrfs, plus Linux NTFS through the separate ntfs3 and ntfs-3g drivers. OverlayFS is a distinct filesystem layer: its backing filesystem
 alone does not certify that cloning works through the mounted view. OpenZFS,
 NFSv4.2 and bcachefs remain unverified until an appropriate environment exists.
 This extends the executable contracts in RFD0011, RFD0012 and RFD0015 without
@@ -49,6 +49,26 @@ mount, then access them through the merged view. Lowerdir is a read-only oracle.
 - A successful ioctl/native trace establishes tested capability, not physical
   disk savings. These compatibility checks are not allocation benchmarks or
   claims about every OverlayFS mount option, kernel or backing filesystem.
+
+## Pathname representability and NTFS
+
+A Linux kernel does not imply that every raw-byte pathname can be represented
+by its mounted filesystems. With UTF-8 pathname conversion, ntfs3 rejects an
+invalid-UTF-8 name with EINVAL and ntfs-3g with EILSEQ. Do not let that fixture
+setup error skip unrelated empty, large and sparse-file isolation tests.
+
+Keep those file-shape tests Unicode-safe and test raw-byte names separately.
+Build the raw-name Git tree through update-index/cacheinfo even if the filesystem
+cannot create the name. Twig must then match stock Git's failure, exit outcome
+and destination cleanup, rather than silently omitting or renaming the path.
+Other I/O errors are not interpreted as an encoding restriction. On filesystems
+that accept the name, compare the successful checkout and private-write behavior.
+
+NTFS coverage is configuration-specific: ntfs3 uses uid/gid plus ACL support;
+ntfs-3g uses permissions/allow_other and an owned mount root. Keep these drivers
+separate. Neither tested driver accepts the clone probe, so no native-CoW or
+allocation savings claim follows. Default mounts without POSIX permission support
+and Windows-hosted NTFS are different configurations, not implied coverage.
 
 ## Alternatives and boundaries
 

@@ -1,5 +1,70 @@
 use super::{donor_coverage::Snapshot, *};
 
+#[test]
+fn raw_byte_paths_match_git_or_its_filesystem_rejection() -> Result<()> {
+    use std::os::unix::ffi::OsStringExt;
+    let f = Fixture::new()?;
+    let name = std::ffi::OsString::from_vec(b"raw-\xff".to_vec());
+    let representable = match fs::write(f.source.join(&name), b"hello\n") {
+        Ok(()) => true,
+        Err(error) if matches!(error.raw_os_error(), Some(libc::EINVAL | libc::EILSEQ)) => {
+            eprintln!("filesystem rejects non-UTF-8 path before Twig: {error}");
+            false
+        }
+        Err(error) => return Err(error.into()),
+    };
+    // Build the same Git tree without requiring the filesystem to represent its
+    // raw name. Unsupported names must fail like Git, not silently disappear.
+    let object = String::from_utf8(git(&f.source, &["rev-parse", "HEAD:hello.txt"])?.stdout)?;
+    checked(
+        command("git", &f.source)
+            .args([
+                "update-index",
+                "--add",
+                "--cacheinfo",
+                "100644",
+                object.trim(),
+            ])
+            .arg(&name)
+            .output()?,
+    )?;
+    git(&f.source, &["commit", "-m", "raw name"])?;
+    let index_before = fs::read(f.source.join(".git/index"))?;
+    let stock = command("git", &f.source)
+        .args(["worktree", "add", "--detach", "../stock", "HEAD"])
+        .output()?;
+    let candidate = f.add()?;
+    assert_eq!(
+        stock.status.success(),
+        representable,
+        "{}",
+        String::from_utf8_lossy(&stock.stderr)
+    );
+    assert_eq!(
+        candidate.status.success(),
+        stock.status.success(),
+        "{}",
+        String::from_utf8_lossy(&candidate.stderr)
+    );
+    if representable {
+        assert_eq!(
+            Snapshot::capture(&f.root.join("stock"))?,
+            Snapshot::capture(&f.destination())?
+        );
+        fs::write(f.destination().join(&name), b"private\n")?;
+        assert_eq!(fs::read(f.source.join(&name))?, b"hello\n");
+    } else {
+        assert_eq!(candidate.status.code(), stock.status.code());
+        assert_eq!(
+            f.destination().try_exists()?,
+            f.root.join("stock").try_exists()?
+        );
+    }
+    assert_eq!(index_before, fs::read(f.source.join(".git/index"))?);
+    assert_eq!(fs::read(f.source.join("hello.txt"))?, b"hello\n");
+    Ok(())
+}
+
 // The lab seeds these repositories before mounting OverlayFS. Modifying lowerdir
 // behind a mounted overlay is undefined; this test only reads it as an oracle.
 #[cfg(target_os = "linux")]
