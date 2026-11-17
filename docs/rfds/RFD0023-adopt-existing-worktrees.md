@@ -19,12 +19,16 @@ From a donor checkout, `git twig adopt --dry-run ../existing` reports same-path
 tracked regular files with byte-identical current contents. Default mode is also
 inspection. Both checkouts must belong to the same Git common directory. Missing,
 different, empty, multiply-linked, cross-device and nonregular files are skipped;
-parent symlinks are not traversed. No ignored/untracked files are adopted.
+parent symlinks are not traversed. Paths must be tracked in both checkouts:
+a target's tracked path does not authorize reading an ignored/untracked donor
+file at the same name. No ignored/untracked files are adopted.
 
 `git twig adopt --prepare ../existing` retains verified private CoW candidate files
 under the common Git directory. Existing worktree files are never replaced.
 Candidates are content experiments, not metadata-complete installable files.
-Preparation changes Git-owned scratch only and can consume metadata space. It
+Preparation changes Git-owned scratch only and can consume metadata space. If
+the scratch filesystem cannot enforce mode 0700, preparation fails before writing
+candidate contents and retains only its empty directory. It
 makes no claim to reclaim existing blocks. Errors leave scratch for inspection.
 
 On Linux, `git twig adopt --dedupe ../existing` uses FIDEDUPERANGE in place. The
@@ -52,7 +56,10 @@ open target descriptor; mismatch fails and retains scratch.
 
 Linux ioctl requests use bounded ranges, inspect both syscall and per-destination
 status, and advance only by reported successful bytes. The kernel equality check,
-not prior inspection, authorizes each range. Partial failure is not rollback:
+not prior inspection, authorizes each range. Acceptance is layer- and
+descriptor-specific: an OverlayFS upper-file probe does not authorize assuming
+that a read-only lower donor can deduplicate into an upper target. Kernel refusal
+must remain explicit; do not force donor copy-up or replace files to bypass it. Partial failure is not rollback:
 earlier ranges may already share blocks, without changing either file's bytes.
 The output distinguishes observed matching logical bytes, prepared clone bytes,
 and kernel-reported deduplicated bytes. None means exclusive physical allocation

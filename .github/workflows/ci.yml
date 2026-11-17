@@ -56,6 +56,9 @@ jobs:
           mkdir -p target/test-fixtures
           sudo mount -o loop "$image" target/test-fixtures
           sudo chown "$(id -u):$(id -g)" target/test-fixtures
+      - name: Independently probe Linux adoption primitives
+        if: runner.os == 'Linux'
+        run: python3 crates/git-twig/tests/fixtures/probe-linux-adoption.py target/test-fixtures --github-env
       - name: Require native Linux reflinks
         if: runner.os == 'Linux'
         env:
@@ -124,7 +127,11 @@ jobs:
           if [ '${{ matrix.backing }}' != ext4 ]; then
             export TWIG_TEST_REQUIRE_NATIVE=1
           fi
+          TWIG_TEST_DEDUPE_SUPPORTED=$(python3 crates/git-twig/tests/fixtures/probe-linux-adoption.py "$root" | python3 -c 'import json,sys; print(int(json.load(sys.stdin)["dedupeSupported"]))')
+          export TWIG_TEST_DEDUPE_SUPPORTED
           TWIG_TEST_FIXTURE_ROOT="$root/plain-fixtures" cargo test -p git-twig --locked
+          TWIG_TEST_DEDUPE_SUPPORTED=$(python3 crates/git-twig/tests/fixtures/probe-linux-adoption.py "$root/merged" | python3 -c 'import json,sys; print(int(json.load(sys.stdin)["dedupeSupported"]))')
+          export TWIG_TEST_DEDUPE_SUPPORTED
           TWIG_TEST_FIXTURE_ROOT="$root/merged/upper-fixtures" cargo test -p git-twig --locked
       - name: Check lower-layer copy-up, private writes and source preservation
         env:
@@ -136,6 +143,22 @@ jobs:
           fi
           cargo test -p git-twig --test worktrees --locked -- \
             --exact filesystem_coverage::overlay_lower_layer_checkout_matches_git_without_mutating_lower_inputs
+      - name: Verify lower-layer adoption and kernel refusals
+        run: |
+          root="$RUNNER_TEMP/overlay-lab/backing"
+          capability=$(python3 crates/git-twig/tests/fixtures/probe-linux-adoption.py "$root/merged")
+          executable=$(printf '%s' "$capability" | python3 -c 'import json,sys; print(json.load(sys.stdin)["artifacts"] + "/dedupe-probe")')
+          TWIG_TEST_CLONE_SUPPORTED=$(printf '%s' "$capability" | python3 -c 'import json,sys; print(int(json.load(sys.stdin)["cloneSupported"]))')
+          export TWIG_TEST_CLONE_SUPPORTED
+          layout=$(python3 crates/git-twig/tests/fixtures/prepare-adoption-overlay.py "$root")
+          TWIG_TEST_ADOPT_OVERLAY_CASE=$(printf '%s' "$layout" | python3 -c 'import json,sys; print(json.load(sys.stdin)["case"])')
+          export TWIG_TEST_ADOPT_OVERLAY_CASE
+          trap 'sudo umount "$TWIG_TEST_ADOPT_OVERLAY_CASE"' EXIT
+          TWIG_TEST_ADOPT_OVERLAY_ORACLE=$(printf '%s' "$layout" | python3 -c 'import json,sys; print(json.load(sys.stdin)["oracle"])')
+          export TWIG_TEST_ADOPT_OVERLAY_ORACLE
+          TWIG_TEST_DEDUPE_SUPPORTED=$("$executable" "$TWIG_TEST_ADOPT_OVERLAY_CASE/probe" --existing | python3 -c 'import json,sys; print(int(json.load(sys.stdin)["supported"]))')
+          export TWIG_TEST_DEDUPE_SUPPORTED
+          cargo test -p git-twig --test worktrees --locked overlay_lower_layer_adoption
       - name: Unmount owned filesystems
         if: always()
         run: |
@@ -166,6 +189,8 @@ jobs:
             sudo ntfs-3g "$root/volume.img" "$root/mount" -o permissions,allow_other
             sudo chown "$(id -u):$(id -g)" "$root/mount"
           fi
+      - name: Independently probe NTFS adoption capabilities
+        run: python3 crates/git-twig/tests/fixtures/probe-linux-adoption.py "$RUNNER_TEMP/ntfs-lab/mount" --github-env
       - name: Verify checkout and filesystem-restricted pathname behavior
         env:
           TWIG_TEST_FIXTURE_ROOT: ${{ runner.temp }}/ntfs-lab/mount/fixtures
@@ -202,6 +227,8 @@ jobs:
             fi
             sudo mount -t '${{ matrix.filesystem }}' -o "loop,uid=$(id -u),gid=$(id -g),umask=022" "$root/volume.img" "$root/mount"
           fi
+      - name: Independently probe portable adoption capabilities
+        run: python3 crates/git-twig/tests/fixtures/probe-linux-adoption.py "$RUNNER_TEMP/portable-lab/mount" --github-env
       - name: Check appropriate filesystem contract
         env:
           TWIG_TEST_FIXTURE_ROOT: ${{ runner.temp }}/portable-lab/mount/fixtures
@@ -209,6 +236,7 @@ jobs:
           if [ '${{ matrix.filesystem }}' = tmpfs ]; then
             TWIG_TEST_CROSS_FILESYSTEM_ROOT="$RUNNER_TEMP/portable-lab/other" cargo test -p git-twig --locked
           else
+            cargo test -p git-twig --test worktrees --locked adopt::linux::
             cargo test -p git-twig --test worktrees --locked filesystem_coverage::portable_
             cargo test -p git-twig --test worktrees --locked raw_byte_paths_match_git_or_its_filesystem_rejection
             cargo test -p git-twig --test worktrees --locked empty_large_and_sparse_files_have_private_writes

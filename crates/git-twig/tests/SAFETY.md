@@ -45,6 +45,33 @@ The ignored-file fixture checks correctness, not a performance threshold. There
 are no elapsed-time assertions. Dependency scripts are never executed. These tests
 do not claim to fix or reproduce issue #5's two-minute slowdown.
 
+## Existing-worktree adoption
+
+`cases/adopt_linux.rs` compares current raw bytes, identities, modes, indexes and
+registration for inspection, preparation and in-place deduplication. It exercises
+non-clone filesystems instead of skipping inspection with the cloning tests.
+Donor-only ignored/untracked files must be excluded even when the target tracks
+the same path. Scratch preparation must reject filesystems that cannot enforce
+private directory permissions before writing candidate contents.
+
+`fixtures/probe-linux-adoption.py` compiles a separate C probe against installed
+Linux UAPI headers. It distinguishes FICLONE from FIDEDUPERANGE and retains syscall,
+per-range status and byte counts. `TWIG_TEST_DEDUPE_SUPPORTED=0|1` passes this
+independent result into the CLI tests; never infer it from a filesystem name or a
+successful reflink. Required-native jobs also execute the ignored live-descriptor,
+writable-mapping and stale-equality cases.
+
+`fixtures/prepare-adoption-overlay.py` creates registrations through a temporary
+bind mount before enabling OverlayFS, so recorded paths match the future merged
+view without changing an active lower layer. The lower-layer test independently
+probes its read-only-donor/writable-target descriptor combination. Upper-layer
+success does not imply lower-layer acceptance: a kernel refusal must preserve both
+merged checkouts and the raw lower oracle. Private writes must remain private.
+
+exFAT/VFAT exercise the regular-file portable subset and safe refusal, not POSIX
+mode or symlink compatibility. Tests do not measure physical block reclamation,
+and OpenZFS/NFS remain outside this local-filesystem adoption matrix.
+
 ## Still required for broader coverage
 
 - Deterministic failure at each individual installation/repair step, not only

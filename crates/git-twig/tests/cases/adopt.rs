@@ -1,4 +1,8 @@
 use super::*;
+
+#[cfg(target_os = "linux")]
+#[path = "adopt_linux.rs"]
+mod linux;
 use std::{
     collections::BTreeMap,
     os::unix::fs::{MetadataExt, PermissionsExt, symlink},

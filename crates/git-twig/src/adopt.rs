@@ -66,6 +66,7 @@ pub(super) fn run(cwd: &Path, args: &[OsString]) -> Result<i32> {
 mod unix {
     use super::*;
     use std::{
+        collections::HashSet,
         ffi::CString,
         fs::{self, File, OpenOptions},
         io::Write,
@@ -196,6 +197,10 @@ mod unix {
             SystemTime::now().duration_since(UNIX_EPOCH)?.as_nanos()
         ));
         fs::DirBuilder::new().mode(0o700).create(&path)?;
+        ensure!(
+            fs::symlink_metadata(&path)?.mode() & 0o777 == 0o700,
+            "filesystem cannot protect private preparation scratch; empty directory retained at {path:?}"
+        );
         eprintln!(
             "git-twig: prepared candidates retained at {path:?}; existing files will NOT be replaced"
         );
@@ -286,6 +291,13 @@ mod unix {
             "--deduplicate",
             "-z",
         ]))?;
+        let donor_files =
+            crate::checked(git(&donor_path).args(["ls-files", "--cached", "--deduplicate", "-z"]))?;
+        let donor_paths: HashSet<&[u8]> = donor_files
+            .stdout
+            .split(|b| *b == 0)
+            .filter(|path| !path.is_empty())
+            .collect();
         let donor = directory(&donor_path)?;
         let target = directory(&target_path)?;
         let stage = if request.mode == Mode::Prepare {
@@ -308,6 +320,11 @@ mod unix {
         let mut deduped_bytes = 0u64;
         for raw in output.stdout.split(|b| *b == 0).filter(|p| !p.is_empty()) {
             let relative = PathBuf::from(crate::native::os_string(raw.to_vec()));
+            if !donor_paths.contains(raw) {
+                skipped += 1;
+                println!("skip {relative:?}: donor path is not tracked");
+                continue;
+            }
             let pair = match matching_pair(&donor, &target, &relative, request.mode) {
                 Ok(pair) => pair,
                 Err(error) => {
