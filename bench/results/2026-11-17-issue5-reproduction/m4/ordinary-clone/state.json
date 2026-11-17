@@ -1,0 +1,337 @@
+{
+  "schemaVersion": 1,
+  "phase": "finished",
+  "current": "released-v04-r2",
+  "pid": null,
+  "supervisorPid": 60528,
+  "updatedAt": "2026-11-17T08:23:29.332Z",
+  "results": [
+    {
+      "arm": "git",
+      "repeat": 0,
+      "args": [
+        "/opt/homebrew/bin/git",
+        "worktree",
+        "add",
+        "--detach",
+        "/Users/leostera/Developer/twig-issue5-repro-20261117/reproduction-points-ordinary-clone/git-r0",
+        "HEAD"
+      ],
+      "exitCode": 0,
+      "elapsedMs": 5290.1655,
+      "loadBefore": [
+        7.89599609375,
+        3.71484375,
+        2.65966796875
+      ],
+      "loadAfter": [
+        7.583984375,
+        3.71923828125,
+        2.66748046875
+      ],
+      "nativeCow": false,
+      "verified": true,
+      "sourceUnchanged": true,
+      "privateWriteIsolated": true
+    },
+    {
+      "arm": "released-v03",
+      "repeat": 0,
+      "args": [
+        "/Users/leostera/Developer/twig-issue5-repro-20261117/v0.3.0/git-twig",
+        "new",
+        "--detach",
+        "/Users/leostera/Developer/twig-issue5-repro-20261117/reproduction-points-ordinary-clone/released-v03-r0",
+        "HEAD"
+      ],
+      "exitCode": 0,
+      "elapsedMs": 5110.255625000002,
+      "loadBefore": [
+        10.43408203125,
+        4.453125,
+        2.939453125
+      ],
+      "loadAfter": [
+        11.84033203125,
+        4.84375,
+        3.0859375
+      ],
+      "nativeCow": false,
+      "verified": true,
+      "sourceUnchanged": true,
+      "privateWriteIsolated": true
+    },
+    {
+      "arm": "reported-870-rust1991",
+      "repeat": 0,
+      "args": [
+        "/Users/leostera/Developer/twig-issue5-repro-20261117/reported-target/release/git-twig",
+        "new",
+        "--detach",
+        "/Users/leostera/Developer/twig-issue5-repro-20261117/reproduction-points-ordinary-clone/reported-870-rust1991-r0",
+        "HEAD"
+      ],
+      "exitCode": 0,
+      "elapsedMs": 6862.537832999995,
+      "loadBefore": [
+        13.9560546875,
+        5.5244140625,
+        3.34716796875
+      ],
+      "loadAfter": [
+        16.4033203125,
+        6.3291015625,
+        3.65771484375
+      ],
+      "nativeCow": true,
+      "verified": true,
+      "sourceUnchanged": true,
+      "privateWriteIsolated": true
+    },
+    {
+      "arm": "released-v04",
+      "repeat": 0,
+      "args": [
+        "/Users/leostera/Developer/twig-issue5-repro-20261117/v0.4.0/git-twig",
+        "new",
+        "--detach",
+        "/Users/leostera/Developer/twig-issue5-repro-20261117/reproduction-points-ordinary-clone/released-v04-r0",
+        "HEAD"
+      ],
+      "exitCode": 0,
+      "elapsedMs": 5475.515416999995,
+      "loadBefore": [
+        15.60400390625,
+        6.64013671875,
+        3.814453125
+      ],
+      "loadAfter": [
+        16.43603515625,
+        6.96142578125,
+        3.9443359375
+      ],
+      "nativeCow": true,
+      "verified": true,
+      "sourceUnchanged": true,
+      "privateWriteIsolated": true
+    },
+    {
+      "arm": "released-v04",
+      "repeat": 1,
+      "args": [
+        "/Users/leostera/Developer/twig-issue5-repro-20261117/v0.4.0/git-twig",
+        "new",
+        "--detach",
+        "/Users/leostera/Developer/twig-issue5-repro-20261117/reproduction-points-ordinary-clone/released-v04-r1",
+        "HEAD"
+      ],
+      "exitCode": 0,
+      "elapsedMs": 5370.484250000009,
+      "loadBefore": [
+        18.93896484375,
+        8.10693359375,
+        4.421875
+      ],
+      "loadAfter": [
+        18.54345703125,
+        8.20458984375,
+        4.4775390625
+      ],
+      "nativeCow": true,
+      "verified": true,
+      "sourceUnchanged": true,
+      "privateWriteIsolated": true
+    },
+    {
+      "arm": "reported-870-rust1991",
+      "repeat": 1,
+      "args": [
+        "/Users/leostera/Developer/twig-issue5-repro-20261117/reported-target/release/git-twig",
+        "new",
+        "--detach",
+        "/Users/leostera/Developer/twig-issue5-repro-20261117/reproduction-points-ordinary-clone/reported-870-rust1991-r1",
+        "HEAD"
+      ],
+      "exitCode": 0,
+      "elapsedMs": 6858.660707999996,
+      "loadBefore": [
+        18.390625,
+        8.6953125,
+        4.71826171875
+      ],
+      "loadAfter": [
+        20.6298828125,
+        9.4951171875,
+        5.04833984375
+      ],
+      "nativeCow": true,
+      "verified": true,
+      "sourceUnchanged": true,
+      "privateWriteIsolated": true
+    },
+    {
+      "arm": "released-v03",
+      "repeat": 1,
+      "args": [
+        "/Users/leostera/Developer/twig-issue5-repro-20261117/v0.3.0/git-twig",
+        "new",
+        "--detach",
+        "/Users/leostera/Developer/twig-issue5-repro-20261117/reproduction-points-ordinary-clone/released-v03-r1",
+        "HEAD"
+      ],
+      "exitCode": 0,
+      "elapsedMs": 5150.280833000012,
+      "loadBefore": [
+        21.1806640625,
+        10.14404296875,
+        5.35595703125
+      ],
+      "loadAfter": [
+        20.044921875,
+        10.091796875,
+        5.365234375
+      ],
+      "nativeCow": false,
+      "verified": true,
+      "sourceUnchanged": true,
+      "privateWriteIsolated": true
+    },
+    {
+      "arm": "git",
+      "repeat": 1,
+      "args": [
+        "/opt/homebrew/bin/git",
+        "worktree",
+        "add",
+        "--detach",
+        "/Users/leostera/Developer/twig-issue5-repro-20261117/reproduction-points-ordinary-clone/git-r1",
+        "HEAD"
+      ],
+      "exitCode": 0,
+      "elapsedMs": 5143.521124999999,
+      "loadBefore": [
+        22.31005859375,
+        11.08154296875,
+        5.80029296875
+      ],
+      "loadAfter": [
+        23.166015625,
+        11.4453125,
+        5.95947265625
+      ],
+      "nativeCow": false,
+      "verified": true,
+      "sourceUnchanged": true,
+      "privateWriteIsolated": true
+    },
+    {
+      "arm": "git",
+      "repeat": 2,
+      "args": [
+        "/opt/homebrew/bin/git",
+        "worktree",
+        "add",
+        "--detach",
+        "/Users/leostera/Developer/twig-issue5-repro-20261117/reproduction-points-ordinary-clone/git-r2",
+        "HEAD"
+      ],
+      "exitCode": 0,
+      "elapsedMs": 4749.695124999998,
+      "loadBefore": [
+        20.619140625,
+        11.28271484375,
+        5.96533203125
+      ],
+      "loadAfter": [
+        21.6103515625,
+        11.64306640625,
+        6.12353515625
+      ],
+      "nativeCow": false,
+      "verified": true,
+      "sourceUnchanged": true,
+      "privateWriteIsolated": true
+    },
+    {
+      "arm": "released-v03",
+      "repeat": 2,
+      "args": [
+        "/Users/leostera/Developer/twig-issue5-repro-20261117/v0.3.0/git-twig",
+        "new",
+        "--detach",
+        "/Users/leostera/Developer/twig-issue5-repro-20261117/reproduction-points-ordinary-clone/released-v03-r2",
+        "HEAD"
+      ],
+      "exitCode": 0,
+      "elapsedMs": 4899.613500000007,
+      "loadBefore": [
+        18.533203125,
+        11.4482421875,
+        6.14990234375
+      ],
+      "loadAfter": [
+        17.76953125,
+        11.4072265625,
+        6.16650390625
+      ],
+      "nativeCow": false,
+      "verified": true,
+      "sourceUnchanged": true,
+      "privateWriteIsolated": true
+    },
+    {
+      "arm": "reported-870-rust1991",
+      "repeat": 2,
+      "args": [
+        "/Users/leostera/Developer/twig-issue5-repro-20261117/reported-target/release/git-twig",
+        "new",
+        "--detach",
+        "/Users/leostera/Developer/twig-issue5-repro-20261117/reproduction-points-ordinary-clone/reported-870-rust1991-r2",
+        "HEAD"
+      ],
+      "exitCode": 0,
+      "elapsedMs": 7057.3479579999985,
+      "loadBefore": [
+        17.50634765625,
+        11.54541015625,
+        6.27587890625
+      ],
+      "loadAfter": [
+        19.7373046875,
+        12.23193359375,
+        6.58154296875
+      ],
+      "nativeCow": true,
+      "verified": true,
+      "sourceUnchanged": true,
+      "privateWriteIsolated": true
+    },
+    {
+      "arm": "released-v04",
+      "repeat": 2,
+      "args": [
+        "/Users/leostera/Developer/twig-issue5-repro-20261117/v0.4.0/git-twig",
+        "new",
+        "--detach",
+        "/Users/leostera/Developer/twig-issue5-repro-20261117/reproduction-points-ordinary-clone/released-v04-r2",
+        "HEAD"
+      ],
+      "exitCode": 0,
+      "elapsedMs": 5482.539041000011,
+      "loadBefore": [
+        20.80908203125,
+        12.82666015625,
+        6.8916015625
+      ],
+      "loadAfter": [
+        20.423828125,
+        12.87890625,
+        6.94482421875
+      ],
+      "nativeCow": true,
+      "verified": true,
+      "sourceUnchanged": true,
+      "privateWriteIsolated": true
+    }
+  ]
+}

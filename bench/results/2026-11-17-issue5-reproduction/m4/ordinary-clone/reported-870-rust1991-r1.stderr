@@ -1,0 +1,24 @@
+git-twig: staging retained on failure at /Users/leostera/Developer/twig-issue5-repro-20261117/docs/.git/twigs/staging/.git-twig-stage-61521-0
+git-twig: APFS directory clones: 20
+git-twig: checkout: 14811 verified file clones, 0 Git-written paths
+git-twig: APFS CoW: verified tracked files
+Preparing worktree (detached HEAD 430261138a)
+git-twig: shared repository: /Users/leostera/Developer/twig-issue5-repro-20261117/docs
+        6.84 real         2.46 user         2.31 sys
+          1223770112  maximum resident set size
+                   0  average shared memory size
+                   0  average unshared data size
+                   0  average unshared stack size
+              104164  page reclaims
+                 230  page faults
+                   0  swaps
+                   0  block input operations
+                   0  block output operations
+                   7  messages sent
+                   7  messages received
+                   0  signals received
+               73085  voluntary context switches
+               11913  involuntary context switches
+         15966168347  instructions retired
+          5339288608  cycles elapsed
+            14074192  peak memory footprint

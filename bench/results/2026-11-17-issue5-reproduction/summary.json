@@ -1,0 +1,594 @@
+{
+  "schemaVersion": 1,
+  "inputCommit": "430261138aa08539cd598b9269bfe8f82fd49b78",
+  "verifiedMeasuredCreates": 48,
+  "scenarios": [
+    {
+      "name": "M1 Ultra — ordinary clone",
+      "directory": "ordinary-clone",
+      "environment": {
+        "os": "ProductName:\t\tmacOS\nProductVersion:\t\t26.5\nBuildVersion:\t\t25F71",
+        "cpu": "Apple M1 Ultra",
+        "git": "git version 2.56.1"
+      },
+      "ignoredSourceFiles": 0,
+      "statistics": [
+        {
+          "arm": "git",
+          "samples": 3,
+          "p50Ms": 4424.334333999999,
+          "empiricalP95Ms": 5219.6165,
+          "empiricalP99Ms": 5219.6165,
+          "minMs": 4085.253834000003,
+          "maxMs": 5219.6165,
+          "logicalPayloadBytesPerSecond": 283773834.25834024,
+          "trackedFilesPerSecond": 3347.6222369048483,
+          "resources": [
+            {
+              "userCpuSeconds": 1.93,
+              "systemCpuSeconds": 2.04,
+              "maxRssBytes": 1232666624
+            },
+            {
+              "userCpuSeconds": 1.94,
+              "systemCpuSeconds": 2.13,
+              "maxRssBytes": 1229357056
+            },
+            {
+              "userCpuSeconds": 1.95,
+              "systemCpuSeconds": 1.99,
+              "maxRssBytes": 1232977920
+            }
+          ],
+          "phases": []
+        },
+        {
+          "arm": "released-v03",
+          "samples": 3,
+          "p50Ms": 4371.333207999996,
+          "empiricalP95Ms": 4425.483833,
+          "empiricalP99Ms": 4425.483833,
+          "minMs": 4257.576667000001,
+          "maxMs": 4425.483833,
+          "logicalPayloadBytesPerSecond": 287214508.3111681,
+          "trackedFilesPerSecond": 3388.2111692822505,
+          "resources": [
+            {
+              "userCpuSeconds": 2.03,
+              "systemCpuSeconds": 2.2,
+              "maxRssBytes": 1232191488
+            },
+            {
+              "userCpuSeconds": 2.05,
+              "systemCpuSeconds": 2.05,
+              "maxRssBytes": 1231273984
+            },
+            {
+              "userCpuSeconds": 2.03,
+              "systemCpuSeconds": 2.1,
+              "maxRssBytes": 1231978496
+            }
+          ],
+          "phases": []
+        },
+        {
+          "arm": "reported-870-rust1991",
+          "samples": 3,
+          "p50Ms": 5713.247000000003,
+          "empiricalP95Ms": 5751.165333000001,
+          "empiricalP99Ms": 5751.165333000001,
+          "minMs": 5651.997583000004,
+          "maxMs": 5751.165333000001,
+          "logicalPayloadBytesPerSecond": 219754251.4790625,
+          "trackedFilesPerSecond": 2592.3962328252205,
+          "resources": [
+            {
+              "userCpuSeconds": 2.12,
+              "systemCpuSeconds": 2.18,
+              "maxRssBytes": 1224310784
+            },
+            {
+              "userCpuSeconds": 2.13,
+              "systemCpuSeconds": 2.05,
+              "maxRssBytes": 1224376320
+            },
+            {
+              "userCpuSeconds": 2.13,
+              "systemCpuSeconds": 2.04,
+              "maxRssBytes": 1224933376
+            }
+          ],
+          "phases": []
+        },
+        {
+          "arm": "released-v04",
+          "samples": 3,
+          "p50Ms": 3463.970708999994,
+          "empiricalP95Ms": 3540.587375000003,
+          "empiricalP99Ms": 3540.587375000003,
+          "minMs": 3430.1884589999972,
+          "maxMs": 3540.587375000003,
+          "logicalPayloadBytesPerSecond": 362448306.7186358,
+          "trackedFilesPerSecond": 4275.728995490194,
+          "resources": [
+            {
+              "userCpuSeconds": 3.37,
+              "systemCpuSeconds": 2.23,
+              "maxRssBytes": 109101056
+            },
+            {
+              "userCpuSeconds": 3.37,
+              "systemCpuSeconds": 2.24,
+              "maxRssBytes": 109166592
+            },
+            {
+              "userCpuSeconds": 3.38,
+              "systemCpuSeconds": 2.25,
+              "maxRssBytes": 109232128
+            }
+          ],
+          "phases": [
+            {
+              "snapshotMs": 937,
+              "verificationMs": 1973,
+              "totalPreparationMs": 3214
+            },
+            {
+              "snapshotMs": 956,
+              "verificationMs": 1973,
+              "totalPreparationMs": 3241
+            },
+            {
+              "snapshotMs": 996,
+              "verificationMs": 2000,
+              "totalPreparationMs": 3315
+            }
+          ]
+        }
+      ],
+      "severeSlowdownObserved": false
+    },
+    {
+      "name": "M1 Ultra — nested ignored 50k",
+      "directory": "nested-ignored-50000",
+      "environment": {
+        "os": "ProductName:\t\tmacOS\nProductVersion:\t\t26.5\nBuildVersion:\t\t25F71",
+        "cpu": "Apple M1 Ultra",
+        "git": "git version 2.56.1"
+      },
+      "ignoredSourceFiles": 50000,
+      "statistics": [
+        {
+          "arm": "git",
+          "samples": 3,
+          "p50Ms": 4209.112542000017,
+          "empiricalP95Ms": 5360.131958,
+          "empiricalP99Ms": 5360.131958,
+          "minMs": 4122.239582999988,
+          "maxMs": 5360.131958,
+          "logicalPayloadBytesPerSecond": 298283855.67553085,
+          "trackedFilesPerSecond": 3518.794009951169,
+          "resources": [
+            {
+              "userCpuSeconds": 1.93,
+              "systemCpuSeconds": 2.1,
+              "maxRssBytes": 1231568896
+            },
+            {
+              "userCpuSeconds": 1.96,
+              "systemCpuSeconds": 2.02,
+              "maxRssBytes": 1231224832
+            },
+            {
+              "userCpuSeconds": 1.95,
+              "systemCpuSeconds": 2.05,
+              "maxRssBytes": 1235533824
+            }
+          ],
+          "phases": []
+        },
+        {
+          "arm": "released-v03",
+          "samples": 3,
+          "p50Ms": 4315.547166999997,
+          "empiricalP95Ms": 4620.633208999992,
+          "empiricalP99Ms": 4620.633208999992,
+          "minMs": 4197.626958000001,
+          "maxMs": 4620.633208999992,
+          "logicalPayloadBytesPerSecond": 290927261.229028,
+          "trackedFilesPerSecond": 3432.0097607219614,
+          "resources": [
+            {
+              "userCpuSeconds": 2.03,
+              "systemCpuSeconds": 1.99,
+              "maxRssBytes": 1233567744
+            },
+            {
+              "userCpuSeconds": 2.03,
+              "systemCpuSeconds": 2.06,
+              "maxRssBytes": 1229815808
+            },
+            {
+              "userCpuSeconds": 2.07,
+              "systemCpuSeconds": 2.34,
+              "maxRssBytes": 1236041728
+            }
+          ],
+          "phases": []
+        },
+        {
+          "arm": "reported-870-rust1991",
+          "samples": 3,
+          "p50Ms": 9958.330999999991,
+          "empiricalP95Ms": 13586.21441700001,
+          "empiricalP99Ms": 13586.21441700001,
+          "minMs": 9587.087167000002,
+          "maxMs": 13586.21441700001,
+          "logicalPayloadBytesPerSecond": 126076379.4655953,
+          "trackedFilesPerSecond": 1487.2974196178068,
+          "resources": [
+            {
+              "userCpuSeconds": 2.17,
+              "systemCpuSeconds": 5.36,
+              "maxRssBytes": 1226145792
+            },
+            {
+              "userCpuSeconds": 2.18,
+              "systemCpuSeconds": 5.46,
+              "maxRssBytes": 1225162752
+            },
+            {
+              "userCpuSeconds": 2.48,
+              "systemCpuSeconds": 7.13,
+              "maxRssBytes": 1233502208
+            }
+          ],
+          "phases": []
+        },
+        {
+          "arm": "released-v04",
+          "samples": 3,
+          "p50Ms": 8309.429999999993,
+          "empiricalP95Ms": 8311.138458000001,
+          "empiricalP99Ms": 8311.138458000001,
+          "minMs": 7266.026957999995,
+          "maxMs": 8311.138458000001,
+          "logicalPayloadBytesPerSecond": 151094638.01969582,
+          "trackedFilesPerSecond": 1782.4327300428563,
+          "resources": [
+            {
+              "userCpuSeconds": 3.43,
+              "systemCpuSeconds": 5.39,
+              "maxRssBytes": 109182976
+            },
+            {
+              "userCpuSeconds": 3.44,
+              "systemCpuSeconds": 6.17,
+              "maxRssBytes": 109248512
+            },
+            {
+              "userCpuSeconds": 3.45,
+              "systemCpuSeconds": 6.03,
+              "maxRssBytes": 109182976
+            }
+          ],
+          "phases": [
+            {
+              "snapshotMs": 4707,
+              "verificationMs": 2024,
+              "totalPreparationMs": 7038
+            },
+            {
+              "snapshotMs": 5680,
+              "verificationMs": 2082,
+              "totalPreparationMs": 8071.999999999999
+            },
+            {
+              "snapshotMs": 5544,
+              "verificationMs": 2150,
+              "totalPreparationMs": 7997
+            }
+          ]
+        }
+      ],
+      "severeSlowdownObserved": false
+    },
+    {
+      "name": "M1 Ultra — top-level ignored 50k",
+      "directory": "top-level-ignored-50000",
+      "environment": {
+        "os": "ProductName:\t\tmacOS\nProductVersion:\t\t26.5\nBuildVersion:\t\t25F71",
+        "cpu": "Apple M1 Ultra",
+        "git": "git version 2.56.1"
+      },
+      "ignoredSourceFiles": 50000,
+      "statistics": [
+        {
+          "arm": "git",
+          "samples": 3,
+          "p50Ms": 4382.5868340000015,
+          "empiricalP95Ms": 5826.419208,
+          "empiricalP99Ms": 5826.419208,
+          "minMs": 4356.3586249999935,
+          "maxMs": 5826.419208,
+          "logicalPayloadBytesPerSecond": 286476997.616974,
+          "trackedFilesPerSecond": 3379.5109055447856,
+          "resources": [
+            {
+              "userCpuSeconds": 1.98,
+              "systemCpuSeconds": 2.52,
+              "maxRssBytes": 1234403328
+            },
+            {
+              "userCpuSeconds": 1.96,
+              "systemCpuSeconds": 2.27,
+              "maxRssBytes": 1229815808
+            },
+            {
+              "userCpuSeconds": 1.96,
+              "systemCpuSeconds": 2.21,
+              "maxRssBytes": 1230733312
+            }
+          ],
+          "phases": []
+        },
+        {
+          "arm": "released-v03",
+          "samples": 3,
+          "p50Ms": 4557.919291999991,
+          "empiricalP95Ms": 4622.913499999999,
+          "empiricalP99Ms": 4622.913499999999,
+          "minMs": 4553.7037080000155,
+          "maxMs": 4622.913499999999,
+          "logicalPayloadBytesPerSecond": 275456899.862983,
+          "trackedFilesPerSecond": 3249.509052517911,
+          "resources": [
+            {
+              "userCpuSeconds": 2.05,
+              "systemCpuSeconds": 2.39,
+              "maxRssBytes": 1232404480
+            },
+            {
+              "userCpuSeconds": 2.04,
+              "systemCpuSeconds": 2.27,
+              "maxRssBytes": 1231994880
+            },
+            {
+              "userCpuSeconds": 2.06,
+              "systemCpuSeconds": 2.32,
+              "maxRssBytes": 1229406208
+            }
+          ],
+          "phases": []
+        },
+        {
+          "arm": "reported-870-rust1991",
+          "samples": 3,
+          "p50Ms": 5846.747625000004,
+          "empiricalP95Ms": 6015.895916000005,
+          "empiricalP99Ms": 6015.895916000005,
+          "minMs": 5799.271458000003,
+          "maxMs": 6015.895916000005,
+          "logicalPayloadBytesPerSecond": 214736533.6296689,
+          "trackedFilesPerSecond": 2533.2032353628383,
+          "resources": [
+            {
+              "userCpuSeconds": 2.14,
+              "systemCpuSeconds": 2.3,
+              "maxRssBytes": 1224409088
+            },
+            {
+              "userCpuSeconds": 2.13,
+              "systemCpuSeconds": 2.19,
+              "maxRssBytes": 1224556544
+            },
+            {
+              "userCpuSeconds": 2.13,
+              "systemCpuSeconds": 2.23,
+              "maxRssBytes": 1224622080
+            }
+          ],
+          "phases": []
+        },
+        {
+          "arm": "released-v04",
+          "samples": 3,
+          "p50Ms": 3726.363083999997,
+          "empiricalP95Ms": 3774.9096250000002,
+          "empiricalP99Ms": 3774.9096250000002,
+          "minMs": 3619.712333000003,
+          "maxMs": 3774.9096250000002,
+          "logicalPayloadBytesPerSecond": 336926458.77446145,
+          "trackedFilesPerSecond": 3974.65294340062,
+          "resources": [
+            {
+              "userCpuSeconds": 3.39,
+              "systemCpuSeconds": 2.38,
+              "maxRssBytes": 109182976
+            },
+            {
+              "userCpuSeconds": 3.37,
+              "systemCpuSeconds": 2.43,
+              "maxRssBytes": 109232128
+            },
+            {
+              "userCpuSeconds": 3.37,
+              "systemCpuSeconds": 2.42,
+              "maxRssBytes": 109199360
+            }
+          ],
+          "phases": [
+            {
+              "snapshotMs": 996,
+              "verificationMs": 2079,
+              "totalPreparationMs": 3390
+            },
+            {
+              "snapshotMs": 1124,
+              "verificationMs": 2021,
+              "totalPreparationMs": 3473
+            },
+            {
+              "snapshotMs": 1137,
+              "verificationMs": 2058,
+              "totalPreparationMs": 3531
+            }
+          ]
+        }
+      ],
+      "severeSlowdownObserved": false
+    },
+    {
+      "name": "M4 Pro — ordinary clone",
+      "directory": "m4/ordinary-clone",
+      "environment": {
+        "os": "ProductName:\t\tmacOS\nProductVersion:\t\t26.6.2\nBuildVersion:\t\t25G83",
+        "cpu": "Apple M4 Pro",
+        "git": "git version 2.56.1"
+      },
+      "ignoredSourceFiles": 0,
+      "statistics": [
+        {
+          "arm": "git",
+          "samples": 3,
+          "p50Ms": 5143.521124999999,
+          "empiricalP95Ms": 5290.1655,
+          "empiricalP99Ms": 5290.1655,
+          "minMs": 4749.695124999998,
+          "maxMs": 5290.1655,
+          "logicalPayloadBytesPerSecond": 244095491.6851829,
+          "trackedFilesPerSecond": 2879.544895424144,
+          "resources": [
+            {
+              "userCpuSeconds": 2.25,
+              "systemCpuSeconds": 2.55,
+              "maxRssBytes": 1229996032
+            },
+            {
+              "userCpuSeconds": 2.24,
+              "systemCpuSeconds": 2.43,
+              "maxRssBytes": 1228570624
+            },
+            {
+              "userCpuSeconds": 2.24,
+              "systemCpuSeconds": 2.14,
+              "maxRssBytes": 1230209024
+            }
+          ],
+          "phases": []
+        },
+        {
+          "arm": "released-v03",
+          "samples": 3,
+          "p50Ms": 5110.255625000002,
+          "empiricalP95Ms": 5150.280833000012,
+          "empiricalP99Ms": 5150.280833000012,
+          "minMs": 4899.613500000007,
+          "maxMs": 5150.280833000012,
+          "logicalPayloadBytesPerSecond": 245684445.18859068,
+          "trackedFilesPerSecond": 2898.2894568997212,
+          "resources": [
+            {
+              "userCpuSeconds": 2.33,
+              "systemCpuSeconds": 2.37,
+              "maxRssBytes": 1228226560
+            },
+            {
+              "userCpuSeconds": 2.33,
+              "systemCpuSeconds": 2.47,
+              "maxRssBytes": 1230389248
+            },
+            {
+              "userCpuSeconds": 2.33,
+              "systemCpuSeconds": 2.2,
+              "maxRssBytes": 1229963264
+            }
+          ],
+          "phases": []
+        },
+        {
+          "arm": "reported-870-rust1991",
+          "samples": 3,
+          "p50Ms": 6862.537832999995,
+          "empiricalP95Ms": 7057.3479579999985,
+          "empiricalP99Ms": 7057.3479579999985,
+          "minMs": 6858.660707999996,
+          "maxMs": 7057.3479579999985,
+          "logicalPayloadBytesPerSecond": 182951314.5942318,
+          "trackedFilesPerSecond": 2158.239467734241,
+          "resources": [
+            {
+              "userCpuSeconds": 2.45,
+              "systemCpuSeconds": 2.2,
+              "maxRssBytes": 1222508544
+            },
+            {
+              "userCpuSeconds": 2.46,
+              "systemCpuSeconds": 2.31,
+              "maxRssBytes": 1223770112
+            },
+            {
+              "userCpuSeconds": 2.45,
+              "systemCpuSeconds": 2.26,
+              "maxRssBytes": 1223950336
+            }
+          ],
+          "phases": []
+        },
+        {
+          "arm": "released-v04",
+          "samples": 3,
+          "p50Ms": 5475.515416999995,
+          "empiricalP95Ms": 5482.539041000011,
+          "empiricalP99Ms": 5482.539041000011,
+          "minMs": 5370.484250000009,
+          "maxMs": 5482.539041000011,
+          "logicalPayloadBytesPerSecond": 229295367.1725551,
+          "trackedFilesPerSecond": 2704.9508351334102,
+          "resources": [
+            {
+              "userCpuSeconds": 3.16,
+              "systemCpuSeconds": 2.56,
+              "maxRssBytes": 107397120
+            },
+            {
+              "userCpuSeconds": 3.15,
+              "systemCpuSeconds": 2.55,
+              "maxRssBytes": 107446272
+            },
+            {
+              "userCpuSeconds": 3.15,
+              "systemCpuSeconds": 2.48,
+              "maxRssBytes": 107364352
+            }
+          ],
+          "phases": [
+            {
+              "snapshotMs": 872,
+              "verificationMs": 4030.9999999999995,
+              "totalPreparationMs": 5162
+            },
+            {
+              "snapshotMs": 864,
+              "verificationMs": 3946,
+              "totalPreparationMs": 5073
+            },
+            {
+              "snapshotMs": 910,
+              "verificationMs": 3895,
+              "totalPreparationMs": 5063
+            }
+          ]
+        }
+      ],
+      "severeSlowdownObserved": false
+    }
+  ],
+  "notes": [
+    "Reported target is about120s vsGit6s; no scenario is considered the reporter's exact environment. Both chips/OS builds differ from M3Max/macOS26.5.2.",
+    "Empirical p95/p99 are maxima of only three points, not reliable tail estimates.",
+    "Logical payload throughput is not physical disk IO bandwidth. CPU/RSS include the timed command's children via /usr/bin/time -l.",
+    "Ignored-file scenarios are synthetic controlled donor-state hypotheses, not evidence about Pablo's checkout. No dependency/application scripts executed.",
+    "Published v0.3 delegates with unchanged attributes; the reported slow native baseline is exact870f52e compiled with Rust1.99.1."
+  ]
+}

@@ -1,0 +1,10 @@
+{
+  "schemaVersion": 1,
+  "note": "The raw manifest inherited one local-M1 hardware note from the controller template. Actual structured environment/CPU/OS and compiler fields are authoritative; the controller template is corrected for future runs. Raw data was not rewritten.",
+  "actualEnvironment": {
+    "os": "ProductName:\t\tmacOS\nProductVersion:\t\t26.6.2\nBuildVersion:\t\t25G83",
+    "cpu": "Apple M4 Pro",
+    "git": "git version 2.56.1"
+  },
+  "reportedCompiler": "rustc 1.99.1 (58cf8f9c3 2026-10-13)"
+}
