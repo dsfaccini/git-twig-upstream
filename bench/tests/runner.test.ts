@@ -279,8 +279,11 @@ const s={stable:true,allocatedBytes:4096,totalBytes:100000,observedAllocatedByte
   );
   return { root, config };
 }
+// Campaign enforces the target OS even with fake workers. These exercise the
+// Linux-only target; portable planner/process tests above still run everywhere.
+const linuxTest = process.platform === "linux" ? test : test.skip;
 for (const mode of ["pass", "fail", "mutate"] as const)
-  test(`end-to-end fake worker ${mode} preserves results without retry`, async () => {
+  linuxTest(`end-to-end fake worker ${mode} preserves results without retry`, async () => {
     const { root, config } = await fakeLab(mode);
     const manifestPath = await campaign(
       root,
@@ -301,7 +304,7 @@ for (const mode of ["pass", "fail", "mutate"] as const)
         : await digest(config.candidate),
     );
   });
-test("pending point is durable before interruption; remaining deadline is recorded", async () => {
+linuxTest("pending point is durable before interruption; remaining deadline is recorded", async () => {
   const { root, config } = await fakeLab("hang");
   const controller = new AbortController();
   const timer = setTimeout(() => controller.abort(), 400);

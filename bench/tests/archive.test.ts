@@ -9,7 +9,7 @@ test("all historical artifacts retain their original byte hashes at unique canon
     await readFile(resolve(root, "bench/results/index.json"), "utf8"),
   );
   expect(index.schemaVersion).toBe(1);
-  expect(index.artifacts.length).toBe(184);
+  expect(index.artifacts.length).toBe(292);
   const originals = new Set<string>(),
     destinations = new Set<string>();
   for (const artifact of index.artifacts) {

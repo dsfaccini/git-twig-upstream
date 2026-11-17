@@ -1,7 +1,7 @@
 #!/usr/bin/env bun
 import {readFileSync,writeFileSync} from "node:fs";
 import {join} from "node:path";
-const root="bench/results/2026-11-17-issue5-reproduction";
+const root="bench/results/multi-build/macos-apfs/2026-11-17/issue5-reproduction";
 const definitions=[
  ["M1 Ultra — ordinary clone","ordinary-clone"],
  ["M1 Ultra — nested ignored 50k","nested-ignored-50000"],

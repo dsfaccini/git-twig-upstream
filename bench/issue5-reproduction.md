@@ -46,6 +46,6 @@ Run the controller with `RUN SOURCE V03 REPORTED870 V04` absolute or relative pa
 Use a clean experiment checkout and unused output paths. See `prepare-issue5-mac.ts`
 for the isolated second-Mac preparation and `create-ignored-donor.ts` for generation.
 Generate JSON summaries and SVGs using `bun bench/summarize-issue5-reproduction.ts`.
-Raw and generated data live under `bench/results/2026-11-17-issue5-reproduction/`.
+Raw and generated data live under `bench/results/multi-build/macos-apfs/2026-11-17/issue5-reproduction/`.
 Do not promote an experiment branch directly into main or claim that a synthetic
 slowdown reproduces the original environment.

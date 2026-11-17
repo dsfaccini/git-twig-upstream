@@ -6,6 +6,546 @@
   ],
   "artifacts": [
     {
+      "originalPath": "bench/results/2026-11-17-issue5-reproduction/comparison.svg",
+      "path": "bench/results/multi-build/macos-apfs/2026-11-17/issue5-reproduction/comparison.svg",
+      "sha256": "96b75a4a21c9b35ce9fde8ac4a8a1a3a7c75e1bedd03a68bd0604ab2a344ecdf"
+    },
+    {
+      "originalPath": "bench/results/2026-11-17-issue5-reproduction/m4/ordinary-clone/git-r0.stderr",
+      "path": "bench/results/multi-build/macos-apfs/2026-11-17/issue5-reproduction/m4/ordinary-clone/git-r0.stderr",
+      "sha256": "7a72d98b51ba469a753bc06bf164cc52da017779a8e33bdc8d790599c166a5be"
+    },
+    {
+      "originalPath": "bench/results/2026-11-17-issue5-reproduction/m4/ordinary-clone/git-r0.stdout",
+      "path": "bench/results/multi-build/macos-apfs/2026-11-17/issue5-reproduction/m4/ordinary-clone/git-r0.stdout",
+      "sha256": "6de6116951c8bd0d378ef86c85008f9341d4108bb5cddf31e05c081685d05420"
+    },
+    {
+      "originalPath": "bench/results/2026-11-17-issue5-reproduction/m4/ordinary-clone/git-r1.stderr",
+      "path": "bench/results/multi-build/macos-apfs/2026-11-17/issue5-reproduction/m4/ordinary-clone/git-r1.stderr",
+      "sha256": "3bbea84e4ba30cf38ae2a3ff115b7adc82aedda009bda072ab7b4116f84534c9"
+    },
+    {
+      "originalPath": "bench/results/2026-11-17-issue5-reproduction/m4/ordinary-clone/git-r1.stdout",
+      "path": "bench/results/multi-build/macos-apfs/2026-11-17/issue5-reproduction/m4/ordinary-clone/git-r1.stdout",
+      "sha256": "6de6116951c8bd0d378ef86c85008f9341d4108bb5cddf31e05c081685d05420"
+    },
+    {
+      "originalPath": "bench/results/2026-11-17-issue5-reproduction/m4/ordinary-clone/git-r2.stderr",
+      "path": "bench/results/multi-build/macos-apfs/2026-11-17/issue5-reproduction/m4/ordinary-clone/git-r2.stderr",
+      "sha256": "c7d33225cb27424b44e725e42da5ea153b995ec85b37f98a8fdf189a2a7beb6e"
+    },
+    {
+      "originalPath": "bench/results/2026-11-17-issue5-reproduction/m4/ordinary-clone/git-r2.stdout",
+      "path": "bench/results/multi-build/macos-apfs/2026-11-17/issue5-reproduction/m4/ordinary-clone/git-r2.stdout",
+      "sha256": "6de6116951c8bd0d378ef86c85008f9341d4108bb5cddf31e05c081685d05420"
+    },
+    {
+      "originalPath": "bench/results/2026-11-17-issue5-reproduction/m4/ordinary-clone/manifest.json",
+      "path": "bench/results/multi-build/macos-apfs/2026-11-17/issue5-reproduction/m4/ordinary-clone/manifest.json",
+      "sha256": "bb36e642de639a85da578d6484b6868e3919963f43e92cc0af45ce696aaaf2c8"
+    },
+    {
+      "originalPath": "bench/results/2026-11-17-issue5-reproduction/m4/ordinary-clone/provenance-correction.json",
+      "path": "bench/results/multi-build/macos-apfs/2026-11-17/issue5-reproduction/m4/ordinary-clone/provenance-correction.json",
+      "sha256": "d35dc619f988aaad9c54f0823503f07a34d82343584c47a8661eac1566747acf"
+    },
+    {
+      "originalPath": "bench/results/2026-11-17-issue5-reproduction/m4/ordinary-clone/released-v03-r0.stderr",
+      "path": "bench/results/multi-build/macos-apfs/2026-11-17/issue5-reproduction/m4/ordinary-clone/released-v03-r0.stderr",
+      "sha256": "e730661f127e2c7a3b960a75f5d70e60e798bf998cbed35ad1849cb2ac20a5e1"
+    },
+    {
+      "originalPath": "bench/results/2026-11-17-issue5-reproduction/m4/ordinary-clone/released-v03-r0.stdout",
+      "path": "bench/results/multi-build/macos-apfs/2026-11-17/issue5-reproduction/m4/ordinary-clone/released-v03-r0.stdout",
+      "sha256": "6de6116951c8bd0d378ef86c85008f9341d4108bb5cddf31e05c081685d05420"
+    },
+    {
+      "originalPath": "bench/results/2026-11-17-issue5-reproduction/m4/ordinary-clone/released-v03-r1.stderr",
+      "path": "bench/results/multi-build/macos-apfs/2026-11-17/issue5-reproduction/m4/ordinary-clone/released-v03-r1.stderr",
+      "sha256": "db87691af1f8b0684f53ee32dbeee5eabae98cdc6237abdcedc4afbbbfb31384"
+    },
+    {
+      "originalPath": "bench/results/2026-11-17-issue5-reproduction/m4/ordinary-clone/released-v03-r1.stdout",
+      "path": "bench/results/multi-build/macos-apfs/2026-11-17/issue5-reproduction/m4/ordinary-clone/released-v03-r1.stdout",
+      "sha256": "6de6116951c8bd0d378ef86c85008f9341d4108bb5cddf31e05c081685d05420"
+    },
+    {
+      "originalPath": "bench/results/2026-11-17-issue5-reproduction/m4/ordinary-clone/released-v03-r2.stderr",
+      "path": "bench/results/multi-build/macos-apfs/2026-11-17/issue5-reproduction/m4/ordinary-clone/released-v03-r2.stderr",
+      "sha256": "1cc55f3b2a65c542ca7ea9c858142dd72bc07f5c6617059b438e27b7771de0ce"
+    },
+    {
+      "originalPath": "bench/results/2026-11-17-issue5-reproduction/m4/ordinary-clone/released-v03-r2.stdout",
+      "path": "bench/results/multi-build/macos-apfs/2026-11-17/issue5-reproduction/m4/ordinary-clone/released-v03-r2.stdout",
+      "sha256": "6de6116951c8bd0d378ef86c85008f9341d4108bb5cddf31e05c081685d05420"
+    },
+    {
+      "originalPath": "bench/results/2026-11-17-issue5-reproduction/m4/ordinary-clone/released-v04-r0.stderr",
+      "path": "bench/results/multi-build/macos-apfs/2026-11-17/issue5-reproduction/m4/ordinary-clone/released-v04-r0.stderr",
+      "sha256": "3ed0d587c3307b713998a2b44d058d543b2ff6e0a8e5add1c323c251549387f3"
+    },
+    {
+      "originalPath": "bench/results/2026-11-17-issue5-reproduction/m4/ordinary-clone/released-v04-r0.stdout",
+      "path": "bench/results/multi-build/macos-apfs/2026-11-17/issue5-reproduction/m4/ordinary-clone/released-v04-r0.stdout",
+      "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+    },
+    {
+      "originalPath": "bench/results/2026-11-17-issue5-reproduction/m4/ordinary-clone/released-v04-r1.stderr",
+      "path": "bench/results/multi-build/macos-apfs/2026-11-17/issue5-reproduction/m4/ordinary-clone/released-v04-r1.stderr",
+      "sha256": "3be48a7edbe1980e1e39ee6c6cebaec850a59527abf8ed6692af10e24d96b715"
+    },
+    {
+      "originalPath": "bench/results/2026-11-17-issue5-reproduction/m4/ordinary-clone/released-v04-r1.stdout",
+      "path": "bench/results/multi-build/macos-apfs/2026-11-17/issue5-reproduction/m4/ordinary-clone/released-v04-r1.stdout",
+      "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+    },
+    {
+      "originalPath": "bench/results/2026-11-17-issue5-reproduction/m4/ordinary-clone/released-v04-r2.stderr",
+      "path": "bench/results/multi-build/macos-apfs/2026-11-17/issue5-reproduction/m4/ordinary-clone/released-v04-r2.stderr",
+      "sha256": "84e63520ead3260d6803cb4771d05db033e94b73374d1f529a32c2205e0f0cb4"
+    },
+    {
+      "originalPath": "bench/results/2026-11-17-issue5-reproduction/m4/ordinary-clone/released-v04-r2.stdout",
+      "path": "bench/results/multi-build/macos-apfs/2026-11-17/issue5-reproduction/m4/ordinary-clone/released-v04-r2.stdout",
+      "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+    },
+    {
+      "originalPath": "bench/results/2026-11-17-issue5-reproduction/m4/ordinary-clone/reported-870-rust1991-r0.stderr",
+      "path": "bench/results/multi-build/macos-apfs/2026-11-17/issue5-reproduction/m4/ordinary-clone/reported-870-rust1991-r0.stderr",
+      "sha256": "7f0aa9fe28b193aea3b136c060833b204ba52dfd5b27862109ef670a8f7873a3"
+    },
+    {
+      "originalPath": "bench/results/2026-11-17-issue5-reproduction/m4/ordinary-clone/reported-870-rust1991-r0.stdout",
+      "path": "bench/results/multi-build/macos-apfs/2026-11-17/issue5-reproduction/m4/ordinary-clone/reported-870-rust1991-r0.stdout",
+      "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+    },
+    {
+      "originalPath": "bench/results/2026-11-17-issue5-reproduction/m4/ordinary-clone/reported-870-rust1991-r1.stderr",
+      "path": "bench/results/multi-build/macos-apfs/2026-11-17/issue5-reproduction/m4/ordinary-clone/reported-870-rust1991-r1.stderr",
+      "sha256": "a41e4373576820441b18c98d78b31d5d504003d3416be9b8b755406c31c5551b"
+    },
+    {
+      "originalPath": "bench/results/2026-11-17-issue5-reproduction/m4/ordinary-clone/reported-870-rust1991-r1.stdout",
+      "path": "bench/results/multi-build/macos-apfs/2026-11-17/issue5-reproduction/m4/ordinary-clone/reported-870-rust1991-r1.stdout",
+      "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+    },
+    {
+      "originalPath": "bench/results/2026-11-17-issue5-reproduction/m4/ordinary-clone/reported-870-rust1991-r2.stderr",
+      "path": "bench/results/multi-build/macos-apfs/2026-11-17/issue5-reproduction/m4/ordinary-clone/reported-870-rust1991-r2.stderr",
+      "sha256": "b9ad788fa1e46b43573f82ea38740fa400f8ba746538ef7684909a20fffcb7f3"
+    },
+    {
+      "originalPath": "bench/results/2026-11-17-issue5-reproduction/m4/ordinary-clone/reported-870-rust1991-r2.stdout",
+      "path": "bench/results/multi-build/macos-apfs/2026-11-17/issue5-reproduction/m4/ordinary-clone/reported-870-rust1991-r2.stdout",
+      "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+    },
+    {
+      "originalPath": "bench/results/2026-11-17-issue5-reproduction/m4/ordinary-clone/state.json",
+      "path": "bench/results/multi-build/macos-apfs/2026-11-17/issue5-reproduction/m4/ordinary-clone/state.json",
+      "sha256": "711401677c750f83c1ec95f883b91422e5c52c85107d9802fcdd572116d48593"
+    },
+    {
+      "originalPath": "bench/results/2026-11-17-issue5-reproduction/nested-ignored-50000/fixture-setup.json",
+      "path": "bench/results/multi-build/macos-apfs/2026-11-17/issue5-reproduction/nested-ignored-50000/fixture-setup.json",
+      "sha256": "63c09e06bf18c5041c51167009b541f97b5a06edab20f50e74eb4d9d28628177"
+    },
+    {
+      "originalPath": "bench/results/2026-11-17-issue5-reproduction/nested-ignored-50000/git-r0.stderr",
+      "path": "bench/results/multi-build/macos-apfs/2026-11-17/issue5-reproduction/nested-ignored-50000/git-r0.stderr",
+      "sha256": "6bc77a87a70775f9039447b8362cdcd7529ea5e992fa27d479ddce653645c118"
+    },
+    {
+      "originalPath": "bench/results/2026-11-17-issue5-reproduction/nested-ignored-50000/git-r0.stdout",
+      "path": "bench/results/multi-build/macos-apfs/2026-11-17/issue5-reproduction/nested-ignored-50000/git-r0.stdout",
+      "sha256": "6de6116951c8bd0d378ef86c85008f9341d4108bb5cddf31e05c081685d05420"
+    },
+    {
+      "originalPath": "bench/results/2026-11-17-issue5-reproduction/nested-ignored-50000/git-r1.stderr",
+      "path": "bench/results/multi-build/macos-apfs/2026-11-17/issue5-reproduction/nested-ignored-50000/git-r1.stderr",
+      "sha256": "565d5a22334dd74b855c2443b30cd10d83ab316f507854d327eb14c83c95e277"
+    },
+    {
+      "originalPath": "bench/results/2026-11-17-issue5-reproduction/nested-ignored-50000/git-r1.stdout",
+      "path": "bench/results/multi-build/macos-apfs/2026-11-17/issue5-reproduction/nested-ignored-50000/git-r1.stdout",
+      "sha256": "6de6116951c8bd0d378ef86c85008f9341d4108bb5cddf31e05c081685d05420"
+    },
+    {
+      "originalPath": "bench/results/2026-11-17-issue5-reproduction/nested-ignored-50000/git-r2.stderr",
+      "path": "bench/results/multi-build/macos-apfs/2026-11-17/issue5-reproduction/nested-ignored-50000/git-r2.stderr",
+      "sha256": "b720aa68d206593a249d29a4172c7b8d920f704475915bf3e326badf679398d5"
+    },
+    {
+      "originalPath": "bench/results/2026-11-17-issue5-reproduction/nested-ignored-50000/git-r2.stdout",
+      "path": "bench/results/multi-build/macos-apfs/2026-11-17/issue5-reproduction/nested-ignored-50000/git-r2.stdout",
+      "sha256": "6de6116951c8bd0d378ef86c85008f9341d4108bb5cddf31e05c081685d05420"
+    },
+    {
+      "originalPath": "bench/results/2026-11-17-issue5-reproduction/nested-ignored-50000/manifest.json",
+      "path": "bench/results/multi-build/macos-apfs/2026-11-17/issue5-reproduction/nested-ignored-50000/manifest.json",
+      "sha256": "74a4a9ebe466f3be18cb9d4db7f4896da8f2f0aae5732583b17b899bc50f7cc5"
+    },
+    {
+      "originalPath": "bench/results/2026-11-17-issue5-reproduction/nested-ignored-50000/released-v03-r0.stderr",
+      "path": "bench/results/multi-build/macos-apfs/2026-11-17/issue5-reproduction/nested-ignored-50000/released-v03-r0.stderr",
+      "sha256": "d70713d94300035f499c585656ce77892097d4c58740af7a8176ddb554a515b4"
+    },
+    {
+      "originalPath": "bench/results/2026-11-17-issue5-reproduction/nested-ignored-50000/released-v03-r0.stdout",
+      "path": "bench/results/multi-build/macos-apfs/2026-11-17/issue5-reproduction/nested-ignored-50000/released-v03-r0.stdout",
+      "sha256": "6de6116951c8bd0d378ef86c85008f9341d4108bb5cddf31e05c081685d05420"
+    },
+    {
+      "originalPath": "bench/results/2026-11-17-issue5-reproduction/nested-ignored-50000/released-v03-r1.stderr",
+      "path": "bench/results/multi-build/macos-apfs/2026-11-17/issue5-reproduction/nested-ignored-50000/released-v03-r1.stderr",
+      "sha256": "385bda2c19dee0039b607c16e3381a59a287bbe47759ef8b596a95e6c1bbe0b8"
+    },
+    {
+      "originalPath": "bench/results/2026-11-17-issue5-reproduction/nested-ignored-50000/released-v03-r1.stdout",
+      "path": "bench/results/multi-build/macos-apfs/2026-11-17/issue5-reproduction/nested-ignored-50000/released-v03-r1.stdout",
+      "sha256": "6de6116951c8bd0d378ef86c85008f9341d4108bb5cddf31e05c081685d05420"
+    },
+    {
+      "originalPath": "bench/results/2026-11-17-issue5-reproduction/nested-ignored-50000/released-v03-r2.stderr",
+      "path": "bench/results/multi-build/macos-apfs/2026-11-17/issue5-reproduction/nested-ignored-50000/released-v03-r2.stderr",
+      "sha256": "cfea0ce297639f9520c99fac0a44cc112f298832cb8fa61cdffd09ffd77195fd"
+    },
+    {
+      "originalPath": "bench/results/2026-11-17-issue5-reproduction/nested-ignored-50000/released-v03-r2.stdout",
+      "path": "bench/results/multi-build/macos-apfs/2026-11-17/issue5-reproduction/nested-ignored-50000/released-v03-r2.stdout",
+      "sha256": "6de6116951c8bd0d378ef86c85008f9341d4108bb5cddf31e05c081685d05420"
+    },
+    {
+      "originalPath": "bench/results/2026-11-17-issue5-reproduction/nested-ignored-50000/released-v04-r0.stderr",
+      "path": "bench/results/multi-build/macos-apfs/2026-11-17/issue5-reproduction/nested-ignored-50000/released-v04-r0.stderr",
+      "sha256": "b0b2078b4881485cf736db8bdefdf5559c7d20122a7555193a6ec3bd3019f04c"
+    },
+    {
+      "originalPath": "bench/results/2026-11-17-issue5-reproduction/nested-ignored-50000/released-v04-r0.stdout",
+      "path": "bench/results/multi-build/macos-apfs/2026-11-17/issue5-reproduction/nested-ignored-50000/released-v04-r0.stdout",
+      "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+    },
+    {
+      "originalPath": "bench/results/2026-11-17-issue5-reproduction/nested-ignored-50000/released-v04-r1.stderr",
+      "path": "bench/results/multi-build/macos-apfs/2026-11-17/issue5-reproduction/nested-ignored-50000/released-v04-r1.stderr",
+      "sha256": "77e43fd4e766860f8f667d253335df8a171c8f3ac557d6a348d72f04643c5cea"
+    },
+    {
+      "originalPath": "bench/results/2026-11-17-issue5-reproduction/nested-ignored-50000/released-v04-r1.stdout",
+      "path": "bench/results/multi-build/macos-apfs/2026-11-17/issue5-reproduction/nested-ignored-50000/released-v04-r1.stdout",
+      "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+    },
+    {
+      "originalPath": "bench/results/2026-11-17-issue5-reproduction/nested-ignored-50000/released-v04-r2.stderr",
+      "path": "bench/results/multi-build/macos-apfs/2026-11-17/issue5-reproduction/nested-ignored-50000/released-v04-r2.stderr",
+      "sha256": "874352c335daa9784b122af921667b43649ac75aec28df968353f35f5db11975"
+    },
+    {
+      "originalPath": "bench/results/2026-11-17-issue5-reproduction/nested-ignored-50000/released-v04-r2.stdout",
+      "path": "bench/results/multi-build/macos-apfs/2026-11-17/issue5-reproduction/nested-ignored-50000/released-v04-r2.stdout",
+      "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+    },
+    {
+      "originalPath": "bench/results/2026-11-17-issue5-reproduction/nested-ignored-50000/reported-870-rust1991-r0.stderr",
+      "path": "bench/results/multi-build/macos-apfs/2026-11-17/issue5-reproduction/nested-ignored-50000/reported-870-rust1991-r0.stderr",
+      "sha256": "89b3cd857cde8d49d74d3cc9bf46762957e27c681b0ec95c5c3398821fb3f403"
+    },
+    {
+      "originalPath": "bench/results/2026-11-17-issue5-reproduction/nested-ignored-50000/reported-870-rust1991-r0.stdout",
+      "path": "bench/results/multi-build/macos-apfs/2026-11-17/issue5-reproduction/nested-ignored-50000/reported-870-rust1991-r0.stdout",
+      "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+    },
+    {
+      "originalPath": "bench/results/2026-11-17-issue5-reproduction/nested-ignored-50000/reported-870-rust1991-r1.stderr",
+      "path": "bench/results/multi-build/macos-apfs/2026-11-17/issue5-reproduction/nested-ignored-50000/reported-870-rust1991-r1.stderr",
+      "sha256": "70117e462b59852bf172857980a059e3d1642a62ef60d607418c5e7441d6ae22"
+    },
+    {
+      "originalPath": "bench/results/2026-11-17-issue5-reproduction/nested-ignored-50000/reported-870-rust1991-r1.stdout",
+      "path": "bench/results/multi-build/macos-apfs/2026-11-17/issue5-reproduction/nested-ignored-50000/reported-870-rust1991-r1.stdout",
+      "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+    },
+    {
+      "originalPath": "bench/results/2026-11-17-issue5-reproduction/nested-ignored-50000/reported-870-rust1991-r2.stderr",
+      "path": "bench/results/multi-build/macos-apfs/2026-11-17/issue5-reproduction/nested-ignored-50000/reported-870-rust1991-r2.stderr",
+      "sha256": "a925efbd065d523fdf022b99640b30785e58a0b7dc23565334809dd95ed54c6c"
+    },
+    {
+      "originalPath": "bench/results/2026-11-17-issue5-reproduction/nested-ignored-50000/reported-870-rust1991-r2.stdout",
+      "path": "bench/results/multi-build/macos-apfs/2026-11-17/issue5-reproduction/nested-ignored-50000/reported-870-rust1991-r2.stdout",
+      "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+    },
+    {
+      "originalPath": "bench/results/2026-11-17-issue5-reproduction/nested-ignored-50000/state.json",
+      "path": "bench/results/multi-build/macos-apfs/2026-11-17/issue5-reproduction/nested-ignored-50000/state.json",
+      "sha256": "9659e6ec2ecb94004080937b4d493664ac3cef71488b54e964b753cece63d12b"
+    },
+    {
+      "originalPath": "bench/results/2026-11-17-issue5-reproduction/ordinary-clone/git-r0.stderr",
+      "path": "bench/results/multi-build/macos-apfs/2026-11-17/issue5-reproduction/ordinary-clone/git-r0.stderr",
+      "sha256": "923ea9c347d51a3a14f1fa427838bb9e0da360ed8c5ca0b6bb7a3ceb5174a17a"
+    },
+    {
+      "originalPath": "bench/results/2026-11-17-issue5-reproduction/ordinary-clone/git-r0.stdout",
+      "path": "bench/results/multi-build/macos-apfs/2026-11-17/issue5-reproduction/ordinary-clone/git-r0.stdout",
+      "sha256": "6de6116951c8bd0d378ef86c85008f9341d4108bb5cddf31e05c081685d05420"
+    },
+    {
+      "originalPath": "bench/results/2026-11-17-issue5-reproduction/ordinary-clone/git-r1.stderr",
+      "path": "bench/results/multi-build/macos-apfs/2026-11-17/issue5-reproduction/ordinary-clone/git-r1.stderr",
+      "sha256": "e0900f85c28bd58f3f4f34f2c8682bfce98392cee7ea3517e5e5c58c47c65fba"
+    },
+    {
+      "originalPath": "bench/results/2026-11-17-issue5-reproduction/ordinary-clone/git-r1.stdout",
+      "path": "bench/results/multi-build/macos-apfs/2026-11-17/issue5-reproduction/ordinary-clone/git-r1.stdout",
+      "sha256": "6de6116951c8bd0d378ef86c85008f9341d4108bb5cddf31e05c081685d05420"
+    },
+    {
+      "originalPath": "bench/results/2026-11-17-issue5-reproduction/ordinary-clone/git-r2.stderr",
+      "path": "bench/results/multi-build/macos-apfs/2026-11-17/issue5-reproduction/ordinary-clone/git-r2.stderr",
+      "sha256": "8c729a466f98d35a5a9d5e7aaf8be4636b3ea75a1ec7fa5192916e5ab40fad3c"
+    },
+    {
+      "originalPath": "bench/results/2026-11-17-issue5-reproduction/ordinary-clone/git-r2.stdout",
+      "path": "bench/results/multi-build/macos-apfs/2026-11-17/issue5-reproduction/ordinary-clone/git-r2.stdout",
+      "sha256": "6de6116951c8bd0d378ef86c85008f9341d4108bb5cddf31e05c081685d05420"
+    },
+    {
+      "originalPath": "bench/results/2026-11-17-issue5-reproduction/ordinary-clone/manifest.json",
+      "path": "bench/results/multi-build/macos-apfs/2026-11-17/issue5-reproduction/ordinary-clone/manifest.json",
+      "sha256": "47a4de8c5b8e895681e4adfde8977d782e512bc3dbc48df9181c17a41547a27e"
+    },
+    {
+      "originalPath": "bench/results/2026-11-17-issue5-reproduction/ordinary-clone/released-v03-r0.stderr",
+      "path": "bench/results/multi-build/macos-apfs/2026-11-17/issue5-reproduction/ordinary-clone/released-v03-r0.stderr",
+      "sha256": "8eefd328783cd846365f7939abae56d3af9ba0e2bf771dec0737aa5e910b37b5"
+    },
+    {
+      "originalPath": "bench/results/2026-11-17-issue5-reproduction/ordinary-clone/released-v03-r0.stdout",
+      "path": "bench/results/multi-build/macos-apfs/2026-11-17/issue5-reproduction/ordinary-clone/released-v03-r0.stdout",
+      "sha256": "6de6116951c8bd0d378ef86c85008f9341d4108bb5cddf31e05c081685d05420"
+    },
+    {
+      "originalPath": "bench/results/2026-11-17-issue5-reproduction/ordinary-clone/released-v03-r1.stderr",
+      "path": "bench/results/multi-build/macos-apfs/2026-11-17/issue5-reproduction/ordinary-clone/released-v03-r1.stderr",
+      "sha256": "0458534d6fe870de649d766513bd40ba4efd82c6ac46301ffa3ab2caf5c1a507"
+    },
+    {
+      "originalPath": "bench/results/2026-11-17-issue5-reproduction/ordinary-clone/released-v03-r1.stdout",
+      "path": "bench/results/multi-build/macos-apfs/2026-11-17/issue5-reproduction/ordinary-clone/released-v03-r1.stdout",
+      "sha256": "6de6116951c8bd0d378ef86c85008f9341d4108bb5cddf31e05c081685d05420"
+    },
+    {
+      "originalPath": "bench/results/2026-11-17-issue5-reproduction/ordinary-clone/released-v03-r2.stderr",
+      "path": "bench/results/multi-build/macos-apfs/2026-11-17/issue5-reproduction/ordinary-clone/released-v03-r2.stderr",
+      "sha256": "424616445b6e6bb76e3d53cc992138d5db4f60322cc1524581d4dd25a53af417"
+    },
+    {
+      "originalPath": "bench/results/2026-11-17-issue5-reproduction/ordinary-clone/released-v03-r2.stdout",
+      "path": "bench/results/multi-build/macos-apfs/2026-11-17/issue5-reproduction/ordinary-clone/released-v03-r2.stdout",
+      "sha256": "6de6116951c8bd0d378ef86c85008f9341d4108bb5cddf31e05c081685d05420"
+    },
+    {
+      "originalPath": "bench/results/2026-11-17-issue5-reproduction/ordinary-clone/released-v04-r0.stderr",
+      "path": "bench/results/multi-build/macos-apfs/2026-11-17/issue5-reproduction/ordinary-clone/released-v04-r0.stderr",
+      "sha256": "95a70c9d3110bce8a438be397d664fe229811ca98faf34e54187637204939f97"
+    },
+    {
+      "originalPath": "bench/results/2026-11-17-issue5-reproduction/ordinary-clone/released-v04-r0.stdout",
+      "path": "bench/results/multi-build/macos-apfs/2026-11-17/issue5-reproduction/ordinary-clone/released-v04-r0.stdout",
+      "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+    },
+    {
+      "originalPath": "bench/results/2026-11-17-issue5-reproduction/ordinary-clone/released-v04-r1.stderr",
+      "path": "bench/results/multi-build/macos-apfs/2026-11-17/issue5-reproduction/ordinary-clone/released-v04-r1.stderr",
+      "sha256": "9aa5b85436d520faed9e23483983b0d8380398b484b781d7573e13d88714da77"
+    },
+    {
+      "originalPath": "bench/results/2026-11-17-issue5-reproduction/ordinary-clone/released-v04-r1.stdout",
+      "path": "bench/results/multi-build/macos-apfs/2026-11-17/issue5-reproduction/ordinary-clone/released-v04-r1.stdout",
+      "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+    },
+    {
+      "originalPath": "bench/results/2026-11-17-issue5-reproduction/ordinary-clone/released-v04-r2.stderr",
+      "path": "bench/results/multi-build/macos-apfs/2026-11-17/issue5-reproduction/ordinary-clone/released-v04-r2.stderr",
+      "sha256": "22821be70326be0c86545867001ec3300e388abf73e4091015d09d591a795253"
+    },
+    {
+      "originalPath": "bench/results/2026-11-17-issue5-reproduction/ordinary-clone/released-v04-r2.stdout",
+      "path": "bench/results/multi-build/macos-apfs/2026-11-17/issue5-reproduction/ordinary-clone/released-v04-r2.stdout",
+      "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+    },
+    {
+      "originalPath": "bench/results/2026-11-17-issue5-reproduction/ordinary-clone/reported-870-rust1991-r0.stderr",
+      "path": "bench/results/multi-build/macos-apfs/2026-11-17/issue5-reproduction/ordinary-clone/reported-870-rust1991-r0.stderr",
+      "sha256": "4af355d338b3daf5310db59f841ccb6ec8fb7350716ba8b22ac594b6530eb6db"
+    },
+    {
+      "originalPath": "bench/results/2026-11-17-issue5-reproduction/ordinary-clone/reported-870-rust1991-r0.stdout",
+      "path": "bench/results/multi-build/macos-apfs/2026-11-17/issue5-reproduction/ordinary-clone/reported-870-rust1991-r0.stdout",
+      "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+    },
+    {
+      "originalPath": "bench/results/2026-11-17-issue5-reproduction/ordinary-clone/reported-870-rust1991-r1.stderr",
+      "path": "bench/results/multi-build/macos-apfs/2026-11-17/issue5-reproduction/ordinary-clone/reported-870-rust1991-r1.stderr",
+      "sha256": "0f4cbeec1abced82077e2ef9eb3c95cf00f0eac80dece8c5baccf4a061cf59eb"
+    },
+    {
+      "originalPath": "bench/results/2026-11-17-issue5-reproduction/ordinary-clone/reported-870-rust1991-r1.stdout",
+      "path": "bench/results/multi-build/macos-apfs/2026-11-17/issue5-reproduction/ordinary-clone/reported-870-rust1991-r1.stdout",
+      "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+    },
+    {
+      "originalPath": "bench/results/2026-11-17-issue5-reproduction/ordinary-clone/reported-870-rust1991-r2.stderr",
+      "path": "bench/results/multi-build/macos-apfs/2026-11-17/issue5-reproduction/ordinary-clone/reported-870-rust1991-r2.stderr",
+      "sha256": "5add7fb018e794e37a912620efe9936be564faea33f10d285448f7605d0d379e"
+    },
+    {
+      "originalPath": "bench/results/2026-11-17-issue5-reproduction/ordinary-clone/reported-870-rust1991-r2.stdout",
+      "path": "bench/results/multi-build/macos-apfs/2026-11-17/issue5-reproduction/ordinary-clone/reported-870-rust1991-r2.stdout",
+      "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+    },
+    {
+      "originalPath": "bench/results/2026-11-17-issue5-reproduction/ordinary-clone/state.json",
+      "path": "bench/results/multi-build/macos-apfs/2026-11-17/issue5-reproduction/ordinary-clone/state.json",
+      "sha256": "5d8d41dc9afd2fcf6df7a6b2c2da859f059120ae5a71a354e7bce05c5bef2130"
+    },
+    {
+      "originalPath": "bench/results/2026-11-17-issue5-reproduction/summary.json",
+      "path": "bench/results/multi-build/macos-apfs/2026-11-17/issue5-reproduction/summary.json",
+      "sha256": "a9485c259579b91ac323c1a4bc90a3c840cd69e24e840b90e3518ffe9419f978"
+    },
+    {
+      "originalPath": "bench/results/2026-11-17-issue5-reproduction/top-level-ignored-50000/git-r0.stderr",
+      "path": "bench/results/multi-build/macos-apfs/2026-11-17/issue5-reproduction/top-level-ignored-50000/git-r0.stderr",
+      "sha256": "a4871b0f5192b1abea728eacbff4300b05672b16f8d31f0abf831b1bf50db5a2"
+    },
+    {
+      "originalPath": "bench/results/2026-11-17-issue5-reproduction/top-level-ignored-50000/git-r0.stdout",
+      "path": "bench/results/multi-build/macos-apfs/2026-11-17/issue5-reproduction/top-level-ignored-50000/git-r0.stdout",
+      "sha256": "6de6116951c8bd0d378ef86c85008f9341d4108bb5cddf31e05c081685d05420"
+    },
+    {
+      "originalPath": "bench/results/2026-11-17-issue5-reproduction/top-level-ignored-50000/git-r1.stderr",
+      "path": "bench/results/multi-build/macos-apfs/2026-11-17/issue5-reproduction/top-level-ignored-50000/git-r1.stderr",
+      "sha256": "c3694b4956504290a7812153996c46ca2450437970ae844cbfefe5aebf55a42c"
+    },
+    {
+      "originalPath": "bench/results/2026-11-17-issue5-reproduction/top-level-ignored-50000/git-r1.stdout",
+      "path": "bench/results/multi-build/macos-apfs/2026-11-17/issue5-reproduction/top-level-ignored-50000/git-r1.stdout",
+      "sha256": "6de6116951c8bd0d378ef86c85008f9341d4108bb5cddf31e05c081685d05420"
+    },
+    {
+      "originalPath": "bench/results/2026-11-17-issue5-reproduction/top-level-ignored-50000/git-r2.stderr",
+      "path": "bench/results/multi-build/macos-apfs/2026-11-17/issue5-reproduction/top-level-ignored-50000/git-r2.stderr",
+      "sha256": "21b9423cac4a1bdc01cbf205e5bb7f621c3e2ae490c26ecf80eda39aa5f19508"
+    },
+    {
+      "originalPath": "bench/results/2026-11-17-issue5-reproduction/top-level-ignored-50000/git-r2.stdout",
+      "path": "bench/results/multi-build/macos-apfs/2026-11-17/issue5-reproduction/top-level-ignored-50000/git-r2.stdout",
+      "sha256": "6de6116951c8bd0d378ef86c85008f9341d4108bb5cddf31e05c081685d05420"
+    },
+    {
+      "originalPath": "bench/results/2026-11-17-issue5-reproduction/top-level-ignored-50000/manifest.json",
+      "path": "bench/results/multi-build/macos-apfs/2026-11-17/issue5-reproduction/top-level-ignored-50000/manifest.json",
+      "sha256": "54ac184069eb1c7f74884d4bb74873821ab45ef663eba7081cd05b0fc04009a3"
+    },
+    {
+      "originalPath": "bench/results/2026-11-17-issue5-reproduction/top-level-ignored-50000/released-v03-r0.stderr",
+      "path": "bench/results/multi-build/macos-apfs/2026-11-17/issue5-reproduction/top-level-ignored-50000/released-v03-r0.stderr",
+      "sha256": "a43c57de1b98ecac942192b46f00c5e1f18601341902984b7e08eba40ef7fe2c"
+    },
+    {
+      "originalPath": "bench/results/2026-11-17-issue5-reproduction/top-level-ignored-50000/released-v03-r0.stdout",
+      "path": "bench/results/multi-build/macos-apfs/2026-11-17/issue5-reproduction/top-level-ignored-50000/released-v03-r0.stdout",
+      "sha256": "6de6116951c8bd0d378ef86c85008f9341d4108bb5cddf31e05c081685d05420"
+    },
+    {
+      "originalPath": "bench/results/2026-11-17-issue5-reproduction/top-level-ignored-50000/released-v03-r1.stderr",
+      "path": "bench/results/multi-build/macos-apfs/2026-11-17/issue5-reproduction/top-level-ignored-50000/released-v03-r1.stderr",
+      "sha256": "260c22bbf069a9dc24a9da62c3974dd78d625dfdc41dbfb84308851a95bf0838"
+    },
+    {
+      "originalPath": "bench/results/2026-11-17-issue5-reproduction/top-level-ignored-50000/released-v03-r1.stdout",
+      "path": "bench/results/multi-build/macos-apfs/2026-11-17/issue5-reproduction/top-level-ignored-50000/released-v03-r1.stdout",
+      "sha256": "6de6116951c8bd0d378ef86c85008f9341d4108bb5cddf31e05c081685d05420"
+    },
+    {
+      "originalPath": "bench/results/2026-11-17-issue5-reproduction/top-level-ignored-50000/released-v03-r2.stderr",
+      "path": "bench/results/multi-build/macos-apfs/2026-11-17/issue5-reproduction/top-level-ignored-50000/released-v03-r2.stderr",
+      "sha256": "3357919c3866b76dfa5a767e52dcb637e0da4609b8cd493aaff137bbcd96c25b"
+    },
+    {
+      "originalPath": "bench/results/2026-11-17-issue5-reproduction/top-level-ignored-50000/released-v03-r2.stdout",
+      "path": "bench/results/multi-build/macos-apfs/2026-11-17/issue5-reproduction/top-level-ignored-50000/released-v03-r2.stdout",
+      "sha256": "6de6116951c8bd0d378ef86c85008f9341d4108bb5cddf31e05c081685d05420"
+    },
+    {
+      "originalPath": "bench/results/2026-11-17-issue5-reproduction/top-level-ignored-50000/released-v04-r0.stderr",
+      "path": "bench/results/multi-build/macos-apfs/2026-11-17/issue5-reproduction/top-level-ignored-50000/released-v04-r0.stderr",
+      "sha256": "7fac723df6b72b4f166f1f3f813cda4f88ef7d2cd5b8ba430473728111f95856"
+    },
+    {
+      "originalPath": "bench/results/2026-11-17-issue5-reproduction/top-level-ignored-50000/released-v04-r0.stdout",
+      "path": "bench/results/multi-build/macos-apfs/2026-11-17/issue5-reproduction/top-level-ignored-50000/released-v04-r0.stdout",
+      "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+    },
+    {
+      "originalPath": "bench/results/2026-11-17-issue5-reproduction/top-level-ignored-50000/released-v04-r1.stderr",
+      "path": "bench/results/multi-build/macos-apfs/2026-11-17/issue5-reproduction/top-level-ignored-50000/released-v04-r1.stderr",
+      "sha256": "2483e9b9fa7e3d576dfa48566709525cdda0f492e6d387f1372ff34aebaf53fc"
+    },
+    {
+      "originalPath": "bench/results/2026-11-17-issue5-reproduction/top-level-ignored-50000/released-v04-r1.stdout",
+      "path": "bench/results/multi-build/macos-apfs/2026-11-17/issue5-reproduction/top-level-ignored-50000/released-v04-r1.stdout",
+      "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+    },
+    {
+      "originalPath": "bench/results/2026-11-17-issue5-reproduction/top-level-ignored-50000/released-v04-r2.stderr",
+      "path": "bench/results/multi-build/macos-apfs/2026-11-17/issue5-reproduction/top-level-ignored-50000/released-v04-r2.stderr",
+      "sha256": "d230e9c4ec3c840df87d4bebdac87c7eba1fcc266a5d7f0708cc2e92fe4cd7d3"
+    },
+    {
+      "originalPath": "bench/results/2026-11-17-issue5-reproduction/top-level-ignored-50000/released-v04-r2.stdout",
+      "path": "bench/results/multi-build/macos-apfs/2026-11-17/issue5-reproduction/top-level-ignored-50000/released-v04-r2.stdout",
+      "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+    },
+    {
+      "originalPath": "bench/results/2026-11-17-issue5-reproduction/top-level-ignored-50000/reported-870-rust1991-r0.stderr",
+      "path": "bench/results/multi-build/macos-apfs/2026-11-17/issue5-reproduction/top-level-ignored-50000/reported-870-rust1991-r0.stderr",
+      "sha256": "4a0606560fb58c8c48611227ae57023c81e30f6c865c48f5b3ca57c02eef3e25"
+    },
+    {
+      "originalPath": "bench/results/2026-11-17-issue5-reproduction/top-level-ignored-50000/reported-870-rust1991-r0.stdout",
+      "path": "bench/results/multi-build/macos-apfs/2026-11-17/issue5-reproduction/top-level-ignored-50000/reported-870-rust1991-r0.stdout",
+      "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+    },
+    {
+      "originalPath": "bench/results/2026-11-17-issue5-reproduction/top-level-ignored-50000/reported-870-rust1991-r1.stderr",
+      "path": "bench/results/multi-build/macos-apfs/2026-11-17/issue5-reproduction/top-level-ignored-50000/reported-870-rust1991-r1.stderr",
+      "sha256": "51105121420a957f4676b42f3bb9a4d07f6762e354804fc074afeb77d045da15"
+    },
+    {
+      "originalPath": "bench/results/2026-11-17-issue5-reproduction/top-level-ignored-50000/reported-870-rust1991-r1.stdout",
+      "path": "bench/results/multi-build/macos-apfs/2026-11-17/issue5-reproduction/top-level-ignored-50000/reported-870-rust1991-r1.stdout",
+      "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+    },
+    {
+      "originalPath": "bench/results/2026-11-17-issue5-reproduction/top-level-ignored-50000/reported-870-rust1991-r2.stderr",
+      "path": "bench/results/multi-build/macos-apfs/2026-11-17/issue5-reproduction/top-level-ignored-50000/reported-870-rust1991-r2.stderr",
+      "sha256": "e22af9ac5d09820ac336f97ea61b8c6dc3ae26a20db1819efa3c108e38f76aee"
+    },
+    {
+      "originalPath": "bench/results/2026-11-17-issue5-reproduction/top-level-ignored-50000/reported-870-rust1991-r2.stdout",
+      "path": "bench/results/multi-build/macos-apfs/2026-11-17/issue5-reproduction/top-level-ignored-50000/reported-870-rust1991-r2.stdout",
+      "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+    },
+    {
+      "originalPath": "bench/results/2026-11-17-issue5-reproduction/top-level-ignored-50000/state.json",
+      "path": "bench/results/multi-build/macos-apfs/2026-11-17/issue5-reproduction/top-level-ignored-50000/state.json",
+      "sha256": "a20408e85ecf58e4e462d5b0861509ada91bfc94d0b64e5e65fad69ee6d24723"
+    },
+    {
       "originalPath": "bench/results/2026-11-15-byte-heavy-baseline.json",
       "path": "bench/results/unattributed/macos-unspecified/2026-11-15/byte-heavy-baseline/2026-11-15-byte-heavy-baseline.json",
       "sha256": "107719007d31ac1ff14d0e11cfd751a7c48b98a9a9b64ef1893a51091f7611fc"
