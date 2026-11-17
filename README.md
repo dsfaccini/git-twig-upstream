@@ -30,7 +30,11 @@ Published v0.3.0 requires the source checkout's current `HEAD`. Development buil
 can reuse matching files from nearby worktrees for other revisions too.
 Short help works outside a checkout: `git twig -h` or `git twig new --help`.
 
-For coding agents: `git twig skill` prints the bundled skill.
+For coding agents: `git twig skill` prints the bundled skill. Give those
+instructions to your agent so it chooses the right checkout, branch and location,
+uses Twig for creation, and asks before cleanup. Twig does not manage agent sessions
+or intercept an app's built-in worktree creation; no client-specific hook is needed
+for agent-directed CLI use.
 
 Native CoW is verified on macOS/APFS and Linux Btrfs/reflink-enabled XFS,
 including the tested OverlayFS layouts below.

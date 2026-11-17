@@ -8,6 +8,28 @@ description: Create and manage ordinary linked Git worktrees with git twig, usin
 Use `git twig new` in place of `git worktree add`. The resulting checkout is a
 normal linked worktree: use ordinary Git commands inside it.
 
+Twig is a filesystem optimization, not an agent session or worktree manager. You
+remain responsible for selecting the repository, base revision, branch, location,
+setup steps, tests, commits and approved cleanup. These instructions apply to any
+agent that can execute Git commands; they do not install or intercept client hooks.
+
+## Before creating a workspace
+
+1. Follow the repository's AGENTS.md and the person's worktree conventions. Inspect
+   existing registrations with `git twig list --porcelain`; scripts should use `-z`
+   and parse NUL records, not whitespace or newline-delimited paths.
+2. Check `git twig --version` and `git twig new -h`. The installed binary may lag
+   behind these instructions. The canonical command is `new`; older v0.1 binaries
+   do not support it. Ask before upgrading an installation; do not silently
+   substitute another executable, reset a destination, or keep retrying bad flags.
+3. Choose the exact base intentionally. `HEAD` means the selected source checkout's
+   current commit, not necessarily the remote default branch. Inspect its branch,
+   status and revision; do not carry dirty work over, fetch/rebase, or reset the
+   source unless the task and repository policy call for it.
+4. Reuse an existing task worktree only after confirming its identity and ownership.
+   Otherwise select a new branch and unused destination. A directory name or branch
+   prefix alone does not prove that another agent's worktree is disposable.
+
 ## CLI reference
 
 ```text
@@ -49,9 +71,9 @@ git twig --version
   while Cargo users can use `git twig -h` or `git-twig --help`.
 
 Standard Git worktree options are passed through. Use `git worktree <command> -h`
-for the full options of a delegated command (`new` uses Git\'s `add` options).
-Do not invent additional Twig
-commands or flags.
+for the full options of a delegated command (`new` uses Git's `add` options).
+Do not invent additional Twig commands or flags. Experimental adoption/setup
+prototypes are not capabilities of an installed release.
 
 ## Create a workspace
 
@@ -78,6 +100,32 @@ never overwrite an existing directory. Run tests and make commits in the new
 worktree as usual. `git twig list` lists worktrees. Add `--porcelain` only when
 parsing the output in a script.
 
+Keep using the resulting absolute worktree path for subsequent tools; changing one
+shell's directory may not change an agent's session directory or another tool's
+working directory. Confirm the checkout and branch before edits, tests or commits.
+For a CLI agent, open or launch it in that checkout using its documented mechanism.
+Do not assume that creating a worktree moved an existing editor/session there.
+
+## Work with agent-managed worktrees
+
+- Prefer explicit Twig creation when you control creation. A client's built-in
+  isolation/worktree feature may call stock Git independently; merely installing
+  this skill does not intercept it or guarantee CoW for app-managed worktrees.
+- Existing Git worktrees need no conversion to be usable. Inspect and work in them
+  normally. Do not replace their files or move them to try to gain sharing, and do
+  not promise that Twig can compact an active existing APFS checkout.
+- Respect the client's paths, session records, branches and cleanup lifecycle.
+  Do not install lifecycle hooks, rewrite agent settings, take ownership of its
+  worktree inventory, or disable its safety checks as part of ordinary Twig use.
+- Configure dependencies or local files deliberately after creation. Do not assume
+  `.worktreeinclude` or a client setup script ran for a manually Twig-created
+  checkout. Never copy secrets or all ignored files, or share writable dependency
+  directories, just to make startup look automatic. Ask when setup needs private
+  configuration or changes outside the task checkout.
+- Report the created/reused path, branch/base and setup still needed. Only claim
+  native CoW when trace output confirms it; a successful Git fallback is valid but
+  not evidence of sharing. Do not promise fixed speed or exclusive space savings.
+
 ## Know what is copied
 
 - Only committed tracked files are included. Local edits and untracked/ignored
@@ -102,9 +150,14 @@ parsing the output in a script.
 
 ## Cleanup safely
 
-Ask before removing a worktree or discarding changes. Check `git status` first;
-never force removal, prune registrations or delete retained staging blindly.
-After approval, use `git twig remove <path>`.
+Ask before removing a worktree or discarding changes. Inspect status (including
+untracked and relevant ignored output), staged changes, new/unpushed commits,
+locks and active sessions first. A clean `git status` alone does not prove the
+worktree is disposable. Do not remove an app-managed checkout behind its owner's
+back or mistake a registration lock for exclusive file access.
+Never force removal, prune registrations, delete branches or delete retained
+staging blindly. After approval, use `git twig remove <path>`; retain branches
+and commits unless their deletion was separately authorized.
 
 Staging lives under the common Git directory in `twigs/staging`. A successful
 create removes only its own staging. Failed/interrupted attempts retain diagnostic
