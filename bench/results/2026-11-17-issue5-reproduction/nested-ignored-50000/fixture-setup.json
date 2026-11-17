@@ -1,0 +1,13 @@
+{
+  "schemaVersion": 1,
+  "generatedAt": "2026-11-17T08:12:30.534Z",
+  "source": "/Users/leostera/Developer/github.com/leostera/git-twig/exp-issue5-reproduction-fixtures/docs",
+  "root": "/Users/leostera/Developer/github.com/leostera/git-twig/exp-issue5-reproduction-fixtures/docs/theme/node_modules/twig-issue5-fixture-50000",
+  "count": 50000,
+  "layout": "16 files per generated package; nested inside tracked theme ancestor; node_modules ignored by original .gitignore",
+  "setupMs": 4793.577458,
+  "notes": [
+    "Synthetic donor-state hypothesis, not evidence that Pablo had these files.",
+    "No application or dependency scripts executed; original attributes and tracked files untouched."
+  ]
+}
