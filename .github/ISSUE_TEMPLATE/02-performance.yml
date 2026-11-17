@@ -1,0 +1,103 @@
+name: Performance or disk-use report
+description: Compare Twig with stock Git using reproducible inputs and complete timings.
+body:
+  - type: markdown
+    attributes:
+      value: |
+        Slowdowns are worth reporting even if you cannot profile them.
+        Keep the original attributes and checkout state; do not use -text to force CoW.
+        This issue is public: redact credentials, private code, remote URLs, and identifying paths.
+        Private repositories are welcome—give sanitized details rather than publishing them.
+        Unknown details are OK; report them as unknown instead of guessing.
+  - type: textarea
+    id: operation
+    attributes:
+      label: What is slow or using unexpected space?
+      description: Describe the user operation and the expected result. If this is a regression, name the last known good version or commit.
+    validations:
+      required: true
+  - type: textarea
+    id: versions
+    attributes:
+      label: Exact Twig and Git versions
+      description: Paste git twig --version and git --version, installation method, and the executable selected by command -v git-twig (or your platform equivalent). For each source-built binary include the full source commit, rustc --version, cargo build command, and custom flags. Distinguish released binaries from development builds even when their version strings match.
+      render: text
+    validations:
+      required: true
+  - type: textarea
+    id: environment
+    attributes:
+      label: OS, hardware, and execution environment
+      description: Exact OS version/build, CPU/chip, architecture, RAM if known, and host/VM/container. On macOS include sw_vers. Note power mode/battery operation and indexing, antivirus, or other concurrent work if known; do not disable security tools for this report.
+    validations:
+      required: true
+  - type: textarea
+    id: storage
+    attributes:
+      label: Filesystem, storage layout, and free space
+      description: Filesystem and case sensitivity; internal/external/network/cloud-synced storage; approximate disk capacity/free space. Are source, destination, and common Git metadata on the same volume? df -h /path/to/source can help. Say unknown where necessary.
+    validations:
+      required: true
+  - type: textarea
+    id: input
+    attributes:
+      label: Repository and exact input
+      description: Public URL and full commit if shareable; otherwise sanitized details. Include tracked file count/bytes if known, submodules/LFS, clone method (ordinary, shallow, partial, or shared), and object-store alternates if known.
+    validations:
+      required: true
+  - type: textarea
+    id: donor
+    attributes:
+      label: Checkout state, attributes, and ignored build files
+      description: Paste relevant .gitattributes without changing them. Mention nested/info/global attributes, core.autocrlf/eol, filters/encoding, sparse checkout, worktree config, hooks, and dirty/staged files if known. Describe ignored/untracked build outputs and their locations (for example theme/node_modules versus root node_modules). A clean git status does not mean ignored files are absent. Do not paste a full config dump or filter credentials.
+    validations:
+      required: true
+  - type: textarea
+    id: commands
+    attributes:
+      label: Exact baseline and Twig commands
+      description: Include the working directory, revision, complete arguments, number of worktrees, and concurrency. Compare the same input with stock Git. Use new unused destinations; do not overwrite or remove existing worktrees for the report.
+      placeholder: |
+        From the same source checkout with HEAD at the reported commit:
+        time git worktree add --detach ../unused-stock HEAD
+        time env TWIG_TRACE=1 git twig new --detach ../unused-twig HEAD
+      render: shell
+    validations:
+      required: true
+  - type: textarea
+    id: measurements
+    attributes:
+      label: Individual timings and measurement method
+      description: Include every observed run for each command, including failures—not just an average. State run order, first-use/warmup/cache conditions, and background work. Repeat at least three times if practical; one run is still useful when clearly identified. Distinguish creation time from subsequent git status, verification, build, or dependency-install time. Do not flush global caches or install dependencies just for this report.
+      placeholder: |
+        Run | command/version | elapsed | success/failure
+        1   | stock Git       |         |
+        1   | Twig            |         |
+        First status timed separately:
+    validations:
+      required: true
+  - type: textarea
+    id: trace
+    attributes:
+      label: Complete TWIG_TRACE=1 output
+      description: Include output from start to finish so we can distinguish native CoW, delegation, snapshot time, raw verification, and later Git work. If tracing is unavailable or unsafe, explain why instead.
+      render: text
+    validations:
+      required: true
+  - type: dropdown
+    id: correctness
+    attributes:
+      label: Checkout correctness checks performed
+      description: Git status alone can hide attribute normalization differences. Tell us below how you checked raw bytes, modes/symlinks, and source isolation.
+      options:
+        - Raw contents and source isolation checked
+        - Only Git status checked
+        - Incorrect checkout or source changes observed
+        - Not checked yet
+    validations:
+      required: true
+  - type: textarea
+    id: verification
+    attributes:
+      label: Verification details and optional disk/profile evidence
+      description: Describe comparisons with a stock worktree, private-write/source checks, and any profiles already collected. For space claims give units, measurement tool, before/after values, and whether first status ran; distinguish apparent size from physical allocation. du alone cannot establish exclusive CoW allocation. Profiling is optional—keep instrumented runs separate from ordinary timings.

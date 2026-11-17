@@ -1,0 +1,27 @@
+name: Feature request
+description: Describe a workflow or platform Twig does not cover yet.
+body:
+  - type: markdown
+    attributes:
+      value: |
+        Use the bug or performance form for failures in existing behavior.
+        This issue is public; leave out credentials and private code.
+  - type: textarea
+    id: problem
+    attributes:
+      label: What workflow are you trying to accomplish?
+      description: Explain the user problem, current workaround, and why existing commands or ordinary Git do not meet the need.
+    validations:
+      required: true
+  - type: textarea
+    id: outcome
+    attributes:
+      label: What should Twig make possible?
+      description: Describe the desired behavior. Example commands are welcome, but an implementation proposal is not required.
+    validations:
+      required: true
+  - type: textarea
+    id: environment
+    attributes:
+      label: Relevant platform or constraints
+      description: OS, architecture, filesystem, Git version, or other requirements if relevant. Unknown or not applicable is fine.
