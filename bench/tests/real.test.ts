@@ -29,7 +29,7 @@ function fixture(host = false) {
     selectedBackend: null,
     failures: [],
     repositories: [
-      { label: "repo", commit: input.revision, donorCommit: null },
+      { label: "repo", commit: input.revision, donor_commit: null },
     ],
     cohorts: [0, 1, 2].flatMap((repeat) =>
       ["git", "twig"].map((backend) => ({

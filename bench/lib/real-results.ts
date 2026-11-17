@@ -108,7 +108,7 @@ export function parseReal(
     repositories.length === 1 &&
       record(repositories[0]).label === input.label &&
       record(repositories[0]).commit === input.revision &&
-      record(repositories[0]).donorCommit === null,
+      record(repositories[0]).donor_commit === null,
     "Wrong repository input",
   );
   const seen = new Set<string>();
