@@ -65,7 +65,9 @@ repository. Pass a worktree path to adopt just that checkout. After adoption,
 Coordinate active agents/editors first: their stored paths are not updated.
 Moves preserve branches and staged, dirty, untracked and ignored files, stay on
 one filesystem and never overwrite destinations. Recovery journals are retained.
-Submodule relocation is not yet supported. Linux can subsequently deduplicate
+Layout moves also require a successful atomic no-overwrite directory-rename
+probe; unsupported drivers are refused before any worktree moves. Submodule
+relocation is not yet supported. Linux can subsequently deduplicate
 matching files in place. On macOS, interactive adoption also offers **offline
 compaction**: save work and close agents, editors, builds and servers using these
 worktrees first. It replaces matching files with verified CoW clones, preserves

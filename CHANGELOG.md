@@ -44,6 +44,10 @@ describe changes from this baseline after they are implemented and verified.
 
 ### Fixed
 
+- Probe atomic no-overwrite directory renames before relocating any worktree.
+  Drivers such as NTFS-3g that reject the primitive are refused without moving
+  user data; there is no overwrite-prone ordinary-rename fallback.
+
 - Blobless partial clones no longer fetch one blob per file. Tree listings stop
   asking for blob sizes, and a target that needs blobs written by Git is left
   to stock Git, which fetches absent blobs in one batch.

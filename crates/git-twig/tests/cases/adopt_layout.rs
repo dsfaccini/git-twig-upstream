@@ -26,6 +26,90 @@ fn apply(cwd: &Path, root: &Path, target: Option<&Path>) -> Result<Output> {
     twig(cwd, &args)
 }
 
+// Probe the filesystem independently, not by interpreting Twig's success. FUSE
+// drivers can support ordinary rename while rejecting RENAME_NOREPLACE. On those
+// drivers verify the product's no-write refusal instead of claiming relocation.
+fn relocation_available_or_refusal_verified(f: &Fixture) -> Result<bool> {
+    #[cfg(not(target_os = "linux"))]
+    {
+        let _ = f;
+        Ok(true)
+    }
+    #[cfg(target_os = "linux")]
+    {
+        use std::{ffi::CString, os::unix::ffi::OsStrExt};
+        let probe = f.root.join("independent-rename-probe");
+        fs::create_dir(&probe)?;
+        let from = probe.join("from");
+        let occupied = probe.join("occupied");
+        let vacant = probe.join("vacant");
+        fs::create_dir(&from)?;
+        fs::create_dir(&occupied)?;
+        let rename = |a: &Path, b: &Path| -> std::io::Result<()> {
+            let a = CString::new(a.as_os_str().as_bytes()).unwrap();
+            let b = CString::new(b.as_os_str().as_bytes()).unwrap();
+            // SAFETY: only newly-created fixture probe directories are addressed.
+            let result = unsafe {
+                libc::renameat2(
+                    libc::AT_FDCWD,
+                    a.as_ptr(),
+                    libc::AT_FDCWD,
+                    b.as_ptr(),
+                    libc::RENAME_NOREPLACE,
+                )
+            };
+            if result == 0 {
+                Ok(())
+            } else {
+                Err(std::io::Error::last_os_error())
+            }
+        };
+        let unsupported = |e: &std::io::Error| {
+            matches!(
+                e.raw_os_error(),
+                Some(libc::EINVAL | libc::EOPNOTSUPP | libc::ENOSYS)
+            )
+        };
+        let available = match rename(&from, &occupied) {
+            Err(error) if error.kind() == std::io::ErrorKind::AlreadyExists => {
+                match rename(&from, &vacant) {
+                    Ok(()) => true,
+                    Err(error) if unsupported(&error) => false,
+                    Err(error) => return Err(error.into()),
+                }
+            }
+            Err(error) if unsupported(&error) => false,
+            Err(error) => return Err(error.into()),
+            Ok(()) => false, // Ignored exclusive flag is not support.
+        };
+        if available {
+            return Ok(true);
+        }
+        let before = files(&f.source)?;
+        let before_index = index(&f.source)?;
+        let registry = git(&f.source, &["worktree", "list", "--porcelain", "-z"])?.stdout;
+        let root = f.root.join("unsupported-layout");
+        let output = apply(&f.source, &root, None)?;
+        assert!(!output.status.success());
+        assert!(
+            String::from_utf8_lossy(&output.stderr)
+                .contains("atomic no-overwrite directory renames are unsupported"),
+            "{output:?}"
+        );
+        assert!(!root.exists());
+        assert_eq!(files(&f.source)?, before);
+        assert_eq!(index(&f.source)?, before_index);
+        assert_eq!(
+            git(&f.source, &["worktree", "list", "--porcelain", "-z"])?.stdout,
+            registry
+        );
+        eprintln!(
+            "independent filesystem probe lacks exclusive rename; safe adoption refusal verified"
+        );
+        Ok(false)
+    }
+}
+
 #[test]
 fn previews_and_missing_confirmation_do_not_write_layout_or_config() -> Result<()> {
     let f = Fixture::new()?;
@@ -54,6 +138,9 @@ fn previews_and_missing_confirmation_do_not_write_layout_or_config() -> Result<(
 #[test]
 fn adopts_nested_worktrees_and_main_into_its_own_old_root_without_losing_state() -> Result<()> {
     let f = Fixture::new()?;
+    if !relocation_available_or_refusal_verified(&f)? {
+        return Ok(());
+    }
     let peer = nested(&f)?;
     fs::write(f.source.join("hello.txt"), "staged main\n")?;
     git(&f.source, &["add", "hello.txt"])?;
@@ -106,6 +193,9 @@ fn adopts_nested_worktrees_and_main_into_its_own_old_root_without_losing_state()
 #[test]
 fn adopts_one_detached_checkout_and_remembers_the_root_for_creation() -> Result<()> {
     let f = Fixture::new()?;
+    if !relocation_available_or_refusal_verified(&f)? {
+        return Ok(());
+    }
     git(
         &f.source,
         &["worktree", "add", "--detach", "../feature", "HEAD"],
@@ -162,6 +252,9 @@ fn rejects_collisions_locks_foreign_targets_and_implicit_descendant_moves() -> R
 #[test]
 fn restructures_main_with_existing_main_data_and_an_already_named_nested_slot() -> Result<()> {
     let f = Fixture::new()?;
+    if !relocation_available_or_refusal_verified(&f)? {
+        return Ok(());
+    }
     fs::create_dir(f.source.join("main"))?;
     fs::write(f.source.join("main/keep"), "ordinary existing directory")?;
     let child = f.source.join("feat-one");
@@ -233,6 +326,9 @@ fn refuses_occupied_destinations_and_active_git_locks_without_moving() -> Result
 #[test]
 fn moving_only_main_repairs_unmoved_external_peers() -> Result<()> {
     let f = Fixture::new()?;
+    if !relocation_available_or_refusal_verified(&f)? {
+        return Ok(());
+    }
     git(
         &f.source,
         &["worktree", "add", "--detach", "../feature", "HEAD"],
@@ -250,6 +346,9 @@ fn moving_only_main_repairs_unmoved_external_peers() -> Result<()> {
 #[test]
 fn repair_failure_rolls_back_every_move_and_retains_recovery_journal() -> Result<()> {
     let f = Fixture::new()?;
+    if !relocation_available_or_refusal_verified(&f)? {
+        return Ok(());
+    }
     let peer = nested(&f)?;
     let before = files(&f.source)?;
     let before_index = index(&peer)?;

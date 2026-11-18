@@ -803,7 +803,28 @@ mod unix {
                 "Recovery journal retained at {:?}",
                 transaction.path.join("journal.nul")
             );
+            transaction.probe_rename().with_context(|| format!("atomic no-overwrite directory renames are unsupported; no worktrees moved; journal retained at {:?}", transaction.path))?;
             Ok(transaction)
+        }
+        fn probe_rename(&mut self) -> Result<()> {
+            let from = self.path.join("probe-from");
+            let occupied = self.path.join("probe-occupied");
+            let vacant = self.path.join("probe-vacant");
+            fs::create_dir(&from)?;
+            fs::create_dir(&occupied)?;
+            match rename_exclusive(&from, &occupied) {
+                Err(error)
+                    if error
+                        .downcast_ref::<io::Error>()
+                        .is_some_and(|e| e.kind() == io::ErrorKind::AlreadyExists) => {}
+                Err(error) => return Err(error),
+                Ok(()) => bail!("filesystem ignored exclusive rename for an occupied directory"),
+            }
+            rename_exclusive(&from, &vacant)?;
+            // These are newly-created, empty probe directories, never user paths.
+            fs::remove_dir(&occupied)?;
+            fs::remove_dir(&vacant)?;
+            self.record("rename-capabilities-verified", &from, &vacant)
         }
         fn record(&mut self, operation: &str, from: &Path, to: &Path) -> Result<()> {
             for field in [
@@ -948,11 +969,9 @@ mod unix {
             bail!("atomic no-replace relocation unavailable")
         };
         // SAFETY: paths are NUL-terminated and both APIs atomically refuse an occupied destination.
-        ensure!(
-            result == 0,
-            "atomic no-replace rename failed: {}",
-            io::Error::last_os_error()
-        );
+        if result != 0 {
+            return Err(io::Error::last_os_error()).context("atomic no-replace rename failed");
+        }
         Ok(())
     }
 }
