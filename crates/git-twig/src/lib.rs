@@ -6,6 +6,7 @@ mod index;
 mod native;
 mod objects;
 mod registry;
+mod sharing;
 mod snapshot;
 mod staging;
 mod tree;
@@ -29,8 +30,9 @@ pub fn run(cwd: &Path, args: &[OsString]) -> Result<i32> {
         args.first().is_none_or(|arg| arg != "add"),
         "\'add\' has been removed; use \'git twig new\'"
     );
+    // A remembered root supplies a destination only when one was omitted.
     // Both native preparation and fallback consume Git worktree arguments.
-    let mut git_args = args.to_vec();
+    let mut git_args = adopt::creation_args(cwd, args)?;
     if git_args.first().is_some_and(|arg| arg == "new") {
         git_args[0] = "add".into();
     }

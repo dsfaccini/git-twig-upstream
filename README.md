@@ -48,6 +48,29 @@ private, never hardlinked to source. Staging lives under the common Git director
 in `twigs/staging` and is removed after success. Failed/interrupted attempts retain
 staging and may leave a partial registered worktree; inspect before retrying.
 
+### Organize existing worktrees (development main)
+
+Keep agent checkouts beside the original clone, rather than nested inside it:
+
+```sh
+git twig adopt --dry-run --worktrees-dir=/path/to/repo
+git twig adopt --worktrees-dir=/path/to/repo
+```
+
+Twig previews `/path/to/repo/{main,feat-x,...}` and asks before moving anything.
+Omit the directory flag to choose a root interactively; it is remembered per
+repository. Pass a worktree path to adopt just that checkout. After adoption,
+`git twig new -b feat/x` uses the saved root automatically.
+
+Coordinate active agents/editors first: their stored paths are not updated.
+Moves preserve branches and staged, dirty, untracked and ignored files, stay on
+one filesystem and never overwrite destinations. Recovery journals are retained.
+Submodule relocation is not yet supported. Linux can subsequently deduplicate
+matching files in place; **moving worktrees on macOS does not compact them**.
+
+This layout flow is unreleased; published v0.5.0 has the earlier sharing-only
+`adopt`. Check `git twig adopt -h` for `--worktrees-dir` before following this flow.
+
 ## Filesystem support
 
 | Platform | Filesystem | CoW / fallback | Verification |

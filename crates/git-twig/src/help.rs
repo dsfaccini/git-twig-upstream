@@ -6,7 +6,7 @@ Usage: git twig <command> [options]
 
 Commands:
   new       Create a linked worktree; use -b <branch> or --detach
-  adopt     EXPERIMENT: inspect/prepare existing files; Linux in-place dedupe
+  adopt     Preview and confirm a sibling layout for existing worktrees
   list      List worktrees (--porcelain for machine-readable output)
   remove    Remove a worktree
   move      Move a worktree
@@ -34,7 +34,7 @@ Other requests and unsupported worktree options use stock Git. Requires Git 2.40
 Set TWIG_TRACE=1 to report backend selection to stderr.
 ";
 
-const NEW: &str = "Usage: git twig new [<git-worktree options>] <path> [<commit>]
+const NEW: &str = "Usage: git twig new [<git-worktree options>] <path> [<commit>]\n       git twig new -b <branch>  # destination from a previously adopted root
 
   -b <branch>       Create a new branch
   -B <branch>       Create or reset a branch (delegates to Git)
@@ -71,7 +71,7 @@ pub fn for_args(args: &[OsString]) -> Option<String> {
     let help = match command {
         "new" => return Some(NEW.into()),
         "adopt" => {
-            "adopt [--dry-run | --prepare | --dedupe] <linked-worktree>\nExperimental: run from a different donor checkout in the same repository.\nDefault/--dry-run compares current tracked-file bytes without writes.\n--prepare retains private verified clones in Git metadata, without replacing files.\n--dedupe is Linux-only in-place sharing; APFS live replacement is unsupported.\nDirty/staged contents are not restored to HEAD. No physical savings claim."
+            "adopt [--dry-run] [--yes] [--worktrees-dir=<root>] [<worktree>]\nDiscover this repository\'s registered worktrees and preview root/{main,feat-x,...}.\nPrompt for a root when none was saved; remember it per repository after success.\nDefault: ask before moving. --dry-run writes nothing. --yes requires an explicit/saved root.\nAn optional worktree selects only that checkout; otherwise include the main clone.\nStop or coordinate agents/editors first; absolute session paths are not updated.\nSame-filesystem moves only; no overwrites, forced unlocks or submodule relocation.\nDirty/staged/untracked/ignored files are preserved; recovery journals are retained.\nLinux then attempts in-place deduplication. macOS relocation does not compact files.\nExplicit --prepare/--dedupe <linked-worktree> retain their v0.5 sharing-only behavior.\nNo measured physical savings claim; APFS candidate clones are never installed."
         }
         "list" => {
             "list [--verbose] [--porcelain [-z]]\nList worktrees; --porcelain is Git's stable machine-readable format."

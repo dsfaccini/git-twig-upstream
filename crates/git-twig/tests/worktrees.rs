@@ -42,6 +42,10 @@ mod donor_metadata;
 #[path = "cases/adopt.rs"]
 mod adopt;
 
+#[cfg(unix)]
+#[path = "cases/adopt_layout.rs"]
+mod adopt_layout;
+
 static NEXT: AtomicU64 = AtomicU64::new(0);
 struct Fixture {
     root: PathBuf,

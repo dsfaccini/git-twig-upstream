@@ -1,0 +1,303 @@
+use super::adopt::{files, index};
+use super::*;
+use std::os::unix::fs::{MetadataExt, PermissionsExt};
+
+fn nested(f: &Fixture) -> Result<PathBuf> {
+    let path = f.source.join(".claude/worktrees/agent");
+    fs::create_dir_all(path.parent().unwrap())?;
+    git(
+        &f.source,
+        &[
+            "worktree",
+            "add",
+            "-b",
+            "feat/nested",
+            path.to_str().unwrap(),
+            "HEAD",
+        ],
+    )?;
+    Ok(path)
+}
+fn apply(cwd: &Path, root: &Path, target: Option<&Path>) -> Result<Output> {
+    let mut args = vec!["adopt", "--yes", "--worktrees-dir", root.to_str().unwrap()];
+    if let Some(target) = target {
+        args.push(target.to_str().unwrap());
+    }
+    twig(cwd, &args)
+}
+
+#[test]
+fn previews_and_missing_confirmation_do_not_write_layout_or_config() -> Result<()> {
+    let f = Fixture::new()?;
+    nested(&f)?;
+    let config = fs::read(f.source.join(".git/config"))?;
+    let before = files(&f.source)?;
+    let before_index = index(&f.source)?;
+    let output = checked(f.twig(&["adopt", "--dry-run"])?)?;
+    assert!(String::from_utf8_lossy(&output.stdout).contains("->"));
+    let root = f.root.join("managed");
+    let refused = f.twig(&["adopt", "--worktrees-dir", root.to_str().unwrap()])?;
+    assert!(!refused.status.success());
+    assert!(!root.exists());
+    assert_eq!(config, fs::read(f.source.join(".git/config"))?);
+    assert_eq!(before_index, index(&f.source)?);
+    assert_eq!(before, files(&f.source)?);
+    assert!(!f.root.read_dir()?.any(|e| {
+        e.unwrap()
+            .file_name()
+            .as_encoded_bytes()
+            .starts_with(b".twig-adopt-")
+    }));
+    Ok(())
+}
+
+#[test]
+fn adopts_nested_worktrees_and_main_into_its_own_old_root_without_losing_state() -> Result<()> {
+    let f = Fixture::new()?;
+    let peer = nested(&f)?;
+    fs::write(f.source.join("hello.txt"), "staged main\n")?;
+    git(&f.source, &["add", "hello.txt"])?;
+    fs::write(f.source.join("hello.txt"), "dirty main\n")?;
+    fs::create_dir_all(f.source.join("ignored/cache"))?;
+    fs::write(f.source.join("ignored/cache/keep"), "ignored main\n")?;
+    fs::write(peer.join("hello.txt"), "staged peer\n")?;
+    git(&peer, &["add", "hello.txt"])?;
+    fs::write(peer.join("hello.txt"), "dirty peer\n")?;
+    fs::write(peer.join("untracked"), "private bytes\n")?;
+    let main_files: Vec<_> = files(&f.source)?
+        .into_iter()
+        .filter(|(p, _)| !p.starts_with(".claude/worktrees"))
+        .collect();
+    let peer_files = files(&peer)?;
+    let main_index = index(&f.source)?;
+    let peer_index = index(&peer)?;
+    let main_inode = fs::metadata(&f.source)?.ino();
+    let output = checked(apply(&peer, &f.source, None)?)?;
+    let main = f.source.join("main");
+    let target = f.source.join("feat-nested");
+    assert_eq!(fs::metadata(&main)?.ino(), main_inode);
+    assert_eq!(files(&main)?.into_iter().collect::<Vec<_>>(), main_files);
+    assert_eq!(files(&target)?, peer_files);
+    assert_eq!(index(&main)?, main_index);
+    assert_eq!(index(&target)?, peer_index);
+    assert!(!peer.exists());
+    assert!(!f.source.join(".git").exists());
+    let inventory = git(&main, &["worktree", "list", "--porcelain"])?;
+    let inventory = String::from_utf8(inventory.stdout)?;
+    assert!(inventory.contains(main.to_str().unwrap()));
+    assert!(inventory.contains(target.to_str().unwrap()));
+    let saved = git(
+        &target,
+        &["config", "--local", "--get", "twig.worktreesDir"],
+    )?;
+    assert_eq!(
+        String::from_utf8(saved.stdout)?.trim(),
+        f.source.to_str().unwrap()
+    );
+    if cfg!(target_os = "macos") {
+        assert!(String::from_utf8_lossy(&output.stdout).contains("sharing will remain unchanged"));
+    }
+    // Git still sees the original staged/dirty distinction after its links move.
+    let status = git(&target, &["status", "--porcelain"])?;
+    assert!(String::from_utf8_lossy(&status.stdout).contains("MM hello.txt"));
+    Ok(())
+}
+
+#[test]
+fn adopts_one_detached_checkout_and_remembers_the_root_for_creation() -> Result<()> {
+    let f = Fixture::new()?;
+    git(
+        &f.source,
+        &["worktree", "add", "--detach", "../feature", "HEAD"],
+    )?;
+    fs::write(f.destination().join("untracked"), "preserve me")?;
+    let before = files(&f.destination())?;
+    let before_index = index(&f.destination())?;
+    let root = f.root.join("managed");
+    checked(apply(&f.source, &root, Some(&f.destination()))?)?;
+    assert!(f.source.join(".git").is_dir());
+    assert_eq!(files(&root.join("feature"))?, before);
+    assert_eq!(index(&root.join("feature"))?, before_index);
+    checked(f.twig(&["new", "-b", "feat/next"])?)?;
+    assert!(root.join("feat-next/hello.txt").is_file());
+    clean(&root.join("feat-next"))?;
+    checked(f.twig(&["adopt", "--yes"])?)?;
+    assert!(root.join("main/.git").is_dir());
+    assert_eq!(files(&root.join("feature"))?, before);
+    clean(&root.join("feat-next"))
+}
+
+#[test]
+fn rejects_collisions_locks_foreign_targets_and_implicit_descendant_moves() -> Result<()> {
+    let f = Fixture::new()?;
+    let peer = nested(&f)?;
+    let root = f.root.join("managed");
+    git(&f.source, &["worktree", "lock", peer.to_str().unwrap()])?;
+    assert!(!apply(&f.source, &root, None)?.status.success());
+    git(&f.source, &["worktree", "unlock", peer.to_str().unwrap()])?;
+    assert!(!apply(&f.source, &root, Some(&f.source))?.status.success());
+    let foreign = Fixture::new()?;
+    assert!(
+        !apply(&f.source, &root, Some(&foreign.source))?
+            .status
+            .success()
+    );
+    git(
+        &f.source,
+        &[
+            "worktree",
+            "add",
+            "-b",
+            "feat-nested",
+            "../collision",
+            "HEAD",
+        ],
+    )?;
+    assert!(!apply(&f.source, &root, None)?.status.success());
+    assert!(!root.exists());
+    assert!(peer.join("hello.txt").is_file());
+    Ok(())
+}
+
+#[test]
+fn restructures_main_with_existing_main_data_and_an_already_named_nested_slot() -> Result<()> {
+    let f = Fixture::new()?;
+    fs::create_dir(f.source.join("main"))?;
+    fs::write(f.source.join("main/keep"), "ordinary existing directory")?;
+    let child = f.source.join("feat-one");
+    git(
+        &f.source,
+        &[
+            "worktree",
+            "add",
+            "-b",
+            "feat/one",
+            child.to_str().unwrap(),
+            "HEAD",
+        ],
+    )?;
+    fs::write(child.join("untracked"), "retained")?;
+    let before = files(&child)?;
+    checked(apply(&f.source, &f.source, None)?)?;
+    assert_eq!(
+        fs::read_to_string(f.source.join("main/main/keep"))?,
+        "ordinary existing directory"
+    );
+    assert_eq!(files(&child)?, before);
+    let status = git(&child, &["status", "--porcelain"])?;
+    assert!(String::from_utf8_lossy(&status.stdout).contains("?? untracked"));
+    Ok(())
+}
+
+#[test]
+fn refuses_submodule_entries_before_moving_anything() -> Result<()> {
+    let f = Fixture::new()?;
+    let head = String::from_utf8(git(&f.source, &["rev-parse", "HEAD"])?.stdout)?;
+    git(
+        &f.source,
+        &[
+            "update-index",
+            "--add",
+            "--cacheinfo",
+            &format!("160000,{},sub", head.trim()),
+        ],
+    )?;
+    let root = f.root.join("managed");
+    let output = apply(&f.source, &root, None)?;
+    assert!(!output.status.success());
+    assert!(String::from_utf8_lossy(&output.stderr).contains("submodule"));
+    assert!(!root.exists());
+    assert!(f.source.join(".git").is_dir());
+    Ok(())
+}
+
+#[test]
+fn refuses_occupied_destinations_and_active_git_locks_without_moving() -> Result<()> {
+    let f = Fixture::new()?;
+    let peer = nested(&f)?;
+    let root = f.root.join("managed");
+    fs::create_dir_all(root.join("main"))?;
+    fs::write(root.join("main/owner"), "not yours")?;
+    let before = files(&f.source)?;
+    assert!(!apply(&f.source, &root, None)?.status.success());
+    assert_eq!(fs::read(root.join("main/owner"))?, b"not yours");
+    assert_eq!(files(&f.source)?, before);
+    let other = f.root.join("other");
+    fs::write(f.source.join(".git/index.lock"), "active owner")?;
+    assert!(!apply(&f.source, &other, Some(&peer))?.status.success());
+    assert!(!other.exists());
+    assert_eq!(files(&f.source)?, before);
+    Ok(())
+}
+
+#[test]
+fn moving_only_main_repairs_unmoved_external_peers() -> Result<()> {
+    let f = Fixture::new()?;
+    git(
+        &f.source,
+        &["worktree", "add", "--detach", "../feature", "HEAD"],
+    )?;
+    let peer = f.destination();
+    let before = files(&peer)?;
+    let before_index = index(&peer)?;
+    checked(apply(&peer, &f.source, Some(&f.source))?)?;
+    assert!(f.source.join("main/.git").is_dir());
+    assert_eq!(files(&peer)?, before);
+    assert_eq!(index(&peer)?, before_index);
+    clean(&peer)
+}
+
+#[test]
+fn repair_failure_rolls_back_every_move_and_retains_recovery_journal() -> Result<()> {
+    let f = Fixture::new()?;
+    let peer = nested(&f)?;
+    let before = files(&f.source)?;
+    let before_index = index(&peer)?;
+    let wrapper = f.root.join("bin");
+    fs::create_dir(&wrapper)?;
+    let real_git = checked(
+        command("sh", &f.source)
+            .args(["-c", "command -v git"])
+            .output()?,
+    )?;
+    let real_git = String::from_utf8(real_git.stdout)?;
+    fs::write(
+        wrapper.join("git"),
+        r#"#!/bin/sh
+previous=
+for arg do
+  if [ "$previous" = worktree ] && [ "$arg" = repair ] && [ ! -e "$TWIG_FAIL_ONCE" ]; then
+    : > "$TWIG_FAIL_ONCE"
+    echo injected-repair-failure >&2
+    exit 91
+  fi
+  previous="$arg"
+done
+exec "$TWIG_REAL_GIT" "$@"
+"#,
+    )?;
+    fs::set_permissions(wrapper.join("git"), fs::Permissions::from_mode(0o755))?;
+    let mut paths = vec![wrapper];
+    paths.extend(std::env::split_paths(&std::env::var_os("PATH").unwrap()));
+    let output = command(env!("CARGO_BIN_EXE_git-twig"), &f.source)
+        .env("PATH", std::env::join_paths(paths)?)
+        .env("TWIG_REAL_GIT", real_git.trim())
+        .env("TWIG_FAIL_ONCE", f.root.join("failed-once"))
+        .args(["adopt", "--yes", "--worktrees-dir"])
+        .arg(&f.source)
+        .output()?;
+    assert!(!output.status.success());
+    assert!(
+        String::from_utf8_lossy(&output.stderr).contains("original layout was restored"),
+        "{output:?}"
+    );
+    assert_eq!(files(&f.source)?, before);
+    assert_eq!(index(&peer)?, before_index);
+    git(&peer, &["status", "--porcelain"])?;
+    assert!(
+        f.root
+            .read_dir()?
+            .any(|e| e.unwrap().path().join("journal.nul").is_file())
+    );
+    Ok(())
+}

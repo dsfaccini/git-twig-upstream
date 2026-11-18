@@ -6,6 +6,21 @@ describe changes from this baseline after they are implemented and verified.
 
 ## Unreleased
 
+### Added
+
+- `git twig adopt` discovers registered worktrees, previews a sibling layout and
+  asks before relocating the original clone and linked checkouts. A single
+  `--worktrees-dir` option selects a root; omitted roots are prompted and saved
+  per repository after success. An optional target adopts only one checkout.
+- `adopt --dry-run` previews without writes; noninteractive application requires
+  `--yes` with an explicit or saved root. Atomic no-overwrite moves preserve
+  dirty/staged/ignored work, repair Git links and retain a recovery journal.
+  Cross-device, locked, colliding and submodule layouts are refused.
+- After adoption, `git twig new -b <branch>` can use the saved root without an
+  explicit destination. Linux attempts in-place sharing after relocation; macOS
+  reports sharing unchanged. Explicit v0.5 `--prepare`/`--dedupe` modes remain
+  sharing-only and never replace live files.
+
 ### Changed
 
 - Shared files are read once, not twice. The stat data of every verified file
