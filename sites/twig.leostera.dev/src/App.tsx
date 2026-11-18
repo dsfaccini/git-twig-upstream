@@ -1,7 +1,7 @@
 import { useEffect, useState } from "react";
 import { Button } from "@ui-sdk/react/button";
 import benchmarks from "virtual:twig-benchmarks";
-import type { DiskComparison } from "../scripts/benchmarks";
+import { DiskChart } from "./PreviewChart";
 import { copyText } from "./clipboard";
 
 export const onboardPrompt =
@@ -42,71 +42,9 @@ function AgentMarks() {
   );
 }
 
-function disk(bytes: number): string {
-  return bytes >= 1024 ** 3
-    ? `${(bytes / 1024 ** 3).toFixed(1)} GiB`
-    : `${(bytes / 1024 ** 2).toFixed(bytes < 10 * 1024 ** 2 ? 1 : 0)} MiB`;
-}
-function DiskChart({ data }: { data: DiskComparison[] }) {
-  const scale = Math.max(
-    1,
-    ...data.map((repo) => repo.twigBytes / repo.gitBytes),
-  );
-  return (
-    <figure className="disk-chart">
-      <figcaption>
-        <h2>Disk use</h2>
-        <span>Git = 100%</span>
-      </figcaption>
-      {data.map((repo) => {
-        const saved = (1 - repo.twigBytes / repo.gitBytes) * 100;
-        const rows = [
-          { label: "git worktree", bytes: repo.gitBytes, kind: "git" },
-          { label: "git twig", bytes: repo.twigBytes, kind: "twig" },
-        ];
-        return (
-          <section className="repo-group" key={repo.name}>
-            <div className="repo-heading">
-              <h3>
-                <a href={repo.source}>{repo.name}</a>
-                {repo.worktrees > 1 && (
-                  <small className="cohort-count" title={`${repo.worktrees} sequential worktrees`}>×{repo.worktrees}</small>
-                )}
-              </h3>
-              <span className={saved >= 0 ? "less" : "more"}>
-                {Math.abs(saved).toFixed(1)}% {saved >= 0 ? "less" : "more"}
-              </span>
-            </div>
-            <p className="sr-only">
-              {repo.worktrees} worktrees, {repo.concurrency} in flight.
-              Additional APFS allocation after first status; {repo.rounds} local
-              rounds. Bar lengths are relative to Git for each repo, not
-              absolute across repos.
-            </p>
-            <div className="bars">
-              {rows.map(({ label, bytes, kind }) => (
-                <div className="bar-row" key={label}>
-                  <code>{label}</code>
-                  <div className="bar-track">
-                    <div
-                      className={`bar ${kind}`}
-                      style={{
-                        width: `${(bytes / repo.gitBytes / scale) * 100}%`,
-                      }}
-                    />
-                  </div>
-                  <span>{disk(bytes)}</span>
-                </div>
-              ))}
-            </div>
-          </section>
-        );
-      })}
-    </figure>
-  );
-}
-
 export default function App() {
+  const [platform, setPlatform] = useState<"mac" | "linux">("mac");
+  const [filesystem, setFilesystem] = useState<"btrfs" | "xfs">("btrfs");
   const [copy, setCopy] = useState<"ready" | "copied" | "failed">("ready");
   useEffect(() => {
     if (copy === "ready") return;
@@ -160,7 +98,14 @@ export default function App() {
           </div>
         </section>
         <section className="benchmarks" aria-label="Disk usage comparison">
-          <DiskChart data={benchmarks} />
+          <div className="platform-switch" role="group" aria-label="Operating system">
+            <button aria-label="Mac" title="Mac" aria-pressed={platform === "mac"} onClick={() => setPlatform("mac")}><img src="/apple.svg" width="20" height="20" alt="" /></button>
+            <button aria-label="Linux" title="Linux" aria-pressed={platform === "linux"} onClick={() => setPlatform("linux")}><img src="/linux.svg" width="20" height="20" alt="" /></button>
+            {platform === "linux" && <select aria-label="Linux filesystem" value={filesystem} onChange={e => setFilesystem(e.target.value === "xfs" ? "xfs" : "btrfs")}>
+              <option value="btrfs">Btrfs</option><option value="xfs">XFS</option>
+            </select>}
+          </div>
+          <DiskChart data={platform === "mac" ? benchmarks.mac : benchmarks[filesystem]} />
         </section>
       </main>
       <footer>

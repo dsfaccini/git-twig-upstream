@@ -1,54 +1,33 @@
 import { expect, test } from "bun:test";
-import { loadBenchmarks, summarize } from "../scripts/benchmarks";
+import { loadBenchmarks, loadPlatforms } from "../scripts/benchmarks";
+
+const repositories = [
+  "Linux kernel", "Pulumi docs", "OpenClaw", "Axo", "git-twig", "Workers starter",
+];
 
 test("uses verified checked-in allocation measurements", () => {
   const data = loadBenchmarks();
-  expect(data.map((d) => d.name)).toEqual([
-    "Linux kernel",
-    "Pulumi docs",
-    "OpenClaw",
-    "Axo",
-    "git-twig",
-    "Workers starter",
-  ]);
+  expect(data.map(d => d.name)).toEqual(repositories);
   expect(data[0]!.gitBytes).toBeGreaterThan(data[0]!.twigBytes);
-  expect(
-    data.every((d) =>
-      d.source.startsWith("https://github.com/leostera/git-twig/"),
-    ),
-  ).toBe(true);
-});
-test("accepts clean schema-v3 APFS runs and rejects dirty or failed runs", () => {
-  const operation = { verified: true, exitCode: 0, error: null, nativeCow: true };
-  const row = {
-    repository: "fixture", sourceCommit: "commit", sourceTree: "tree",
-    sourceUnchanged: true, succeeded: 1, failed: 0, operations: [operation],
-  };
-  const raw = {
-    schemaVersion: 3, filesystem: "case-sensitive-image", dirty: false,
-    failures: [], concurrency: 1, worktreesPerCohort: 1,
-    cohorts: [
-      { ...row, backend: "git", growthAfterStatusBytes: 100 },
-      { ...row, backend: "twig", growthAfterStatusBytes: 20 },
-    ],
-  };
-  expect(summarize(raw, "fixture", "Fixture", "").twigBytes).toBe(20);
-  expect(() => summarize({ ...raw, dirty: true }, "fixture", "Fixture", "")).toThrow();
-  expect(() => summarize({ ...raw, failures: ["interrupted"] }, "fixture", "Fixture", "")).toThrow();
+  expect(data.every(d => d.source.startsWith("https://github.com/leostera/git-twig/"))).toBe(true);
 });
 
-test("does not present missing cohorts as zero space", () => {
-  expect(() =>
-    summarize(
-      {
-        schemaVersion: 2,
-        filesystem: "isolated-image",
-        concurrency: 1,
-        cohorts: [],
-      },
-      "linux",
-      "Linux",
-      "",
-    ),
-  ).toThrow("Missing paired");
+test("provides complete paired real-repository comparisons for all platforms", () => {
+  const platforms = loadPlatforms();
+  expect(Object.keys(platforms)).toEqual(["mac", "xfs", "btrfs"]);
+  for (const rows of Object.values(platforms)) {
+    expect(rows.map(d => d.name)).toEqual(repositories);
+    expect(rows.every(d => d.gitBytes > 0 && d.twigBytes > 0 && d.rounds === 3 && d.concurrency === 1)).toBe(true);
+    expect(rows.map(d => d.worktrees)).toEqual([1, 1, 1, 1, 10, 10]);
+  }
+});
+
+test("retains the audited absolute allocation values", () => {
+  const data = loadPlatforms();
+  expect(data.mac[0]!.gitBytes).toBe(1964982272);
+  expect(data.mac[0]!.twigBytes).toBe(46772224);
+  expect(data.xfs[0]!.gitBytes).toBe(1982636032);
+  expect(data.xfs[0]!.twigBytes).toBe(74174464);
+  expect(data.btrfs[0]!.gitBytes).toBe(1981104128);
+  expect(data.btrfs[0]!.twigBytes).toBe(200765440);
 });

@@ -328,6 +328,14 @@ footer a:hover {
     font-size: 13px;
   }
 }
+.platform-switch { display:flex; justify-content:center; align-items:center; gap:5px; height:38px; margin-bottom:8px; }
+.platform-switch button, .platform-switch select { font:inherit; font-size:13px; color:#626c5b; border:1px solid transparent; background:transparent; padding:5px 12px; border-radius:6px; cursor:pointer; }
+.platform-switch button { display:grid; place-items:center; width:44px; height:32px; padding:5px; }
+.platform-switch button img { display:block; opacity:.65; }
+.platform-switch button[aria-pressed="true"] img { opacity:1; }
+.platform-switch button[aria-pressed="true"] { color:#283b2b; background:#e9eddc; border-color:#d5ddc6; }
+.platform-switch select { border-color:#d5ddc6; background:#fffef9; margin-left:8px; }
+
 @media (prefers-reduced-motion: reduce) {
   *,
   *::before,
