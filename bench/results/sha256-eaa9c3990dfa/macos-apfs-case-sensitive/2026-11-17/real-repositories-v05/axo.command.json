@@ -1,0 +1,23 @@
+[
+  "/Users/leostera/Developer/github.com/leostera/git-twig/main/target/v05-real-macos-2026-11-17/bin/twig-real-bench",
+  "--repo",
+  "axo=/Users/leostera/Developer/github.com/leostera/axo",
+  "--revision",
+  "axo=67af816be26633039e8507d93d577b2073d6f5fd",
+  "--candidate",
+  "/Users/leostera/Developer/github.com/leostera/git-twig/main/target/v05-real-macos-2026-11-17/bin/git-twig",
+  "--filesystem",
+  "case-sensitive-image",
+  "--image-gib",
+  "32",
+  "--worktrees",
+  "1",
+  "--concurrency",
+  "1",
+  "--repeats",
+  "3",
+  "--warmup",
+  "true",
+  "--output",
+  "/Users/leostera/Developer/github.com/leostera/git-twig/main/target/v05-real-macos-2026-11-17/axo.json"
+]

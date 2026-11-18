@@ -1,0 +1,31 @@
+openclaw: git, repeat 1/3, 1 creates with concurrency 1
+cohort workers launched: 1; queued creates: 1
+git: CLI completed 1/1; content verification pending
+  15.84s creates; 1 ok / 0 failed; allocation after status: 919.54 MiB
+  disposable image detached and removed
+openclaw: twig, repeat 1/3, 1 creates with concurrency 1
+cohort workers launched: 1; queued creates: 1
+twig: CLI completed 1/1; content verification pending
+  15.93s creates; 1 ok / 0 failed; allocation after status: 31.23 MiB
+  disposable image detached and removed
+openclaw: twig, repeat 2/3, 1 creates with concurrency 1
+cohort workers launched: 1; queued creates: 1
+twig: CLI completed 1/1; content verification pending
+  37.20s creates; 1 ok / 0 failed; allocation after status: 30.96 MiB
+  disposable image detached and removed
+openclaw: git, repeat 2/3, 1 creates with concurrency 1
+cohort workers launched: 1; queued creates: 1
+git: CLI completed 1/1; content verification pending
+  47.85s creates; 1 ok / 0 failed; allocation after status: 914.81 MiB
+  disposable image detached and removed
+openclaw: git, repeat 3/3, 1 creates with concurrency 1
+cohort workers launched: 1; queued creates: 1
+git: CLI completed 1/1; content verification pending
+  44.47s creates; 1 ok / 0 failed; allocation after status: 915.03 MiB
+  disposable image detached and removed
+openclaw: twig, repeat 3/3, 1 creates with concurrency 1
+cohort workers launched: 1; queued creates: 1
+twig: CLI completed 1/1; content verification pending
+  18.51s creates; 1 ok / 0 failed; allocation after status: 31.11 MiB
+  disposable image detached and removed
+/Users/leostera/Developer/github.com/leostera/git-twig/main/target/v05-real-macos-2026-11-17/openclaw.json

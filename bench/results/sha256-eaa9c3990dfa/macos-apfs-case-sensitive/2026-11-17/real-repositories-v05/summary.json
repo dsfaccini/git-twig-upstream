@@ -1,0 +1,154 @@
+{
+  "schemaVersion": 1,
+  "kind": "real-repository-allocation-snapshot",
+  "candidateSourceTag": "v0.5.0",
+  "candidateSourceCommit": "4d2622f77ea8bfecc1f3fd6f1930686648990bbd",
+  "candidateSHA256": "eaa9c3990dfabc0bfaa0614abd8efdbde07149c77fa96c0eb0636cf446cd88e7",
+  "manifestSHA256": "e0c71b0a1889450823ede31b77b2c1e62af8356c798b07a0ff62a7562364d6ac",
+  "verifiedCreates": 144,
+  "failedCreates": 0,
+  "unstableAllocationObservations": 4,
+  "completeComparisons": 6,
+  "eligibleComparisons": 4,
+  "comparisons": [
+    {
+      "repository": "workers-starter",
+      "worktrees": 10,
+      "concurrency": 1,
+      "pairedRounds": 3,
+      "verifiedCreates": 60,
+      "allocationStable": true,
+      "comparisonEligible": true,
+      "gitMedianBytes": 610304,
+      "twigMedianBytes": 315392,
+      "gitObservedBytes": [
+        610304,
+        610304,
+        610304
+      ],
+      "twigObservedBytes": [
+        315392,
+        315392,
+        315392
+      ],
+      "rawFile": "workers-starter.json"
+    },
+    {
+      "repository": "twig",
+      "worktrees": 10,
+      "concurrency": 1,
+      "pairedRounds": 3,
+      "verifiedCreates": 60,
+      "allocationStable": true,
+      "comparisonEligible": true,
+      "gitMedianBytes": 5468160,
+      "twigMedianBytes": 536576,
+      "gitObservedBytes": [
+        5468160,
+        5468160,
+        5472256
+      ],
+      "twigObservedBytes": [
+        540672,
+        532480,
+        536576
+      ],
+      "rawFile": "twig.json"
+    },
+    {
+      "repository": "axo",
+      "worktrees": 1,
+      "concurrency": 1,
+      "pairedRounds": 3,
+      "verifiedCreates": 6,
+      "allocationStable": true,
+      "comparisonEligible": true,
+      "gitMedianBytes": 32325632,
+      "twigMedianBytes": 1249280,
+      "gitObservedBytes": [
+        32325632,
+        32374784,
+        32325632
+      ],
+      "twigObservedBytes": [
+        1249280,
+        1249280,
+        1249280
+      ],
+      "rawFile": "axo.json"
+    },
+    {
+      "repository": "linux",
+      "worktrees": 1,
+      "concurrency": 1,
+      "pairedRounds": 3,
+      "verifiedCreates": 6,
+      "allocationStable": true,
+      "comparisonEligible": true,
+      "gitMedianBytes": 1964982272,
+      "twigMedianBytes": 46772224,
+      "gitObservedBytes": [
+        1965297664,
+        1964982272,
+        1964756992
+      ],
+      "twigObservedBytes": [
+        46772224,
+        46755840,
+        46944256
+      ],
+      "rawFile": "linux.json"
+    },
+    {
+      "repository": "openclaw",
+      "worktrees": 1,
+      "concurrency": 1,
+      "pairedRounds": 3,
+      "verifiedCreates": 6,
+      "allocationStable": false,
+      "comparisonEligible": false,
+      "gitMedianBytes": 959475712,
+      "twigMedianBytes": 32624640,
+      "gitObservedBytes": [
+        964210688,
+        959250432,
+        959475712
+      ],
+      "twigObservedBytes": [
+        32751616,
+        32464896,
+        32624640
+      ],
+      "rawFile": "openclaw.json"
+    },
+    {
+      "repository": "pulumi",
+      "worktrees": 1,
+      "concurrency": 1,
+      "pairedRounds": 3,
+      "verifiedCreates": 6,
+      "allocationStable": false,
+      "comparisonEligible": false,
+      "gitMedianBytes": 1298493440,
+      "twigMedianBytes": 8318976,
+      "gitObservedBytes": [
+        1298493440,
+        1297776640,
+        1298604032
+      ],
+      "twigObservedBytes": [
+        8318976,
+        8486912,
+        7942144
+      ],
+      "rawFile": "pulumi.json"
+    }
+  ],
+  "notes": [
+    "All original observations are retained. No failed/unstable point was retried or replaced.",
+    "Medians for ineligible groups are diagnostic only, not an unqualified website comparison.",
+    "Case-sensitive APFS images on the recorded shared Mac. Additional allocation includes Git metadata after first status, not exclusive file allocation.",
+    "Repository pins and batch sizes match the historical v0.4 campaign; image capacities are not identical for every workload.",
+    "Raw timing observations remain archived but are not promoted as website measurements."
+  ]
+}
