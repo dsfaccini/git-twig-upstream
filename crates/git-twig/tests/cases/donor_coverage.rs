@@ -391,3 +391,72 @@ fn separate_git_directories_share_from_the_real_checkout() -> Result<()> {
     assert_eq!(fs::read(destination.join("description"))?, b"tracked\n");
     clean(&destination)
 }
+
+/// A donor someone is working in has deleted and replaced tracked paths. Those
+/// paths are Git's to write; every other file is still worth sharing.
+#[cfg(unix)]
+#[test]
+fn deleted_and_replaced_donor_paths_do_not_disable_sharing() -> Result<()> {
+    use std::os::unix::fs::symlink;
+    let f = Fixture::new()?;
+    for directory in ["tree/kept", "tree/gone", "linked", "swapped"] {
+        fs::create_dir_all(f.source.join(directory))?;
+    }
+    let tracked = [
+        "root-gone",
+        "root-link",
+        "tree/kept/file",
+        "tree/gone/file",
+        "tree/deleted",
+        "tree/became-link",
+        "tree/became-directory",
+        "linked/file",
+        "swapped/file",
+    ];
+    for name in tracked {
+        fs::write(f.source.join(name), format!("{name}\n"))?;
+    }
+    symlink("kept/file", f.source.join("tree/was-link"))?;
+    git(&f.source, &["add", "."])?;
+    git(&f.source, &["commit", "-m", "tracked"])?;
+
+    fs::remove_file(f.source.join("root-gone"))?;
+    fs::remove_file(f.source.join("root-link"))?;
+    symlink("hello.txt", f.source.join("root-link"))?;
+    fs::remove_dir_all(f.source.join("tree/gone"))?;
+    fs::remove_file(f.source.join("tree/deleted"))?;
+    fs::remove_file(f.source.join("tree/became-link"))?;
+    symlink("/etc/passwd", f.source.join("tree/became-link"))?;
+    fs::remove_file(f.source.join("tree/became-directory"))?;
+    fs::create_dir(f.source.join("tree/became-directory"))?;
+    fs::write(f.source.join("tree/became-directory/inside"), "untracked\n")?;
+    fs::remove_file(f.source.join("tree/was-link"))?;
+    fs::write(f.source.join("tree/was-link"), "now a file\n")?;
+    fs::remove_dir_all(f.source.join("linked"))?;
+    symlink("tree", f.source.join("linked"))?;
+    fs::remove_dir_all(f.source.join("swapped"))?;
+    fs::write(f.source.join("swapped"), "now a file\n")?;
+
+    let output = checked(f.add()?)?;
+    native(&output);
+    for name in tracked {
+        let path = f.destination().join(name);
+        assert!(fs::symlink_metadata(&path)?.is_file(), "{name}");
+        assert_eq!(fs::read(path)?, format!("{name}\n").as_bytes(), "{name}");
+    }
+    assert_eq!(
+        fs::read_link(f.destination().join("tree/was-link"))?,
+        Path::new("kept/file")
+    );
+    assert!(
+        !f.destination()
+            .join("tree/became-directory/inside")
+            .exists()
+    );
+    clean(&f.destination())?;
+    // The donor keeps its work in progress.
+    assert!(fs::symlink_metadata(f.source.join("linked"))?.is_symlink());
+    assert_eq!(fs::read(f.source.join("swapped"))?, b"now a file\n");
+    assert!(!f.source.join("tree/deleted").exists());
+    Ok(())
+}

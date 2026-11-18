@@ -13,6 +13,9 @@ describe changes from this baseline after they are implemented and verified.
   `git status` in a new worktree no longer rehashes every file. Paths under a
   line-ending or other conversion policy keep raw verification
   ([RFD0024](docs/rfds/RFD0024-verified-index-reuse.md)).
+- A donor with deleted tracked files, or tracked paths replaced by a symlink,
+  directory or other entry, no longer disables sharing for the whole worktree.
+  Git writes those paths and the remaining files are still shared.
 - Clone normalization skips `chmod` for files that already have checkout
   permissions.
 

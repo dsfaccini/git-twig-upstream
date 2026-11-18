@@ -50,9 +50,10 @@ tests remain part of the same suite.
 
 ## Interpretation
 
-A clean `git status` is not the contents oracle. Missing donor files may safely
-fall back; intact donor cases must use native CoW on macOS and on required-native
-Linux runs. Symlink traversal is never used by the inventory helper. `.git`
+A clean `git status` is not the contents oracle. Donor paths that were deleted or
+replaced by another kind of entry are written by Git while the rest stays shared;
+both those and intact donor cases must use native CoW on macOS and on
+required-native Linux runs. Symlink traversal is never used by the inventory helper. `.git`
 metadata is excluded from raw checkout comparisons and registration is checked
 separately. Index preservation is an explicit byte comparison.
 

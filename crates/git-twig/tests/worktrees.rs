@@ -458,7 +458,7 @@ fn empty_large_and_sparse_files_have_private_writes() -> Result<()> {
 
 #[cfg(target_os = "linux")]
 #[test]
-fn nested_tracked_fifo_falls_back_without_blocking_or_touching_source() -> Result<()> {
+fn nested_tracked_fifo_is_rewritten_without_blocking_or_touching_source() -> Result<()> {
     let f = Fixture::new()?;
     fs::create_dir(f.source.join("tree"))?;
     fs::write(f.source.join("tree/file"), "committed")?;
@@ -471,7 +471,8 @@ fn nested_tracked_fifo_falls_back_without_blocking_or_touching_source() -> Resul
     let mut child = command(env!("CARGO_BIN_EXE_git-twig"), &f.source);
     child.args(["new", "--detach", "../feature"]);
     let output = checked(bounded_output(child)?)?;
-    assert!(!String::from_utf8_lossy(&output.stderr).contains("CoW: verified"));
+    // The FIFO is never opened: Git writes that path and the rest is shared.
+    native(&output);
     assert_eq!(fs::read(f.destination().join("tree/file"))?, b"committed");
     assert_eq!(fs::read(f.root.join("original"))?, b"committed");
     use std::os::unix::fs::FileTypeExt;
@@ -1305,7 +1306,7 @@ fn directory_clone_permissions_follow_umask_not_source_modes() -> Result<()> {
 
 #[cfg(unix)]
 #[test]
-fn replaced_directory_symlink_delegates_without_traversing_it() -> Result<()> {
+fn replaced_directory_symlink_is_rewritten_without_traversing_it() -> Result<()> {
     use std::os::unix::fs::symlink;
     let f = Fixture::new()?;
     fs::create_dir_all(f.source.join("tree/sub"))?;
@@ -1315,7 +1316,8 @@ fn replaced_directory_symlink_delegates_without_traversing_it() -> Result<()> {
     fs::rename(f.source.join("tree/sub"), f.root.join("outside"))?;
     symlink(f.root.join("outside"), f.source.join("tree/sub"))?;
     let output = checked(f.add()?)?;
-    assert!(!String::from_utf8_lossy(&output.stderr).contains("CoW: verified"));
+    native(&output);
+    assert!(fs::symlink_metadata(f.destination().join("tree/sub"))?.is_dir());
     assert_eq!(
         fs::read(f.destination().join("tree/sub/file"))?,
         b"committed"

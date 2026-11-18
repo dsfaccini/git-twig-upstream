@@ -57,12 +57,13 @@ pub fn materialize(
     for (name, node) in &tree.children {
         let source = root.join(name);
         let target = data.join(name);
+        // A donor in use has deleted and replaced tracked paths. Leave those for
+        // Git to write, and keep sharing everything that is still what Git tracks.
+        if !still_tracked_kind(&source, node)? {
+            continue;
+        }
         match node {
             Node::Directory(directory) => {
-                ensure!(
-                    fs::symlink_metadata(&source)?.is_dir(),
-                    "source directory changed type"
-                );
                 #[cfg(target_os = "linux")]
                 {
                     clone_tracked_directory(&source, &target, directory, modes)?;
@@ -74,13 +75,7 @@ pub fn materialize(
                     let _ = directory;
                 }
             }
-            Node::File { .. } => {
-                ensure!(
-                    fs::symlink_metadata(&source)?.is_file(),
-                    "source is not a regular file"
-                );
-                native::clone_path(&source, &target)?;
-            }
+            Node::File { .. } => native::clone_path(&source, &target)?,
             Node::Symlink => native::symlink(&fs::read_link(&source)?, &target)?,
         }
         normalize(
@@ -109,16 +104,15 @@ fn clone_tracked_directory(
     directory: &Directory,
     modes: &native::FileModes,
 ) -> Result<()> {
-    ensure!(
-        fs::symlink_metadata(source)?.is_dir(),
-        "source directory changed type"
-    );
     // mkdir already applies umask/default ACL and inherits SGID/GID like Git.
     // Even chmod(mode | SGID) clears SGID when its group is not in our groups.
     fs::create_dir(target)?;
     for (name, node) in &directory.children {
         let source = source.join(name);
         let target = target.join(name);
+        if !still_tracked_kind(&source, node)? {
+            continue;
+        }
         match node {
             Node::Directory(directory) => {
                 clone_tracked_directory(&source, &target, directory, modes)?;
@@ -133,39 +127,54 @@ fn clone_tracked_directory(
     Ok(())
 }
 
+/// Whether a donor path still holds the kind of entry the target tracks there.
+/// Only a hint for skipping work: private bytes are verified afterwards.
+fn still_tracked_kind(source: &Path, node: &Node) -> Result<bool> {
+    let kind = match fs::symlink_metadata(source) {
+        Ok(metadata) => metadata.file_type(),
+        Err(error) if error.kind() == std::io::ErrorKind::NotFound => return Ok(false),
+        Err(error) => return Err(error.into()),
+    };
+    Ok(same_kind(node, kind))
+}
+
+fn same_kind(node: &Node, kind: fs::FileType) -> bool {
+    match node {
+        Node::Directory(_) => kind.is_dir(),
+        Node::File { .. } => kind.is_file(),
+        Node::Symlink => kind.is_symlink(),
+    }
+}
+
 fn normalize(
     path: &Path,
     node: &Node,
     actual: fs::FileType,
     modes: &native::FileModes,
 ) -> Result<()> {
+    // The donor replaced this tracked path with something else. Drop the clone:
+    // an absent private path is one Git writes.
+    if !same_kind(node, actual) {
+        return remove_private_tree(path, actual);
+    }
     let metadata = fs::symlink_metadata(path)?;
     // Before anything else: an immutable clone refuses the changes below.
     native::discard_donor_metadata(path, &metadata)?;
     match node {
         Node::Directory(expected) => {
-            ensure!(actual.is_dir(), "cloned directory changed type");
             // Source directories may be read-only; checkout permissions come from this umask.
             modes.ensure(path, &metadata, true)?;
-            let mut remaining = expected.children.len();
             for child in fs::read_dir(path)? {
                 let child = child?;
                 let actual = child.file_type()?;
                 match expected.children.get(&child.file_name()) {
-                    Some(node) => {
-                        normalize(&child.path(), node, actual, modes)?;
-                        remaining -= 1;
-                    }
+                    Some(node) => normalize(&child.path(), node, actual, modes)?,
                     None => remove_private_tree(&child.path(), actual)?,
                 }
             }
-            ensure!(remaining == 0, "tracked path missing from cloned directory");
         }
-        Node::File { executable } => {
-            ensure!(actual.is_file(), "cloned regular file changed type");
-            modes.ensure(path, &metadata, *executable)?;
-        }
-        Node::Symlink => ensure!(actual.is_symlink(), "cloned symlink changed type"),
+        Node::File { executable } => modes.ensure(path, &metadata, *executable)?,
+        Node::Symlink => {}
     }
     Ok(())
 }
