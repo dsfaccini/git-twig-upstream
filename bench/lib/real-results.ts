@@ -83,6 +83,7 @@ export function parseReal(
     filesystem: string;
     input: RealInput;
     rounds: number;
+    longAllocationWindow?: boolean;
   },
 ): VerifiedCohort[] {
   const r = record(value),
@@ -102,6 +103,16 @@ export function parseReal(
       r.selectedBackend === null,
     "Wrong real-repository protocol",
   );
+  if (expected.longAllocationWindow && expected.filesystem !== "host") {
+    const sampling = record(r.allocationSampling);
+    invariant(
+      sampling.intervalMs === 500 &&
+        sampling.minimumSamples === 20 &&
+        sampling.stableSamples === 11 &&
+        sampling.maximumSamples === 240,
+      "Wrong allocation settlement protocol",
+    );
+  }
   invariant(list(r.failures).length === 0, "Worker reported failures");
   const repositories = list(r.repositories);
   invariant(
@@ -206,6 +217,20 @@ export function parseReal(
           ),
         "Missing allocation observations",
       );
+      if (expected.longAllocationWindow) {
+        const observations = list(space.observedAllocatedBytes);
+        invariant(
+          observations.length >= 20 &&
+            observations.length <= 240 &&
+            observations.at(-1) === space.allocatedBytes,
+          "Invalid long-window observations",
+        );
+        if (space.stable)
+          invariant(
+            observations.slice(-11).every((n) => n === space.allocatedBytes),
+            "False allocation stability",
+          );
+      }
       allocationStable &&= space.stable;
     }
     const allocation = c.growthAfterStatusBytes;

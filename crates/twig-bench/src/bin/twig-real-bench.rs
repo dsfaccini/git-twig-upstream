@@ -55,6 +55,7 @@ struct Suite {
     schema_version: u32,
     filesystem: Filesystem,
     image_size_gib: Option<u64>,
+    allocation_sampling: Option<AllocationSampling>,
     warmup: bool,
     require_native: bool,
     selected_backend: Option<String>,
@@ -359,7 +360,7 @@ fn main() -> Result<()> {
         )?
     };
     let mut suite = Suite {
-        schema_version: 4, filesystem, warmup, require_native, selected_backend: selected_backend.clone(), image_size_gib: if filesystem == Filesystem::Host { None } else { Some(image_size_gib) }, suite: "real-image-cohort".into(), generated_at_unix_ms: timestamp,
+        schema_version: 4, filesystem, allocation_sampling: if filesystem == Filesystem::Host { None } else { Some(ALLOCATION_SAMPLING) }, warmup, require_native, selected_backend: selected_backend.clone(), image_size_gib: if filesystem == Filesystem::Host { None } else { Some(image_size_gib) }, suite: "real-image-cohort".into(), generated_at_unix_ms: timestamp,
         commit: git_text(&cwd, &["rev-parse", "HEAD"])?, dirty: !git_text(&cwd, &["status", "--porcelain"])?.is_empty(),
         candidate_sha256: digest.split_whitespace().next().context("missing candidate hash")?.into(),
         git_version: capture(&cwd, "git", &["--version".into()])?,
@@ -1204,6 +1205,28 @@ fn self_cpu_ms() -> Result<f64> {
     )
 }
 
+#[derive(Serialize)]
+#[serde(rename_all = "camelCase")]
+struct AllocationSampling {
+    interval_ms: u64,
+    minimum_samples: usize,
+    stable_samples: usize,
+    maximum_samples: usize,
+}
+const ALLOCATION_SAMPLING: AllocationSampling = AllocationSampling {
+    interval_ms: 500,
+    minimum_samples: 20,
+    stable_samples: 11,
+    maximum_samples: 240,
+};
+
+fn allocation_has_settled(observations: &[u64]) -> bool {
+    observations.len() >= ALLOCATION_SAMPLING.minimum_samples
+        && observations[observations.len() - ALLOCATION_SAMPLING.stable_samples..]
+            .iter()
+            .all(|value| Some(value) == observations.last())
+}
+
 fn settled_space(mount: &Path) -> Result<Space> {
     let mut sync = Command::new("sync");
     #[cfg(target_os = "linux")]
@@ -1211,18 +1234,12 @@ fn settled_space(mount: &Path) -> Result<Space> {
     checked(sync.output()?)?;
     let mut observations = vec![];
     let mut snapshot = space(mount)?;
-    // Large APFS checkouts can finish syncing before allocation accounting settles.
-    // Keep the same three-identical-reading rule, but allow up to 60 seconds on macOS.
-    let max_samples = if cfg!(target_os = "macos") { 240 } else { 12 };
-    for _ in 0..max_samples {
-        thread::sleep(Duration::from_millis(250));
+    // Allocation accounting may continue after sync; require a long quiet window.
+    for _ in 0..ALLOCATION_SAMPLING.maximum_samples {
+        thread::sleep(Duration::from_millis(ALLOCATION_SAMPLING.interval_ms));
         snapshot = space(mount)?;
         observations.push(snapshot.allocated_bytes);
-        if observations.len() >= 3
-            && observations[observations.len() - 3..]
-                .iter()
-                .all(|n| *n == snapshot.allocated_bytes)
-        {
+        if allocation_has_settled(&observations) {
             snapshot.stable = true;
             break;
         }
@@ -1360,6 +1377,21 @@ fn save(path: &Path, suite: &Suite) -> Result<()> {
 
 #[cfg(test)]
 mod tests {
+    #[test]
+    fn allocation_requires_a_long_observation_and_quiet_window() {
+        assert!(!super::allocation_has_settled(&[4096; 19]));
+        assert!(super::allocation_has_settled(&[4096; 20]));
+        let mut changing = vec![4096; 20];
+        changing.push(8192);
+        assert!(!super::allocation_has_settled(&changing));
+        changing.extend([8192; 9]);
+        assert!(!super::allocation_has_settled(&changing));
+        changing.push(8192);
+        assert!(super::allocation_has_settled(&changing));
+        assert!(!super::allocation_has_settled(
+            &(0..240).collect::<Vec<_>>()
+        ));
+    }
     use super::*;
     #[test]
     fn checkout_counters_are_not_inferred_from_a_backend_banner() {

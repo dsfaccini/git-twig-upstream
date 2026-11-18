@@ -272,6 +272,7 @@ export async function run(args: string[]) {
             filesystem: target.workerFilesystem,
             input,
             rounds: 3,
+            longAllocationWindow: true,
           },
         );
         const summary = summarizeReal(cohorts);
@@ -283,6 +284,10 @@ export async function run(args: string[]) {
         });
         job.verified = true;
         job.allocationComparable = cohorts.every((c) => c.allocationStable);
+        invariant(
+          target.workerFilesystem === "host" || job.allocationComparable,
+          "Allocation did not settle; retain this complete attempt and rerun the entire paired repository job, never select individual cohorts",
+        );
         job.status = "completed";
       } catch (error) {
         job.error = String(error);

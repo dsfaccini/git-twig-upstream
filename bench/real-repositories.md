@@ -48,6 +48,21 @@ The reporter checks complete paired groups and reproduces JSON/CSV byte-for-byte
 Partial results do not become complete comparisons. Raw manifests are never
 rewritten after an abrupt interruption or a corrected post-processing gate.
 
+### Long-window allocation protocol
+
+New allocation campaigns use filesystem sync followed by half-second allocation
+samples: at least 20 observations (10 seconds), with the final 11 identical
+observations spanning five seconds. The limit is 240 samples (120 seconds) per
+snapshot. All four snapshots in every paired cohort must settle. The raw header
+records this policy; the parser independently checks the observation window.
+
+An unstable attempt remains immutable and is not eligible for publication. With
+explicit operator authorization, retry the **entire three-round paired repository
+job** on fresh disposable images, not selected backends or individual cohorts.
+Select the first fully qualifying attempt, never the fastest or smallest result.
+Keep previous attempts and distinguish their shorter sampling protocol. Stop on
+correctness failures rather than retrying them into apparent success.
+
 ## Standalone worker
 
 This suite measures a cohort of real CLI processes, not an internal copier.
