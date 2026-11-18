@@ -21,6 +21,8 @@ mod filesystem_coverage;
 #[path = "cases/nonregular_coverage.rs"]
 mod nonregular_coverage;
 
+#[path = "cases/index_freshness.rs"]
+mod index_freshness;
 #[path = "cases/partial_clones.rs"]
 mod partial_clones;
 

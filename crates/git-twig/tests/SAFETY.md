@@ -35,6 +35,10 @@ prefix, branch names Git refuses before registration, and (ignored, attaches a
 disk image) exFAT companion files. `cases/donor_coverage.rs` covers a separate
 Git directory, where Git lists the main checkout at a path holding no checkout.
 
+`cases/index_freshness.rs` requires the installed index to record inode and size
+for root, nested, symlink and Git-rewritten entries, and same-size dirty donor
+bytes to be rewritten rather than recorded as clean.
+
 These are finite generated cases, not exhaustive proofs or a randomized shrinking
 framework. The generation seed and fixture are retained. Parallel launch varies
 scheduling but does not force every interleaving. The registration fault injection

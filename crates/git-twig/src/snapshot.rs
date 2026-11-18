@@ -139,13 +139,14 @@ fn normalize(
     actual: fs::FileType,
     modes: &native::FileModes,
 ) -> Result<()> {
+    let metadata = fs::symlink_metadata(path)?;
     // Before anything else: an immutable clone refuses the changes below.
-    native::discard_donor_metadata(path)?;
+    native::discard_donor_metadata(path, &metadata)?;
     match node {
         Node::Directory(expected) => {
             ensure!(actual.is_dir(), "cloned directory changed type");
             // Source directories may be read-only; checkout permissions come from this umask.
-            modes.apply_directory(path)?;
+            modes.ensure(path, &metadata, true)?;
             let mut remaining = expected.children.len();
             for child in fs::read_dir(path)? {
                 let child = child?;
@@ -162,7 +163,7 @@ fn normalize(
         }
         Node::File { executable } => {
             ensure!(actual.is_file(), "cloned regular file changed type");
-            modes.apply(path, *executable)?;
+            modes.ensure(path, &metadata, *executable)?;
         }
         Node::Symlink => ensure!(actual.is_symlink(), "cloned symlink changed type"),
     }

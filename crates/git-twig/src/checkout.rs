@@ -89,6 +89,14 @@ impl<'a> Checkout<'a> {
                 "core.symlinks=true",
                 "-c",
                 "submodule.recurse=false",
+                // The staged index is installed into the new worktree: it must be
+                // one self-contained file with nothing tied to this location.
+                "-c",
+                "core.splitIndex=false",
+                "-c",
+                "core.untrackedCache=false",
+                "-c",
+                "index.sparse=false",
             ]);
         command
     }
@@ -119,12 +127,31 @@ impl<'a> Checkout<'a> {
     fn write_paths(&self, paths: &[&Path]) -> Result<()> {
         if !paths.is_empty() {
             with_input(
+                // -u records each written file's stat data in the staged index.
                 self.command()
-                    .args(["checkout-index", "--force", "-z", "--stdin"]),
+                    .args(["checkout-index", "-u", "--force", "-z", "--stdin"]),
                 self::paths(paths.iter().copied()),
             )?;
         }
         Ok(())
+    }
+
+    /// Let Git hash every staged file once against the staged index, recording
+    /// stat data for the ones that match, and name the ones that do not.
+    fn refresh(&self) -> Result<std::collections::BTreeSet<Vec<u8>>> {
+        // A fresh index holds no stat data, so nothing here is trusted from stat:
+        // every entry is compared by content. -q keeps going past mismatches.
+        checked(self.command().args(["update-index", "-q", "--refresh"]))?;
+        let stale = checked(self.command().args(["diff-files", "--name-only", "-z"]))?.stdout;
+        ensure!(
+            stale.is_empty() || stale.last() == Some(&0),
+            "unterminated stale path listing"
+        );
+        Ok(stale
+            .split(|byte| *byte == 0)
+            .filter(|path| !path.is_empty())
+            .map(<[u8]>::to_vec)
+            .collect())
     }
 
     pub fn repair(
@@ -134,6 +161,16 @@ impl<'a> Checkout<'a> {
         policy: &Policy,
         lazy: bool,
     ) -> Result<()> {
+        // checkout-index asks a promisor remote for one blob per path. Only
+        // Git's own checkout batches, so leave absent blobs to it.
+        let writable = |entry: &Entry| {
+            ensure!(
+                !lazy || entry.kind == Kind::Submodule,
+                "partial clone: Git must write {:?}, and stock Git fetches absent blobs in one batch",
+                entry.path
+            );
+            Ok(())
+        };
         let regular: Vec<_> = entries
             .iter()
             .zip(&policy.actions)
@@ -146,11 +183,21 @@ impl<'a> Checkout<'a> {
         let mut symlink_objects = None;
         let mut attributes = Vec::new();
         let mut files = Vec::new();
+        let mut refreshing = Vec::new();
         let mut verified = 0;
         for (entry, action) in entries.iter().zip(&policy.actions) {
             let retain = match (*action, entry.kind) {
                 (Action::VerifyClone, Kind::File { .. }) => {
                     matches.next().expect("one hash verdict per regular file")
+                }
+                // The verdict comes from the index refresh below.
+                (Action::RefreshClone, Kind::File { .. }) => {
+                    let candidate = objects::candidate_bytes(self.data, entry)?.is_some();
+                    if candidate {
+                        refreshing.push(entry);
+                        continue;
+                    }
+                    false
                 }
                 (Action::VerifyClone, Kind::Symlink)
                 | (Action::VerifyAutoBinary, Kind::File { .. }) => {
@@ -174,13 +221,7 @@ impl<'a> Checkout<'a> {
                 }
                 continue;
             }
-            // checkout-index asks a promisor remote for one blob per path. Only
-            // Git's own checkout batches, so leave absent blobs to it.
-            ensure!(
-                !lazy || entry.kind == Kind::Submodule,
-                "partial clone: Git must write {:?}, and stock Git fetches absent blobs in one batch",
-                entry.path
-            );
+            writable(entry)?;
             if entry
                 .path
                 .file_name()
@@ -191,14 +232,26 @@ impl<'a> Checkout<'a> {
                 files.push(entry.path.as_path());
             }
         }
-        // Git may consult working-tree attributes while writing. Restore target policies
-        // first; untracked policies were already removed by the snapshot inventory.
+        // Git may consult working-tree attributes while writing and refreshing.
+        // Restore target policies first; untracked policies were already removed
+        // by the snapshot inventory, and tracked ones never wait for the refresh.
         self.write_paths(&attributes)?;
         self.write_paths(&files)?;
+        let stale = self.refresh()?;
+        let mut rewritten = Vec::new();
+        for entry in refreshing {
+            if stale.contains(&native::path_bytes(&entry.path)) {
+                writable(entry)?;
+                rewritten.push(entry.path.as_path());
+            } else {
+                verified += 1;
+            }
+        }
+        self.write_paths(&rewritten)?;
         policy.ensure_same(&self.policy(entries)?)?;
         crate::trace(&format!(
             "checkout: {verified} verified file clones, {} Git-written paths",
-            attributes.len() + files.len()
+            attributes.len() + files.len() + rewritten.len()
         ));
         Ok(())
     }
@@ -217,6 +270,10 @@ fn checkout_config(bytes: &[u8]) -> Vec<u8> {
 
 #[derive(Debug, Clone, Copy, PartialEq, Eq)]
 enum Action {
+    /// Git hashes the clone while refreshing the staged index. Only for paths
+    /// Git converts in neither direction, where that hash is the raw blob's.
+    RefreshClone,
+    /// Compare raw bytes: checkout is the identity, but cleaning may not be.
     VerifyClone,
     VerifyAutoBinary,
     GitWrite,
@@ -304,6 +361,14 @@ fn parse_attributes(
         .map(|(entry, attrs)| {
             if entry.kind == Kind::Submodule {
                 Action::GitWrite
+            } else if matches!(entry.kind, Kind::File { .. })
+                && attrs.unconverted(configuration)
+                && entry
+                    .path
+                    .file_name()
+                    .is_none_or(|name| name != ".gitattributes")
+            {
+                Action::RefreshClone
             } else if entry.kind == Kind::Symlink || attrs.identity(configuration) {
                 Action::VerifyClone
             } else if attrs.auto_binary(configuration) {
@@ -327,6 +392,17 @@ impl Attributes {
             || (self.text.is_none()
                 && self.eol.is_none()
                 && matches!(config.autocrlf.as_slice(), b"true" | b"yes" | b"on" | b"1"))
+    }
+
+    /// No conversion when checking out and none when cleaning, so Git's index
+    /// hash of the working file is the hash of its raw bytes. Attribute files are
+    /// excluded by the caller: a dirty one could change what cleaning means.
+    fn unconverted(&self, config: &Configuration) -> bool {
+        !self.legacy_crlf
+            && !self.builtin_conversion
+            && self.eol.is_none()
+            && matches!(self.text.as_deref(), None | Some(b"unset" | b"unspecified"))
+            && matches!(config.autocrlf.as_slice(), b"false" | b"no" | b"off" | b"0")
     }
 
     fn identity(&self, config: &Configuration) -> bool {
@@ -438,6 +514,23 @@ mod tests {
         }
         assert_eq!(
             parse_attributes(&entries, b"", &config)?,
+            vec![Action::RefreshClone]
+        );
+        assert_eq!(
+            parse_attributes(&entries, b"file\0text\0unset\0", &config)?,
+            vec![Action::RefreshClone]
+        );
+        // Cleaning converts CRLF under these, so only raw bytes can certify.
+        let input = Configuration::parse(b"core.autocrlf\ninput\0")?;
+        assert_eq!(
+            parse_attributes(&entries, b"", &input)?,
+            vec![Action::VerifyClone]
+        );
+        let attributes = crate::tree::parse(
+            b"100644 blob 0000000000000000000000000000000000000000 6\ttree/.gitattributes\0",
+        )?;
+        assert_eq!(
+            parse_attributes(&attributes, b"", &config)?,
             vec![Action::VerifyClone]
         );
         assert_eq!(

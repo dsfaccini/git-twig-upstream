@@ -25,32 +25,15 @@ pub fn hash_private_files(root: &Path, data: &Path, entries: &[&Entry]) -> Resul
             matches!(entry.kind, Kind::File { .. }),
             "raw hash input is not a regular entry"
         );
-        let path = data.join(&entry.path);
-        let metadata = match fs::symlink_metadata(&path) {
-            Ok(metadata) => metadata,
-            // Cross-revision targets may have no candidate in the selected donor.
-            Err(error) if error.kind() == std::io::ErrorKind::NotFound => continue,
-            Err(error) => return Err(error.into()),
-        };
-        ensure!(
-            metadata.is_file(),
-            "private hash candidate is not a regular file"
-        );
-        // A dirty sparse/oversized donor must not turn validation into hashing
-        // terabytes that cannot possibly match the target's known blob length.
-        // Without a known length (partial clones) the hash itself is the verdict.
-        if entry
-            .blob_bytes
-            .is_some_and(|bytes| bytes != metadata.len())
-        {
+        let Some(bytes) = candidate_bytes(data, entry)? else {
             continue;
-        }
-        total = total.saturating_add(metadata.len());
+        };
+        total = total.saturating_add(bytes);
         files.push(HashFile {
             index,
             entry,
-            path,
-            bytes: metadata.len(),
+            path: data.join(&entry.path),
+            bytes,
         });
     }
     if files.is_empty() {
@@ -94,6 +77,31 @@ pub fn hash_private_files(root: &Path, data: &Path, entries: &[&Entry]) -> Resul
         }
         Ok(matched)
     })
+}
+
+/// The length of a private regular file that could still be the target blob, or
+/// None when it is absent or its length already rules it out.
+pub fn candidate_bytes(data: &Path, entry: &Entry) -> Result<Option<u64>> {
+    let metadata = match fs::symlink_metadata(data.join(&entry.path)) {
+        Ok(metadata) => metadata,
+        // Cross-revision targets may have no candidate in the selected donor.
+        Err(error) if error.kind() == std::io::ErrorKind::NotFound => return Ok(None),
+        Err(error) => return Err(error.into()),
+    };
+    ensure!(
+        metadata.is_file(),
+        "private candidate is not a regular file"
+    );
+    // A dirty sparse/oversized donor must not turn validation into hashing
+    // terabytes that cannot possibly match the target's known blob length.
+    // Without a known length (partial clones) the hash itself is the verdict.
+    if entry
+        .blob_bytes
+        .is_some_and(|bytes| bytes != metadata.len())
+    {
+        return Ok(None);
+    }
+    Ok(Some(metadata.len()))
 }
 
 struct HashFile<'a> {

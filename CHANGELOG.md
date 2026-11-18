@@ -6,6 +6,16 @@ describe changes from this baseline after they are implemented and verified.
 
 ## Unreleased
 
+### Changed
+
+- Shared files are read once, not twice. Git verifies unconverted files while
+  refreshing the staged index, and that index is installed, so the first
+  `git status` in a new worktree no longer rehashes every file. Paths under a
+  line-ending or other conversion policy keep raw verification
+  ([RFD0024](docs/rfds/RFD0024-verified-index-reuse.md)).
+- Clone normalization skips `chmod` for files that already have checkout
+  permissions.
+
 ### Fixed
 
 - Blobless partial clones no longer fetch one blob per file. Tree listings stop

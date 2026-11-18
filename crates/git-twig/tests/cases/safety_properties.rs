@@ -205,7 +205,7 @@ fn after_registration(f: &Fixture, action: &str) -> Result<Output> {
             r#"#!/bin/sh
 if [ -f "$TWIG_TEST_LATE_FAILURE" ]; then
   for arg in "$@"; do
-    if [ "$arg" = "read-tree" ]; then
+    if [ "$arg" = "update-index" ]; then
       printf 'injected index installation failure\n' >&2
       exit 93
     fi

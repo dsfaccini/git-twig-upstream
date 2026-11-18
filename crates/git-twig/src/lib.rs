@@ -369,11 +369,25 @@ fn finish_install(prepared: &Prepared) -> Result<()> {
         );
         fs::rename(entry.path(), target)?;
     }
+    // The staged index already records what verification read. Installing it,
+    // rather than building an empty one, spares the first status a second read.
+    let git_dir = output_path(
+        checked(git(&prepared.destination).args(["rev-parse", "--absolute-git-dir"]))?.stdout,
+    )?;
+    for name in ["index", "index.lock"] {
+        ensure!(
+            fs::symlink_metadata(git_dir.join(name)).is_err(),
+            "destination index changed during installation"
+        );
+    }
+    fs::rename(&index, git_dir.join("index"))?;
+    // Moving a top-level entry changes its own ctime. Git rehashes only those.
     checked(git(&prepared.destination).args([
         "-c",
         "submodule.recurse=false",
-        "read-tree",
-        &prepared.commit,
+        "update-index",
+        "-q",
+        "--refresh",
     ]))?;
     trace(&format!("shared repository: {}", prepared.root.display()));
     Ok(())
