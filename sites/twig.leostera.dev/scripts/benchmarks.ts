@@ -64,7 +64,7 @@ function comparison(file: string, sha: string, repository: string, name: string,
   return { name, worktrees: count, concurrency: 1, rounds: 3,
     gitBytes: median(run.cohorts.filter(c=>c.backend==="git").map(c=>c.growthAfterStatusBytes)),
     twigBytes: median(run.cohorts.filter(c=>c.backend==="twig").map(c=>c.growthAfterStatusBytes)),
-    source: `https://github.com/leostera/git-twig/blob/9bbebee/bench/results/${file}` };
+    source: `https://github.com/leostera/git-twig/blob/727d5d6a283cb2bb14ba60c58064b1bb839f6309/bench/results/${file}` };
 }
 export function loadPlatforms(): Record<"mac"|"xfs"|"btrfs", DiskComparison[]> {
   const linux = read(linuxFile), mac = read(macFile);
