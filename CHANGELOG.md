@@ -8,11 +8,11 @@ describe changes from this baseline after they are implemented and verified.
 
 ### Changed
 
-- Shared files are read once, not twice. Git verifies unconverted files while
-  refreshing the staged index, and that index is installed, so the first
-  `git status` in a new worktree no longer rehashes every file. Paths under a
-  line-ending or other conversion policy keep raw verification
+- Shared files are read once, not twice. The stat data of every verified file
+  is recorded in the installed index, so the first `git status` in a new
+  worktree no longer rehashes every file. Verification itself is unchanged
   ([RFD0024](docs/rfds/RFD0024-verified-index-reuse.md)).
+- On Linux, large inventories are cloned on up to eight threads.
 - A donor with deleted tracked files, or tracked paths replaced by a symlink,
   directory or other entry, no longer disables sharing for the whole worktree.
   Git writes those paths and the remaining files are still shared.

@@ -2,6 +2,7 @@
 mod adopt;
 mod checkout;
 mod donor;
+mod index;
 mod native;
 mod objects;
 mod registry;
@@ -241,7 +242,8 @@ fn prepare(cwd: &Path, request: &AddRequest, staging: &mut staging::Staging) -> 
     #[cfg(not(target_os = "macos"))]
     let _ = directories;
     let verification_started = std::time::Instant::now();
-    checkout.repair(&root, &entries, &policy, lazy)?;
+    let certified = checkout.repair(&root, &entries, &policy, lazy)?;
+    checkout.record(&commit, &entries, &certified)?;
     trace(&format!(
         "native preparation: snapshot {:.3}s; raw verification/repair {:.3}s; total {:.3}s",
         snapshot_elapsed.as_secs_f64(),

@@ -66,7 +66,9 @@ pub fn materialize(
             Node::Directory(directory) => {
                 #[cfg(target_os = "linux")]
                 {
-                    clone_tracked_directory(&source, &target, directory, modes)?;
+                    let mut files = Vec::new();
+                    plan_tracked_directory(&source, &target, directory, &mut files)?;
+                    clone_planned_files(&files, modes)?;
                     continue; // The Linux walker already establishes types and checkout modes.
                 }
                 #[cfg(not(target_os = "linux"))]
@@ -98,11 +100,20 @@ pub fn materialize(
 // Linux FICLONE works on regular files, not directory trees. Walk only the
 // committed inventory so ignored files and unrelated special files are never opened.
 #[cfg(target_os = "linux")]
-fn clone_tracked_directory(
+struct PlannedFile {
+    source: std::path::PathBuf,
+    target: std::path::PathBuf,
+    executable: bool,
+}
+
+/// Create the tracked directories and symlinks, and list the regular files to
+/// clone. Directories exist before any file worker starts.
+#[cfg(target_os = "linux")]
+fn plan_tracked_directory(
     source: &Path,
     target: &Path,
     directory: &Directory,
-    modes: &native::FileModes,
+    files: &mut Vec<PlannedFile>,
 ) -> Result<()> {
     // mkdir already applies umask/default ACL and inherits SGID/GID like Git.
     // Even chmod(mode | SGID) clears SGID when its group is not in our groups.
@@ -110,21 +121,72 @@ fn clone_tracked_directory(
     for (name, node) in &directory.children {
         let source = source.join(name);
         let target = target.join(name);
-        if !still_tracked_kind(&source, node)? {
-            continue;
-        }
         match node {
             Node::Directory(directory) => {
-                clone_tracked_directory(&source, &target, directory, modes)?;
+                if still_tracked_kind(&source, node)? {
+                    plan_tracked_directory(&source, &target, directory, files)?;
+                }
             }
-            Node::File { executable } => {
-                native::clone_path(&source, &target)?;
-                modes.apply(&target, *executable)?;
+            // Checked by the worker that clones it, next to the clone itself.
+            Node::File { executable } => files.push(PlannedFile {
+                source,
+                target,
+                executable: *executable,
+            }),
+            Node::Symlink => {
+                if still_tracked_kind(&source, node)? {
+                    native::symlink(&fs::read_link(&source)?, &target)?;
+                }
             }
-            Node::Symlink => native::symlink(&fs::read_link(&source)?, &target)?,
         }
     }
     Ok(())
+}
+
+/// Reflink each planned file. One clone is a handful of system calls with no
+/// shared state, so a large inventory is split across a few threads.
+#[cfg(target_os = "linux")]
+fn clone_planned_files(files: &[PlannedFile], modes: &native::FileModes) -> Result<()> {
+    let clone = |file: &PlannedFile| -> Result<()> {
+        let kind = Node::File {
+            executable: file.executable,
+        };
+        if still_tracked_kind(&file.source, &kind)? {
+            native::clone_path(&file.source, &file.target)?;
+            modes.apply(&file.target, file.executable)?;
+        }
+        Ok(())
+    };
+    let workers = clone_worker_count(
+        files.len(),
+        std::thread::available_parallelism().map_or(1, usize::from),
+    );
+    if workers == 1 {
+        return files.iter().try_for_each(clone);
+    }
+    // Every worker joins before the first error is returned: nothing may still
+    // be writing private files when preparation fails over to Git.
+    std::thread::scope(|scope| {
+        let handles: Vec<_> = files
+            .chunks(files.len().div_ceil(workers))
+            .map(|chunk| scope.spawn(move || chunk.iter().try_for_each(clone)))
+            .collect();
+        handles
+            .into_iter()
+            .map(|handle| {
+                handle
+                    .join()
+                    .map_err(|_| anyhow::anyhow!("clone worker panicked"))?
+            })
+            .collect::<Vec<Result<()>>>()
+            .into_iter()
+            .collect()
+    })
+}
+
+#[cfg(any(target_os = "linux", test))]
+fn clone_worker_count(files: usize, cpus: usize) -> usize {
+    if files >= 1024 { cpus.clamp(1, 8) } else { 1 }
 }
 
 /// Whether a donor path still holds the kind of entry the target tracks there.
@@ -243,6 +305,13 @@ mod tests {
             tree.insert(&["a".into(), "b".into()], Kind::Symlink)
                 .is_err()
         );
+    }
+    #[test]
+    fn small_inventories_clone_on_one_thread_and_large_ones_are_bounded() {
+        assert_eq!(clone_worker_count(1023, 64), 1);
+        assert_eq!(clone_worker_count(1024, 64), 8);
+        assert_eq!(clone_worker_count(100_000, 2), 2);
+        assert_eq!(clone_worker_count(100_000, 1), 1);
     }
     #[test]
     fn rejects_duplicate_paths() {

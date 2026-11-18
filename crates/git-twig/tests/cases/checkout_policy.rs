@@ -278,8 +278,6 @@ fn parallel_raw_hashing_preserves_order_formats_and_dirty_file_repairs() -> Resu
         for index in 0..520 {
             fs::write(f.source.join(format!("files/{index:04}")), content(index))?;
         }
-        // Cleaning may convert these, so only raw hashing can certify them.
-        fs::write(f.source.join(".gitattributes"), "files/* eol=lf\n")?;
         git(&f.source, &["add", "."])?;
         git(&f.source, &["commit", "-m", "parallel raw verification"])?;
         fs::write(f.source.join("files/0001"), vec![b'y'; 128 * 1024])?;

@@ -1,6 +1,8 @@
 //! Target-index checkout policy and per-path recovery inside private staging.
 use crate::{
-    checked, checked_with_input as with_input, git, native,
+    checked, checked_with_input as with_input, git,
+    index::Stat,
+    native,
     objects::{self, Objects},
     output_path,
     tree::{Entry, Kind},
@@ -127,55 +129,29 @@ impl<'a> Checkout<'a> {
     fn write_paths(&self, paths: &[&Path]) -> Result<()> {
         if !paths.is_empty() {
             with_input(
-                // -u records each written file's stat data in the staged index.
                 self.command()
-                    .args(["checkout-index", "-u", "--force", "-z", "--stdin"]),
+                    .args(["checkout-index", "--force", "-z", "--stdin"]),
                 self::paths(paths.iter().copied()),
             )?;
         }
         Ok(())
     }
 
-    /// Let Git hash every staged file once against the staged index, recording
-    /// stat data for the ones that match, and name the ones that do not.
-    fn refresh(&self) -> Result<std::collections::BTreeSet<Vec<u8>>> {
-        // A fresh index holds no stat data, so nothing here is trusted from stat:
-        // every entry is compared by content. -q keeps going past mismatches.
-        checked(self.command().args(["update-index", "-q", "--refresh"]))?;
-        let stale = checked(self.command().args(["diff-files", "--name-only", "-z"]))?.stdout;
-        ensure!(
-            stale.is_empty() || stale.last() == Some(&0),
-            "unterminated stale path listing"
-        );
-        Ok(stale
-            .split(|byte| *byte == 0)
-            .filter(|path| !path.is_empty())
-            .map(<[u8]>::to_vec)
-            .collect())
-    }
-
+    /// Verify every private clone against the target, let Git write the rest, and
+    /// return per entry the stat data of each file whose bytes were hashed equal.
     pub fn repair(
         &self,
         root: &Path,
         entries: &[Entry],
         policy: &Policy,
         lazy: bool,
-    ) -> Result<()> {
-        // checkout-index asks a promisor remote for one blob per path. Only
-        // Git's own checkout batches, so leave absent blobs to it.
-        let writable = |entry: &Entry| {
-            ensure!(
-                !lazy || entry.kind == Kind::Submodule,
-                "partial clone: Git must write {:?}, and stock Git fetches absent blobs in one batch",
-                entry.path
-            );
-            Ok(())
-        };
+    ) -> Result<Vec<Option<Stat>>> {
         let regular: Vec<_> = entries
             .iter()
             .zip(&policy.actions)
             .filter(|(entry, action)| {
-                **action == Action::VerifyClone && matches!(entry.kind, Kind::File { .. })
+                matches!(action, Action::VerifyClone | Action::VerifySettled)
+                    && matches!(entry.kind, Kind::File { .. })
             })
             .map(|(entry, _)| entry)
             .collect();
@@ -183,21 +159,19 @@ impl<'a> Checkout<'a> {
         let mut symlink_objects = None;
         let mut attributes = Vec::new();
         let mut files = Vec::new();
-        let mut refreshing = Vec::new();
+        let mut certified = Vec::with_capacity(entries.len());
         let mut verified = 0;
         for (entry, action) in entries.iter().zip(&policy.actions) {
+            let mut certificate = None;
             let retain = match (*action, entry.kind) {
-                (Action::VerifyClone, Kind::File { .. }) => {
-                    matches.next().expect("one hash verdict per regular file")
-                }
-                // The verdict comes from the index refresh below.
-                (Action::RefreshClone, Kind::File { .. }) => {
-                    let candidate = objects::candidate_bytes(self.data, entry)?.is_some();
-                    if candidate {
-                        refreshing.push(entry);
-                        continue;
+                (Action::VerifyClone | Action::VerifySettled, Kind::File { .. }) => {
+                    let verdict = matches.next().expect("one hash verdict per regular file");
+                    // Where cleaning could convert, equal raw bytes may still be a
+                    // modified file to Git. Let Git judge those, as after a checkout.
+                    if *action == Action::VerifySettled {
+                        certificate = verdict;
                     }
-                    false
+                    verdict.is_some()
                 }
                 (Action::VerifyClone, Kind::Symlink)
                 | (Action::VerifyAutoBinary, Kind::File { .. }) => {
@@ -215,13 +189,20 @@ impl<'a> Checkout<'a> {
                 }
                 _ => false,
             };
+            certified.push(certificate);
             if retain {
                 if matches!(entry.kind, Kind::File { .. }) {
                     verified += 1;
                 }
                 continue;
             }
-            writable(entry)?;
+            // checkout-index asks a promisor remote for one blob per path. Only
+            // Git's own checkout batches, so leave absent blobs to it.
+            ensure!(
+                !lazy || entry.kind == Kind::Submodule,
+                "partial clone: Git must write {:?}, and stock Git fetches absent blobs in one batch",
+                entry.path
+            );
             if entry
                 .path
                 .file_name()
@@ -232,27 +213,39 @@ impl<'a> Checkout<'a> {
                 files.push(entry.path.as_path());
             }
         }
-        // Git may consult working-tree attributes while writing and refreshing.
-        // Restore target policies first; untracked policies were already removed
-        // by the snapshot inventory, and tracked ones never wait for the refresh.
+        // Git may consult working-tree attributes while writing. Restore target policies
+        // first; untracked policies were already removed by the snapshot inventory.
         self.write_paths(&attributes)?;
         self.write_paths(&files)?;
-        let stale = self.refresh()?;
-        let mut rewritten = Vec::new();
-        for entry in refreshing {
-            if stale.contains(&native::path_bytes(&entry.path)) {
-                writable(entry)?;
-                rewritten.push(entry.path.as_path());
-            } else {
-                verified += 1;
-            }
-        }
-        self.write_paths(&rewritten)?;
         policy.ensure_same(&self.policy(entries)?)?;
         crate::trace(&format!(
             "checkout: {verified} verified file clones, {} Git-written paths",
-            attributes.len() + files.len() + rewritten.len()
+            attributes.len() + files.len()
         ));
+        Ok(certified)
+    }
+
+    /// Replace the staged index with one recording the verified files' stat data.
+    /// Git must read the draft, agree that it names exactly the target commit, and
+    /// rewrite it in its own format. Its refresh trusts the recorded files and
+    /// compares the rest by content, exactly as after a checkout: a path that is
+    /// modified the moment Git writes it stays visibly modified.
+    pub fn record(
+        &self,
+        commit: &str,
+        entries: &[Entry],
+        certified: &[Option<Stat>],
+    ) -> Result<()> {
+        crate::index::write_draft(self.data, self.index, entries, certified)?;
+        checked(
+            self.command()
+                .args(["update-index", "-q", "--refresh", "--force-write-index"]),
+        )?;
+        checked(
+            self.command()
+                .args(["diff-index", "--cached", "--quiet", commit, "--"]),
+        )
+        .context("recorded index does not match the target commit")?;
         Ok(())
     }
 }
@@ -270,10 +263,11 @@ fn checkout_config(bytes: &[u8]) -> Vec<u8> {
 
 #[derive(Debug, Clone, Copy, PartialEq, Eq)]
 enum Action {
-    /// Git hashes the clone while refreshing the staged index. Only for paths
-    /// Git converts in neither direction, where that hash is the raw blob's.
-    RefreshClone,
-    /// Compare raw bytes: checkout is the identity, but cleaning may not be.
+    /// Raw bytes equal to the blob settle the matter: Git converts this path in
+    /// neither direction, so it also sees the file as unchanged.
+    VerifySettled,
+    /// Checkout is the identity, so raw bytes certify the clone. Cleaning may
+    /// still convert, so whether the file counts as unchanged is Git's call.
     VerifyClone,
     VerifyAutoBinary,
     GitWrite,
@@ -361,14 +355,8 @@ fn parse_attributes(
         .map(|(entry, attrs)| {
             if entry.kind == Kind::Submodule {
                 Action::GitWrite
-            } else if matches!(entry.kind, Kind::File { .. })
-                && attrs.unconverted(configuration)
-                && entry
-                    .path
-                    .file_name()
-                    .is_none_or(|name| name != ".gitattributes")
-            {
-                Action::RefreshClone
+            } else if matches!(entry.kind, Kind::File { .. }) && attrs.unconverted(configuration) {
+                Action::VerifySettled
             } else if entry.kind == Kind::Symlink || attrs.identity(configuration) {
                 Action::VerifyClone
             } else if attrs.auto_binary(configuration) {
@@ -394,9 +382,7 @@ impl Attributes {
                 && matches!(config.autocrlf.as_slice(), b"true" | b"yes" | b"on" | b"1"))
     }
 
-    /// No conversion when checking out and none when cleaning, so Git's index
-    /// hash of the working file is the hash of its raw bytes. Attribute files are
-    /// excluded by the caller: a dirty one could change what cleaning means.
+    /// No conversion when checking out and none when cleaning.
     fn unconverted(&self, config: &Configuration) -> bool {
         !self.legacy_crlf
             && !self.builtin_conversion
@@ -514,23 +500,16 @@ mod tests {
         }
         assert_eq!(
             parse_attributes(&entries, b"", &config)?,
-            vec![Action::RefreshClone]
+            vec![Action::VerifySettled]
         );
         assert_eq!(
             parse_attributes(&entries, b"file\0text\0unset\0", &config)?,
-            vec![Action::RefreshClone]
+            vec![Action::VerifySettled]
         );
-        // Cleaning converts CRLF under these, so only raw bytes can certify.
+        // Cleaning converts CRLF here: raw bytes certify, Git decides "unchanged".
         let input = Configuration::parse(b"core.autocrlf\ninput\0")?;
         assert_eq!(
             parse_attributes(&entries, b"", &input)?,
-            vec![Action::VerifyClone]
-        );
-        let attributes = crate::tree::parse(
-            b"100644 blob 0000000000000000000000000000000000000000 6\ttree/.gitattributes\0",
-        )?;
-        assert_eq!(
-            parse_attributes(&attributes, b"", &config)?,
             vec![Action::VerifyClone]
         );
         assert_eq!(
