@@ -1,0 +1,45 @@
+{
+  "schemaVersion": 1,
+  "artifacts": [
+    {
+      "name": "manifest.json",
+      "bytes": 3070,
+      "sha256": "ec151959f4c690db3d7021c17a6f3b7b9bd46a8c6d71af304f49265035b34e2c"
+    },
+    {
+      "name": "openclaw-openclaw.svg",
+      "bytes": 2335,
+      "sha256": "eb5095f10e3a03d77ed95cd2b6a5b7d7ec7ea47f174fa200f7a55725f793208a"
+    },
+    {
+      "name": "openclaw.csv",
+      "bytes": 647,
+      "sha256": "8ddb255a81d6f45a9937d9c6c4096be857635fe685ee1c6ade5b022c7ca7b029"
+    },
+    {
+      "name": "openclaw.json",
+      "bytes": 28329,
+      "sha256": "c08f2130924c7180f0f64b739f17cd36b06be074a7ddfcdf847520e655819a87"
+    },
+    {
+      "name": "openclaw.json.stderr.log",
+      "bytes": 2271,
+      "sha256": "8e311adea955308705421965292a610d0aa1075b615aa39cff17cce585d62808"
+    },
+    {
+      "name": "openclaw.json.stdout.log",
+      "bytes": 190,
+      "sha256": "9ab8e5ebd9c404b88c6c7c82a2ddc4216c73049913ecc4fe2b06451bba642c5b"
+    },
+    {
+      "name": "openclaw.report.json",
+      "bytes": 1737,
+      "sha256": "9d9c9591fcd29f20980743217d6515663b32bbd5fee5fc8fbd9c164911a5c21f"
+    },
+    {
+      "name": "openclaw.summary.json",
+      "bytes": 1368,
+      "sha256": "0c46076aa5adae0e4c44800e1d329a025012091def47325e8113e3f04b7acc85"
+    }
+  ]
+}

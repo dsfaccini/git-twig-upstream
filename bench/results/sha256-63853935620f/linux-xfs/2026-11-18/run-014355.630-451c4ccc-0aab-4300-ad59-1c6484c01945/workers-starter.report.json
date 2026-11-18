@@ -1,0 +1,60 @@
+{
+  "schemaVersion": 1,
+  "target": "linux-xfs",
+  "repository": "workers-starter",
+  "release": "v0.5.0",
+  "rawSha256": "725066c17f2db8dec8beaff8728dc0d4b8ad079666d413dd22369904d36452e6",
+  "worktreesPerCohort": 10,
+  "concurrency": 1,
+  "pairedRounds": 3,
+  "warmup": true,
+  "allocationComparable": true,
+  "allocationDisplay": [
+    {
+      "backend": "git",
+      "label": "584 KiB"
+    },
+    {
+      "backend": "twig",
+      "label": "240 KiB"
+    }
+  ],
+  "summary": [
+    {
+      "backend": "git",
+      "rounds": 3,
+      "operations": 30,
+      "allocationComparable": true,
+      "batchCreateMedianMs": 157.02665900000002,
+      "createsPerSecondMedian": 63.683453903199954,
+      "logicalBytesPerSecondMedian": 90494.18799644714,
+      "createP50Ms": 15.786782999999998,
+      "createP95Ms": 17.668940000000003,
+      "createP99Ms": 18.124295,
+      "createMaxMs": 18.124295,
+      "firstStatusP50Ms": 4.072049000000001,
+      "allocationMedianBytes": 598016,
+      "allocationMinBytes": 598016,
+      "allocationMaxBytes": 598016,
+      "maxHarnessCpuWallRatio": 0.05053918901757953
+    },
+    {
+      "backend": "twig",
+      "rounds": 3,
+      "operations": 30,
+      "allocationComparable": true,
+      "batchCreateMedianMs": 869.902499,
+      "createsPerSecondMedian": 11.495541180184608,
+      "logicalBytesPerSecondMedian": 16335.164017042327,
+      "createP50Ms": 86.744887,
+      "createP95Ms": 91.05605999999999,
+      "createP99Ms": 92.719328,
+      "createMaxMs": 92.719328,
+      "firstStatusP50Ms": 4.1459895,
+      "allocationMedianBytes": 245760,
+      "allocationMinBytes": 245760,
+      "allocationMaxBytes": 245760,
+      "maxHarnessCpuWallRatio": 0.010507032818027607
+    }
+  ]
+}

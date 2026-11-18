@@ -1,0 +1,88 @@
+{
+  "schemaVersion": 1,
+  "kind": "published-release-benchmark-provenance",
+  "release": "v0.5.0",
+  "releaseCommit": "4d2622f77ea8bfecc1f3fd6f1930686648990bbd",
+  "inputPins": "original v0.4 published comparisons",
+  "binaries": {
+    "twig-real-bench": "261bc7a230fcbaeab9f88e1c0a86c03b7b1f6464fcf80360865993912bcde32f",
+    "git-twig": "63853935620fef55977053e7de6671bbcf17da839f36dd426348c126910cda97",
+    "bun": "10702245766b225e70bbf6235fd6b47214fd94b4760d00ffaed8ab0df57ac235",
+    "git": "eb54b535467e0975c1284d4c4d08eea779aeb248a5d34b02e2ee171382e22201",
+    "twig-real-plot": "e6299c965061be25eed274eed9c9e36c7862a93f2a715542f99d018929368eb8"
+  },
+  "inputs": [
+    {
+      "label": "workers-starter",
+      "revision": "d0b1ee485dc1cf2bc0b2a3511cf8cf1057624d02",
+      "worktrees": 10,
+      "imageGiB": 16,
+      "hostTiming": true,
+      "tree": "d4e01b1be340f6770de5b6b6e4bbcc090312b1aa",
+      "trackedBlobs": 6,
+      "logicalBlobBytes": 1421,
+      "shallow": false,
+      "promisor": false
+    },
+    {
+      "label": "twig",
+      "revision": "96c43950e4c0d8524de4ad53157c136eb222d39c",
+      "worktrees": 10,
+      "imageGiB": 16,
+      "hostTiming": true,
+      "tree": "efa8b786a16488976f20b96e63a2417d1ce7bf07",
+      "trackedBlobs": 45,
+      "logicalBlobBytes": 388029,
+      "shallow": false,
+      "promisor": false
+    },
+    {
+      "label": "axo",
+      "revision": "67af816be26633039e8507d93d577b2073d6f5fd",
+      "worktrees": 1,
+      "imageGiB": 16,
+      "hostTiming": true,
+      "tree": "675920882d5a4c2b8d42db9e0673b3c3625a2b95",
+      "trackedBlobs": 2083,
+      "logicalBlobBytes": 26185024,
+      "shallow": false,
+      "promisor": false
+    },
+    {
+      "label": "openclaw",
+      "revision": "410c0dda40702e25263b49b8b7d0786a5e49e366",
+      "worktrees": 1,
+      "imageGiB": 24,
+      "hostTiming": true,
+      "tree": "16be5eb7eee60e1285bb8be4db00d9910b200e42",
+      "trackedBlobs": 65500,
+      "logicalBlobBytes": 776199844,
+      "shallow": true,
+      "promisor": false
+    },
+    {
+      "label": "pulumi",
+      "revision": "430261138aa08539cd598b9269bfe8f82fd49b78",
+      "worktrees": 1,
+      "imageGiB": 16,
+      "hostTiming": true,
+      "tree": "56771086e70ddbd601b405740afddc2b7a42510a",
+      "trackedBlobs": 14811,
+      "logicalBlobBytes": 1255510318,
+      "shallow": false,
+      "promisor": false
+    },
+    {
+      "label": "linux",
+      "revision": "23c62304dde29abe92013d85910d03a77dada35d",
+      "worktrees": 1,
+      "imageGiB": 32,
+      "hostTiming": false,
+      "tree": "78c11a69c8b8226b0cefc40082c0cdc8030b2f8b",
+      "trackedBlobs": 97371,
+      "logicalBlobBytes": 1676008970,
+      "shallow": true,
+      "promisor": false
+    }
+  ]
+}

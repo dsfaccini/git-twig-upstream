@@ -1,0 +1,14 @@
+{
+  "schemaVersion": 1,
+  "lab": "/home/leostera/Developer/github.com/leostera/git-twig/bench-v05-real/target/v05-stable-c4d3d4e",
+  "inputs": "/home/leostera/Developer/github.com/leostera/git-twig/bench-v05-real/target/v05-stable-c4d3d4e/inputs.json",
+  "candidate": "/home/leostera/Developer/github.com/leostera/git-twig/bench-v05-real/target/v05-stable-c4d3d4e/bin/git-twig",
+  "binaryDir": "/home/leostera/Developer/github.com/leostera/git-twig/bench-v05-real/target/v05-stable-c4d3d4e/bin",
+  "sourceCommit": "c4d3d4e8fc4738f083f3aa2dab2b299f507aa9f2",
+  "candidateCommit": "4d2622f77ea8bfecc1f3fd6f1930686648990bbd",
+  "targets": [
+    "linux-xfs",
+    "linux-btrfs"
+  ],
+  "environment": "Threadripper 2990WX; kernel 7.0.0-43-generic; Git 2.43.0; owned loopback images on ext4 /dev/sda1; no bare-device claim. Original v0.4 pins, published v0.5.0, serial paired three rounds with warmup. Long allocation settlement; first stable complete repository attempt, all attempts retained."
+}

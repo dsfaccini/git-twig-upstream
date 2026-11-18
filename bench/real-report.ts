@@ -1,8 +1,9 @@
 import { readFile, writeFile } from "node:fs/promises";
-import { resolve, dirname } from "node:path";
+import { resolve } from "node:path";
 import { fileURLToPath } from "node:url";
 import { digest, invariant, list, record, string } from "./lib/results.ts";
 import { parseInputs, parseReal, summarizeReal } from "./lib/real-results.ts";
+import { formatBytes } from "./lib/units.ts";
 
 const root = fileURLToPath(new URL("../", import.meta.url));
 function path(value: unknown) {
@@ -119,7 +120,13 @@ export async function report(captureName: string, check = false) {
       filesystem: string(config.filesystem),
       input,
       rounds: 3,
+      longAllocationWindow: capture.longAllocationWindow === true,
     });
+    if (capture.longAllocationWindow === true)
+      invariant(
+        cohorts.every((c) => c.allocationStable),
+        "Unsettled allocation cannot enter the stable release capture",
+      );
     for (const c of list(raw.cohorts).map(record)) {
       let finished = 0;
       for (const op of list(c.operations)
@@ -152,6 +159,14 @@ export async function report(captureName: string, check = false) {
       pairedRounds: 3,
       warmup: true,
       allocationComparable,
+      ...(capture.longAllocationWindow === true
+        ? {
+            allocationDisplay: summary.map((row) => ({
+              backend: row.backend,
+              label: formatBytes(row.allocationMedianBytes),
+            })),
+          }
+        : {}),
       summary,
     };
     const prefix = path(file).slice(0, -5);

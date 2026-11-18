@@ -1,0 +1,30 @@
+pulumi: git, repeat 1/3, 1 creates with concurrency 1
+cohort workers launched: 1; queued creates: 1
+git: CLI completed 1/1; content verification pending
+  4.12s creates; 1 ok / 0 failed; allocation after status: 1239.91 MiB
+  Linux image retained at /home/leostera/Developer/github.com/leostera/git-twig/bench-v05-real/target/real-images/1794970272666-7001/pulumi-git-0.img
+pulumi: twig, repeat 1/3, 1 creates with concurrency 1
+cohort workers launched: 1; queued creates: 1
+twig: CLI completed 1/1; content verification pending
+  3.11s creates; 1 ok / 0 failed; allocation after status: 11.89 MiB
+  Linux image retained at /home/leostera/Developer/github.com/leostera/git-twig/bench-v05-real/target/real-images/1794970272666-7001/pulumi-twig-0.img
+pulumi: twig, repeat 2/3, 1 creates with concurrency 1
+cohort workers launched: 1; queued creates: 1
+twig: CLI completed 1/1; content verification pending
+  3.06s creates; 1 ok / 0 failed; allocation after status: 11.89 MiB
+  Linux image retained at /home/leostera/Developer/github.com/leostera/git-twig/bench-v05-real/target/real-images/1794970272666-7001/pulumi-twig-1.img
+pulumi: git, repeat 2/3, 1 creates with concurrency 1
+cohort workers launched: 1; queued creates: 1
+git: CLI completed 1/1; content verification pending
+  4.04s creates; 1 ok / 0 failed; allocation after status: 1239.91 MiB
+  Linux image retained at /home/leostera/Developer/github.com/leostera/git-twig/bench-v05-real/target/real-images/1794970272666-7001/pulumi-git-1.img
+pulumi: git, repeat 3/3, 1 creates with concurrency 1
+cohort workers launched: 1; queued creates: 1
+git: CLI completed 1/1; content verification pending
+  4.04s creates; 1 ok / 0 failed; allocation after status: 1239.91 MiB
+  Linux image retained at /home/leostera/Developer/github.com/leostera/git-twig/bench-v05-real/target/real-images/1794970272666-7001/pulumi-git-2.img
+pulumi: twig, repeat 3/3, 1 creates with concurrency 1
+cohort workers launched: 1; queued creates: 1
+twig: CLI completed 1/1; content verification pending
+  3.16s creates; 1 ok / 0 failed; allocation after status: 11.89 MiB
+  Linux image retained at /home/leostera/Developer/github.com/leostera/git-twig/bench-v05-real/target/real-images/1794970272666-7001/pulumi-twig-2.img
