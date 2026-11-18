@@ -1,5 +1,5 @@
 //! Experimental existing-worktree sharing; never replace a worktree file.
-use anyhow::{Context, Result, bail, ensure};
+use anyhow::{Context, Result, ensure};
 use std::{
     ffi::OsString,
     path::{Path, PathBuf},
@@ -58,7 +58,7 @@ pub(super) fn run(cwd: &Path, args: &[OsString]) -> Result<i32> {
     #[cfg(not(unix))]
     {
         let _ = (cwd, request);
-        bail!("adoption prototype requires Unix");
+        anyhow::bail!("adoption prototype requires Unix");
     }
 }
 
@@ -67,21 +67,21 @@ mod unix {
     use super::*;
     use std::{
         collections::HashSet,
-        ffi::CString,
         fs::{self, File, OpenOptions},
         io::Write,
         os::{
-            fd::{AsRawFd, FromRawFd},
-            unix::{
-                ffi::OsStrExt,
-                fs::{DirBuilderExt, MetadataExt, OpenOptionsExt},
-            },
+            fd::AsRawFd,
+            unix::fs::{DirBuilderExt, MetadataExt},
         },
-        path::Component,
         time::{SystemTime, UNIX_EPOCH},
     };
 
+    use crate::file_bytes::{directory, equal, open_relative};
     use crate::registry::git;
+    #[cfg(target_os = "linux")]
+    use std::os::unix::fs::OpenOptionsExt;
+    #[cfg(target_os = "macos")]
+    use std::{ffi::CString, os::unix::ffi::OsStrExt};
 
     fn repository(path: &Path) -> Result<PathBuf> {
         let root = crate::output_path(
@@ -99,47 +99,6 @@ mod unix {
             .stdout,
         )?)?)
     }
-    fn directory(path: &Path) -> Result<File> {
-        Ok(OpenOptions::new()
-            .read(true)
-            .custom_flags(libc::O_DIRECTORY | libc::O_NOFOLLOW)
-            .open(path)?)
-    }
-    /// Retain parent descriptors while opening each component, never following
-    /// a symlink into a donor's or target's unrelated directory tree.
-    fn open_relative(root: &File, relative: &Path, writable: bool) -> Result<File> {
-        let mut parent = root.try_clone()?;
-        let mut components = relative.components().peekable();
-        ensure!(components.peek().is_some(), "empty tracked path");
-        while let Some(component) = components.next() {
-            let Component::Normal(name) = component else {
-                bail!("unsafe tracked path: {relative:?}")
-            };
-            let name = CString::new(name.as_bytes())?;
-            let leaf = components.peek().is_none();
-            let flags = libc::O_NOFOLLOW
-                | libc::O_CLOEXEC
-                | libc::O_NONBLOCK
-                | if leaf {
-                    if writable {
-                        libc::O_RDWR
-                    } else {
-                        libc::O_RDONLY
-                    }
-                } else {
-                    libc::O_RDONLY | libc::O_DIRECTORY
-                };
-            // SAFETY: live parent fd and NUL-terminated component. Ownership of
-            // the new descriptor transfers exactly once to File.
-            let fd = unsafe { libc::openat(parent.as_raw_fd(), name.as_ptr(), flags) };
-            if fd < 0 {
-                return Err(std::io::Error::last_os_error().into());
-            }
-            parent = unsafe { File::from_raw_fd(fd) };
-        }
-        Ok(parent)
-    }
-
     struct Pair {
         donor: File,
         target: File,
@@ -168,25 +127,6 @@ mod unix {
             "different current bytes"
         );
         Ok(pair)
-    }
-
-    /// Pread leaves shared descriptor offsets untouched. A size check is only
-    /// an early rejection; every accepted byte is compared, followed by EOF.
-    fn equal(a: &File, b: &File, length: u64) -> Result<bool> {
-        use std::os::unix::fs::FileExt;
-        let mut left = [0u8; 65536];
-        let mut right = [0u8; 65536];
-        let mut offset = 0;
-        while offset < length {
-            let count = (length - offset).min(left.len() as u64) as usize;
-            a.read_exact_at(&mut left[..count], offset)?;
-            b.read_exact_at(&mut right[..count], offset)?;
-            if left[..count] != right[..count] {
-                return Ok(false);
-            }
-            offset += count as u64;
-        }
-        Ok(a.read_at(&mut left[..1], length)? == 0 && b.read_at(&mut right[..1], length)? == 0)
     }
 
     fn prepare_directory(common: &Path) -> Result<PathBuf> {
@@ -245,7 +185,7 @@ mod unix {
     }
     #[cfg(not(any(target_os = "macos", target_os = "linux")))]
     fn clone_descriptor(_: &File, _: &Path) -> Result<()> {
-        bail!("native cloning unavailable")
+        anyhow::bail!("native cloning unavailable")
     }
 
     pub(super) fn run(cwd: &Path, request: Request) -> Result<i32> {
@@ -496,7 +436,7 @@ mod unix {
         any(target_arch = "x86_64", target_arch = "aarch64")
     )))]
     fn dedupe(_: &Pair) -> Result<u64> {
-        bail!("in-place deduplication unavailable")
+        anyhow::bail!("in-place deduplication unavailable")
     }
 }
 

@@ -1,7 +1,11 @@
 //! Native CoW materialization with Git-owned linked-worktree bookkeeping.
 mod adopt;
 mod checkout;
+#[cfg(target_os = "macos")]
+mod compact;
 mod donor;
+#[cfg(unix)]
+mod file_bytes;
 mod index;
 mod native;
 mod objects;

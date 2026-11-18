@@ -56,6 +56,34 @@ also be on that filesystem; otherwise creation delegates to Git.
 See git help worktree for the full Git worktree option reference.
 ";
 
+const ADOPT: &str = "Usage: git twig adopt [options] [<worktree>]
+
+  --worktrees-dir <root>  Preview root/{main,feat-x,...}; remember after adoption
+  --dry-run              Preview layout/sharing without writes
+  --yes                  Apply the reviewed plan; explicit/saved root required
+  --compact              Request matching-file compaction as well as relocation
+  --offline              Affirm donor/target worktrees are saved and closed
+  --move-only            Relocate without attempting file sharing
+
+No target: include the original clone and this repository's registered worktrees.
+A target selects only that checkout. The original clone uses main/ regardless of branch.
+An unsaved root is prompted; no global layout modes. No overwrites or forced unlocks.
+Coordinate agents/editors first: stored absolute session paths are not updated.
+
+macOS: interactive adoption offers compaction and requires explicit offline consent.
+Automation requires --compact --offline --yes. --yes alone is move-only on macOS.
+Stop agents/editors/builds/servers first; paused processes can retain writable mappings.
+Verified native CoW replacements preserve current bytes, supported metadata and index
+entries, but change inode/ctime. Old versions are retired only after verification.
+An open original prevents retirement; failure retains copies and a recovery journal.
+Never treat process scans or --offline as proof that a live worktree is safe.
+
+Linux: native in-place sharing remains the default; --move-only disables it.
+Matching logical/kernel bytes do not measure exclusive physical space reclaimed.
+Explicit --prepare/--dedupe <linked-worktree> keep v0.5 sharing-only semantics:
+--prepare clones are never installed; Linux --dedupe does not replace inodes.
+";
+
 fn is_help(arg: &OsString) -> bool {
     arg == "-h" || arg == "--help"
 }
@@ -70,9 +98,7 @@ pub fn for_args(args: &[OsString]) -> Option<String> {
     }
     let help = match command {
         "new" => return Some(NEW.into()),
-        "adopt" => {
-            "adopt [--dry-run] [--yes] [--worktrees-dir=<root>] [<worktree>]\nDiscover this repository\'s registered worktrees and preview root/{main,feat-x,...}.\nPrompt for a root when none was saved; remember it per repository after success.\nDefault: ask before moving. --dry-run writes nothing. --yes requires an explicit/saved root.\nAn optional worktree selects only that checkout; otherwise include the main clone.\nStop or coordinate agents/editors first; absolute session paths are not updated.\nSame-filesystem moves only; no overwrites, forced unlocks or submodule relocation.\nDirty/staged/untracked/ignored files are preserved; recovery journals are retained.\nLinux then attempts in-place deduplication. macOS relocation does not compact files.\nExplicit --prepare/--dedupe <linked-worktree> retain their v0.5 sharing-only behavior.\nNo measured physical savings claim; APFS candidate clones are never installed."
-        }
+        "adopt" => return Some(ADOPT.into()),
         "list" => {
             "list [--verbose] [--porcelain [-z]]\nList worktrees; --porcelain is Git's stable machine-readable format."
         }

@@ -46,6 +46,10 @@ mod adopt;
 #[path = "cases/adopt_layout.rs"]
 mod adopt_layout;
 
+#[cfg(target_os = "macos")]
+#[path = "cases/adopt_compact.rs"]
+mod adopt_compact;
+
 static NEXT: AtomicU64 = AtomicU64::new(0);
 struct Fixture {
     root: PathBuf,

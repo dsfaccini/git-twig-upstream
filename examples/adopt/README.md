@@ -23,9 +23,33 @@ clone. Do not delete journals or parked files after an interrupted/failed move.
 Session records and other external absolute paths are not updated automatically.
 
 After adoption, `git twig new -b feat/x` can use the saved root without an explicit
-path. Layout adoption on Linux attempts in-place sharing afterward; on macOS it
-reports sharing unchanged and does not compact existing worktrees.
+path. Layout adoption on Linux attempts in-place sharing afterward. On macOS moving
+alone leaves sharing unchanged; optional offline compaction is described below.
 See [RFD0025](../../docs/rfds/RFD0025-adopt-worktree-layout.md).
+
+## Offline APFS compaction (development main)
+
+```sh
+git twig adopt --compact --dry-run --worktrees-dir=/path/to/repo
+# Save work; close all agents/editors/builds/servers using donor and targets.
+git twig adopt --compact --worktrees-dir=/path/to/repo
+```
+
+Interactive adoption offers compaction and asks for explicit offline consent.
+Already-approved automation requires `--compact --offline --yes` with an explicit
+or saved root; `--yes` alone is move-only on macOS. `--move-only` disables sharing
+on both platforms. Never use process scans or a paused session as proof that
+replacement is safe.
+
+Only byte-identical same-path tracked regular files are shared. Native candidates
+receive the target's supported metadata (including creation time, ACLs and xattrs)
+and are re-verified before atomic exchange. Index contents stay unchanged, while
+inodes/ctime change. Verified originals are retired with a busy-file guard to
+release old references; journals remain. On failure preserve both installed and
+recovery copies and inspect the journal before restarting any agent. Unsupported
+metadata, hardlinks, symlinks and ignored/untracked data are not replaced. Matching
+logical bytes are not exclusive physical savings; snapshots/backups are not pruned.
+See [RFD0026](../../docs/rfds/RFD0026-offline-adoption-compaction.md).
 
 This layout flow is unreleased. Published v0.5 has the earlier sharing-only default;
 check `git twig adopt -h` for `--worktrees-dir` before using the layout examples.
@@ -49,7 +73,7 @@ may already share blocks.
 
 On APFS, `--prepare` makes verified private CoW candidates in Git metadata and
 leaves every existing worktree file in place. It can consume additional space.
-The candidates are not metadata-complete installable files. **This is not yet an
+The candidates are not metadata-complete installable files. **The --prepare mode is not an
 APFS compactor.** `--dedupe` fails on macOS rather than replacing live files.
 
 On Linux XFS/Btrfs, try `--dedupe` only in a disposable experiment first. It uses

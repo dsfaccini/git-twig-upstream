@@ -10,13 +10,29 @@ use std::{
 use crate::registry::{self, Checkout, Registration, git};
 
 const ROOT_KEY: &str = "twig.worktreesDir";
-const USAGE: &str = "git twig adopt [--dry-run] [--yes] [--worktrees-dir=<root>] [<worktree>]";
+const USAGE: &str = "git twig adopt [--dry-run] [--yes] [--compact [--offline] | --move-only] [--worktrees-dir=<root>] [<worktree>]";
+
+#[derive(Clone, Copy, PartialEq, Eq)]
+enum Sharing {
+    Automatic,
+    Compact,
+    MoveOnly,
+}
+
+/// Constructed only after this module receives explicit offline consent. This
+/// records the owner\'s assertion, not proof of exclusive kernel ownership.
+#[cfg(target_os = "macos")]
+pub(super) struct OfflineConsent {
+    _confirmed: (),
+}
 
 struct Request {
     root: Option<PathBuf>,
     target: Option<PathBuf>,
     dry_run: bool,
     yes: bool,
+    sharing: Sharing,
+    offline: bool,
 }
 impl Request {
     fn parse(args: &[OsString]) -> Result<Self> {
@@ -25,6 +41,8 @@ impl Request {
             target: None,
             dry_run: false,
             yes: false,
+            sharing: Sharing::Automatic,
+            offline: false,
         };
         let mut args = args.iter();
         let mut positional = false;
@@ -39,10 +57,26 @@ impl Request {
             } else if !positional && arg == "--yes" {
                 ensure!(!request.yes, "duplicate --yes");
                 request.yes = true;
+            } else if !positional && (arg == "--compact" || arg == "--move-only") {
+                ensure!(
+                    request.sharing == Sharing::Automatic,
+                    "choose --compact or --move-only only once"
+                );
+                request.sharing = if arg == "--compact" {
+                    Sharing::Compact
+                } else {
+                    Sharing::MoveOnly
+                };
+            } else if !positional && arg == "--offline" {
+                ensure!(!request.offline, "duplicate --offline");
+                request.offline = true;
             } else if !positional && arg == "--worktrees-dir" {
                 ensure!(request.root.is_none(), "duplicate --worktrees-dir");
                 let value = args.next().context("--worktrees-dir requires a path")?;
-                ensure!(!value.is_empty(), "empty worktrees directory");
+                ensure!(
+                    !value.is_empty() && !value.as_encoded_bytes().starts_with(b"-"),
+                    "--worktrees-dir requires a path, not another option; use --worktrees-dir=<path> for a hyphen-prefixed path"
+                );
                 request.root = Some(value.into());
             } else if !positional && arg.as_encoded_bytes().starts_with(b"--worktrees-dir=") {
                 ensure!(request.root.is_none(), "duplicate --worktrees-dir");
@@ -61,6 +95,17 @@ impl Request {
         ensure!(
             !(request.yes && request.dry_run),
             "--yes and --dry-run are mutually exclusive"
+        );
+        ensure!(
+            !request.offline || request.sharing == Sharing::Compact,
+            "--offline requires --compact"
+        );
+        ensure!(
+            !cfg!(target_os = "macos")
+                || !request.yes
+                || request.sharing != Sharing::Compact
+                || request.offline,
+            "macOS --compact --yes requires --offline: save work and close agents/editors/builds first"
         );
         Ok(request)
     }
@@ -419,6 +464,14 @@ mod unix {
             });
             for moving in &moves {
                 ensure!(
+                    !repository
+                        .main
+                        .parent()
+                        .context("main has no parent")?
+                        .starts_with(&moving.from),
+                    "recovery directory would lie inside a moving checkout; this overlapping layout is unsupported"
+                );
+                ensure!(
                     !root.starts_with(&moving.from)
                         || (moving.from == repository.main && root == moving.from),
                     "worktrees directory must be outside moving checkouts (or exactly the original main path)"
@@ -457,7 +510,25 @@ mod unix {
                 moves,
             })
         }
-        fn show(&self) {
+        fn targets(&self, relocated: bool) -> Vec<PathBuf> {
+            self.repository
+                .records
+                .iter()
+                .skip(1)
+                .filter(|r| self.selected.as_ref().is_none_or(|p| p == &r.path))
+                .map(|r| {
+                    if relocated {
+                        self.moves
+                            .iter()
+                            .find(|m| m.from == r.path)
+                            .map_or_else(|| r.path.clone(), |m| m.to.clone())
+                    } else {
+                        r.path.clone()
+                    }
+                })
+                .collect()
+        }
+        fn show(&self, sharing: Sharing) {
             println!("Worktrees directory: {:?}", self.root);
             for record in &self.repository.records {
                 if let Some(m) = self.moves.iter().find(|m| m.from == record.path) {
@@ -473,9 +544,11 @@ mod unix {
             println!(
                 "Coordinate active agents/editors first: their stored absolute paths will not be updated."
             );
-            if cfg!(target_os = "macos") {
+            if sharing == Sharing::MoveOnly {
+                println!("Move-only: existing file sharing will remain unchanged.");
+            } else if cfg!(target_os = "macos") {
                 println!(
-                    "macOS: relocation does not compact existing files; sharing will remain unchanged."
+                    "macOS: move-only sharing will remain unchanged; optional compaction replaces file identities and requires saved, closed worktrees."
                 );
             } else {
                 println!(
@@ -532,10 +605,13 @@ mod unix {
             }
         };
         let plan = Plan::build(repository, root, selected.as_deref())?;
-        plan.show();
+        plan.show(request.sharing);
+        preview_sharing(&plan, request.sharing)?;
         if request.dry_run {
             println!("Dry run: no directories, configuration or files changed.");
-            if let Some(target) = selected {
+            if request.sharing == Sharing::Automatic
+                && let Some(target) = selected
+            {
                 let donor = fs::canonicalize(crate::output_path(
                     crate::checked(git(cwd).args(["rev-parse", "--show-toplevel"]))?.stdout,
                 )?)?;
@@ -545,9 +621,21 @@ mod unix {
             }
             return Ok(0);
         }
+        let sharing = choose_sharing(request.sharing, request.yes)?;
+        if cfg!(target_os = "macos") && sharing == Sharing::Compact && !request.offline {
+            ensure!(!request.yes, "macOS --compact --yes requires --offline");
+            println!(
+                "Offline compaction replaces file identities and retires verified old copies. Save work and CLOSE all agents, editors, builds and servers using donor/target worktrees. Paused processes may still hold files open."
+            );
+            if prompt("Type offline to acknowledge all these worktrees are closed: ")? != "offline"
+            {
+                println!("Adoption canceled; nothing changed.");
+                return Ok(0);
+            }
+        }
         if !request.yes
             && !matches!(
-                prompt("Apply this layout and attempt supported sharing? [y/N] ")?.as_str(),
+                prompt("Apply the displayed layout and sharing plan? [y/N] ")?.as_str(),
                 "y" | "Y" | "yes" | "YES"
             )
         {
@@ -566,6 +654,18 @@ mod unix {
                 m.from
             );
         }
+        #[cfg(target_os = "macos")]
+        let mut compaction = if sharing == Sharing::Compact {
+            Some(crate::compact::Session::new(
+                plan.repository
+                    .main
+                    .parent()
+                    .context("main has no parent")?,
+                OfflineConsent { _confirmed: () },
+            )?)
+        } else {
+            None
+        };
         apply(&plan)?;
         crate::checked(
             git(&plan.main_destination)
@@ -573,10 +673,63 @@ mod unix {
                 .arg(&plan.root),
         ).context("layout was adopted, but saving the root failed; worktree files remain at the displayed destinations")?;
         println!("Layout adopted. Saved worktrees directory: {:?}", plan.root);
-        share_after_move(&plan);
+        #[cfg(target_os = "macos")]
+        if let Some(session) = compaction.as_mut() {
+            for target in plan.targets(true) {
+                session
+                    .compact(&plan.main_destination, &target)?
+                    .show(&target, false);
+            }
+        }
+        if sharing != Sharing::MoveOnly {
+            share_after_move(&plan);
+        }
         Ok(0)
     }
 
+    fn choose_sharing(choice: Sharing, yes: bool) -> Result<Sharing> {
+        if choice != Sharing::Automatic {
+            return Ok(choice);
+        }
+        if !cfg!(target_os = "macos") {
+            return Ok(Sharing::Compact);
+        }
+        if yes {
+            return Ok(Sharing::MoveOnly);
+        }
+        Ok(
+            if matches!(
+                prompt(
+                    "Also compact matching files? Requires an offline maintenance window [y/N] "
+                )?
+                .as_str(),
+                "y" | "Y" | "yes" | "YES"
+            ) {
+                Sharing::Compact
+            } else {
+                Sharing::MoveOnly
+            },
+        )
+    }
+    fn preview_sharing(plan: &Plan, sharing: Sharing) -> Result<()> {
+        if sharing == Sharing::MoveOnly {
+            return Ok(());
+        }
+        #[cfg(target_os = "macos")]
+        for target in plan.targets(false) {
+            crate::compact::preview(&plan.repository.main, &target)?.show(&target, true);
+        }
+        #[cfg(target_os = "linux")]
+        if sharing == Sharing::Compact {
+            for target in plan.targets(false) {
+                crate::sharing::run(
+                    &plan.repository.main,
+                    &["--dry-run".into(), target.into_os_string()],
+                )?;
+            }
+        }
+        Ok(())
+    }
     fn share_after_move(plan: &Plan) {
         if !cfg!(target_os = "linux") {
             return;
@@ -819,6 +972,9 @@ mod tests {
         assert_eq!(r.target, Some(PathBuf::from("a")));
         for words in [
             vec!["--layout=global"],
+            vec!["--compact", "--move-only"],
+            vec!["--offline"],
+            vec!["--worktrees-dir", "--compact", "--yes"],
             vec!["--yes", "--dry-run"],
             vec!["a", "b"],
             vec!["--worktrees-dir="],

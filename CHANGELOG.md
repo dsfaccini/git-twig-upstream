@@ -8,6 +8,14 @@ describe changes from this baseline after they are implemented and verified.
 
 ### Added
 
+- Optional offline APFS compaction during adoption: `--compact` previews and
+  applies verified native CoW replacements with supported target metadata and
+  index contents preserved. Interactive use requires explicit saved/closed-tree
+  confirmation; automation requires `--compact --offline --yes`. `--move-only`
+  disables sharing. Old copies are retired only after verification with a native
+  busy-file guard; failures retain both copies and a recovery journal. This is
+  not safe live deduplication or a measured physical-space claim.
+
 - `git twig adopt` discovers registered worktrees, previews a sibling layout and
   asks before relocating the original clone and linked checkouts. A single
   `--worktrees-dir` option selects a root; omitted roots are prompted and saved
@@ -17,8 +25,8 @@ describe changes from this baseline after they are implemented and verified.
   dirty/staged/ignored work, repair Git links and retain a recovery journal.
   Cross-device, locked, colliding and submodule layouts are refused.
 - After adoption, `git twig new -b <branch>` can use the saved root without an
-  explicit destination. Linux attempts in-place sharing after relocation; macOS
-  reports sharing unchanged. Explicit v0.5 `--prepare`/`--dedupe` modes remain
+  explicit destination. Linux attempts in-place sharing after relocation; move-only
+  macOS adoption reports sharing unchanged. Explicit v0.5 `--prepare`/`--dedupe` modes remain
   sharing-only and never replace live files.
 
 ### Changed

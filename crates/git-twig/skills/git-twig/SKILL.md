@@ -34,7 +34,7 @@ agent that can execute Git commands; they do not install or intercept client hoo
 
 ```text
 git twig new [<git-worktree options>] <path> [<commit>]
-git twig adopt [--dry-run] [--yes] [--worktrees-dir=<root>] [<worktree>]
+git twig adopt [--dry-run] [--yes] [--compact [--offline] | --move-only] [--worktrees-dir=<root>] [<worktree>]
 git twig adopt [--prepare | --dedupe] <linked-worktree>
 git twig list [--porcelain [-z]]
 git twig remove <path>
@@ -170,13 +170,33 @@ kernel in-place sharing of identical same-path tracked regular files against the
 main checkout. Unsupported/changed ranges are reported separately from a
 successful move; earlier deduplicated ranges are not rolled back. Neither logical
 matching bytes nor kernel byte counts prove exclusive physical space reclaimed.
-On macOS, relocation leaves existing file sharing unchanged: it does not compact
-the worktree. Do not describe ordinary Git worktrees as needing a format conversion.
+On macOS, moving alone leaves sharing unchanged, but interactive adoption offers
+an explicit offline compaction step. First preview `adopt --compact --dry-run`.
+Before approving compaction, have the owner save work and CLOSE every agent,
+editor, build and server using donor/target worktrees. A paused process can still
+hold descriptors or writable mappings. Do not infer exclusive ownership from
+lsof/process scans or simply pass an offline flag on the owner's behalf.
+
+For explicitly approved automation, use `--compact --offline --yes` with the
+reviewed explicit/saved root. `--yes` alone never authorizes APFS replacement;
+`--move-only` opts out of sharing on either platform. Compaction uses verified
+native CoW clones of matching tracked current bytes, preserving supported target
+metadata and index entries, not restoring HEAD. It changes inodes/ctime and may
+cause the next status to refresh its stat cache. Verified old copies are retired
+to release their references; indefinite backups would keep old extents pinned.
+
+An open original prevents retirement. A failure after swapping stops and retains
+installed/recovery copies: report the journal path and do not restart agents,
+retry, delete originals or blindly roll back over possible writes. Unsupported
+metadata/files remain untouched. Snapshots are never deleted and physical space
+reclaimed is not inferred from matching logical bytes. This remains an explicitly
+offline operation, not live APFS deduplication. Ordinary Git worktrees do not need
+a format conversion.
 
 The explicit v0.5 sharing-only modes remain available from a distinct donor:
 `git -C main twig adopt --prepare ../existing` retains private verified clones,
 and Linux `--dedupe` compares/shares ranges in place without replacing inodes.
-Prepared macOS clones can consume extra space and are never installed. Never
+These --prepare clones can consume extra space and are never installed. Never
 substitute clone-and-rename on an active APFS checkout: open writers can retain
 the old inode. These modes do not relocate worktrees or need agent hooks.
 
