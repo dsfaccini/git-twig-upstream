@@ -1,0 +1,55 @@
+{
+  "repository": "pulumi",
+  "attempt": 1,
+  "rawFile": "/Users/leostera/Developer/github.com/leostera/git-twig/main/target/v05-real-macos-settled-2026-11-18/pulumi-attempt-1/pulumi.json",
+  "sha256": "b52bebcdbad1bfe19e50977c374cfabacd54ee76f85d4c8797377e588bb9d254",
+  "exitCode": 0,
+  "cohorts": 6,
+  "failures": [],
+  "allocationStable": true,
+  "comparisonEligible": true,
+  "observations": [
+    {
+      "backend": "git",
+      "round": 0,
+      "bytes": 1297809408,
+      "beforeStable": true,
+      "afterStatusStable": true
+    },
+    {
+      "backend": "twig",
+      "round": 0,
+      "bytes": 8794112,
+      "beforeStable": true,
+      "afterStatusStable": true
+    },
+    {
+      "backend": "twig",
+      "round": 1,
+      "bytes": 8273920,
+      "beforeStable": true,
+      "afterStatusStable": true
+    },
+    {
+      "backend": "git",
+      "round": 1,
+      "bytes": 1298259968,
+      "beforeStable": true,
+      "afterStatusStable": true
+    },
+    {
+      "backend": "git",
+      "round": 2,
+      "bytes": 1297702912,
+      "beforeStable": true,
+      "afterStatusStable": true
+    },
+    {
+      "backend": "twig",
+      "round": 2,
+      "bytes": 8318976,
+      "beforeStable": true,
+      "afterStatusStable": true
+    }
+  ]
+}
