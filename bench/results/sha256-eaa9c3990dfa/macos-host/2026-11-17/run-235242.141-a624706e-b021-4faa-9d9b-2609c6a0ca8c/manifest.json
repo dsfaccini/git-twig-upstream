@@ -1,0 +1,162 @@
+{
+  "schemaVersion": 1,
+  "kind": "real-repository-campaign",
+  "generatedAt": "2026-11-17T23:52:42.141Z",
+  "commit": "ace60d62f1584532efa6ebceef481d21f2483989",
+  "dirty": false,
+  "candidate": {
+    "version": "git-twig 0.5.0",
+    "sourceCommit": "4d2622f77ea8bfecc1f3fd6f1930686648990bbd",
+    "sha256": "eaa9c3990dfabc0bfaa0614abd8efdbde07149c77fa96c0eb0636cf446cd88e7"
+  },
+  "git": {
+    "version": "git version 2.56.1",
+    "sha256": "b5eaefb829ec3b61176f83ed7fddc333a9d92e762ec4e558f55baadc4314297d"
+  },
+  "worker": {
+    "sha256": "c48b9f59b44faa9e4977259e71ff4eb6d83f1b6a588a049c4a7a60257e1e6a4f"
+  },
+  "config": {
+    "target": "macos-host",
+    "filesystem": "host",
+    "rounds": 3,
+    "concurrency": 1,
+    "warmup": true,
+    "budgetSeconds": 7200,
+    "pointSeconds": 1800,
+    "minimumFreeGiB": 128,
+    "maxGrowthGiB": 160,
+    "environment": "Shared Apple M1 Ultra Mac Studio, internal APFS storage. Published v0.5.0 arm64 archive verified against release SHA-256. Stock Git 2.56.1. Original v0.4 pins and agreed counts; warmup enabled; concurrency one; three paired rounds. Original host Workers starter raw results independently qualified after header-parser correction and are not repeated. Remaining host jobs and the separate originally planned case-sensitive allocation target only. No competing builds/tests; background apps not stopped."
+  },
+  "inputs": [
+    {
+      "label": "twig",
+      "revision": "96c43950e4c0d8524de4ad53157c136eb222d39c",
+      "worktrees": 10,
+      "imageGiB": 16,
+      "hostTiming": true
+    },
+    {
+      "label": "axo",
+      "revision": "67af816be26633039e8507d93d577b2073d6f5fd",
+      "worktrees": 1,
+      "imageGiB": 16,
+      "hostTiming": true
+    },
+    {
+      "label": "openclaw",
+      "revision": "410c0dda40702e25263b49b8b7d0786a5e49e366",
+      "worktrees": 1,
+      "imageGiB": 24,
+      "hostTiming": true
+    },
+    {
+      "label": "pulumi",
+      "revision": "430261138aa08539cd598b9269bfe8f82fd49b78",
+      "worktrees": 1,
+      "imageGiB": 16,
+      "hostTiming": true
+    }
+  ],
+  "status": "completed",
+  "stopReason": null,
+  "resourceSamples": [
+    {
+      "freeGiB": 630.0704383850098,
+      "growthGiB": 0.00000762939453125,
+      "elapsedMs": 1.0030410000000103
+    },
+    {
+      "freeGiB": 629.3985404968262,
+      "growthGiB": 0.671905517578125,
+      "elapsedMs": 13249.713291
+    },
+    {
+      "freeGiB": 629.392879486084,
+      "growthGiB": 0.6775665283203125,
+      "elapsedMs": 13288.867166
+    },
+    {
+      "freeGiB": 628.349437713623,
+      "growthGiB": 1.72100830078125,
+      "elapsedMs": 30133.138375
+    },
+    {
+      "freeGiB": 628.3590774536133,
+      "growthGiB": 1.7113685607910156,
+      "elapsedMs": 30180.229
+    },
+    {
+      "freeGiB": 610.292308807373,
+      "growthGiB": 19.77813720703125,
+      "elapsedMs": 465592.537833
+    },
+    {
+      "freeGiB": 610.2921600341797,
+      "growthGiB": 19.77828598022461,
+      "elapsedMs": 465651.303791
+    },
+    {
+      "freeGiB": 576.3862991333008,
+      "growthGiB": 53.684146881103516,
+      "elapsedMs": 740212.05675
+    }
+  ],
+  "jobs": [
+    {
+      "repository": "twig",
+      "file": "twig.json",
+      "status": "completed",
+      "verified": true,
+      "allocationComparable": false,
+      "timeoutMs": 1800000,
+      "error": null,
+      "startedElapsedMs": 30.702457999999993,
+      "finishedElapsedMs": 13288.536291,
+      "exitCode": 0
+    },
+    {
+      "repository": "axo",
+      "file": "axo.json",
+      "status": "completed",
+      "verified": true,
+      "allocationComparable": false,
+      "timeoutMs": 1800000,
+      "error": null,
+      "startedElapsedMs": 13318.682875,
+      "finishedElapsedMs": 30179.618916,
+      "exitCode": 0
+    },
+    {
+      "repository": "openclaw",
+      "file": "openclaw.json",
+      "status": "completed",
+      "verified": true,
+      "allocationComparable": false,
+      "timeoutMs": 1800000,
+      "error": null,
+      "startedElapsedMs": 30209.359458,
+      "finishedElapsedMs": 465650.188125,
+      "exitCode": 0
+    },
+    {
+      "repository": "pulumi",
+      "file": "pulumi.json",
+      "status": "completed",
+      "verified": true,
+      "allocationComparable": false,
+      "timeoutMs": 1800000,
+      "error": null,
+      "startedElapsedMs": 465679.132958,
+      "finishedElapsedMs": 740273.417125,
+      "exitCode": 0
+    }
+  ],
+  "notes": [
+    "Published v0.5.0 vs frozen stock Git; release asset provenance is retained alongside this campaign. Three paired rounds, concurrency one, warmup enabled. Original v0.4 input pins and counts.",
+    "No retries, no automatic exclusion of errors, and no website changes. Unstable allocation observations remain raw data, not comparative allocation claims.",
+    "Host timing and filesystem-image allocation are separate environments; never combine them into one cohort. Warm caches on shared hosts; background apps not stopped. No cold-cache, saturation or universal speed claim.",
+    "Full independent raw-byte/mode/symlink verification, native-clone checks, source isolation and private writes are mandatory. Verification follows creation timing. Original sources are read-only; applications and dependency scripts are never executed.",
+    "Observed nearest-rank percentiles from small finite samples are not population tail estimates. CLI creation and subsequent first-status latency are reported separately."
+  ]
+}

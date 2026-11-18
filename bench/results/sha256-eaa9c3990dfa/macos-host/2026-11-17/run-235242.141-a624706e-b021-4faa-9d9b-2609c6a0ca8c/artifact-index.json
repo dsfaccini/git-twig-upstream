@@ -1,0 +1,130 @@
+{
+  "schemaVersion": 1,
+  "artifacts": [
+    {
+      "name": "axo-axo.svg",
+      "bytes": 2027,
+      "sha256": "9ce5ee0f751d058253543fa6f1f25f7f8cc283248eb594b4bee64b55c0b3654f"
+    },
+    {
+      "name": "axo.csv",
+      "bytes": 616,
+      "sha256": "c5883b9bd04a0fa826997a0cf6fd90357995ce9ce3ee1454eb45d1ae4104bc2e"
+    },
+    {
+      "name": "axo.json",
+      "bytes": 13595,
+      "sha256": "ec6dca76575485119895ebfb24a739b78f429e933608e121a300c77e69fe132e"
+    },
+    {
+      "name": "axo.report.json",
+      "bytes": 1512,
+      "sha256": "ee574f000f497b89bd163c2b9c35a8b66f8e85f264828ac093a1bed43f5c01a9"
+    },
+    {
+      "name": "axo.summary.json",
+      "bytes": 1285,
+      "sha256": "85b4eb827cc9c6b2ea0202c9324adfbe29057ac9782e55db762d6fe9ece57018"
+    },
+    {
+      "name": "gate-fix.bundle",
+      "bytes": 773,
+      "sha256": "6ef1498f624d611817d48fb7ff3adda38f518c86cd2e8b850fa556341caf0f89"
+    },
+    {
+      "name": "harness.bundle",
+      "bytes": 9736,
+      "sha256": "c4492739edf79d9f2215a476732a45c8e43a3fffd6cb37cdd6c018f75ffa3762"
+    },
+    {
+      "name": "manifest.json",
+      "bytes": 5402,
+      "sha256": "1af803d46b914fa333c5236420ae34c318c08f84d48df077fd4693f4e2e3b81d"
+    },
+    {
+      "name": "openclaw-openclaw.svg",
+      "bytes": 2038,
+      "sha256": "6b4c1f4f660cdec774b37bc0076d245cc1988d95439899c74cb4122fd8e5cf10"
+    },
+    {
+      "name": "openclaw.csv",
+      "bytes": 638,
+      "sha256": "f2fdda42b1488e0ad0d0b85935963b8ab17c8aeef6f1055a49eef1a9499e29d5"
+    },
+    {
+      "name": "openclaw.json",
+      "bytes": 13683,
+      "sha256": "2e726f6d1d6b7e5a8f07da83440bc942492cdd5beeb90ff4cd060a7341a8048c"
+    },
+    {
+      "name": "openclaw.report.json",
+      "bytes": 1539,
+      "sha256": "d04a54cbbae0630ab4b59d047acf66ed1a262bccea85dbdc4240c5d1e1c3b55a"
+    },
+    {
+      "name": "openclaw.summary.json",
+      "bytes": 1312,
+      "sha256": "596b88260bcf147fef3571d3d78a3afda4927df2495f908c1ca85b9a67872f87"
+    },
+    {
+      "name": "pulumi-pulumi.svg",
+      "bytes": 2030,
+      "sha256": "29cd2d3d91da1002cb60c5b48056d2f0a2dcc177318b4a25a1b52ba7cb853576"
+    },
+    {
+      "name": "pulumi.csv",
+      "bytes": 629,
+      "sha256": "716c7aa5898caae3bca1fedc2280f0ee170d3872ffcbe8d349fc6c328d7a1892"
+    },
+    {
+      "name": "pulumi.json",
+      "bytes": 13671,
+      "sha256": "6fb473415913f033d8a7e1c64468c41cde8523c6c939fd7103bb2d4b16b7849f"
+    },
+    {
+      "name": "pulumi.report.json",
+      "bytes": 1528,
+      "sha256": "79288b311a39e29f805129b377efc90a9051de6426186638b7e5cd18335a2e32"
+    },
+    {
+      "name": "pulumi.summary.json",
+      "bytes": 1301,
+      "sha256": "b8926437129aff8c8a02df8d6de360a8ca00472c520f9db783559a9da24d86e1"
+    },
+    {
+      "name": "release-SHA256SUMS",
+      "bytes": 333,
+      "sha256": "d740266abc1df5eeea15f90d88f5b99d2ceccdff836fc075e6d4c54cb7e31f27"
+    },
+    {
+      "name": "release-provenance.json",
+      "bytes": 2641,
+      "sha256": "655ae6d5ee4478ac72899a80298feeba12faa00fecbd3a5bd9228610d744f163"
+    },
+    {
+      "name": "twig-twig.svg",
+      "bytes": 2032,
+      "sha256": "810fe5ce30defc7249aca4ef527bf7780457bb4439245680ff802ee02f92d71c"
+    },
+    {
+      "name": "twig.csv",
+      "bytes": 647,
+      "sha256": "85880259bc1e5062039649e50bb293a8ac3898129483756e882b7df76212940b"
+    },
+    {
+      "name": "twig.json",
+      "bytes": 34274,
+      "sha256": "5cb4a6b638c55891b64cf056842cc5b8bbadba630e141eb5256b4d3294464a3a"
+    },
+    {
+      "name": "twig.report.json",
+      "bytes": 1545,
+      "sha256": "9bd5d8b68c913167d9ac0897e1973fbdb5ea1f03343a4da81d98203eed57d807"
+    },
+    {
+      "name": "twig.summary.json",
+      "bytes": 1317,
+      "sha256": "7ae1c498f52d06f2864e80f87f8cbcf2496fce2c774a5a46806ae66e0985e18b"
+    }
+  ]
+}

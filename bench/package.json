@@ -5,7 +5,7 @@
   "scripts": {
     "test": "bun test tests",
     "typecheck": "tsc --noEmit",
-    "format:check": "prettier --check run.ts real.ts lib suites linux-xfs linux-btrfs macos-apfs macos-apfs-case-sensitive tests"
+    "format:check": "prettier --check run.ts real.ts real-report.ts lib suites linux-xfs linux-btrfs macos-apfs macos-apfs-case-sensitive tests"
   },
   "devDependencies": {
     "@types/bun": "1.3.11",

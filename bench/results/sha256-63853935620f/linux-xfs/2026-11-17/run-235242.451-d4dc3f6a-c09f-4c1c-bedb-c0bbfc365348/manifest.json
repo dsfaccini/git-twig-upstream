@@ -1,0 +1,142 @@
+{
+  "schemaVersion": 1,
+  "kind": "real-repository-campaign",
+  "generatedAt": "2026-11-17T23:52:42.452Z",
+  "commit": "ace60d62f1584532efa6ebceef481d21f2483989",
+  "dirty": false,
+  "candidate": {
+    "version": "git-twig 0.5.0",
+    "sourceCommit": "4d2622f77ea8bfecc1f3fd6f1930686648990bbd",
+    "sha256": "63853935620fef55977053e7de6671bbcf17da839f36dd426348c126910cda97"
+  },
+  "git": {
+    "version": "git version 2.43.0",
+    "sha256": "eb54b535467e0975c1284d4c4d08eea779aeb248a5d34b02e2ee171382e22201"
+  },
+  "worker": {
+    "sha256": "beb63e90e653c629028fe630e750112cfeca27ca406f3a761e10d66fefb33d17"
+  },
+  "config": {
+    "target": "linux-xfs",
+    "filesystem": "linux-xfs-image",
+    "rounds": 3,
+    "concurrency": 1,
+    "warmup": true,
+    "budgetSeconds": 7200,
+    "pointSeconds": 1800,
+    "minimumFreeGiB": 128,
+    "maxGrowthGiB": 160,
+    "environment": "Shared Linux kernel 7.0.0-43-generic in Ubuntu Noble container; stock Git 2.43.0. Published v0.5.0 x86_64 verified release archive. Owned XFS sparse loopback on ext4 backing /dev/sda1. Original v0.4 pins, counts, warmup, three pairs, concurrency one. Only unmeasured repositories after correcting repository-header parsing; original Workers starter data qualified unchanged, not repeated. No competing builds/tests."
+  },
+  "inputs": [
+    {
+      "label": "twig",
+      "revision": "96c43950e4c0d8524de4ad53157c136eb222d39c",
+      "worktrees": 10,
+      "imageGiB": 16,
+      "hostTiming": true
+    },
+    {
+      "label": "axo",
+      "revision": "67af816be26633039e8507d93d577b2073d6f5fd",
+      "worktrees": 1,
+      "imageGiB": 16,
+      "hostTiming": true
+    },
+    {
+      "label": "openclaw",
+      "revision": "410c0dda40702e25263b49b8b7d0786a5e49e366",
+      "worktrees": 1,
+      "imageGiB": 24,
+      "hostTiming": true
+    },
+    {
+      "label": "pulumi",
+      "revision": "430261138aa08539cd598b9269bfe8f82fd49b78",
+      "worktrees": 1,
+      "imageGiB": 16,
+      "hostTiming": true
+    },
+    {
+      "label": "linux",
+      "revision": "23c62304dde29abe92013d85910d03a77dada35d",
+      "worktrees": 1,
+      "imageGiB": 32,
+      "hostTiming": false
+    }
+  ],
+  "status": "running",
+  "stopReason": null,
+  "resourceSamples": [
+    {
+      "freeGiB": 376.7372627258301,
+      "growthGiB": 0.00000762939453125,
+      "elapsedMs": 1.5111090000000047
+    },
+    {
+      "freeGiB": 376.33343505859375,
+      "growthGiB": 0.4038352966308594,
+      "elapsedMs": 75900.09023799999
+    },
+    {
+      "freeGiB": 376.3334274291992,
+      "growthGiB": 0.4038429260253906,
+      "elapsedMs": 75935.28527899999
+    },
+    {
+      "freeGiB": 375.3939552307129,
+      "growthGiB": 1.3433151245117188,
+      "elapsedMs": 175394.75727200002
+    },
+    {
+      "freeGiB": 375.39358139038086,
+      "growthGiB": 1.34368896484375,
+      "elapsedMs": 175430.28541
+    }
+  ],
+  "jobs": [
+    {
+      "repository": "twig",
+      "file": "twig.json",
+      "status": "completed",
+      "verified": true,
+      "allocationComparable": true,
+      "timeoutMs": 1800000,
+      "error": null,
+      "startedElapsedMs": 30.441652000000005,
+      "finishedElapsedMs": 75934.414255,
+      "exitCode": 0
+    },
+    {
+      "repository": "axo",
+      "file": "axo.json",
+      "status": "completed",
+      "verified": true,
+      "allocationComparable": true,
+      "timeoutMs": 1800000,
+      "error": null,
+      "startedElapsedMs": 75960.24184999999,
+      "finishedElapsedMs": 175429.41638,
+      "exitCode": 0
+    },
+    {
+      "repository": "openclaw",
+      "file": "openclaw.json",
+      "status": "running",
+      "verified": false,
+      "allocationComparable": false,
+      "timeoutMs": 1800000,
+      "error": null,
+      "startedElapsedMs": 175455.749889,
+      "finishedElapsedMs": null,
+      "exitCode": null
+    }
+  ],
+  "notes": [
+    "Published v0.5.0 vs frozen stock Git; release asset provenance is retained alongside this campaign. Three paired rounds, concurrency one, warmup enabled. Original v0.4 input pins and counts.",
+    "No retries, no automatic exclusion of errors, and no website changes. Unstable allocation observations remain raw data, not comparative allocation claims.",
+    "Host timing and filesystem-image allocation are separate environments; never combine them into one cohort. Warm caches on shared hosts; background apps not stopped. No cold-cache, saturation or universal speed claim.",
+    "Full independent raw-byte/mode/symlink verification, native-clone checks, source isolation and private writes are mandatory. Verification follows creation timing. Original sources are read-only; applications and dependency scripts are never executed.",
+    "Observed nearest-rank percentiles from small finite samples are not population tail estimates. CLI creation and subsequent first-status latency are reported separately."
+  ]
+}

@@ -36,6 +36,18 @@ operation percentiles, first-status latency and harness CPU headroom. Unstable
 allocation is not certified comparative space evidence. Small samples do not
 establish population tail latency. These commands never update the website.
 
+Verify the retained release capture and regenerate its reports in memory:
+
+```sh
+bun bench/real-report.ts --check bench/results/v0.5.0-real.json
+```
+
+The capture records original result hashes, release identities, exact input pins,
+sequential intervals, incomplete jobs and qualification/interruption evidence.
+The reporter checks complete paired groups and reproduces JSON/CSV byte-for-byte.
+Partial results do not become complete comparisons. Raw manifests are never
+rewritten after an abrupt interruption or a corrected post-processing gate.
+
 ## Standalone worker
 
 This suite measures a cohort of real CLI processes, not an internal copier.
