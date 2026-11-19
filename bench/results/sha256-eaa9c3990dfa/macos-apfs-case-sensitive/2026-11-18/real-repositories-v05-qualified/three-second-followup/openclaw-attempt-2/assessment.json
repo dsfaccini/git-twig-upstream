@@ -1,0 +1,55 @@
+{
+  "repository": "openclaw",
+  "attempt": 2,
+  "rawFile": "/Users/leostera/Developer/github.com/leostera/git-twig/main/target/v05-real-macos-stability-2026-11-18/openclaw-attempt-2/openclaw.json",
+  "sha256": "df9a8918229cda02c3c1bfbdf73c395bc4666e8b86a5c369fe32a348ec416c1d",
+  "exitCode": 0,
+  "cohorts": 6,
+  "failures": [],
+  "allocationStable": false,
+  "comparisonEligible": false,
+  "observations": [
+    {
+      "backend": "git",
+      "round": 0,
+      "bytes": 963915776,
+      "beforeStable": true,
+      "afterStatusStable": false
+    },
+    {
+      "backend": "twig",
+      "round": 0,
+      "bytes": 32768000,
+      "beforeStable": true,
+      "afterStatusStable": true
+    },
+    {
+      "backend": "twig",
+      "round": 1,
+      "bytes": 32505856,
+      "beforeStable": true,
+      "afterStatusStable": true
+    },
+    {
+      "backend": "git",
+      "round": 1,
+      "bytes": 959283200,
+      "beforeStable": true,
+      "afterStatusStable": true
+    },
+    {
+      "backend": "git",
+      "round": 2,
+      "bytes": 958636032,
+      "beforeStable": true,
+      "afterStatusStable": true
+    },
+    {
+      "backend": "twig",
+      "round": 2,
+      "bytes": 33214464,
+      "beforeStable": true,
+      "afterStatusStable": false
+    }
+  ]
+}

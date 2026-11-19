@@ -1,0 +1,103 @@
+{
+  "schemaVersion": 1,
+  "kind": "real-repository-campaign",
+  "generatedAt": "2026-11-17T23:47:52.122Z",
+  "commit": "63f1edc0cbf2fd40f0907a3e053f4757baa65a8d",
+  "dirty": false,
+  "candidate": {
+    "version": "git-twig 0.5.0",
+    "sourceCommit": "4d2622f77ea8bfecc1f3fd6f1930686648990bbd",
+    "sha256": "eaa9c3990dfabc0bfaa0614abd8efdbde07149c77fa96c0eb0636cf446cd88e7"
+  },
+  "git": {
+    "version": "git version 2.56.1",
+    "sha256": "b5eaefb829ec3b61176f83ed7fddc333a9d92e762ec4e558f55baadc4314297d"
+  },
+  "worker": {
+    "sha256": "c48b9f59b44faa9e4977259e71ff4eb6d83f1b6a588a049c4a7a60257e1e6a4f"
+  },
+  "config": {
+    "target": "macos-host",
+    "filesystem": "host",
+    "rounds": 3,
+    "concurrency": 1,
+    "warmup": true,
+    "budgetSeconds": 7200,
+    "pointSeconds": 1800,
+    "minimumFreeGiB": 128,
+    "maxGrowthGiB": 160,
+    "environment": "Shared Apple M1 Ultra Mac Studio, internal APFS storage. Published v0.5.0 arm64 archive verified against release SHA-256. Stock Git 2.56.1. Original v0.4 pins; warm caches; no intentional competing builds/tests or benchmark on this backing disk. Host timing and isolated case-sensitive APFS image allocation are separate; background apps not stopped."
+  },
+  "inputs": [
+    {
+      "label": "workers-starter",
+      "revision": "d0b1ee485dc1cf2bc0b2a3511cf8cf1057624d02",
+      "worktrees": 10,
+      "imageGiB": 16,
+      "hostTiming": true
+    },
+    {
+      "label": "twig",
+      "revision": "96c43950e4c0d8524de4ad53157c136eb222d39c",
+      "worktrees": 10,
+      "imageGiB": 16,
+      "hostTiming": true
+    },
+    {
+      "label": "axo",
+      "revision": "67af816be26633039e8507d93d577b2073d6f5fd",
+      "worktrees": 1,
+      "imageGiB": 16,
+      "hostTiming": true
+    },
+    {
+      "label": "openclaw",
+      "revision": "410c0dda40702e25263b49b8b7d0786a5e49e366",
+      "worktrees": 1,
+      "imageGiB": 24,
+      "hostTiming": true
+    },
+    {
+      "label": "pulumi",
+      "revision": "430261138aa08539cd598b9269bfe8f82fd49b78",
+      "worktrees": 1,
+      "imageGiB": 16,
+      "hostTiming": true
+    }
+  ],
+  "status": "failed",
+  "stopReason": "Error: Wrong repository input",
+  "resourceSamples": [
+    {
+      "freeGiB": 626.8306846618652,
+      "growthGiB": 0.00000762939453125,
+      "elapsedMs": 1.0484590000000082
+    },
+    {
+      "freeGiB": 626.788257598877,
+      "growthGiB": 0.0424346923828125,
+      "elapsedMs": 11600.632459
+    }
+  ],
+  "jobs": [
+    {
+      "repository": "workers-starter",
+      "file": "workers-starter.json",
+      "status": "failed",
+      "verified": false,
+      "allocationComparable": false,
+      "timeoutMs": 1800000,
+      "error": "Error: Wrong repository input",
+      "startedElapsedMs": 35.46154200000001,
+      "finishedElapsedMs": 11643.644250000001,
+      "exitCode": 0
+    }
+  ],
+  "notes": [
+    "Published v0.5.0 vs frozen stock Git; release asset provenance is retained alongside this campaign. Three paired rounds, concurrency one, warmup enabled. Original v0.4 input pins and counts.",
+    "No retries, no automatic exclusion of errors, and no website changes. Unstable allocation observations remain raw data, not comparative allocation claims.",
+    "Host timing and filesystem-image allocation are separate environments; never combine them into one cohort. Warm caches on shared hosts; background apps not stopped. No cold-cache, saturation or universal speed claim.",
+    "Full independent raw-byte/mode/symlink verification, native-clone checks, source isolation and private writes are mandatory. Verification follows creation timing. Original sources are read-only; applications and dependency scripts are never executed.",
+    "Observed nearest-rank percentiles from small finite samples are not population tail estimates. CLI creation and subsequent first-status latency are reported separately."
+  ]
+}

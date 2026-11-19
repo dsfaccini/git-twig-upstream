@@ -1,0 +1,14 @@
+{
+  "schemaVersion": 1,
+  "kind": "first-stable-complete-paired-jobs",
+  "candidateSha256": "63853935620fef55977053e7de6671bbcf17da839f36dd426348c126910cda97",
+  "source": "c4d3d4e8fc4738f083f3aa2dab2b299f507aa9f2",
+  "budgetSeconds": 21600,
+  "maximumAttemptsPerRepository": 3,
+  "minimumFreeGiB": 128,
+  "maximumGrowthGiB": 160,
+  "status": "failed",
+  "attempts": [],
+  "accepted": [],
+  "error": "Error: Expected nonempty string"
+}

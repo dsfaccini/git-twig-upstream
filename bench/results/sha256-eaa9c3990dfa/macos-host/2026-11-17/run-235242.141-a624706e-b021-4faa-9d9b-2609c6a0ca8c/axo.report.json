@@ -1,0 +1,50 @@
+{
+  "schemaVersion": 1,
+  "target": "macos-host",
+  "repository": "axo",
+  "release": "v0.5.0",
+  "rawSha256": "ec6dca76575485119895ebfb24a739b78f429e933608e121a300c77e69fe132e",
+  "worktreesPerCohort": 1,
+  "concurrency": 1,
+  "pairedRounds": 3,
+  "warmup": true,
+  "allocationComparable": false,
+  "summary": [
+    {
+      "backend": "git",
+      "rounds": 3,
+      "operations": 3,
+      "allocationComparable": false,
+      "batchCreateMedianMs": 366.899542,
+      "createsPerSecondMedian": 2.725541696097293,
+      "logicalBytesPerSecondMedian": 71368374.72530833,
+      "createP50Ms": 366.837583,
+      "createP95Ms": 395.648917,
+      "createP99Ms": 395.648917,
+      "createMaxMs": 395.648917,
+      "firstStatusP50Ms": 150.89025,
+      "allocationMedianBytes": null,
+      "allocationMinBytes": null,
+      "allocationMaxBytes": null,
+      "maxHarnessCpuWallRatio": 0.002884387705727743
+    },
+    {
+      "backend": "twig",
+      "rounds": 3,
+      "operations": 3,
+      "allocationComparable": false,
+      "batchCreateMedianMs": 903.521666,
+      "createsPerSecondMedian": 1.106780321524686,
+      "logicalBytesPerSecondMedian": 28981069.281851623,
+      "createP50Ms": 903.458209,
+      "createP95Ms": 996.061958,
+      "createP99Ms": 996.061958,
+      "createMaxMs": 996.061958,
+      "firstStatusP50Ms": 172.80679199999997,
+      "allocationMedianBytes": null,
+      "allocationMinBytes": null,
+      "allocationMaxBytes": null,
+      "maxHarnessCpuWallRatio": 0.0016657043838946475
+    }
+  ]
+}

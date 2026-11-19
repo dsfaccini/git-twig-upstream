@@ -1,0 +1,43 @@
+{
+  "schemaVersion": 1,
+  "repository": "axo",
+  "filesystem": "linux-xfs-image",
+  "summary": [
+    {
+      "backend": "git",
+      "rounds": 3,
+      "operations": 3,
+      "allocationComparable": true,
+      "batchCreateMedianMs": 256.02205,
+      "createsPerSecondMedian": 3.9059135726786036,
+      "logicalBytesPerSecondMedian": 102276440.64251497,
+      "createP50Ms": 255.75312900000003,
+      "createP95Ms": 258.426314,
+      "createP99Ms": 258.426314,
+      "createMaxMs": 258.426314,
+      "firstStatusP50Ms": 115.663469,
+      "allocationMedianBytes": 32722944,
+      "allocationMinBytes": 32722944,
+      "allocationMaxBytes": 32722944,
+      "maxHarnessCpuWallRatio": 0.006846548656560878
+    },
+    {
+      "backend": "twig",
+      "rounds": 3,
+      "operations": 3,
+      "allocationComparable": true,
+      "batchCreateMedianMs": 559.584399,
+      "createsPerSecondMedian": 1.7870405282689092,
+      "logicalBytesPerSecondMedian": 46793699.121694066,
+      "createP50Ms": 559.3322,
+      "createP95Ms": 569.848863,
+      "createP99Ms": 569.848863,
+      "createMaxMs": 569.848863,
+      "firstStatusP50Ms": 112.46655999999999,
+      "allocationMedianBytes": 1880064,
+      "allocationMinBytes": 1880064,
+      "allocationMaxBytes": 1880064,
+      "maxHarnessCpuWallRatio": 0.003613835054625978
+    }
+  ]
+}

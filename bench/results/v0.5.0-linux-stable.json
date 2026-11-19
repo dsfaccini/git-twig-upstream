@@ -1,0 +1,217 @@
+{
+  "schemaVersion": 1,
+  "kind": "published-real-repository-capture",
+  "release": "v0.5.0",
+  "releaseCommit": "4d2622f77ea8bfecc1f3fd6f1930686648990bbd",
+  "protocol": {
+    "rounds": 3,
+    "concurrency": 1,
+    "warmup": true,
+    "inputPins": "original v0.4 comparisons",
+    "timingBoundary": "CLI creation; first status and independent full verification recorded separately"
+  },
+  "candidateHashes": {
+    "linux-xfs": {
+      "sha256": "63853935620fef55977053e7de6671bbcf17da839f36dd426348c126910cda97",
+      "archiveSha256": "819e1ebea0039fc440f255fc5abb2d8be735a831e54c9b93d082bd3e0301eea5",
+      "asset": "git-twig-v0.5.0-x86_64-unknown-linux-gnu.tar.gz"
+    },
+    "linux-btrfs": {
+      "sha256": "63853935620fef55977053e7de6671bbcf17da839f36dd426348c126910cda97",
+      "archiveSha256": "819e1ebea0039fc440f255fc5abb2d8be735a831e54c9b93d082bd3e0301eea5",
+      "asset": "git-twig-v0.5.0-x86_64-unknown-linux-gnu.tar.gz"
+    }
+  },
+  "inputs": [
+    {
+      "label": "workers-starter",
+      "revision": "d0b1ee485dc1cf2bc0b2a3511cf8cf1057624d02",
+      "worktrees": 10,
+      "imageGiB": 16,
+      "hostTiming": true,
+      "tree": "d4e01b1be340f6770de5b6b6e4bbcc090312b1aa",
+      "trackedBlobs": 6,
+      "logicalBlobBytes": 1421,
+      "shallow": false,
+      "promisor": false
+    },
+    {
+      "label": "twig",
+      "revision": "96c43950e4c0d8524de4ad53157c136eb222d39c",
+      "worktrees": 10,
+      "imageGiB": 16,
+      "hostTiming": true,
+      "tree": "efa8b786a16488976f20b96e63a2417d1ce7bf07",
+      "trackedBlobs": 45,
+      "logicalBlobBytes": 388029,
+      "shallow": false,
+      "promisor": false
+    },
+    {
+      "label": "axo",
+      "revision": "67af816be26633039e8507d93d577b2073d6f5fd",
+      "worktrees": 1,
+      "imageGiB": 16,
+      "hostTiming": true,
+      "tree": "675920882d5a4c2b8d42db9e0673b3c3625a2b95",
+      "trackedBlobs": 2083,
+      "logicalBlobBytes": 26185024,
+      "shallow": false,
+      "promisor": false
+    },
+    {
+      "label": "openclaw",
+      "revision": "410c0dda40702e25263b49b8b7d0786a5e49e366",
+      "worktrees": 1,
+      "imageGiB": 24,
+      "hostTiming": true,
+      "tree": "16be5eb7eee60e1285bb8be4db00d9910b200e42",
+      "trackedBlobs": 65500,
+      "logicalBlobBytes": 776199844,
+      "shallow": true,
+      "promisor": false
+    },
+    {
+      "label": "pulumi",
+      "revision": "430261138aa08539cd598b9269bfe8f82fd49b78",
+      "worktrees": 1,
+      "imageGiB": 16,
+      "hostTiming": true,
+      "tree": "56771086e70ddbd601b405740afddc2b7a42510a",
+      "trackedBlobs": 14811,
+      "logicalBlobBytes": 1255510318,
+      "shallow": false,
+      "promisor": false
+    },
+    {
+      "label": "linux",
+      "revision": "23c62304dde29abe92013d85910d03a77dada35d",
+      "worktrees": 1,
+      "imageGiB": 32,
+      "hostTiming": false,
+      "tree": "78c11a69c8b8226b0cefc40082c0cdc8030b2f8b",
+      "trackedBlobs": 97371,
+      "logicalBlobBytes": 1676008970,
+      "shallow": true,
+      "promisor": false
+    }
+  ],
+  "longAllocationWindow": true,
+  "verifiedCreates": 288,
+  "verifiedCohorts": 72,
+  "interruptedResults": 0,
+  "unmeasured": [],
+  "observations": [
+    {
+      "target": "linux-xfs",
+      "repository": "workers-starter",
+      "file": "bench/results/sha256-63853935620f/linux-xfs/2026-11-18/run-014355.630-451c4ccc-0aab-4300-ad59-1c6484c01945/workers-starter.json",
+      "sha256": "725066c17f2db8dec8beaff8728dc0d4b8ad079666d413dd22369904d36452e6",
+      "manifest": "bench/results/sha256-63853935620f/linux-xfs/2026-11-18/run-014355.630-451c4ccc-0aab-4300-ad59-1c6484c01945/manifest.json",
+      "status": "verified"
+    },
+    {
+      "target": "linux-xfs",
+      "repository": "twig",
+      "file": "bench/results/sha256-63853935620f/linux-xfs/2026-11-18/run-014830.174-92e0660a-7bd6-42da-a467-61dad3933217/twig.json",
+      "sha256": "723bbfe947f68b7f8141798d603a70b7577be272761f8d569a04b29cb1b8444f",
+      "manifest": "bench/results/sha256-63853935620f/linux-xfs/2026-11-18/run-014830.174-92e0660a-7bd6-42da-a467-61dad3933217/manifest.json",
+      "status": "verified"
+    },
+    {
+      "target": "linux-xfs",
+      "repository": "axo",
+      "file": "bench/results/sha256-63853935620f/linux-xfs/2026-11-18/run-015421.267-0bd13e56-00c4-466d-94d6-5ed3cb320a78/axo.json",
+      "sha256": "7b8ecf47391e8995803b02e5df33170716f50d67c5f844e14c4064672556322f",
+      "manifest": "bench/results/sha256-63853935620f/linux-xfs/2026-11-18/run-015421.267-0bd13e56-00c4-466d-94d6-5ed3cb320a78/manifest.json",
+      "status": "verified"
+    },
+    {
+      "target": "linux-xfs",
+      "repository": "openclaw",
+      "file": "bench/results/sha256-63853935620f/linux-xfs/2026-11-18/run-020108.806-3d7a3823-7339-4708-95f7-002fe3d05318/openclaw.json",
+      "sha256": "c08f2130924c7180f0f64b739f17cd36b06be074a7ddfcdf847520e655819a87",
+      "manifest": "bench/results/sha256-63853935620f/linux-xfs/2026-11-18/run-020108.806-3d7a3823-7339-4708-95f7-002fe3d05318/manifest.json",
+      "status": "verified"
+    },
+    {
+      "target": "linux-xfs",
+      "repository": "pulumi",
+      "file": "bench/results/sha256-63853935620f/linux-xfs/2026-11-18/run-025112.535-2808437c-f286-4595-b8b6-3c9831a94014/pulumi.json",
+      "sha256": "80df4cbf51061c5c67831611f97ab2291f71fd13b5d0ba85fbe535b573577726",
+      "manifest": "bench/results/sha256-63853935620f/linux-xfs/2026-11-18/run-025112.535-2808437c-f286-4595-b8b6-3c9831a94014/manifest.json",
+      "status": "verified"
+    },
+    {
+      "target": "linux-xfs",
+      "repository": "linux",
+      "file": "bench/results/sha256-63853935620f/linux-xfs/2026-11-18/run-030416.007-58af415b-f842-4af3-8051-7d48a85fd5b7/linux.json",
+      "sha256": "788fd9337bd863fe37f50401a429e5e98f19b729fff1415f1ee3498c756b4d90",
+      "manifest": "bench/results/sha256-63853935620f/linux-xfs/2026-11-18/run-030416.007-58af415b-f842-4af3-8051-7d48a85fd5b7/manifest.json",
+      "status": "verified"
+    },
+    {
+      "target": "linux-btrfs",
+      "repository": "workers-starter",
+      "file": "bench/results/sha256-63853935620f/linux-btrfs/2026-11-18/run-035859.039-077fdc19-13fc-4996-b743-6b2d3878d086/workers-starter.json",
+      "sha256": "b916dd9bdac0f6e64f4d366f7322eae6139a254c4eb65629ef5ea5afd4a1e921",
+      "manifest": "bench/results/sha256-63853935620f/linux-btrfs/2026-11-18/run-035859.039-077fdc19-13fc-4996-b743-6b2d3878d086/manifest.json",
+      "status": "verified"
+    },
+    {
+      "target": "linux-btrfs",
+      "repository": "twig",
+      "file": "bench/results/sha256-63853935620f/linux-btrfs/2026-11-18/run-040348.326-d7b1c71f-0a15-43e5-af16-aac2027dd5c4/twig.json",
+      "sha256": "e69f1bec4b6d4bcdf77fb0403921171f94529517e589af93922cc3cc4cda0f3f",
+      "manifest": "bench/results/sha256-63853935620f/linux-btrfs/2026-11-18/run-040348.326-d7b1c71f-0a15-43e5-af16-aac2027dd5c4/manifest.json",
+      "status": "verified"
+    },
+    {
+      "target": "linux-btrfs",
+      "repository": "axo",
+      "file": "bench/results/sha256-63853935620f/linux-btrfs/2026-11-18/run-040806.200-a7ead3d5-07c0-45cd-beb5-8945aa26f848/axo.json",
+      "sha256": "0210fe8ac1e79c3cc7443a7f417d9f26fa0d7cabb505258b3fcd37246b953713",
+      "manifest": "bench/results/sha256-63853935620f/linux-btrfs/2026-11-18/run-040806.200-a7ead3d5-07c0-45cd-beb5-8945aa26f848/manifest.json",
+      "status": "verified"
+    },
+    {
+      "target": "linux-btrfs",
+      "repository": "openclaw",
+      "file": "bench/results/sha256-63853935620f/linux-btrfs/2026-11-18/run-041230.487-8091c835-b2dd-45d5-bb6e-99ab9a2840e3/openclaw.json",
+      "sha256": "60938f83c4043188d33b37a3b00375578b91f5dfa4cf7db3bc94d33357c6ef9e",
+      "manifest": "bench/results/sha256-63853935620f/linux-btrfs/2026-11-18/run-041230.487-8091c835-b2dd-45d5-bb6e-99ab9a2840e3/manifest.json",
+      "status": "verified"
+    },
+    {
+      "target": "linux-btrfs",
+      "repository": "pulumi",
+      "file": "bench/results/sha256-63853935620f/linux-btrfs/2026-11-18/run-042337.716-d88d9d95-cfd8-46aa-b9ff-db26e384376e/pulumi.json",
+      "sha256": "d96b49bbfb668dd5f0baf46e69bd4f1a5fe5e2c0e1e732aae8964037e5c8b61a",
+      "manifest": "bench/results/sha256-63853935620f/linux-btrfs/2026-11-18/run-042337.716-d88d9d95-cfd8-46aa-b9ff-db26e384376e/manifest.json",
+      "status": "verified"
+    },
+    {
+      "target": "linux-btrfs",
+      "repository": "linux",
+      "file": "bench/results/sha256-63853935620f/linux-btrfs/2026-11-18/run-043157.180-ba1c32b3-146f-4825-804b-8ec1aeab4e68/linux.json",
+      "sha256": "28d59a9f23a59e6dfa3da1584110eb1774e55604cc644ce1cb16eacf51eb7015",
+      "manifest": "bench/results/sha256-63853935620f/linux-btrfs/2026-11-18/run-043157.180-ba1c32b3-146f-4825-804b-8ec1aeab4e68/manifest.json",
+      "status": "verified"
+    }
+  ],
+  "notes": [
+    "All twelve complete paired repository jobs passed independently, on their first measured attempts.",
+    "Long-window sampler: 500 ms interval, at least 20 samples, 11 identical final samples, maximum 240 samples. All four snapshots in all six cohorts must settle.",
+    "The supervisor failed its cumulative disk-growth guard after accepting the final job. Original failed supervisor state is retained unchanged; this is not a successful resource-budget campaign claim. The twelve independently complete job manifests remain successful.",
+    "The earlier short-window results, parser gate failures, host-reboot interruption, and pre-measurement stable-driver configuration failure remain retained separately.",
+    "Display labels use binary units; original exact byte counts remain the source of truth. Different filesystem environments are not cross-host or bare-device throughput comparisons."
+  ],
+  "campaignMetadata": [
+    "bench/results/sha256-63853935620f/linux-xfs/2026-11-18/real-repositories-v05-stable-campaign",
+    "bench/results/sha256-63853935620f/linux-btrfs/2026-11-18/real-repositories-v05-stable-campaign"
+  ],
+  "campaignEvidence": [
+    "bench/results/sha256-63853935620f/linux-xfs/2026-11-18/real-repositories-v05-stable-campaign",
+    "bench/results/sha256-63853935620f/linux-btrfs/2026-11-18/real-repositories-v05-stable-campaign"
+  ]
+}

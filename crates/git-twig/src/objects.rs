@@ -1,6 +1,8 @@
 //! Compare private checkout bytes to raw objects, never clean-filtered index hashes.
 use crate::{
-    checked, git, native,
+    checked, git,
+    index::Stat,
+    native,
     tree::{Entry, Kind},
 };
 use anyhow::{Context, Result, ensure};
@@ -14,7 +16,11 @@ use std::{
 /// Hash raw PRIVATE regular files in one Git process, without inflating or copying
 /// target blobs through a pipe. Git supplies its own object format and SHA-1 collision
 /// detection. No -w, filters, index stat cache or source file is involved.
-pub fn hash_private_files(root: &Path, data: &Path, entries: &[&Entry]) -> Result<Vec<bool>> {
+pub fn hash_private_files(
+    root: &Path,
+    data: &Path,
+    entries: &[&Entry],
+) -> Result<Vec<Option<Stat>>> {
     if entries.is_empty() {
         return Ok(Vec::new());
     }
@@ -25,32 +31,21 @@ pub fn hash_private_files(root: &Path, data: &Path, entries: &[&Entry]) -> Resul
             matches!(entry.kind, Kind::File { .. }),
             "raw hash input is not a regular entry"
         );
-        let path = data.join(&entry.path);
-        let metadata = match fs::symlink_metadata(&path) {
-            Ok(metadata) => metadata,
-            // Cross-revision targets may have no candidate in the selected donor.
-            Err(error) if error.kind() == std::io::ErrorKind::NotFound => continue,
-            Err(error) => return Err(error.into()),
-        };
-        ensure!(
-            metadata.is_file(),
-            "private hash candidate is not a regular file"
-        );
-        // A dirty sparse/oversized donor must not turn validation into hashing
-        // terabytes that cannot possibly match the target's known blob length.
-        if Some(metadata.len()) != entry.blob_bytes {
+        let Some(metadata) = candidate(data, entry)? else {
             continue;
-        }
+        };
         total = total.saturating_add(metadata.len());
         files.push(HashFile {
             index,
             entry,
-            path,
+            path: data.join(&entry.path),
             bytes: metadata.len(),
+            // Taken before hashing: the index later requires this exact identity.
+            stat: Stat::of(&metadata),
         });
     }
     if files.is_empty() {
-        return Ok(vec![false; entries.len()]);
+        return Ok(vec![None; entries.len()]);
     }
     let cpus = std::thread::available_parallelism().map_or(1, usize::from);
     let workers = hash_worker_count(files.len(), total, cpus);
@@ -79,17 +74,42 @@ pub fn hash_private_files(root: &Path, data: &Path, entries: &[&Entry]) -> Resul
             .iter()
             .map(|batch| scope.spawn(move || hash_batch(root, batch)))
             .collect();
-        let mut matched = vec![false; entries.len()];
+        let mut matched = vec![None; entries.len()];
         for handle in handles {
-            for (index, equal) in handle
+            for (index, certificate) in handle
                 .join()
                 .map_err(|_| anyhow::anyhow!("raw hash worker panicked"))??
             {
-                matched[index] = equal;
+                matched[index] = certificate;
             }
         }
         Ok(matched)
     })
+}
+
+/// The private regular file that could still be the target blob, or None when
+/// it is absent or its length already rules it out.
+fn candidate(data: &Path, entry: &Entry) -> Result<Option<fs::Metadata>> {
+    let metadata = match fs::symlink_metadata(data.join(&entry.path)) {
+        Ok(metadata) => metadata,
+        // Cross-revision targets may have no candidate in the selected donor.
+        Err(error) if error.kind() == std::io::ErrorKind::NotFound => return Ok(None),
+        Err(error) => return Err(error.into()),
+    };
+    ensure!(
+        metadata.is_file(),
+        "private candidate is not a regular file"
+    );
+    // A dirty sparse/oversized donor must not turn validation into hashing
+    // terabytes that cannot possibly match the target's known blob length.
+    // Without a known length (partial clones) the hash itself is the verdict.
+    if entry
+        .blob_bytes
+        .is_some_and(|bytes| bytes != metadata.len())
+    {
+        return Ok(None);
+    }
+    Ok(Some(metadata))
 }
 
 struct HashFile<'a> {
@@ -97,6 +117,7 @@ struct HashFile<'a> {
     entry: &'a Entry,
     path: PathBuf,
     bytes: u64,
+    stat: Stat,
 }
 
 struct HashBatch<'a> {
@@ -112,7 +133,7 @@ fn hash_worker_count(files: usize, bytes: u64, cpus: usize) -> usize {
     }
 }
 
-fn hash_batch(root: &Path, batch: &HashBatch<'_>) -> Result<Vec<(usize, bool)>> {
+fn hash_batch(root: &Path, batch: &HashBatch<'_>) -> Result<Vec<(usize, Option<Stat>)>> {
     if batch.files.is_empty() {
         return Ok(Vec::new());
     }
@@ -135,7 +156,7 @@ fn hash_batch(root: &Path, batch: &HashBatch<'_>) -> Result<Vec<(usize, bool)>> 
         .files
         .iter()
         .zip(matches)
-        .map(|(file, equal)| (file.index, equal))
+        .map(|(file, equal)| (file.index, equal.then_some(file.stat)))
         .collect())
 }
 
@@ -300,6 +321,28 @@ fn compare(
         equal: equal && candidate.read(&mut actual[..1])? == 0,
         contains_nul,
     })
+}
+
+/// Whether absent objects are fetched on demand from a promisor remote. Git then
+/// fetches once per object unless the caller batches, as its own checkout does.
+pub fn fetches_lazily(root: &Path) -> Result<bool> {
+    let output = git(root)
+        .args([
+            "config",
+            "--get-regexp",
+            r"^(extensions\.partialclone|remote\..*\.(promisor|partialclonefilter))$",
+        ])
+        .output()?;
+    // Exit status 1 means no such key. Any configured value is treated as partial.
+    if output.status.code() == Some(1) {
+        return Ok(false);
+    }
+    ensure!(
+        output.status.success(),
+        "Git failed: {}",
+        String::from_utf8_lossy(&output.stderr)
+    );
+    Ok(!output.stdout.is_empty())
 }
 
 /// Fail closed when replace refs or grafts could make an object ID mean other bytes.

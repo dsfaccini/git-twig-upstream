@@ -24,6 +24,21 @@ independent reflink probe prevents silently testing fallback instead.
 | HEAD movement invalidates installation | Move detached destination HEAD after registration; reject installation before any target files are moved |
 | Retrying cannot consume another invocation's scratch | Reject reuse of partial destination; succeed at fresh destination; compare retained staging before/after and exact registrations |
 
+`cases/partial_clones.rs` counts promisor fetches in Git's own event trace: none
+for the current revision, at most one batch when target blobs are absent.
+`cases/donor_metadata.rs` and `cases/staging_cleanup.rs` (macOS) compare extended
+attributes and BSD flags with a stock worktree, and require immutable tracked or
+ignored donor files to leave neither flags in the target nor retained staging.
+
+The same file covers scratch removal for paths beyond PATH_MAX under the staging
+prefix, branch names Git refuses before registration, and (ignored, attaches a
+disk image) exFAT companion files. `cases/donor_coverage.rs` covers a separate
+Git directory, where Git lists the main checkout at a path holding no checkout.
+
+`cases/index_freshness.rs` requires the installed index to record inode and size
+for root, nested, symlink and Git-rewritten entries, and same-size dirty donor
+bytes to be rewritten rather than recorded as clean.
+
 These are finite generated cases, not exhaustive proofs or a randomized shrinking
 framework. The generation seed and fixture are retained. Parallel launch varies
 scheduling but does not force every interleaving. The registration fault injection
@@ -35,9 +50,10 @@ tests remain part of the same suite.
 
 ## Interpretation
 
-A clean `git status` is not the contents oracle. Missing donor files may safely
-fall back; intact donor cases must use native CoW on macOS and on required-native
-Linux runs. Symlink traversal is never used by the inventory helper. `.git`
+A clean `git status` is not the contents oracle. Donor paths that were deleted or
+replaced by another kind of entry are written by Git while the rest stays shared;
+both those and intact donor cases must use native CoW on macOS and on
+required-native Linux runs. Symlink traversal is never used by the inventory helper. `.git`
 metadata is excluded from raw checkout comparisons and registration is checked
 separately. Index preservation is an explicit byte comparison.
 
@@ -78,8 +94,8 @@ and OpenZFS/NFS remain outside this local-filesystem adoption matrix.
   registration and the existing policy boundaries.
 - Concurrent donor mutation during cloning/hashing (post-verification mutation is
   covered), and destination races within individual rename/check transitions.
-- Full mode, ACL, extended-attribute, immutable-file, and Unicode/case-collision
-  semantics on both case-sensitive and default APFS.
+- Full mode, ACL and Unicode/case-collision semantics on both case-sensitive and
+  default APFS; system-owned flags and attributes; Linux immutable attributes.
 - Separate-volume/external-drive cases, ENOSPC and injected I/O failures using
   disposable volumes; never fill a user's main disk.
 - Larger generated inventories with replayable randomness and shrinking, while

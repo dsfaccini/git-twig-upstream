@@ -1,0 +1,31 @@
+pulumi: git, repeat 1/3, 1 creates with concurrency 1
+cohort workers launched: 1; queued creates: 1
+git: CLI completed 1/1; content verification pending
+  6.28s creates; 1 ok / 0 failed; allocation after status: 1237.69 MiB
+  disposable image detached and removed
+pulumi: twig, repeat 1/3, 1 creates with concurrency 1
+cohort workers launched: 1; queued creates: 1
+twig: CLI completed 1/1; content verification pending
+  6.71s creates; 1 ok / 0 failed; allocation after status: 8.39 MiB
+  disposable image detached and removed
+pulumi: twig, repeat 2/3, 1 creates with concurrency 1
+cohort workers launched: 1; queued creates: 1
+twig: CLI completed 1/1; content verification pending
+  5.86s creates; 1 ok / 0 failed; allocation after status: 7.89 MiB
+  disposable image detached and removed
+pulumi: git, repeat 2/3, 1 creates with concurrency 1
+cohort workers launched: 1; queued creates: 1
+git: CLI completed 1/1; content verification pending
+  7.35s creates; 1 ok / 0 failed; allocation after status: 1238.12 MiB
+  disposable image detached and removed
+pulumi: git, repeat 3/3, 1 creates with concurrency 1
+cohort workers launched: 1; queued creates: 1
+git: CLI completed 1/1; content verification pending
+  8.92s creates; 1 ok / 0 failed; allocation after status: 1237.59 MiB
+  disposable image detached and removed
+pulumi: twig, repeat 3/3, 1 creates with concurrency 1
+cohort workers launched: 1; queued creates: 1
+twig: CLI completed 1/1; content verification pending
+  6.20s creates; 1 ok / 0 failed; allocation after status: 7.93 MiB
+  disposable image detached and removed
+/Users/leostera/Developer/github.com/leostera/git-twig/main/target/v05-real-macos-settled-2026-11-18/pulumi-attempt-1/pulumi.json

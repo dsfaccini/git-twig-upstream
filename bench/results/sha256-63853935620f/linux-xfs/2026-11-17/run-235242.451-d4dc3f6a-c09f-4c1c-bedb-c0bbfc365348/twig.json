@@ -1,0 +1,1236 @@
+{
+  "schemaVersion": 4,
+  "filesystem": "linux-xfs-image",
+  "imageSizeGib": 16,
+  "warmup": true,
+  "requireNative": true,
+  "selectedBackend": null,
+  "suite": "real-image-cohort",
+  "generatedAtUnixMs": 1794959562492,
+  "commit": "ace60d62f1584532efa6ebceef481d21f2483989",
+  "dirty": false,
+  "candidateSha256": "63853935620fef55977053e7de6671bbcf17da839f36dd426348c126910cda97",
+  "gitVersion": "git version 2.43.0",
+  "platform": "linux x86_64 7.0.0-43-generic",
+  "cpu": "AMD Ryzen Threadripper 2990WX 32-Core Processor",
+  "concurrency": 1,
+  "worktreesPerCohort": 10,
+  "repeats": 3,
+  "repositories": [
+    {
+      "label": "twig",
+      "commit": "96c43950e4c0d8524de4ad53157c136eb222d39c",
+      "donor_commit": null
+    }
+  ],
+  "notes": [
+    "Each image-backed backend/repeat gets a fresh, isolated sparse filesystem image (capacity/format recorded in imageSizeGiB/filesystem). Seed uses git clone --shared --no-checkout plus explicit pinned-commit checkout. Original repositories and object stores are read-only inputs; seed history uses alternates outside image.",
+    "One operation warmup per backend in its own seed/registry so it cannot become a measured donor. Removed before APFS snapshots; retained on Linux/host and excluded by the before snapshot. Global/system config and fixture hooks disabled. Backend order alternates by repeat.",
+    "A barrier releases the bounded worker pool simultaneously; each worker starts its next queued create only after its previous CLI returns. worktreesPerCohort is the total count; concurrency is the maximum in flight. Create wall time includes thread startup/barrier and ends at the last CLI completion, excluding final coordinator checkpoint/join work. Per-operation latency measures only that CLI. harnessCpuMsDuringCreate records self CPU (coordinator and worker threads), excluding CLI child CPU. No verification/generation competes with creates. No retries: failures are data.",
+    "First git status is measured sequentially after all creates and the initial space snapshot. Full byte/symlink/executable verification follows each first status; its CPU is outside creation timing. A first-status sum is not a concurrent-status wall time.",
+    "Allocated space is total minus free blocks from statvfs on the isolated filesystem, sampled after sync until stable (or marked unstable). This includes working files, indexes, retained staging and filesystem metadata, not logical size/du/st_blocks. Host sparse-image allocation is not the metric.",
+    "After initial verification/space measurement, one data-bearing byte in the largest regular target file matching the original donor (offset and file length recorded) is changed in place; if no such data exists, the probe is not applicable. Additional filesystem allocation is sampled; seed file must remain unchanged. APFS images are detached and deleted after saving each cohort; Linux images and fixtures are retained after unmount; no benchmark input paths or source file contents are serialized.",
+    "Local warm-cache results. A sparse loopback/disk image is a controlled filesystem, not a claim about native host-volume maximum throughput. Report failures alongside latency and allocation; do not compare unequal successful counts as identical capacity.",
+    "Linux images use the host kernel through loopback devices. XFS is formatted with reflink=1; Btrfs uses default features (no compression). Filesystem allocation includes metadata/logs and shared data counted once. Native Twig reflinks are mandatory. Each backend/repeat gets a separate filesystem, seed, warmup and registry. Images and fixtures are retained; mount/mkfs require root or noninteractive sudo inside a dedicated test environment. These are not bare-device performance numbers.",
+    "Rust: compiler outside measurement container; candidate SHA-256 recorded; UID: 1000; image tool: mkfs.xfs version 6.6.0",
+    "Schema 4 records source/donor and target commits/trees separately. Different-revision checkout bytes come from an independent Git oracle outside the measured filesystem and worktree registry. Later measured creates may legitimately reuse earlier completed targets. requireNative=false is only for explicitly named fallback baselines; native flags and clone counts remain recorded, never relabeled.",
+    "Shared Linux kernel 7.0.0-43-generic in Ubuntu Noble container; stock Git 2.43.0. Published v0.5.0 x86_64 verified release archive. Owned XFS sparse loopback on ext4 backing /dev/sda1. Original v0.4 pins, counts, warmup, three pairs, concurrency one. Only unmeasured repositories after correcting repository-header parsing; original Workers starter data qualified unchanged, not repeated. No competing builds/tests."
+  ],
+  "cohorts": [
+    {
+      "repository": "twig",
+      "sourceCommit": "96c43950e4c0d8524de4ad53157c136eb222d39c",
+      "sourceTree": "efa8b786a16488976f20b96e63a2417d1ce7bf07",
+      "targetCommit": "96c43950e4c0d8524de4ad53157c136eb222d39c",
+      "targetTree": "efa8b786a16488976f20b96e63a2417d1ce7bf07",
+      "backend": "git",
+      "repeat": 0,
+      "trackedFiles": 45,
+      "logicalBytesPerWorktree": 388029,
+      "createWallMs": 269.78429,
+      "harnessCpuMsDuringCreate": 12.434999999999999,
+      "observerWallMs": 270.52666,
+      "createsPerSecond": 37.06665054514479,
+      "statusAndVerificationWallMs": 121.360478,
+      "succeeded": 10,
+      "failed": 0,
+      "verifiedFiles": 450,
+      "sourceUnchanged": true,
+      "privateWriteTested": true,
+      "warmupCleanupRecovered": false,
+      "privateWriteFileBytes": 114396,
+      "privateWriteOffset": 0,
+      "before": {
+        "allocatedBytes": 363311104,
+        "totalBytes": 17112760320,
+        "stable": true,
+        "observedAllocatedBytes": [
+          363311104,
+          363311104,
+          363311104
+        ]
+      },
+      "afterCreate": {
+        "allocatedBytes": 368947200,
+        "totalBytes": 17112760320,
+        "stable": true,
+        "observedAllocatedBytes": [
+          368947200,
+          368947200,
+          368947200
+        ]
+      },
+      "afterStatus": {
+        "allocatedBytes": 368947200,
+        "totalBytes": 17112760320,
+        "stable": true,
+        "observedAllocatedBytes": [
+          368947200,
+          368947200,
+          368947200
+        ]
+      },
+      "afterPrivateWrites": {
+        "allocatedBytes": 368947200,
+        "totalBytes": 17112760320,
+        "stable": true,
+        "observedAllocatedBytes": [
+          368947200,
+          368947200,
+          368947200
+        ]
+      },
+      "growthAfterCreateBytes": 5636096,
+      "growthAfterStatusBytes": 5636096,
+      "privateWriteGrowthBytes": 0,
+      "operations": [
+        {
+          "worker": 0,
+          "createMs": 27.647676999999998,
+          "createStartedAtMs": 0.34758,
+          "createFinishedAtMs": 27.995818,
+          "firstStatusMs": 9.218902,
+          "exitCode": 0,
+          "nativeCow": false,
+          "verifiedClones": null,
+          "gitWrittenPaths": null,
+          "verified": true,
+          "error": null
+        },
+        {
+          "worker": 1,
+          "createMs": 27.756965,
+          "createStartedAtMs": 28.062435,
+          "createFinishedAtMs": 55.819911,
+          "firstStatusMs": 7.977886,
+          "exitCode": 0,
+          "nativeCow": false,
+          "verifiedClones": null,
+          "gitWrittenPaths": null,
+          "verified": true,
+          "error": null
+        },
+        {
+          "worker": 2,
+          "createMs": 25.980492,
+          "createStartedAtMs": 55.875567000000004,
+          "createFinishedAtMs": 81.85658,
+          "firstStatusMs": 7.798505,
+          "exitCode": 0,
+          "nativeCow": false,
+          "verifiedClones": null,
+          "gitWrittenPaths": null,
+          "verified": true,
+          "error": null
+        },
+        {
+          "worker": 3,
+          "createMs": 25.859874,
+          "createStartedAtMs": 81.907226,
+          "createFinishedAtMs": 107.76746,
+          "firstStatusMs": 7.52185,
+          "exitCode": 0,
+          "nativeCow": false,
+          "verifiedClones": null,
+          "gitWrittenPaths": null,
+          "verified": true,
+          "error": null
+        },
+        {
+          "worker": 4,
+          "createMs": 26.436958999999998,
+          "createStartedAtMs": 107.823427,
+          "createFinishedAtMs": 134.260726,
+          "firstStatusMs": 7.705508,
+          "exitCode": 0,
+          "nativeCow": false,
+          "verifiedClones": null,
+          "gitWrittenPaths": null,
+          "verified": true,
+          "error": null
+        },
+        {
+          "worker": 5,
+          "createMs": 24.848644,
+          "createStartedAtMs": 134.314829,
+          "createFinishedAtMs": 159.163803,
+          "firstStatusMs": 7.661715,
+          "exitCode": 0,
+          "nativeCow": false,
+          "verifiedClones": null,
+          "gitWrittenPaths": null,
+          "verified": true,
+          "error": null
+        },
+        {
+          "worker": 6,
+          "createMs": 29.338748000000002,
+          "createStartedAtMs": 159.22836600000002,
+          "createFinishedAtMs": 188.567595,
+          "firstStatusMs": 7.617762,
+          "exitCode": 0,
+          "nativeCow": false,
+          "verifiedClones": null,
+          "gitWrittenPaths": null,
+          "verified": true,
+          "error": null
+        },
+        {
+          "worker": 7,
+          "createMs": 26.527441,
+          "createStartedAtMs": 188.61967399999997,
+          "createFinishedAtMs": 215.147646,
+          "firstStatusMs": 7.5468269999999995,
+          "exitCode": 0,
+          "nativeCow": false,
+          "verifiedClones": null,
+          "gitWrittenPaths": null,
+          "verified": true,
+          "error": null
+        },
+        {
+          "worker": 8,
+          "createMs": 27.409426,
+          "createStartedAtMs": 215.20277,
+          "createFinishedAtMs": 242.612516,
+          "firstStatusMs": 7.61151,
+          "exitCode": 0,
+          "nativeCow": false,
+          "verifiedClones": null,
+          "gitWrittenPaths": null,
+          "verified": true,
+          "error": null
+        },
+        {
+          "worker": 9,
+          "createMs": 27.123412,
+          "createStartedAtMs": 242.66056799999998,
+          "createFinishedAtMs": 269.78429,
+          "firstStatusMs": 7.5589200000000005,
+          "exitCode": 0,
+          "nativeCow": false,
+          "verifiedClones": null,
+          "gitWrittenPaths": null,
+          "verified": true,
+          "error": null
+        }
+      ]
+    },
+    {
+      "repository": "twig",
+      "sourceCommit": "96c43950e4c0d8524de4ad53157c136eb222d39c",
+      "sourceTree": "efa8b786a16488976f20b96e63a2417d1ce7bf07",
+      "targetCommit": "96c43950e4c0d8524de4ad53157c136eb222d39c",
+      "targetTree": "efa8b786a16488976f20b96e63a2417d1ce7bf07",
+      "backend": "twig",
+      "repeat": 0,
+      "trackedFiles": 45,
+      "logicalBytesPerWorktree": 388029,
+      "createWallMs": 999.5863459999999,
+      "harnessCpuMsDuringCreate": 12.567,
+      "observerWallMs": 1000.421211,
+      "createsPerSecond": 10.004138251804413,
+      "statusAndVerificationWallMs": 110.916303,
+      "succeeded": 10,
+      "failed": 0,
+      "verifiedFiles": 450,
+      "sourceUnchanged": true,
+      "privateWriteTested": true,
+      "warmupCleanupRecovered": false,
+      "privateWriteFileBytes": 114396,
+      "privateWriteOffset": 0,
+      "before": {
+        "allocatedBytes": 362889216,
+        "totalBytes": 17112760320,
+        "stable": true,
+        "observedAllocatedBytes": [
+          362889216,
+          362889216,
+          362889216
+        ]
+      },
+      "afterCreate": {
+        "allocatedBytes": 363552768,
+        "totalBytes": 17112760320,
+        "stable": true,
+        "observedAllocatedBytes": [
+          363552768,
+          363552768,
+          363552768
+        ]
+      },
+      "afterStatus": {
+        "allocatedBytes": 363552768,
+        "totalBytes": 17112760320,
+        "stable": true,
+        "observedAllocatedBytes": [
+          363552768,
+          363552768,
+          363552768
+        ]
+      },
+      "afterPrivateWrites": {
+        "allocatedBytes": 364699648,
+        "totalBytes": 17112760320,
+        "stable": true,
+        "observedAllocatedBytes": [
+          364699648,
+          364699648,
+          364699648
+        ]
+      },
+      "growthAfterCreateBytes": 663552,
+      "growthAfterStatusBytes": 663552,
+      "privateWriteGrowthBytes": 1146880,
+      "operations": [
+        {
+          "worker": 0,
+          "createMs": 99.21335400000001,
+          "createStartedAtMs": 0.219937,
+          "createFinishedAtMs": 99.433792,
+          "firstStatusMs": 9.432848,
+          "exitCode": 0,
+          "nativeCow": true,
+          "verifiedClones": 45,
+          "gitWrittenPaths": 0,
+          "verified": true,
+          "error": null
+        },
+        {
+          "worker": 1,
+          "createMs": 99.518834,
+          "createStartedAtMs": 99.49825399999999,
+          "createFinishedAtMs": 199.017559,
+          "firstStatusMs": 7.585191,
+          "exitCode": 0,
+          "nativeCow": true,
+          "verifiedClones": 45,
+          "gitWrittenPaths": 0,
+          "verified": true,
+          "error": null
+        },
+        {
+          "worker": 2,
+          "createMs": 94.837957,
+          "createStartedAtMs": 199.072463,
+          "createFinishedAtMs": 293.91087100000004,
+          "firstStatusMs": 7.761756,
+          "exitCode": 0,
+          "nativeCow": true,
+          "verifiedClones": 45,
+          "gitWrittenPaths": 0,
+          "verified": true,
+          "error": null
+        },
+        {
+          "worker": 3,
+          "createMs": 102.57217,
+          "createStartedAtMs": 293.958802,
+          "createFinishedAtMs": 396.531453,
+          "firstStatusMs": 7.563549,
+          "exitCode": 0,
+          "nativeCow": true,
+          "verifiedClones": 45,
+          "gitWrittenPaths": 0,
+          "verified": true,
+          "error": null
+        },
+        {
+          "worker": 4,
+          "createMs": 103.192939,
+          "createStartedAtMs": 396.589263,
+          "createFinishedAtMs": 499.782673,
+          "firstStatusMs": 7.809856,
+          "exitCode": 0,
+          "nativeCow": true,
+          "verifiedClones": 45,
+          "gitWrittenPaths": 0,
+          "verified": true,
+          "error": null
+        },
+        {
+          "worker": 5,
+          "createMs": 97.54159,
+          "createStartedAtMs": 499.838929,
+          "createFinishedAtMs": 597.38099,
+          "firstStatusMs": 7.537019,
+          "exitCode": 0,
+          "nativeCow": true,
+          "verifiedClones": 45,
+          "gitWrittenPaths": 0,
+          "verified": true,
+          "error": null
+        },
+        {
+          "worker": 6,
+          "createMs": 99.18141399999999,
+          "createStartedAtMs": 597.433319,
+          "createFinishedAtMs": 696.615234,
+          "firstStatusMs": 7.618504,
+          "exitCode": 0,
+          "nativeCow": true,
+          "verifiedClones": 45,
+          "gitWrittenPaths": 0,
+          "verified": true,
+          "error": null
+        },
+        {
+          "worker": 7,
+          "createMs": 102.320653,
+          "createStartedAtMs": 696.680237,
+          "createFinishedAtMs": 799.001331,
+          "firstStatusMs": 6.9117120000000005,
+          "exitCode": 0,
+          "nativeCow": true,
+          "verifiedClones": 45,
+          "gitWrittenPaths": 0,
+          "verified": true,
+          "error": null
+        },
+        {
+          "worker": 8,
+          "createMs": 101.005206,
+          "createStartedAtMs": 799.044372,
+          "createFinishedAtMs": 900.050019,
+          "firstStatusMs": 4.220232,
+          "exitCode": 0,
+          "nativeCow": true,
+          "verifiedClones": 45,
+          "gitWrittenPaths": 0,
+          "verified": true,
+          "error": null
+        },
+        {
+          "worker": 9,
+          "createMs": 99.493917,
+          "createStartedAtMs": 900.091928,
+          "createFinishedAtMs": 999.5863459999999,
+          "firstStatusMs": 4.354447,
+          "exitCode": 0,
+          "nativeCow": true,
+          "verifiedClones": 45,
+          "gitWrittenPaths": 0,
+          "verified": true,
+          "error": null
+        }
+      ]
+    },
+    {
+      "repository": "twig",
+      "sourceCommit": "96c43950e4c0d8524de4ad53157c136eb222d39c",
+      "sourceTree": "efa8b786a16488976f20b96e63a2417d1ce7bf07",
+      "targetCommit": "96c43950e4c0d8524de4ad53157c136eb222d39c",
+      "targetTree": "efa8b786a16488976f20b96e63a2417d1ce7bf07",
+      "backend": "twig",
+      "repeat": 1,
+      "trackedFiles": 45,
+      "logicalBytesPerWorktree": 388029,
+      "createWallMs": 995.5071250000001,
+      "harnessCpuMsDuringCreate": 14.471000000000004,
+      "observerWallMs": 996.308816,
+      "createsPerSecond": 10.045131520279174,
+      "statusAndVerificationWallMs": 124.199693,
+      "succeeded": 10,
+      "failed": 0,
+      "verifiedFiles": 450,
+      "sourceUnchanged": true,
+      "privateWriteTested": true,
+      "warmupCleanupRecovered": false,
+      "privateWriteFileBytes": 114396,
+      "privateWriteOffset": 0,
+      "before": {
+        "allocatedBytes": 362889216,
+        "totalBytes": 17112760320,
+        "stable": true,
+        "observedAllocatedBytes": [
+          362889216,
+          362889216,
+          362889216
+        ]
+      },
+      "afterCreate": {
+        "allocatedBytes": 363552768,
+        "totalBytes": 17112760320,
+        "stable": true,
+        "observedAllocatedBytes": [
+          363552768,
+          363552768,
+          363552768
+        ]
+      },
+      "afterStatus": {
+        "allocatedBytes": 363552768,
+        "totalBytes": 17112760320,
+        "stable": true,
+        "observedAllocatedBytes": [
+          363552768,
+          363552768,
+          363552768
+        ]
+      },
+      "afterPrivateWrites": {
+        "allocatedBytes": 364699648,
+        "totalBytes": 17112760320,
+        "stable": true,
+        "observedAllocatedBytes": [
+          364699648,
+          364699648,
+          364699648
+        ]
+      },
+      "growthAfterCreateBytes": 663552,
+      "growthAfterStatusBytes": 663552,
+      "privateWriteGrowthBytes": 1146880,
+      "operations": [
+        {
+          "worker": 0,
+          "createMs": 97.416684,
+          "createStartedAtMs": 0.244945,
+          "createFinishedAtMs": 97.66218,
+          "firstStatusMs": 9.193735,
+          "exitCode": 0,
+          "nativeCow": true,
+          "verifiedClones": 45,
+          "gitWrittenPaths": 0,
+          "verified": true,
+          "error": null
+        },
+        {
+          "worker": 1,
+          "createMs": 96.819361,
+          "createStartedAtMs": 97.730099,
+          "createFinishedAtMs": 194.549961,
+          "firstStatusMs": 7.771464,
+          "exitCode": 0,
+          "nativeCow": true,
+          "verifiedClones": 45,
+          "gitWrittenPaths": 0,
+          "verified": true,
+          "error": null
+        },
+        {
+          "worker": 2,
+          "createMs": 101.553028,
+          "createStartedAtMs": 194.610436,
+          "createFinishedAtMs": 296.163935,
+          "firstStatusMs": 7.629535,
+          "exitCode": 0,
+          "nativeCow": true,
+          "verifiedClones": 45,
+          "gitWrittenPaths": 0,
+          "verified": true,
+          "error": null
+        },
+        {
+          "worker": 3,
+          "createMs": 101.32094699999999,
+          "createStartedAtMs": 296.217497,
+          "createFinishedAtMs": 397.53886500000004,
+          "firstStatusMs": 8.261042999999999,
+          "exitCode": 0,
+          "nativeCow": true,
+          "verifiedClones": 45,
+          "gitWrittenPaths": 0,
+          "verified": true,
+          "error": null
+        },
+        {
+          "worker": 4,
+          "createMs": 97.257783,
+          "createStartedAtMs": 397.584782,
+          "createFinishedAtMs": 494.843066,
+          "firstStatusMs": 7.846897,
+          "exitCode": 0,
+          "nativeCow": true,
+          "verifiedClones": 45,
+          "gitWrittenPaths": 0,
+          "verified": true,
+          "error": null
+        },
+        {
+          "worker": 5,
+          "createMs": 98.14742199999999,
+          "createStartedAtMs": 494.902369,
+          "createFinishedAtMs": 593.050382,
+          "firstStatusMs": 7.727571,
+          "exitCode": 0,
+          "nativeCow": true,
+          "verifiedClones": 45,
+          "gitWrittenPaths": 0,
+          "verified": true,
+          "error": null
+        },
+        {
+          "worker": 6,
+          "createMs": 98.043535,
+          "createStartedAtMs": 593.113983,
+          "createFinishedAtMs": 691.1579690000001,
+          "firstStatusMs": 7.885079999999999,
+          "exitCode": 0,
+          "nativeCow": true,
+          "verifiedClones": 45,
+          "gitWrittenPaths": 0,
+          "verified": true,
+          "error": null
+        },
+        {
+          "worker": 7,
+          "createMs": 98.538856,
+          "createStartedAtMs": 691.214296,
+          "createFinishedAtMs": 789.753763,
+          "firstStatusMs": 7.751496,
+          "exitCode": 0,
+          "nativeCow": true,
+          "verifiedClones": 45,
+          "gitWrittenPaths": 0,
+          "verified": true,
+          "error": null
+        },
+        {
+          "worker": 8,
+          "createMs": 102.56553,
+          "createStartedAtMs": 789.809769,
+          "createFinishedAtMs": 892.37578,
+          "firstStatusMs": 7.982655,
+          "exitCode": 0,
+          "nativeCow": true,
+          "verifiedClones": 45,
+          "gitWrittenPaths": 0,
+          "verified": true,
+          "error": null
+        },
+        {
+          "worker": 9,
+          "createMs": 103.073184,
+          "createStartedAtMs": 892.4334200000001,
+          "createFinishedAtMs": 995.5071250000001,
+          "firstStatusMs": 7.766545,
+          "exitCode": 0,
+          "nativeCow": true,
+          "verifiedClones": 45,
+          "gitWrittenPaths": 0,
+          "verified": true,
+          "error": null
+        }
+      ]
+    },
+    {
+      "repository": "twig",
+      "sourceCommit": "96c43950e4c0d8524de4ad53157c136eb222d39c",
+      "sourceTree": "efa8b786a16488976f20b96e63a2417d1ce7bf07",
+      "targetCommit": "96c43950e4c0d8524de4ad53157c136eb222d39c",
+      "targetTree": "efa8b786a16488976f20b96e63a2417d1ce7bf07",
+      "backend": "git",
+      "repeat": 1,
+      "trackedFiles": 45,
+      "logicalBytesPerWorktree": 388029,
+      "createWallMs": 262.915501,
+      "harnessCpuMsDuringCreate": 12.662999999999982,
+      "observerWallMs": 263.696373,
+      "createsPerSecond": 38.03503392521539,
+      "statusAndVerificationWallMs": 123.752697,
+      "succeeded": 10,
+      "failed": 0,
+      "verifiedFiles": 450,
+      "sourceUnchanged": true,
+      "privateWriteTested": true,
+      "warmupCleanupRecovered": false,
+      "privateWriteFileBytes": 114396,
+      "privateWriteOffset": 0,
+      "before": {
+        "allocatedBytes": 363311104,
+        "totalBytes": 17112760320,
+        "stable": true,
+        "observedAllocatedBytes": [
+          363311104,
+          363311104,
+          363311104
+        ]
+      },
+      "afterCreate": {
+        "allocatedBytes": 368947200,
+        "totalBytes": 17112760320,
+        "stable": true,
+        "observedAllocatedBytes": [
+          368947200,
+          368947200,
+          368947200
+        ]
+      },
+      "afterStatus": {
+        "allocatedBytes": 368947200,
+        "totalBytes": 17112760320,
+        "stable": true,
+        "observedAllocatedBytes": [
+          368947200,
+          368947200,
+          368947200
+        ]
+      },
+      "afterPrivateWrites": {
+        "allocatedBytes": 368947200,
+        "totalBytes": 17112760320,
+        "stable": true,
+        "observedAllocatedBytes": [
+          368947200,
+          368947200,
+          368947200
+        ]
+      },
+      "growthAfterCreateBytes": 5636096,
+      "growthAfterStatusBytes": 5636096,
+      "privateWriteGrowthBytes": 0,
+      "operations": [
+        {
+          "worker": 0,
+          "createMs": 28.710037,
+          "createStartedAtMs": 0.25469400000000003,
+          "createFinishedAtMs": 28.965292,
+          "firstStatusMs": 9.282533,
+          "exitCode": 0,
+          "nativeCow": false,
+          "verifiedClones": null,
+          "gitWrittenPaths": null,
+          "verified": true,
+          "error": null
+        },
+        {
+          "worker": 1,
+          "createMs": 24.875897000000002,
+          "createStartedAtMs": 29.024424,
+          "createFinishedAtMs": 53.900562,
+          "firstStatusMs": 7.947799,
+          "exitCode": 0,
+          "nativeCow": false,
+          "verifiedClones": null,
+          "gitWrittenPaths": null,
+          "verified": true,
+          "error": null
+        },
+        {
+          "worker": 2,
+          "createMs": 17.015494,
+          "createStartedAtMs": 53.936941000000004,
+          "createFinishedAtMs": 70.952816,
+          "firstStatusMs": 7.782906,
+          "exitCode": 0,
+          "nativeCow": false,
+          "verifiedClones": null,
+          "gitWrittenPaths": null,
+          "verified": true,
+          "error": null
+        },
+        {
+          "worker": 3,
+          "createMs": 25.777358,
+          "createStartedAtMs": 71.000176,
+          "createFinishedAtMs": 96.778125,
+          "firstStatusMs": 7.629345,
+          "exitCode": 0,
+          "nativeCow": false,
+          "verifiedClones": null,
+          "gitWrittenPaths": null,
+          "verified": true,
+          "error": null
+        },
+        {
+          "worker": 4,
+          "createMs": 28.350564000000002,
+          "createStartedAtMs": 96.83775899999999,
+          "createFinishedAtMs": 125.18870400000002,
+          "firstStatusMs": 8.046276,
+          "exitCode": 0,
+          "nativeCow": false,
+          "verifiedClones": null,
+          "gitWrittenPaths": null,
+          "verified": true,
+          "error": null
+        },
+        {
+          "worker": 5,
+          "createMs": 28.958378,
+          "createStartedAtMs": 125.246263,
+          "createFinishedAtMs": 154.205152,
+          "firstStatusMs": 7.894407000000001,
+          "exitCode": 0,
+          "nativeCow": false,
+          "verifiedClones": null,
+          "gitWrittenPaths": null,
+          "verified": true,
+          "error": null
+        },
+        {
+          "worker": 6,
+          "createMs": 26.676476,
+          "createStartedAtMs": 154.259986,
+          "createFinishedAtMs": 180.93696300000002,
+          "firstStatusMs": 7.638201,
+          "exitCode": 0,
+          "nativeCow": false,
+          "verifiedClones": null,
+          "gitWrittenPaths": null,
+          "verified": true,
+          "error": null
+        },
+        {
+          "worker": 7,
+          "createMs": 27.056928,
+          "createStartedAtMs": 180.990635,
+          "createFinishedAtMs": 208.04807399999999,
+          "firstStatusMs": 7.661907,
+          "exitCode": 0,
+          "nativeCow": false,
+          "verifiedClones": null,
+          "gitWrittenPaths": null,
+          "verified": true,
+          "error": null
+        },
+        {
+          "worker": 8,
+          "createMs": 27.330177,
+          "createStartedAtMs": 208.112085,
+          "createFinishedAtMs": 235.442743,
+          "firstStatusMs": 7.582936,
+          "exitCode": 0,
+          "nativeCow": false,
+          "verifiedClones": null,
+          "gitWrittenPaths": null,
+          "verified": true,
+          "error": null
+        },
+        {
+          "worker": 9,
+          "createMs": 27.424115999999998,
+          "createStartedAtMs": 235.490904,
+          "createFinishedAtMs": 262.915501,
+          "firstStatusMs": 7.696543,
+          "exitCode": 0,
+          "nativeCow": false,
+          "verifiedClones": null,
+          "gitWrittenPaths": null,
+          "verified": true,
+          "error": null
+        }
+      ]
+    },
+    {
+      "repository": "twig",
+      "sourceCommit": "96c43950e4c0d8524de4ad53157c136eb222d39c",
+      "sourceTree": "efa8b786a16488976f20b96e63a2417d1ce7bf07",
+      "targetCommit": "96c43950e4c0d8524de4ad53157c136eb222d39c",
+      "targetTree": "efa8b786a16488976f20b96e63a2417d1ce7bf07",
+      "backend": "git",
+      "repeat": 2,
+      "trackedFiles": 45,
+      "logicalBytesPerWorktree": 388029,
+      "createWallMs": 268.276453,
+      "harnessCpuMsDuringCreate": 13.239000000000004,
+      "observerWallMs": 269.089406,
+      "createsPerSecond": 37.27498216177772,
+      "statusAndVerificationWallMs": 120.886237,
+      "succeeded": 10,
+      "failed": 0,
+      "verifiedFiles": 450,
+      "sourceUnchanged": true,
+      "privateWriteTested": true,
+      "warmupCleanupRecovered": false,
+      "privateWriteFileBytes": 114396,
+      "privateWriteOffset": 0,
+      "before": {
+        "allocatedBytes": 363311104,
+        "totalBytes": 17112760320,
+        "stable": true,
+        "observedAllocatedBytes": [
+          363311104,
+          363311104,
+          363311104
+        ]
+      },
+      "afterCreate": {
+        "allocatedBytes": 368947200,
+        "totalBytes": 17112760320,
+        "stable": true,
+        "observedAllocatedBytes": [
+          368947200,
+          368947200,
+          368947200
+        ]
+      },
+      "afterStatus": {
+        "allocatedBytes": 368947200,
+        "totalBytes": 17112760320,
+        "stable": true,
+        "observedAllocatedBytes": [
+          368947200,
+          368947200,
+          368947200
+        ]
+      },
+      "afterPrivateWrites": {
+        "allocatedBytes": 368947200,
+        "totalBytes": 17112760320,
+        "stable": true,
+        "observedAllocatedBytes": [
+          368947200,
+          368947200,
+          368947200
+        ]
+      },
+      "growthAfterCreateBytes": 5636096,
+      "growthAfterStatusBytes": 5636096,
+      "privateWriteGrowthBytes": 0,
+      "operations": [
+        {
+          "worker": 0,
+          "createMs": 27.193357000000002,
+          "createStartedAtMs": 0.41322499999999995,
+          "createFinishedAtMs": 27.606903,
+          "firstStatusMs": 9.184657000000001,
+          "exitCode": 0,
+          "nativeCow": false,
+          "verifiedClones": null,
+          "gitWrittenPaths": null,
+          "verified": true,
+          "error": null
+        },
+        {
+          "worker": 1,
+          "createMs": 27.26306,
+          "createStartedAtMs": 27.661597,
+          "createFinishedAtMs": 54.925137,
+          "firstStatusMs": 7.963639,
+          "exitCode": 0,
+          "nativeCow": false,
+          "verifiedClones": null,
+          "gitWrittenPaths": null,
+          "verified": true,
+          "error": null
+        },
+        {
+          "worker": 2,
+          "createMs": 26.206042999999998,
+          "createStartedAtMs": 54.973670000000006,
+          "createFinishedAtMs": 81.18049400000001,
+          "firstStatusMs": 7.781944,
+          "exitCode": 0,
+          "nativeCow": false,
+          "verifiedClones": null,
+          "gitWrittenPaths": null,
+          "verified": true,
+          "error": null
+        },
+        {
+          "worker": 3,
+          "createMs": 26.007737,
+          "createStartedAtMs": 81.277799,
+          "createFinishedAtMs": 107.28589600000001,
+          "firstStatusMs": 7.632441,
+          "exitCode": 0,
+          "nativeCow": false,
+          "verifiedClones": null,
+          "gitWrittenPaths": null,
+          "verified": true,
+          "error": null
+        },
+        {
+          "worker": 4,
+          "createMs": 26.482637999999998,
+          "createStartedAtMs": 107.342394,
+          "createFinishedAtMs": 133.825753,
+          "firstStatusMs": 7.561535999999999,
+          "exitCode": 0,
+          "nativeCow": false,
+          "verifiedClones": null,
+          "gitWrittenPaths": null,
+          "verified": true,
+          "error": null
+        },
+        {
+          "worker": 5,
+          "createMs": 26.509870000000003,
+          "createStartedAtMs": 133.877612,
+          "createFinishedAtMs": 160.388003,
+          "firstStatusMs": 7.672886999999999,
+          "exitCode": 0,
+          "nativeCow": false,
+          "verifiedClones": null,
+          "gitWrittenPaths": null,
+          "verified": true,
+          "error": null
+        },
+        {
+          "worker": 6,
+          "createMs": 27.204128,
+          "createStartedAtMs": 160.441915,
+          "createFinishedAtMs": 187.646393,
+          "firstStatusMs": 7.539104,
+          "exitCode": 0,
+          "nativeCow": false,
+          "verifiedClones": null,
+          "gitWrittenPaths": null,
+          "verified": true,
+          "error": null
+        },
+        {
+          "worker": 7,
+          "createMs": 26.672529,
+          "createStartedAtMs": 187.702911,
+          "createFinishedAtMs": 214.37579000000002,
+          "firstStatusMs": 7.671335,
+          "exitCode": 0,
+          "nativeCow": false,
+          "verifiedClones": null,
+          "gitWrittenPaths": null,
+          "verified": true,
+          "error": null
+        },
+        {
+          "worker": 8,
+          "createMs": 27.208455999999998,
+          "createStartedAtMs": 214.430705,
+          "createFinishedAtMs": 241.63964199999998,
+          "firstStatusMs": 7.5202469999999995,
+          "exitCode": 0,
+          "nativeCow": false,
+          "verifiedClones": null,
+          "gitWrittenPaths": null,
+          "verified": true,
+          "error": null
+        },
+        {
+          "worker": 9,
+          "createMs": 26.580534,
+          "createStartedAtMs": 241.69543800000002,
+          "createFinishedAtMs": 268.276453,
+          "firstStatusMs": 6.844855000000001,
+          "exitCode": 0,
+          "nativeCow": false,
+          "verifiedClones": null,
+          "gitWrittenPaths": null,
+          "verified": true,
+          "error": null
+        }
+      ]
+    },
+    {
+      "repository": "twig",
+      "sourceCommit": "96c43950e4c0d8524de4ad53157c136eb222d39c",
+      "sourceTree": "efa8b786a16488976f20b96e63a2417d1ce7bf07",
+      "targetCommit": "96c43950e4c0d8524de4ad53157c136eb222d39c",
+      "targetTree": "efa8b786a16488976f20b96e63a2417d1ce7bf07",
+      "backend": "twig",
+      "repeat": 2,
+      "trackedFiles": 45,
+      "logicalBytesPerWorktree": 388029,
+      "createWallMs": 987.173055,
+      "harnessCpuMsDuringCreate": 13.381,
+      "observerWallMs": 987.98668,
+      "createsPerSecond": 10.12993613363971,
+      "statusAndVerificationWallMs": 104.883216,
+      "succeeded": 10,
+      "failed": 0,
+      "verifiedFiles": 450,
+      "sourceUnchanged": true,
+      "privateWriteTested": true,
+      "warmupCleanupRecovered": false,
+      "privateWriteFileBytes": 114396,
+      "privateWriteOffset": 0,
+      "before": {
+        "allocatedBytes": 362889216,
+        "totalBytes": 17112760320,
+        "stable": true,
+        "observedAllocatedBytes": [
+          362889216,
+          362889216,
+          362889216
+        ]
+      },
+      "afterCreate": {
+        "allocatedBytes": 363552768,
+        "totalBytes": 17112760320,
+        "stable": true,
+        "observedAllocatedBytes": [
+          363552768,
+          363552768,
+          363552768
+        ]
+      },
+      "afterStatus": {
+        "allocatedBytes": 363552768,
+        "totalBytes": 17112760320,
+        "stable": true,
+        "observedAllocatedBytes": [
+          363552768,
+          363552768,
+          363552768
+        ]
+      },
+      "afterPrivateWrites": {
+        "allocatedBytes": 364699648,
+        "totalBytes": 17112760320,
+        "stable": true,
+        "observedAllocatedBytes": [
+          364699648,
+          364699648,
+          364699648
+        ]
+      },
+      "growthAfterCreateBytes": 663552,
+      "growthAfterStatusBytes": 663552,
+      "privateWriteGrowthBytes": 1146880,
+      "operations": [
+        {
+          "worker": 0,
+          "createMs": 104.782093,
+          "createStartedAtMs": 0.25074599999999997,
+          "createFinishedAtMs": 105.03328,
+          "firstStatusMs": 8.927349,
+          "exitCode": 0,
+          "nativeCow": true,
+          "verifiedClones": 45,
+          "gitWrittenPaths": 0,
+          "verified": true,
+          "error": null
+        },
+        {
+          "worker": 1,
+          "createMs": 102.406464,
+          "createStartedAtMs": 105.08906599999999,
+          "createFinishedAtMs": 207.496021,
+          "firstStatusMs": 7.660484,
+          "exitCode": 0,
+          "nativeCow": true,
+          "verifiedClones": 45,
+          "gitWrittenPaths": 0,
+          "verified": true,
+          "error": null
+        },
+        {
+          "worker": 2,
+          "createMs": 95.35533699999999,
+          "createStartedAtMs": 207.555854,
+          "createFinishedAtMs": 302.911441,
+          "firstStatusMs": 7.617232,
+          "exitCode": 0,
+          "nativeCow": true,
+          "verifiedClones": 45,
+          "gitWrittenPaths": 0,
+          "verified": true,
+          "error": null
+        },
+        {
+          "worker": 3,
+          "createMs": 95.502606,
+          "createStartedAtMs": 302.950926,
+          "createFinishedAtMs": 398.454023,
+          "firstStatusMs": 7.513154,
+          "exitCode": 0,
+          "nativeCow": true,
+          "verifiedClones": 45,
+          "gitWrittenPaths": 0,
+          "verified": true,
+          "error": null
+        },
+        {
+          "worker": 4,
+          "createMs": 95.813496,
+          "createStartedAtMs": 398.513206,
+          "createFinishedAtMs": 494.32748399999997,
+          "firstStatusMs": 7.572136,
+          "exitCode": 0,
+          "nativeCow": true,
+          "verifiedClones": 45,
+          "gitWrittenPaths": 0,
+          "verified": true,
+          "error": null
+        },
+        {
+          "worker": 5,
+          "createMs": 99.230154,
+          "createStartedAtMs": 494.368361,
+          "createFinishedAtMs": 593.598975,
+          "firstStatusMs": 7.656146,
+          "exitCode": 0,
+          "nativeCow": true,
+          "verifiedClones": 45,
+          "gitWrittenPaths": 0,
+          "verified": true,
+          "error": null
+        },
+        {
+          "worker": 6,
+          "createMs": 96.37772799999999,
+          "createStartedAtMs": 593.654501,
+          "createFinishedAtMs": 690.03273,
+          "firstStatusMs": 6.856667000000001,
+          "exitCode": 0,
+          "nativeCow": true,
+          "verifiedClones": 45,
+          "gitWrittenPaths": 0,
+          "verified": true,
+          "error": null
+        },
+        {
+          "worker": 7,
+          "createMs": 104.50901499999999,
+          "createStartedAtMs": 690.1001180000001,
+          "createFinishedAtMs": 794.609644,
+          "firstStatusMs": 4.5588049999999996,
+          "exitCode": 0,
+          "nativeCow": true,
+          "verifiedClones": 45,
+          "gitWrittenPaths": 0,
+          "verified": true,
+          "error": null
+        },
+        {
+          "worker": 8,
+          "createMs": 98.683646,
+          "createStartedAtMs": 794.6693270000001,
+          "createFinishedAtMs": 893.353404,
+          "firstStatusMs": 4.254277,
+          "exitCode": 0,
+          "nativeCow": true,
+          "verifiedClones": 45,
+          "gitWrittenPaths": 0,
+          "verified": true,
+          "error": null
+        },
+        {
+          "worker": 9,
+          "createMs": 93.77167,
+          "createStartedAtMs": 893.400674,
+          "createFinishedAtMs": 987.173055,
+          "firstStatusMs": 4.216004,
+          "exitCode": 0,
+          "nativeCow": true,
+          "verifiedClones": 45,
+          "gitWrittenPaths": 0,
+          "verified": true,
+          "error": null
+        }
+      ]
+    }
+  ],
+  "failures": []
+}

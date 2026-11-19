@@ -1,0 +1,9 @@
+{
+  "sourceCommit": "7ead6c970cff621938de9b99f4fa0b451ad3302b",
+  "sourceDirty": false,
+  "candidateUnchanged": true,
+  "oldSamplingBudgetSeconds": 3,
+  "newSamplingBudgetSeconds": 60,
+  "intervalMs": 250,
+  "identicalConsecutiveReadings": 3
+}

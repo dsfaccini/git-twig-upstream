@@ -1,0 +1,29 @@
+{
+  "schemaVersion": 1,
+  "kind": "first-stable-complete-paired-jobs",
+  "candidateSha256": "63853935620fef55977053e7de6671bbcf17da839f36dd426348c126910cda97",
+  "source": "c4d3d4e8fc4738f083f3aa2dab2b299f507aa9f2",
+  "budgetSeconds": 21600,
+  "maximumAttemptsPerRepository": 3,
+  "minimumFreeGiB": 128,
+  "maximumGrowthGiB": 160,
+  "status": "running",
+  "attempts": [],
+  "accepted": [],
+  "error": null,
+  "config": {
+    "schemaVersion": 1,
+    "lab": "/home/leostera/Developer/github.com/leostera/git-twig/bench-v05-real/target/v05-stable-c4d3d4e-v2",
+    "inputs": "/home/leostera/Developer/github.com/leostera/git-twig/bench-v05-real/target/v05-stable-c4d3d4e/inputs.json",
+    "candidate": "/home/leostera/Developer/github.com/leostera/git-twig/bench-v05-real/target/v05-stable-c4d3d4e/bin/git-twig",
+    "binaryDir": "/home/leostera/Developer/github.com/leostera/git-twig/bench-v05-real/target/v05-stable-c4d3d4e/bin",
+    "sourceCommit": "c4d3d4e8fc4738f083f3aa2dab2b299f507aa9f2",
+    "targets": [
+      "linux-xfs",
+      "linux-btrfs"
+    ],
+    "environment": "Threadripper 2990WX; kernel 7.0.0-43-generic; Git 2.43.0; owned loopback images on ext4 /dev/sda1; no bare-device claim. Original v0.4 pins, published v0.5.0, serial paired three rounds with warmup. Long allocation settlement; first stable complete repository attempt, all attempts retained.",
+    "releaseCommit": "4d2622f77ea8bfecc1f3fd6f1930686648990bbd"
+  },
+  "driverSha256": "e3ff55d53bd204b64356f33e21593b9e135d2c72b2de76f60882c4b6d9c83c59"
+}

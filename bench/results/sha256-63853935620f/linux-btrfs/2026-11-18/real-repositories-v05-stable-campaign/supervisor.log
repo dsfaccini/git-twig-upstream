@@ -1,0 +1,74 @@
+attempt linux-xfs workers-starter 1
+results: /home/leostera/Developer/github.com/leostera/git-twig/bench-v05-real/bench/results/sha256-63853935620f/linux-xfs/2026-11-18/run-014355.630-451c4ccc-0aab-4300-ad59-1c6484c01945
+START linux-xfs workers-starter
+completed linux-xfs workers-starter
+completed /home/leostera/Developer/github.com/leostera/git-twig/bench-v05-real/bench/results/sha256-63853935620f/linux-xfs/2026-11-18/run-014355.630-451c4ccc-0aab-4300-ad59-1c6484c01945/manifest.json
+attempt linux-xfs twig 1
+results: /home/leostera/Developer/github.com/leostera/git-twig/bench-v05-real/bench/results/sha256-63853935620f/linux-xfs/2026-11-18/run-014830.174-92e0660a-7bd6-42da-a467-61dad3933217
+START linux-xfs twig
+completed linux-xfs twig
+completed /home/leostera/Developer/github.com/leostera/git-twig/bench-v05-real/bench/results/sha256-63853935620f/linux-xfs/2026-11-18/run-014830.174-92e0660a-7bd6-42da-a467-61dad3933217/manifest.json
+attempt linux-xfs axo 1
+results: /home/leostera/Developer/github.com/leostera/git-twig/bench-v05-real/bench/results/sha256-63853935620f/linux-xfs/2026-11-18/run-015421.267-0bd13e56-00c4-466d-94d6-5ed3cb320a78
+START linux-xfs axo
+completed linux-xfs axo
+completed /home/leostera/Developer/github.com/leostera/git-twig/bench-v05-real/bench/results/sha256-63853935620f/linux-xfs/2026-11-18/run-015421.267-0bd13e56-00c4-466d-94d6-5ed3cb320a78/manifest.json
+attempt linux-xfs openclaw 1
+results: /home/leostera/Developer/github.com/leostera/git-twig/bench-v05-real/bench/results/sha256-63853935620f/linux-xfs/2026-11-18/run-020108.806-3d7a3823-7339-4708-95f7-002fe3d05318
+START linux-xfs openclaw
+completed linux-xfs openclaw
+completed /home/leostera/Developer/github.com/leostera/git-twig/bench-v05-real/bench/results/sha256-63853935620f/linux-xfs/2026-11-18/run-020108.806-3d7a3823-7339-4708-95f7-002fe3d05318/manifest.json
+attempt linux-xfs pulumi 1
+results: /home/leostera/Developer/github.com/leostera/git-twig/bench-v05-real/bench/results/sha256-63853935620f/linux-xfs/2026-11-18/run-025112.535-2808437c-f286-4595-b8b6-3c9831a94014
+START linux-xfs pulumi
+completed linux-xfs pulumi
+completed /home/leostera/Developer/github.com/leostera/git-twig/bench-v05-real/bench/results/sha256-63853935620f/linux-xfs/2026-11-18/run-025112.535-2808437c-f286-4595-b8b6-3c9831a94014/manifest.json
+attempt linux-xfs linux 1
+results: /home/leostera/Developer/github.com/leostera/git-twig/bench-v05-real/bench/results/sha256-63853935620f/linux-xfs/2026-11-18/run-030416.007-58af415b-f842-4af3-8051-7d48a85fd5b7
+START linux-xfs linux
+completed linux-xfs linux
+completed /home/leostera/Developer/github.com/leostera/git-twig/bench-v05-real/bench/results/sha256-63853935620f/linux-xfs/2026-11-18/run-030416.007-58af415b-f842-4af3-8051-7d48a85fd5b7/manifest.json
+attempt linux-btrfs workers-starter 1
+results: /home/leostera/Developer/github.com/leostera/git-twig/bench-v05-real/bench/results/sha256-63853935620f/linux-btrfs/2026-11-18/run-035859.039-077fdc19-13fc-4996-b743-6b2d3878d086
+START linux-btrfs workers-starter
+completed linux-btrfs workers-starter
+completed /home/leostera/Developer/github.com/leostera/git-twig/bench-v05-real/bench/results/sha256-63853935620f/linux-btrfs/2026-11-18/run-035859.039-077fdc19-13fc-4996-b743-6b2d3878d086/manifest.json
+attempt linux-btrfs twig 1
+results: /home/leostera/Developer/github.com/leostera/git-twig/bench-v05-real/bench/results/sha256-63853935620f/linux-btrfs/2026-11-18/run-040348.326-d7b1c71f-0a15-43e5-af16-aac2027dd5c4
+START linux-btrfs twig
+completed linux-btrfs twig
+completed /home/leostera/Developer/github.com/leostera/git-twig/bench-v05-real/bench/results/sha256-63853935620f/linux-btrfs/2026-11-18/run-040348.326-d7b1c71f-0a15-43e5-af16-aac2027dd5c4/manifest.json
+attempt linux-btrfs axo 1
+results: /home/leostera/Developer/github.com/leostera/git-twig/bench-v05-real/bench/results/sha256-63853935620f/linux-btrfs/2026-11-18/run-040806.200-a7ead3d5-07c0-45cd-beb5-8945aa26f848
+START linux-btrfs axo
+completed linux-btrfs axo
+completed /home/leostera/Developer/github.com/leostera/git-twig/bench-v05-real/bench/results/sha256-63853935620f/linux-btrfs/2026-11-18/run-040806.200-a7ead3d5-07c0-45cd-beb5-8945aa26f848/manifest.json
+attempt linux-btrfs openclaw 1
+results: /home/leostera/Developer/github.com/leostera/git-twig/bench-v05-real/bench/results/sha256-63853935620f/linux-btrfs/2026-11-18/run-041230.487-8091c835-b2dd-45d5-bb6e-99ab9a2840e3
+START linux-btrfs openclaw
+completed linux-btrfs openclaw
+completed /home/leostera/Developer/github.com/leostera/git-twig/bench-v05-real/bench/results/sha256-63853935620f/linux-btrfs/2026-11-18/run-041230.487-8091c835-b2dd-45d5-bb6e-99ab9a2840e3/manifest.json
+attempt linux-btrfs pulumi 1
+results: /home/leostera/Developer/github.com/leostera/git-twig/bench-v05-real/bench/results/sha256-63853935620f/linux-btrfs/2026-11-18/run-042337.716-d88d9d95-cfd8-46aa-b9ff-db26e384376e
+START linux-btrfs pulumi
+completed linux-btrfs pulumi
+completed /home/leostera/Developer/github.com/leostera/git-twig/bench-v05-real/bench/results/sha256-63853935620f/linux-btrfs/2026-11-18/run-042337.716-d88d9d95-cfd8-46aa-b9ff-db26e384376e/manifest.json
+attempt linux-btrfs linux 1
+results: /home/leostera/Developer/github.com/leostera/git-twig/bench-v05-real/bench/results/sha256-63853935620f/linux-btrfs/2026-11-18/run-043157.180-ba1c32b3-146f-4825-804b-8ec1aeab4e68
+START linux-btrfs linux
+completed linux-btrfs linux
+completed /home/leostera/Developer/github.com/leostera/git-twig/bench-v05-real/bench/results/sha256-63853935620f/linux-btrfs/2026-11-18/run-043157.180-ba1c32b3-146f-4825-804b-8ec1aeab4e68/manifest.json
+failed /home/leostera/Developer/github.com/leostera/git-twig/bench-v05-real/target/v05-stable-c4d3d4e-v2/stable-state.json
+19 | }
+20 | export function invariant(
+21 |   condition: unknown,
+22 |   message: string,
+23 | ): asserts condition {
+24 |   if (!condition) throw new Error(message);
+                                 ^
+error: Platform-wide disk guard
+      at invariant (/home/leostera/Developer/github.com/leostera/git-twig/bench-v05-real/bench/lib/results.ts:24:29)
+      at <anonymous> (/home/leostera/Developer/github.com/leostera/git-twig/bench-v05-real/bench/real-stable.ts:100:5)
+      at async stableCampaign (/home/leostera/Developer/github.com/leostera/git-twig/bench-v05-real/bench/real-stable.ts:180:17)
+
+Bun v1.4.4 (Linux x64)

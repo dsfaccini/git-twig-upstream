@@ -48,6 +48,49 @@ private, never hardlinked to source. Staging lives under the common Git director
 in `twigs/staging` and is removed after success. Failed/interrupted attempts retain
 staging and may leave a partial registered worktree; inspect before retrying.
 
+### Organize existing worktrees (development main)
+
+Keep agent checkouts beside the original clone, rather than nested inside it:
+
+```sh
+git twig adopt --dry-run --worktrees-dir=/path/to/repo
+git twig adopt --worktrees-dir=/path/to/repo
+```
+
+Twig previews `/path/to/repo/{main,feat-x,...}` and asks before moving anything.
+Omit the directory flag to choose a root interactively; it is remembered per
+repository. Pass a worktree path to adopt just that checkout. After adoption,
+`git twig new -b feat/x` uses the saved root automatically.
+
+Coordinate active agents/editors first: their stored paths are not updated.
+Moves preserve branches and staged, dirty, untracked and ignored files, stay on
+one filesystem and never overwrite destinations. Recovery journals are retained.
+Layout moves also require a successful atomic no-overwrite directory-rename
+probe; unsupported drivers are refused before any worktree moves. Submodule
+relocation is not yet supported. Linux can subsequently deduplicate
+matching files in place. On macOS, interactive adoption also offers **offline
+compaction**: save work and close agents, editors, builds and servers using these
+worktrees first. It replaces matching files with verified CoW clones, preserves
+supported target metadata and staged/dirty contents, then retires verified old
+copies. Inodes change, so the next Git status may refresh its stat cache.
+
+```sh
+git twig adopt --compact --dry-run --worktrees-dir=/path/to/repo
+# After reviewing the plan and saving/closing every donor/target worktree:
+git twig adopt --compact --worktrees-dir=/path/to/repo
+```
+
+For already-approved automation, macOS requires `--compact --offline --yes`;
+`--yes` alone remains move-only. `--move-only` explicitly disables sharing on
+both platforms. Busy originals cannot be retired; failure retains copies and a
+journal for recovery. Never restart agents blindly after a compaction failure.
+Logical matching bytes are not guaranteed physical space reclaimed, and neither
+snapshots nor unrelated backups are deleted. This is not live APFS deduplication.
+
+This layout flow is unreleased; published v0.5.0 has the earlier sharing-only
+`adopt`. Check `git twig adopt -h` for `--worktrees-dir` and `--compact` before
+following these flows.
+
 ## Filesystem support
 
 | Platform | Filesystem | CoW / fallback | Verification |

@@ -1,0 +1,29 @@
+{
+  "schemaVersion": 1,
+  "kind": "campaign-interruption",
+  "originalManifestSha256": "0a6d61d283b1f1681ab7a1d83db3e7d01b588ec2a624e1863dcf86f92864f6e3",
+  "originalManifestUnchanged": true,
+  "reason": "Linux measurement container exited during OpenClaw. Host reboot interrupted the controller; the original running manifest and partial worker records are preserved, not resumed.",
+  "containerState": {
+    "Status": "exited",
+    "Running": false,
+    "Paused": false,
+    "Restarting": false,
+    "OOMKilled": false,
+    "Dead": false,
+    "Pid": 0,
+    "ExitCode": 255,
+    "Error": "",
+    "StartedAt": "2026-11-15T17:01:22.754335266Z",
+    "FinishedAt": "2026-11-18T00:22:48.056566586Z"
+  },
+  "hostBootTimeUtc": "2026-11-18T00:21:04+00:00",
+  "unmeasuredXfs": [
+    "pulumi",
+    "linux"
+  ],
+  "unmeasuredTargets": [
+    "linux-btrfs"
+  ],
+  "retry": false
+}

@@ -328,106 +328,13 @@ footer a:hover {
     font-size: 13px;
   }
 }
-.chart-controls {
-  display: flex;
-  flex-wrap: wrap;
-  gap: 4px;
-  margin-bottom: 8px;
-}
-.chart-controls button {
-  background: transparent;
-  border: 1px solid transparent;
-  border-radius: 5px;
-  padding: 4px 7px;
-  font: inherit;
-  font-size: 12px;
-  color: #626c5b;
-  cursor: pointer;
-}
-.chart-controls button[aria-pressed="true"] {
-  color: #283b2b;
-  background: #e9eddc;
-  border-color: #d5ddc6;
-}
-
-.preview-profiles {
-  display: grid;
-  grid-template-columns: minmax(0, 1fr);
-  gap: 6px 24px;
-}
-.preview-profiles .repo-group {
-  margin: 0;
-  padding: 3px 0 0;
-  border-top: 1px solid #e8ebdf;
-}
-@media (max-width: 620px) {
-  .preview-profiles {
-    grid-template-columns: minmax(0, 1fr);
-    gap: 6px;
-  }
-}
-
-.metric-controls {
-  align-items: center;
-  margin-bottom: 4px;
-}
-.metric-controls span {
-  margin-left: auto;
-  font-size: 11px;
-  color: #6a755f;
-}
-.preview-chart figcaption {
-  margin-bottom: 8px;
-}
-.preview-chart figcaption > span {
-  font-size: 11px;
-}
-.chart-scale,
-.chart-notes,
-.chart-health,
-.chart-links {
-  font-size: 11px;
-  line-height: 1.4;
-  color: #6a755f;
-  margin: 6px 0;
-}
-.chart-health.has-issues {
-  color: #8a6535;
-}
-.chart-links {
-  margin-bottom: 0;
-}
-.preview-chart h3 {
-  font-size: 13px;
-}
-.preview-chart .bar-row {
-  grid-template-columns: 68px 1fr 82px;
-  gap: 6px;
-}
-.preview-chart .bar-row code,
-.preview-chart .bar-row > span {
-  font-size: 11px;
-  line-height: 13px;
-}
-.preview-chart .bar-row + .bar-row {
-  margin-top: 2px;
-}
-.preview-chart .bar-track {
-  height: 8px;
-  position: relative;
-}
-.preview-chart .bar {
-  position: absolute;
-}
-
-.bar.candidate {
-  background: #85a65f;
-}
-.not-compared {
-  font-size: 12px;
-  min-height: 41px;
-  margin: 0;
-}
+.platform-switch { display:flex; justify-content:center; align-items:center; gap:5px; height:38px; margin-bottom:8px; }
+.platform-switch button, .platform-switch select { font:inherit; font-size:13px; color:#626c5b; border:1px solid transparent; background:transparent; padding:5px 12px; border-radius:6px; cursor:pointer; }
+.platform-switch button { display:grid; place-items:center; width:44px; height:32px; padding:5px; }
+.platform-switch button img { display:block; opacity:.65; }
+.platform-switch button[aria-pressed="true"] img { opacity:1; }
+.platform-switch button[aria-pressed="true"] { color:#283b2b; background:#e9eddc; border-color:#d5ddc6; }
+.platform-switch select { border-color:#d5ddc6; background:#fffef9; margin-left:8px; }
 
 @media (prefers-reduced-motion: reduce) {
   *,

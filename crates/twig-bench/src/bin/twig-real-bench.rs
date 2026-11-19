@@ -55,6 +55,7 @@ struct Suite {
     schema_version: u32,
     filesystem: Filesystem,
     image_size_gib: Option<u64>,
+    allocation_sampling: Option<AllocationSampling>,
     warmup: bool,
     require_native: bool,
     selected_backend: Option<String>,
@@ -359,7 +360,7 @@ fn main() -> Result<()> {
         )?
     };
     let mut suite = Suite {
-        schema_version: 4, filesystem, warmup, require_native, selected_backend: selected_backend.clone(), image_size_gib: if filesystem == Filesystem::Host { None } else { Some(image_size_gib) }, suite: "real-image-cohort".into(), generated_at_unix_ms: timestamp,
+        schema_version: 4, filesystem, allocation_sampling: if filesystem == Filesystem::Host { None } else { Some(ALLOCATION_SAMPLING) }, warmup, require_native, selected_backend: selected_backend.clone(), image_size_gib: if filesystem == Filesystem::Host { None } else { Some(image_size_gib) }, suite: "real-image-cohort".into(), generated_at_unix_ms: timestamp,
         commit: git_text(&cwd, &["rev-parse", "HEAD"])?, dirty: !git_text(&cwd, &["status", "--porcelain"])?.is_empty(),
         candidate_sha256: digest.split_whitespace().next().context("missing candidate hash")?.into(),
         git_version: capture(&cwd, "git", &["--version".into()])?,
@@ -368,9 +369,9 @@ fn main() -> Result<()> {
         notes: vec![
             "Each image-backed backend/repeat gets a fresh, isolated sparse filesystem image (capacity/format recorded in imageSizeGiB/filesystem). Seed uses git clone --shared --no-checkout plus explicit pinned-commit checkout. Original repositories and object stores are read-only inputs; seed history uses alternates outside image.".into(),
             if warmup { "One operation warmup per backend in its own seed/registry so it cannot become a measured donor. Removed before APFS snapshots; retained on Linux/host and excluded by the before snapshot. Global/system config and fixture hooks disabled. Backend order alternates by repeat.".into() } else { "Operation warmup disabled; seed checkout still warms input objects/files. Global/system Git config and fixture hooks disabled.".into() },
-            "A barrier releases the bounded worker pool simultaneously; each worker starts its next queued create only after its previous CLI returns. worktreesPerCohort is the total count; concurrency is the maximum in flight. Create wall time includes thread startup/barrier and ends at the last CLI completion, excluding final coordinator checkpoint/join work. Per-operation latency measures only that CLI. harnessCpuMsDuringCreate records self CPU (coordinator and worker threads), excluding CLI child CPU. No verification/generation competes with creates. No retries: failures are data.".into(),
+            "A barrier releases the bounded worker pool simultaneously; each worker starts its next queued create only after its previous CLI returns. worktreesPerCohort is the total count; concurrency is the maximum in flight. Create wall time includes thread startup/barrier and ends at the last CLI completion, excluding final coordinator checkpoint/join work. Per-operation latency measures only that CLI. harnessCpuMsDuringCreate records self CPU (coordinator and worker threads), excluding CLI child CPU. No verification/generation competes with creates. No operation retries inside a cohort. Operator-authorized complete paired repository attempts are retained separately; select the first stable complete attempt, never favorable timings or individual cohorts.".into(),
             "First git status is measured sequentially after all creates and the initial space snapshot. Full byte/symlink/executable verification follows each first status; its CPU is outside creation timing. A first-status sum is not a concurrent-status wall time.".into(),
-            "Allocated space is total minus free blocks from statvfs on the isolated filesystem, sampled after sync until stable (or marked unstable). This includes working files, indexes, retained staging and filesystem metadata, not logical size/du/st_blocks. Host sparse-image allocation is not the metric.".into(),
+            "Allocated space is total minus free blocks from statvfs on the isolated filesystem, sampled after sync until stable (or marked unstable). The recorded allocationSampling policy requires at least 20 samples 500 ms apart and an identical final 11-sample window, with a maximum of 240 samples (120 seconds) on either platform. This includes working files, indexes, retained staging and filesystem metadata, not logical size/du/st_blocks. Host sparse-image allocation is not the metric.".into(),
             "After initial verification/space measurement, one data-bearing byte in the largest regular target file matching the original donor (offset and file length recorded) is changed in place; if no such data exists, the probe is not applicable. Additional filesystem allocation is sampled; seed file must remain unchanged. APFS images are detached and deleted after saving each cohort; Linux images and fixtures are retained after unmount; no benchmark input paths or source file contents are serialized.".into(),
             "Local warm-cache results. A sparse loopback/disk image is a controlled filesystem, not a claim about native host-volume maximum throughput. Report failures alongside latency and allocation; do not compare unequal successful counts as identical capacity.".into(),
         ], cohorts: vec![], failures: vec![],
@@ -1204,6 +1205,28 @@ fn self_cpu_ms() -> Result<f64> {
     )
 }
 
+#[derive(Serialize)]
+#[serde(rename_all = "camelCase")]
+struct AllocationSampling {
+    interval_ms: u64,
+    minimum_samples: usize,
+    stable_samples: usize,
+    maximum_samples: usize,
+}
+const ALLOCATION_SAMPLING: AllocationSampling = AllocationSampling {
+    interval_ms: 500,
+    minimum_samples: 20,
+    stable_samples: 11,
+    maximum_samples: 240,
+};
+
+fn allocation_has_settled(observations: &[u64]) -> bool {
+    observations.len() >= ALLOCATION_SAMPLING.minimum_samples
+        && observations[observations.len() - ALLOCATION_SAMPLING.stable_samples..]
+            .iter()
+            .all(|value| Some(value) == observations.last())
+}
+
 fn settled_space(mount: &Path) -> Result<Space> {
     let mut sync = Command::new("sync");
     #[cfg(target_os = "linux")]
@@ -1211,15 +1234,12 @@ fn settled_space(mount: &Path) -> Result<Space> {
     checked(sync.output()?)?;
     let mut observations = vec![];
     let mut snapshot = space(mount)?;
-    for _ in 0..12 {
-        thread::sleep(Duration::from_millis(250));
+    // Allocation accounting may continue after sync; require a long quiet window.
+    for _ in 0..ALLOCATION_SAMPLING.maximum_samples {
+        thread::sleep(Duration::from_millis(ALLOCATION_SAMPLING.interval_ms));
         snapshot = space(mount)?;
         observations.push(snapshot.allocated_bytes);
-        if observations.len() >= 3
-            && observations[observations.len() - 3..]
-                .iter()
-                .all(|n| *n == snapshot.allocated_bytes)
-        {
+        if allocation_has_settled(&observations) {
             snapshot.stable = true;
             break;
         }
@@ -1357,6 +1377,21 @@ fn save(path: &Path, suite: &Suite) -> Result<()> {
 
 #[cfg(test)]
 mod tests {
+    #[test]
+    fn allocation_requires_a_long_observation_and_quiet_window() {
+        assert!(!super::allocation_has_settled(&[4096; 19]));
+        assert!(super::allocation_has_settled(&[4096; 20]));
+        let mut changing = vec![4096; 20];
+        changing.push(8192);
+        assert!(!super::allocation_has_settled(&changing));
+        changing.extend([8192; 9]);
+        assert!(!super::allocation_has_settled(&changing));
+        changing.push(8192);
+        assert!(super::allocation_has_settled(&changing));
+        assert!(!super::allocation_has_settled(
+            &(0..240).collect::<Vec<_>>()
+        ));
+    }
     use super::*;
     #[test]
     fn checkout_counters_are_not_inferred_from_a_backend_banner() {

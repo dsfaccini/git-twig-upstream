@@ -1,0 +1,424 @@
+{
+  "schemaVersion": 1,
+  "kind": "qualified-real-repository-allocation",
+  "candidateSourceTag": "v0.5.0",
+  "candidateSourceCommit": "4d2622f77ea8bfecc1f3fd6f1930686648990bbd",
+  "candidateSHA256": "eaa9c3990dfabc0bfaa0614abd8efdbde07149c77fa96c0eb0636cf446cd88e7",
+  "verifiedCreatesAcrossRetainedAttempts": 174,
+  "failedCreates": 0,
+  "unstableAllocationObservationsRetained": 11,
+  "originalSnapshot": "bench/results/sha256-eaa9c3990dfa/macos-apfs-case-sensitive/2026-11-17/real-repositories-v05",
+  "comparisons": [
+    {
+      "repository": "workers-starter",
+      "worktrees": 10,
+      "concurrency": 1,
+      "pairedRounds": 3,
+      "verifiedCreates": 60,
+      "unstableAllocationObservations": 0,
+      "comparisonEligible": true,
+      "gitMedianBytes": 610304,
+      "twigMedianBytes": 315392,
+      "gitObservedBytes": [
+        610304,
+        610304,
+        610304
+      ],
+      "twigObservedBytes": [
+        315392,
+        315392,
+        315392
+      ],
+      "rawSHA256": "0291a72b83ee4969801330a45d17d1926c06fcb69e3c488b80b0c59b31c27460",
+      "campaign": "original",
+      "rawFile": "bench/results/sha256-eaa9c3990dfa/macos-apfs-case-sensitive/2026-11-17/real-repositories-v05/workers-starter.json"
+    },
+    {
+      "repository": "twig",
+      "worktrees": 10,
+      "concurrency": 1,
+      "pairedRounds": 3,
+      "verifiedCreates": 60,
+      "unstableAllocationObservations": 0,
+      "comparisonEligible": true,
+      "gitMedianBytes": 5468160,
+      "twigMedianBytes": 536576,
+      "gitObservedBytes": [
+        5468160,
+        5468160,
+        5472256
+      ],
+      "twigObservedBytes": [
+        540672,
+        532480,
+        536576
+      ],
+      "rawSHA256": "486404d22ee7e621c066aed7f948193ecdfc3bca35c70b5017cea435c304bd07",
+      "campaign": "original",
+      "rawFile": "bench/results/sha256-eaa9c3990dfa/macos-apfs-case-sensitive/2026-11-17/real-repositories-v05/twig.json"
+    },
+    {
+      "repository": "axo",
+      "worktrees": 1,
+      "concurrency": 1,
+      "pairedRounds": 3,
+      "verifiedCreates": 6,
+      "unstableAllocationObservations": 0,
+      "comparisonEligible": true,
+      "gitMedianBytes": 32325632,
+      "twigMedianBytes": 1249280,
+      "gitObservedBytes": [
+        32325632,
+        32374784,
+        32325632
+      ],
+      "twigObservedBytes": [
+        1249280,
+        1249280,
+        1249280
+      ],
+      "rawSHA256": "5d8c9d889270e04f7f5a73ef7a14b60b95ac727aff44a026b5ab5c6a280516b1",
+      "campaign": "original",
+      "rawFile": "bench/results/sha256-eaa9c3990dfa/macos-apfs-case-sensitive/2026-11-17/real-repositories-v05/axo.json"
+    },
+    {
+      "repository": "linux",
+      "worktrees": 1,
+      "concurrency": 1,
+      "pairedRounds": 3,
+      "verifiedCreates": 6,
+      "unstableAllocationObservations": 0,
+      "comparisonEligible": true,
+      "gitMedianBytes": 1964982272,
+      "twigMedianBytes": 46772224,
+      "gitObservedBytes": [
+        1965297664,
+        1964982272,
+        1964756992
+      ],
+      "twigObservedBytes": [
+        46772224,
+        46755840,
+        46944256
+      ],
+      "rawSHA256": "9c7c29c746eaf9bcff8b0deeb39c700f5c9154c70dc1eed26be7c245d3fd364d",
+      "campaign": "original",
+      "rawFile": "bench/results/sha256-eaa9c3990dfa/macos-apfs-case-sensitive/2026-11-17/real-repositories-v05/linux.json"
+    },
+    {
+      "repository": "openclaw",
+      "worktrees": 1,
+      "concurrency": 1,
+      "pairedRounds": 3,
+      "verifiedCreates": 6,
+      "unstableAllocationObservations": 0,
+      "comparisonEligible": true,
+      "gitMedianBytes": 959184896,
+      "twigMedianBytes": 32911360,
+      "gitObservedBytes": [
+        958730240,
+        963964928,
+        959184896
+      ],
+      "twigObservedBytes": [
+        32546816,
+        32931840,
+        32911360
+      ],
+      "rawSHA256": "879269607fb1e8596e8e15ab9c96d1265c650618d402a02335cf81184c8dd2fd",
+      "rawFile": "settled/openclaw-attempt-1/openclaw.json"
+    },
+    {
+      "repository": "pulumi",
+      "worktrees": 1,
+      "concurrency": 1,
+      "pairedRounds": 3,
+      "verifiedCreates": 6,
+      "unstableAllocationObservations": 0,
+      "comparisonEligible": true,
+      "gitMedianBytes": 1297809408,
+      "twigMedianBytes": 8318976,
+      "gitObservedBytes": [
+        1297809408,
+        1298259968,
+        1297702912
+      ],
+      "twigObservedBytes": [
+        8794112,
+        8273920,
+        8318976
+      ],
+      "rawSHA256": "b52bebcdbad1bfe19e50977c374cfabacd54ee76f85d4c8797377e588bb9d254",
+      "rawFile": "settled/pulumi-attempt-1/pulumi.json"
+    }
+  ],
+  "attempts": [
+    {
+      "repository": "workers-starter",
+      "worktrees": 10,
+      "concurrency": 1,
+      "pairedRounds": 3,
+      "verifiedCreates": 60,
+      "unstableAllocationObservations": 0,
+      "comparisonEligible": true,
+      "gitMedianBytes": 610304,
+      "twigMedianBytes": 315392,
+      "gitObservedBytes": [
+        610304,
+        610304,
+        610304
+      ],
+      "twigObservedBytes": [
+        315392,
+        315392,
+        315392
+      ],
+      "rawSHA256": "0291a72b83ee4969801330a45d17d1926c06fcb69e3c488b80b0c59b31c27460",
+      "campaign": "original"
+    },
+    {
+      "repository": "twig",
+      "worktrees": 10,
+      "concurrency": 1,
+      "pairedRounds": 3,
+      "verifiedCreates": 60,
+      "unstableAllocationObservations": 0,
+      "comparisonEligible": true,
+      "gitMedianBytes": 5468160,
+      "twigMedianBytes": 536576,
+      "gitObservedBytes": [
+        5468160,
+        5468160,
+        5472256
+      ],
+      "twigObservedBytes": [
+        540672,
+        532480,
+        536576
+      ],
+      "rawSHA256": "486404d22ee7e621c066aed7f948193ecdfc3bca35c70b5017cea435c304bd07",
+      "campaign": "original"
+    },
+    {
+      "repository": "axo",
+      "worktrees": 1,
+      "concurrency": 1,
+      "pairedRounds": 3,
+      "verifiedCreates": 6,
+      "unstableAllocationObservations": 0,
+      "comparisonEligible": true,
+      "gitMedianBytes": 32325632,
+      "twigMedianBytes": 1249280,
+      "gitObservedBytes": [
+        32325632,
+        32374784,
+        32325632
+      ],
+      "twigObservedBytes": [
+        1249280,
+        1249280,
+        1249280
+      ],
+      "rawSHA256": "5d8c9d889270e04f7f5a73ef7a14b60b95ac727aff44a026b5ab5c6a280516b1",
+      "campaign": "original"
+    },
+    {
+      "repository": "linux",
+      "worktrees": 1,
+      "concurrency": 1,
+      "pairedRounds": 3,
+      "verifiedCreates": 6,
+      "unstableAllocationObservations": 0,
+      "comparisonEligible": true,
+      "gitMedianBytes": 1964982272,
+      "twigMedianBytes": 46772224,
+      "gitObservedBytes": [
+        1965297664,
+        1964982272,
+        1964756992
+      ],
+      "twigObservedBytes": [
+        46772224,
+        46755840,
+        46944256
+      ],
+      "rawSHA256": "9c7c29c746eaf9bcff8b0deeb39c700f5c9154c70dc1eed26be7c245d3fd364d",
+      "campaign": "original"
+    },
+    {
+      "repository": "openclaw",
+      "worktrees": 1,
+      "concurrency": 1,
+      "pairedRounds": 3,
+      "verifiedCreates": 6,
+      "unstableAllocationObservations": 2,
+      "comparisonEligible": false,
+      "gitMedianBytes": 959475712,
+      "twigMedianBytes": 32624640,
+      "gitObservedBytes": [
+        964210688,
+        959250432,
+        959475712
+      ],
+      "twigObservedBytes": [
+        32751616,
+        32464896,
+        32624640
+      ],
+      "rawSHA256": "5d6ca183a4c7d374998e958e70c04846999fb4644f7627b1b57252cbca848996",
+      "campaign": "original"
+    },
+    {
+      "repository": "pulumi",
+      "worktrees": 1,
+      "concurrency": 1,
+      "pairedRounds": 3,
+      "verifiedCreates": 6,
+      "unstableAllocationObservations": 2,
+      "comparisonEligible": false,
+      "gitMedianBytes": 1298493440,
+      "twigMedianBytes": 8318976,
+      "gitObservedBytes": [
+        1298493440,
+        1297776640,
+        1298604032
+      ],
+      "twigObservedBytes": [
+        8318976,
+        8486912,
+        7942144
+      ],
+      "rawSHA256": "a13c2dc5ec9189591a14be6399f76f55c4921321213509676a4fa064e03c5fd4",
+      "campaign": "original"
+    },
+    {
+      "repository": "openclaw",
+      "worktrees": 1,
+      "concurrency": 1,
+      "pairedRounds": 3,
+      "verifiedCreates": 6,
+      "unstableAllocationObservations": 3,
+      "comparisonEligible": false,
+      "gitMedianBytes": 959586304,
+      "twigMedianBytes": 33124352,
+      "gitObservedBytes": [
+        959586304,
+        959897600,
+        958701568
+      ],
+      "twigObservedBytes": [
+        32948224,
+        33124352,
+        33185792
+      ],
+      "rawSHA256": "565df8bcda5510f5232e49ff123acd612c959b5925cdf9fb33e88c0005364654",
+      "campaign": "three-second-followup",
+      "attempt": "openclaw-attempt-1"
+    },
+    {
+      "repository": "openclaw",
+      "worktrees": 1,
+      "concurrency": 1,
+      "pairedRounds": 3,
+      "verifiedCreates": 6,
+      "unstableAllocationObservations": 2,
+      "comparisonEligible": false,
+      "gitMedianBytes": 959283200,
+      "twigMedianBytes": 32768000,
+      "gitObservedBytes": [
+        963915776,
+        959283200,
+        958636032
+      ],
+      "twigObservedBytes": [
+        32768000,
+        32505856,
+        33214464
+      ],
+      "rawSHA256": "df9a8918229cda02c3c1bfbdf73c395bc4666e8b86a5c369fe32a348ec416c1d",
+      "campaign": "three-second-followup",
+      "attempt": "openclaw-attempt-2"
+    },
+    {
+      "repository": "pulumi",
+      "worktrees": 1,
+      "concurrency": 1,
+      "pairedRounds": 3,
+      "verifiedCreates": 6,
+      "unstableAllocationObservations": 2,
+      "comparisonEligible": false,
+      "gitMedianBytes": 1297674240,
+      "twigMedianBytes": 8216576,
+      "gitObservedBytes": [
+        1297915904,
+        1297674240,
+        1297534976
+      ],
+      "twigObservedBytes": [
+        8216576,
+        7557120,
+        8368128
+      ],
+      "rawSHA256": "92aa1a8945e593d6069764dc716c3a4d3023b29d55ca262cea499da668e92280",
+      "campaign": "three-second-followup",
+      "attempt": "pulumi-attempt-1"
+    },
+    {
+      "repository": "openclaw",
+      "worktrees": 1,
+      "concurrency": 1,
+      "pairedRounds": 3,
+      "verifiedCreates": 6,
+      "unstableAllocationObservations": 0,
+      "comparisonEligible": true,
+      "gitMedianBytes": 959184896,
+      "twigMedianBytes": 32911360,
+      "gitObservedBytes": [
+        958730240,
+        963964928,
+        959184896
+      ],
+      "twigObservedBytes": [
+        32546816,
+        32931840,
+        32911360
+      ],
+      "rawSHA256": "879269607fb1e8596e8e15ab9c96d1265c650618d402a02335cf81184c8dd2fd",
+      "campaign": "sixty-second-followup",
+      "attempt": "openclaw-attempt-1"
+    },
+    {
+      "repository": "pulumi",
+      "worktrees": 1,
+      "concurrency": 1,
+      "pairedRounds": 3,
+      "verifiedCreates": 6,
+      "unstableAllocationObservations": 0,
+      "comparisonEligible": true,
+      "gitMedianBytes": 1297809408,
+      "twigMedianBytes": 8318976,
+      "gitObservedBytes": [
+        1297809408,
+        1298259968,
+        1297702912
+      ],
+      "twigObservedBytes": [
+        8794112,
+        8273920,
+        8318976
+      ],
+      "rawSHA256": "b52bebcdbad1bfe19e50977c374cfabacd54ee76f85d4c8797377e588bb9d254",
+      "campaign": "sixty-second-followup",
+      "attempt": "pulumi-attempt-1"
+    }
+  ],
+  "notes": [
+    "Every original and follow-up attempt is retained, including unstable observations.",
+    "The unchanged published v0.5.0 binary is compared with stock Git on real repositories.",
+    "Only the macOS harness allocation-sampling budget changed from 3 to 60 seconds. The three-identical-consecutive-readings criterion and 250 ms interval did not change.",
+    "First fully stable complete three-round paired campaign was selected per rerun repository, by stability rather than measured savings.",
+    "Four original comparisons already met the same stability criterion; OpenClaw and Pulumi use the 60-second-budget follow-up.",
+    "Additional case-sensitive APFS allocation after first status includes metadata; not exclusive file allocation.",
+    "These were allocation-refresh campaigns, not a controlled host-latency refresh. Another independently launched campaign was discovered on the shared Mac during the original run; raw timings remain evidence, not automatically eligible speed claims."
+  ]
+}

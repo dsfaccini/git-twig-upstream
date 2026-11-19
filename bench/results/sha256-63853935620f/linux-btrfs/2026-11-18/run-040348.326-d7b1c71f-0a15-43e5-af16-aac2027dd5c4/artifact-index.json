@@ -1,0 +1,45 @@
+{
+  "schemaVersion": 1,
+  "artifacts": [
+    {
+      "name": "manifest.json",
+      "bytes": 3067,
+      "sha256": "f0923822172d3ec669bcc70c5ad5721c4232ea53551e41c05a821e357fedc20a"
+    },
+    {
+      "name": "twig-twig.svg",
+      "bytes": 2329,
+      "sha256": "5d370e75ceff67ffc176ccb46fa33c6f32f2a2c11fdd696c91784ecb1a042543"
+    },
+    {
+      "name": "twig.csv",
+      "bytes": 610,
+      "sha256": "e6fca36bb3f2b47cb71bad8278fff431cd38ba4ce8e34396c62e257c0ff786b7"
+    },
+    {
+      "name": "twig.json",
+      "bytes": 47484,
+      "sha256": "e69f1bec4b6d4bcdf77fb0403921171f94529517e589af93922cc3cc4cda0f3f"
+    },
+    {
+      "name": "twig.json.stderr.log",
+      "bytes": 5190,
+      "sha256": "a1a6db42b786d6719046acb7147b55e310bbe0e7f7f8792dd08effb5a5a0ad74"
+    },
+    {
+      "name": "twig.json.stdout.log",
+      "bytes": 188,
+      "sha256": "5e3c966f4c43abbad0ba4cabc9632da9ddbf4e3ec7e47836168ae770501c6417"
+    },
+    {
+      "name": "twig.report.json",
+      "bytes": 1698,
+      "sha256": "e34fc03782d8b8750ae52814433b3e4e74f46683d3af0ea3118674407b194061"
+    },
+    {
+      "name": "twig.summary.json",
+      "bytes": 1329,
+      "sha256": "5bc68e0df453a706e26adea7caa09dacbc4f1e7d965ae1d75388c184e90c9bd9"
+    }
+  ]
+}

@@ -1,0 +1,55 @@
+{
+  "schemaVersion": 1,
+  "artifacts": [
+    {
+      "name": "gate-fix.bundle",
+      "bytes": 773,
+      "sha256": "6ef1498f624d611817d48fb7ff3adda38f518c86cd2e8b850fa556341caf0f89"
+    },
+    {
+      "name": "harness.bundle",
+      "bytes": 9736,
+      "sha256": "c4492739edf79d9f2215a476732a45c8e43a3fffd6cb37cdd6c018f75ffa3762"
+    },
+    {
+      "name": "manifest.json",
+      "bytes": 4049,
+      "sha256": "17cf403b383aa59f2d7f38bde4951944946b1fd21222c269f93f7801389e8027"
+    },
+    {
+      "name": "release-SHA256SUMS",
+      "bytes": 333,
+      "sha256": "d740266abc1df5eeea15f90d88f5b99d2ceccdff836fc075e6d4c54cb7e31f27"
+    },
+    {
+      "name": "release-provenance.json",
+      "bytes": 2721,
+      "sha256": "584c78920e293a838e5bc2317ec428b555ae092a2ff9ce23de7b3c50108044b1"
+    },
+    {
+      "name": "workers-starter-workers-starter.svg",
+      "bytes": 2341,
+      "sha256": "917edb5b2ee707db691cddf0a718924c070ef5e76f83a5d94124f4baba900e75"
+    },
+    {
+      "name": "workers-starter.csv",
+      "bytes": 592,
+      "sha256": "4a9e190249f9d694af9a6f5a578e6b0738a05f48257de2738a2a35df4feb5d7b"
+    },
+    {
+      "name": "workers-starter.json",
+      "bytes": 39453,
+      "sha256": "a4f2172c719f0c1cabf125c936cf61b3b26bca1ef9e57f06d633c46c6b60f176"
+    },
+    {
+      "name": "workers-starter.qualification.json",
+      "bytes": 1614,
+      "sha256": "b6264dd2b1f65d34073e4d7d17d19125ceec355ca3847bef189372cc5c86f4af"
+    },
+    {
+      "name": "workers-starter.report.json",
+      "bytes": 1535,
+      "sha256": "fe43a1684f13a5d1fda52097f8e675cacb291543e0d130e7f518a93f921920e7"
+    }
+  ]
+}

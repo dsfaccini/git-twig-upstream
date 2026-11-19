@@ -1,0 +1,208 @@
+{
+  "schemaVersion": 1,
+  "kind": "first-stable-complete-paired-jobs",
+  "candidateSha256": "63853935620fef55977053e7de6671bbcf17da839f36dd426348c126910cda97",
+  "source": "c4d3d4e8fc4738f083f3aa2dab2b299f507aa9f2",
+  "budgetSeconds": 21600,
+  "maximumAttemptsPerRepository": 3,
+  "minimumFreeGiB": 128,
+  "maximumGrowthGiB": 160,
+  "status": "failed",
+  "attempts": [
+    {
+      "target": "linux-xfs",
+      "repository": "workers-starter",
+      "attempt": 1,
+      "manifest": "bench/results/sha256-63853935620f/linux-xfs/2026-11-18/run-014355.630-451c4ccc-0aab-4300-ad59-1c6484c01945/manifest.json",
+      "accepted": true,
+      "stopReason": null
+    },
+    {
+      "target": "linux-xfs",
+      "repository": "twig",
+      "attempt": 1,
+      "manifest": "bench/results/sha256-63853935620f/linux-xfs/2026-11-18/run-014830.174-92e0660a-7bd6-42da-a467-61dad3933217/manifest.json",
+      "accepted": true,
+      "stopReason": null
+    },
+    {
+      "target": "linux-xfs",
+      "repository": "axo",
+      "attempt": 1,
+      "manifest": "bench/results/sha256-63853935620f/linux-xfs/2026-11-18/run-015421.267-0bd13e56-00c4-466d-94d6-5ed3cb320a78/manifest.json",
+      "accepted": true,
+      "stopReason": null
+    },
+    {
+      "target": "linux-xfs",
+      "repository": "openclaw",
+      "attempt": 1,
+      "manifest": "bench/results/sha256-63853935620f/linux-xfs/2026-11-18/run-020108.806-3d7a3823-7339-4708-95f7-002fe3d05318/manifest.json",
+      "accepted": true,
+      "stopReason": null
+    },
+    {
+      "target": "linux-xfs",
+      "repository": "pulumi",
+      "attempt": 1,
+      "manifest": "bench/results/sha256-63853935620f/linux-xfs/2026-11-18/run-025112.535-2808437c-f286-4595-b8b6-3c9831a94014/manifest.json",
+      "accepted": true,
+      "stopReason": null
+    },
+    {
+      "target": "linux-xfs",
+      "repository": "linux",
+      "attempt": 1,
+      "manifest": "bench/results/sha256-63853935620f/linux-xfs/2026-11-18/run-030416.007-58af415b-f842-4af3-8051-7d48a85fd5b7/manifest.json",
+      "accepted": true,
+      "stopReason": null
+    },
+    {
+      "target": "linux-btrfs",
+      "repository": "workers-starter",
+      "attempt": 1,
+      "manifest": "bench/results/sha256-63853935620f/linux-btrfs/2026-11-18/run-035859.039-077fdc19-13fc-4996-b743-6b2d3878d086/manifest.json",
+      "accepted": true,
+      "stopReason": null
+    },
+    {
+      "target": "linux-btrfs",
+      "repository": "twig",
+      "attempt": 1,
+      "manifest": "bench/results/sha256-63853935620f/linux-btrfs/2026-11-18/run-040348.326-d7b1c71f-0a15-43e5-af16-aac2027dd5c4/manifest.json",
+      "accepted": true,
+      "stopReason": null
+    },
+    {
+      "target": "linux-btrfs",
+      "repository": "axo",
+      "attempt": 1,
+      "manifest": "bench/results/sha256-63853935620f/linux-btrfs/2026-11-18/run-040806.200-a7ead3d5-07c0-45cd-beb5-8945aa26f848/manifest.json",
+      "accepted": true,
+      "stopReason": null
+    },
+    {
+      "target": "linux-btrfs",
+      "repository": "openclaw",
+      "attempt": 1,
+      "manifest": "bench/results/sha256-63853935620f/linux-btrfs/2026-11-18/run-041230.487-8091c835-b2dd-45d5-bb6e-99ab9a2840e3/manifest.json",
+      "accepted": true,
+      "stopReason": null
+    },
+    {
+      "target": "linux-btrfs",
+      "repository": "pulumi",
+      "attempt": 1,
+      "manifest": "bench/results/sha256-63853935620f/linux-btrfs/2026-11-18/run-042337.716-d88d9d95-cfd8-46aa-b9ff-db26e384376e/manifest.json",
+      "accepted": true,
+      "stopReason": null
+    },
+    {
+      "target": "linux-btrfs",
+      "repository": "linux",
+      "attempt": 1,
+      "manifest": "bench/results/sha256-63853935620f/linux-btrfs/2026-11-18/run-043157.180-ba1c32b3-146f-4825-804b-8ec1aeab4e68/manifest.json",
+      "accepted": true,
+      "stopReason": null
+    }
+  ],
+  "accepted": [
+    {
+      "target": "linux-xfs",
+      "repository": "workers-starter",
+      "attempt": 1,
+      "manifest": "bench/results/sha256-63853935620f/linux-xfs/2026-11-18/run-014355.630-451c4ccc-0aab-4300-ad59-1c6484c01945/manifest.json",
+      "accepted": true,
+      "stopReason": null
+    },
+    {
+      "target": "linux-xfs",
+      "repository": "twig",
+      "attempt": 1,
+      "manifest": "bench/results/sha256-63853935620f/linux-xfs/2026-11-18/run-014830.174-92e0660a-7bd6-42da-a467-61dad3933217/manifest.json",
+      "accepted": true,
+      "stopReason": null
+    },
+    {
+      "target": "linux-xfs",
+      "repository": "axo",
+      "attempt": 1,
+      "manifest": "bench/results/sha256-63853935620f/linux-xfs/2026-11-18/run-015421.267-0bd13e56-00c4-466d-94d6-5ed3cb320a78/manifest.json",
+      "accepted": true,
+      "stopReason": null
+    },
+    {
+      "target": "linux-xfs",
+      "repository": "openclaw",
+      "attempt": 1,
+      "manifest": "bench/results/sha256-63853935620f/linux-xfs/2026-11-18/run-020108.806-3d7a3823-7339-4708-95f7-002fe3d05318/manifest.json",
+      "accepted": true,
+      "stopReason": null
+    },
+    {
+      "target": "linux-xfs",
+      "repository": "pulumi",
+      "attempt": 1,
+      "manifest": "bench/results/sha256-63853935620f/linux-xfs/2026-11-18/run-025112.535-2808437c-f286-4595-b8b6-3c9831a94014/manifest.json",
+      "accepted": true,
+      "stopReason": null
+    },
+    {
+      "target": "linux-xfs",
+      "repository": "linux",
+      "attempt": 1,
+      "manifest": "bench/results/sha256-63853935620f/linux-xfs/2026-11-18/run-030416.007-58af415b-f842-4af3-8051-7d48a85fd5b7/manifest.json",
+      "accepted": true,
+      "stopReason": null
+    },
+    {
+      "target": "linux-btrfs",
+      "repository": "workers-starter",
+      "attempt": 1,
+      "manifest": "bench/results/sha256-63853935620f/linux-btrfs/2026-11-18/run-035859.039-077fdc19-13fc-4996-b743-6b2d3878d086/manifest.json",
+      "accepted": true,
+      "stopReason": null
+    },
+    {
+      "target": "linux-btrfs",
+      "repository": "twig",
+      "attempt": 1,
+      "manifest": "bench/results/sha256-63853935620f/linux-btrfs/2026-11-18/run-040348.326-d7b1c71f-0a15-43e5-af16-aac2027dd5c4/manifest.json",
+      "accepted": true,
+      "stopReason": null
+    },
+    {
+      "target": "linux-btrfs",
+      "repository": "axo",
+      "attempt": 1,
+      "manifest": "bench/results/sha256-63853935620f/linux-btrfs/2026-11-18/run-040806.200-a7ead3d5-07c0-45cd-beb5-8945aa26f848/manifest.json",
+      "accepted": true,
+      "stopReason": null
+    },
+    {
+      "target": "linux-btrfs",
+      "repository": "openclaw",
+      "attempt": 1,
+      "manifest": "bench/results/sha256-63853935620f/linux-btrfs/2026-11-18/run-041230.487-8091c835-b2dd-45d5-bb6e-99ab9a2840e3/manifest.json",
+      "accepted": true,
+      "stopReason": null
+    },
+    {
+      "target": "linux-btrfs",
+      "repository": "pulumi",
+      "attempt": 1,
+      "manifest": "bench/results/sha256-63853935620f/linux-btrfs/2026-11-18/run-042337.716-d88d9d95-cfd8-46aa-b9ff-db26e384376e/manifest.json",
+      "accepted": true,
+      "stopReason": null
+    },
+    {
+      "target": "linux-btrfs",
+      "repository": "linux",
+      "attempt": 1,
+      "manifest": "bench/results/sha256-63853935620f/linux-btrfs/2026-11-18/run-043157.180-ba1c32b3-146f-4825-804b-8ec1aeab4e68/manifest.json",
+      "accepted": true,
+      "stopReason": null
+    }
+  ],
+  "error": "Error: Platform-wide disk guard"
+}

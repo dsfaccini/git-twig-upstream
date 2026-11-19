@@ -1,0 +1,23 @@
+[
+  "/Users/leostera/Developer/github.com/leostera/git-twig/main/target/v05-real-macos-settled-2026-11-18/bin/twig-real-bench",
+  "--repo",
+  "pulumi=/Users/leostera/Developer/github.com/leostera/git-twig/exp-issue5-reproduction-fixtures/docs",
+  "--revision",
+  "pulumi=430261138aa08539cd598b9269bfe8f82fd49b78",
+  "--candidate",
+  "/Users/leostera/Developer/github.com/leostera/git-twig/main/target/v05-real-macos-settled-2026-11-18/bin/git-twig",
+  "--filesystem",
+  "case-sensitive-image",
+  "--image-gib",
+  "32",
+  "--worktrees",
+  "1",
+  "--concurrency",
+  "1",
+  "--repeats",
+  "3",
+  "--warmup",
+  "true",
+  "--output",
+  "/Users/leostera/Developer/github.com/leostera/git-twig/main/target/v05-real-macos-settled-2026-11-18/pulumi-attempt-1/pulumi.json"
+]

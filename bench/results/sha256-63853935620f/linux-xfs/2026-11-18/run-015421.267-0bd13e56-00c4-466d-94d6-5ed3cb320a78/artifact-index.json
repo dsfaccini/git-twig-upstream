@@ -1,0 +1,45 @@
+{
+  "schemaVersion": 1,
+  "artifacts": [
+    {
+      "name": "axo-axo.svg",
+      "bytes": 2325,
+      "sha256": "007d06159ba52aa618394d5703b26a4315c03b68cd550c2049af9a48d8b9e7da"
+    },
+    {
+      "name": "axo.csv",
+      "bytes": 632,
+      "sha256": "37d089fa9c0251687b6da2f928a6f437bfd6045e14164cf10ee169f0742a2045"
+    },
+    {
+      "name": "axo.json",
+      "bytes": 27712,
+      "sha256": "7b8ecf47391e8995803b02e5df33170716f50d67c5f844e14c4064672556322f"
+    },
+    {
+      "name": "axo.json.stderr.log",
+      "bytes": 2202,
+      "sha256": "db4c59a169fe2aa4f9d3636eac5fcf10da371c63f551060c4a2a4ea3391d00f8"
+    },
+    {
+      "name": "axo.json.stdout.log",
+      "bytes": 185,
+      "sha256": "2e3333c1419776cc3bec324bccca5d59e3cca0a08504b1375f18eae554823196"
+    },
+    {
+      "name": "axo.report.json",
+      "bytes": 1717,
+      "sha256": "05d89405aa282580d09da9079a9f71953ea09c230ef833345288f38bc0504875"
+    },
+    {
+      "name": "axo.summary.json",
+      "bytes": 1348,
+      "sha256": "9413bccedce99777ff1f06ee2a923d422951400487f6cf14047529bc19e885db"
+    },
+    {
+      "name": "manifest.json",
+      "bytes": 3056,
+      "sha256": "0f6537cf2b3e5e8a06085236502a5ce909fbc68476d7eb6d006ac565fd8aea34"
+    }
+  ]
+}

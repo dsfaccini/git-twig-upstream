@@ -1,0 +1,205 @@
+{
+  "schemaVersion": 1,
+  "artifacts": [
+    {
+      "path": "collector.py",
+      "bytes": 8624,
+      "sha256": "ff39f8c18c1748a4add129732319bf50dfae20bf51c6c26cae19db0068f5558f"
+    },
+    {
+      "path": "harness-source.bundle",
+      "bytes": 1129,
+      "sha256": "55fc103e280f65e0fcd3f6f6a60ed2893dd2fbfb6e7c417fcb873d25af7d22aa"
+    },
+    {
+      "path": "settled/build.log",
+      "bytes": 199,
+      "sha256": "c04eaca462784c428e78599224e9368694212878a43d5ad6d909867e5514512d"
+    },
+    {
+      "path": "settled/controller.log",
+      "bytes": 0,
+      "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+    },
+    {
+      "path": "settled/frozen-binaries.json",
+      "bytes": 700,
+      "sha256": "c4bdc1c6df5c7f64324fc57d4bf9d952e7b9e2a76b0bec5dbf80cbbdd19f45a8"
+    },
+    {
+      "path": "settled/harness-build.json",
+      "bytes": 244,
+      "sha256": "2cb90be1876b8a27d916f0f794fa763f363698564900623c0621e0d97e16c1a3"
+    },
+    {
+      "path": "settled/launch.json",
+      "bytes": 145,
+      "sha256": "9e41ee9809524e9a47efd0f6805b929c4d30206085ef32d9b2342986f26885f7"
+    },
+    {
+      "path": "settled/launch.log",
+      "bytes": 0,
+      "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+    },
+    {
+      "path": "settled/launch.py",
+      "bytes": 3178,
+      "sha256": "062fbcb7fa9a19ee64cfbe2faabcbab108310e69300739a296df4dfa7870307f"
+    },
+    {
+      "path": "settled/manifest.json",
+      "bytes": 4638,
+      "sha256": "e8984a4035c9c1d55367c671881e66a9b5e81502a63545fa42e6b2159a06790b"
+    },
+    {
+      "path": "settled/openclaw-attempt-1/assessment.json",
+      "bytes": 1256,
+      "sha256": "918e13d57300e3178df820916e2acb43e17c70223bc4bd2ea91c490ae98b42d9"
+    },
+    {
+      "path": "settled/openclaw-attempt-1/command.json",
+      "bytes": 792,
+      "sha256": "97cc37146f2e7d027596a2ab78fe796e8212362ae678fb0fd09d5510e2afd655"
+    },
+    {
+      "path": "settled/openclaw-attempt-1/openclaw.json",
+      "bytes": 21294,
+      "sha256": "879269607fb1e8596e8e15ab9c96d1265c650618d402a02335cf81184c8dd2fd"
+    },
+    {
+      "path": "settled/openclaw-attempt-1/worker.log",
+      "bytes": 1733,
+      "sha256": "f047658805e6042dcc6366c794fd33bb4a0fef5b7a386406d3606b5a407a7ba6"
+    },
+    {
+      "path": "settled/pulumi-attempt-1/assessment.json",
+      "bytes": 1250,
+      "sha256": "b90b431eea2b64f1426ce0e0d638f3e09ff6fb6b3d5cffd2c956497be2e7d232"
+    },
+    {
+      "path": "settled/pulumi-attempt-1/command.json",
+      "bytes": 765,
+      "sha256": "1c9f7183401f0827a0e8ded8b50764569bfeaa4a386b8624db0ca976e4081a09"
+    },
+    {
+      "path": "settled/pulumi-attempt-1/pulumi.json",
+      "bytes": 21401,
+      "sha256": "b52bebcdbad1bfe19e50977c374cfabacd54ee76f85d4c8797377e588bb9d254"
+    },
+    {
+      "path": "settled/pulumi-attempt-1/worker.log",
+      "bytes": 1711,
+      "sha256": "fdd6ae76485b65ea01c04285edfc39000d34be35475cef9c1ecf85cb44853c1c"
+    },
+    {
+      "path": "settled/run.ts",
+      "bytes": 8976,
+      "sha256": "4927b4b12eccc983c20374606f796739ac780eee3ea42af4967f193bec14cb7f"
+    },
+    {
+      "path": "settled/state.json",
+      "bytes": 3424,
+      "sha256": "0af1df7acbfa8833f63e299ac1e3fd78467f5fc4aa6c9c788452cf5d26bdcf29"
+    },
+    {
+      "path": "summary.json",
+      "bytes": 12347,
+      "sha256": "890fc2318467f35a245559bdaa1f6b335dfd372a3c4f4d5cedd3f07ac6942093"
+    },
+    {
+      "path": "three-second-followup/controller.log",
+      "bytes": 0,
+      "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+    },
+    {
+      "path": "three-second-followup/manifest.json",
+      "bytes": 4013,
+      "sha256": "4f407e1fdb45acb6df86908c2edae63fd425570aab2ab163854f57c642471e5c"
+    },
+    {
+      "path": "three-second-followup/openclaw-attempt-1/assessment.json",
+      "bytes": 1263,
+      "sha256": "5ba2d538a976c277727abcfa1d9de67f7eddb5cdc2dd23d3a84c63b294b65e9a"
+    },
+    {
+      "path": "three-second-followup/openclaw-attempt-1/command.json",
+      "bytes": 778,
+      "sha256": "1f9c0e0638611d14a5b46c1444140b31dbf28489d7d75116e117d5b73da39017"
+    },
+    {
+      "path": "three-second-followup/openclaw-attempt-1/openclaw.json",
+      "bytes": 19418,
+      "sha256": "565df8bcda5510f5232e49ff123acd612c959b5925cdf9fb33e88c0005364654"
+    },
+    {
+      "path": "three-second-followup/openclaw-attempt-1/worker.log",
+      "bytes": 1735,
+      "sha256": "2aa4a45f6de3fd2e97d92eedee38c7d223fc9c536b2fbfa486b5a37320a1bd4a"
+    },
+    {
+      "path": "three-second-followup/openclaw-attempt-2/assessment.json",
+      "bytes": 1262,
+      "sha256": "be4b6e55d029b2a44d49ec0d62b2e00cc84dd0c7beb1077664d88bdf09c4ff02"
+    },
+    {
+      "path": "three-second-followup/openclaw-attempt-2/command.json",
+      "bytes": 778,
+      "sha256": "b08a74705b09b534f8b3e253c2f9f4de8878ff5d65e850d3ac3b622e508bdc15"
+    },
+    {
+      "path": "three-second-followup/openclaw-attempt-2/openclaw.json",
+      "bytes": 19178,
+      "sha256": "df9a8918229cda02c3c1bfbdf73c395bc4666e8b86a5c369fe32a348ec416c1d"
+    },
+    {
+      "path": "three-second-followup/openclaw-attempt-2/worker.log",
+      "bytes": 1735,
+      "sha256": "ed0348ae90fe4b2854a63c96949831eed7fe64b966867420832c5ec60f787d6f"
+    },
+    {
+      "path": "three-second-followup/pause-between-attempts.log",
+      "bytes": 0,
+      "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+    },
+    {
+      "path": "three-second-followup/pause-between-attempts.py",
+      "bytes": 1213,
+      "sha256": "3dc98f63d07d18c0e006860aa55a2ab9664f391ce61e3c8af4a2eac341234c8c"
+    },
+    {
+      "path": "three-second-followup/pulumi-attempt-1/assessment.json",
+      "bytes": 1256,
+      "sha256": "525d16d8f05ea8cf85d4cb59487e69a8d5e58461864999cfd33236a0d8c65876"
+    },
+    {
+      "path": "three-second-followup/pulumi-attempt-1/command.json",
+      "bytes": 751,
+      "sha256": "dce94fa1b18b6253edaf37fe06edf2ce6b0dcc5dbc7722463c0c583c3f234584"
+    },
+    {
+      "path": "three-second-followup/pulumi-attempt-1/pulumi.json",
+      "bytes": 19569,
+      "sha256": "92aa1a8945e593d6069764dc716c3a4d3023b29d55ca262cea499da668e92280"
+    },
+    {
+      "path": "three-second-followup/pulumi-attempt-1/worker.log",
+      "bytes": 1713,
+      "sha256": "ac506d5d60c8ce985f2ef3ff0c8ca9732fee78a96e9a2884fd62814fa75cf9bb"
+    },
+    {
+      "path": "three-second-followup/run.ts",
+      "bytes": 8106,
+      "sha256": "9ff2187b985ff0fdd4395f6a4a35bf29017d92e986b7efa8ae0f07b5761682e9"
+    },
+    {
+      "path": "three-second-followup/settling-window-transition.json",
+      "bytes": 5341,
+      "sha256": "bec51c05703b1f570a68841f90057ce7c34ebb0b30b1a0ecb86f86f6eaf4e594"
+    },
+    {
+      "path": "three-second-followup/state.json",
+      "bytes": 4651,
+      "sha256": "6f5b8009f2bdf17e093f5147d3f65417163f72112703d7cb46d618f43f87b19c"
+    }
+  ]
+}

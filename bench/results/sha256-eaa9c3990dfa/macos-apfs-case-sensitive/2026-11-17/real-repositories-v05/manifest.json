@@ -1,0 +1,79 @@
+{
+  "schemaVersion": 1,
+  "startedAt": "2026-11-17T23:30:23.754Z",
+  "harnessCheckoutCommit": "a57f7c77c6979b9fa57d8b9b7216c6903b730427",
+  "candidateSourceTag": "v0.5.0",
+  "candidateSourceCommit": "4d2622f77ea8bfecc1f3fd6f1930686648990bbd",
+  "workerSourceCommit": "4d2622f77ea8bfecc1f3fd6f1930686648990bbd",
+  "platform": "ProductName:\t\tmacOS\nProductVersion:\t\t26.5\nBuildVersion:\t\t25F71",
+  "cpu": "Apple M1 Ultra",
+  "gitVersion": "git version 2.56.1",
+  "gitExecPath": "/opt/homebrew/opt/git/libexec/git-core",
+  "binaries": {
+    "git-twig": {
+      "path": "/Users/leostera/Developer/github.com/leostera/git-twig/main/target/v05-real-macos-2026-11-17/bin/git-twig",
+      "sha256": "eaa9c3990dfabc0bfaa0614abd8efdbde07149c77fa96c0eb0636cf446cd88e7"
+    },
+    "twig-real-bench": {
+      "path": "/Users/leostera/Developer/github.com/leostera/git-twig/main/target/v05-real-macos-2026-11-17/bin/twig-real-bench",
+      "sha256": "e87ab58784f43695425230148fc9a8b9871bc71482502141da23f6b37e2c3ba2"
+    },
+    "git": {
+      "path": "/Users/leostera/Developer/github.com/leostera/git-twig/main/target/v05-real-macos-2026-11-17/bin/git",
+      "sha256": "b5eaefb829ec3b61176f83ed7fddc333a9d92e762ec4e558f55baadc4314297d"
+    }
+  },
+  "jobs": [
+    {
+      "name": "workers-starter",
+      "path": "/Users/leostera/Developer/github.com/leostera/git-twig/main/target/workers-starter",
+      "revision": "d0b1ee485dc1cf2bc0b2a3511cf8cf1057624d02",
+      "worktrees": 10
+    },
+    {
+      "name": "twig",
+      "path": "/Users/leostera/Developer/github.com/leostera/git-twig/main",
+      "revision": "96c43950e4c0d8524de4ad53157c136eb222d39c",
+      "worktrees": 10
+    },
+    {
+      "name": "axo",
+      "path": "/Users/leostera/Developer/github.com/leostera/axo",
+      "revision": "67af816be26633039e8507d93d577b2073d6f5fd",
+      "worktrees": 1
+    },
+    {
+      "name": "linux",
+      "path": "/Users/leostera/Developer/github.com/leostera/git-twig/main/target/kernel-input.git",
+      "revision": "23c62304dde29abe92013d85910d03a77dada35d",
+      "worktrees": 1
+    },
+    {
+      "name": "openclaw",
+      "path": "/Users/leostera/Developer/github.com/leostera/git-twig/main/target/apfs-v04-final-2026-11-17/input/openclaw.git",
+      "revision": "410c0dda40702e25263b49b8b7d0786a5e49e366",
+      "worktrees": 1
+    },
+    {
+      "name": "pulumi",
+      "path": "/Users/leostera/Developer/github.com/leostera/git-twig/exp-issue5-reproduction-fixtures/docs",
+      "revision": "430261138aa08539cd598b9269bfe8f82fd49b78",
+      "worktrees": 1
+    }
+  ],
+  "config": {
+    "filesystem": "case-sensitive-image",
+    "imageGib": 32,
+    "repeats": 3,
+    "concurrency": 1,
+    "warmup": true,
+    "minimumHostFreeGiB": 128
+  },
+  "notes": [
+    "Published v0.5.0 GitHub arm64 archive, not an earlier candidate.",
+    "Real repository pins and batch sizes match the historical v0.4 campaign. Allocation-only refresh; raw harness timings are retained but not promoted as website claims.",
+    "Additional isolated filesystem allocation after first status, including Git metadata; not exclusive per-file allocation or adopted-space savings.",
+    "Three paired rounds; separate image and seed per backend/round. No measured retries or silent exclusions. All correctness and native/private-write checks remain enabled.",
+    "Shared Apple M1 Ultra host, warm cache. No intentional competing tests, builds, or benchmark campaigns. No application code/dependencies executed."
+  ]
+}

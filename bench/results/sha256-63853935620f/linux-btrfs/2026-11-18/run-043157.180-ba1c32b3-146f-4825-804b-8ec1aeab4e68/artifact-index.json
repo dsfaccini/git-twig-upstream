@@ -1,0 +1,45 @@
+{
+  "schemaVersion": 1,
+  "artifacts": [
+    {
+      "name": "linux-linux.svg",
+      "bytes": 2347,
+      "sha256": "fdce54e0298e7450d598f09919139faa6a14819d2f0a619ca3325894ac3cfb78"
+    },
+    {
+      "name": "linux.csv",
+      "bytes": 649,
+      "sha256": "a82825960842cd57454290203e0c77cc18fe9af7dd9d07129344980883717bae"
+    },
+    {
+      "name": "linux.json",
+      "bytes": 28393,
+      "sha256": "28d59a9f23a59e6dfa3da1584110eb1774e55604cc644ce1cb16eacf51eb7015"
+    },
+    {
+      "name": "linux.json.stderr.log",
+      "bytes": 2250,
+      "sha256": "8abdba77b6e7cc1148f9a56bb5ca1e92823df7b6c3d3e022f5ef5efb2bad10e0"
+    },
+    {
+      "name": "linux.json.stdout.log",
+      "bytes": 189,
+      "sha256": "756b58670dff4580bf06d726d78d6f5c4700273738a3f2f056553f7d410dbe9b"
+    },
+    {
+      "name": "linux.report.json",
+      "bytes": 1737,
+      "sha256": "b8aee7071d8ea3f411b029631f36e209348f40420f83a87217b0ff748dfd596c"
+    },
+    {
+      "name": "linux.summary.json",
+      "bytes": 1369,
+      "sha256": "5b5e0a5f4bd41c4ad4f3f48c276a366f43b8820dbedd44815c21e4c51cece924"
+    },
+    {
+      "name": "manifest.json",
+      "bytes": 3067,
+      "sha256": "fc025ac774671bad43adcb883860cb56c85218036d9972a0bf3c8a93833fde01"
+    }
+  ]
+}
