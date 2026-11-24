@@ -21,13 +21,34 @@ mod filesystem_coverage;
 #[path = "cases/nonregular_coverage.rs"]
 mod nonregular_coverage;
 
+#[path = "cases/index_freshness.rs"]
+mod index_freshness;
+#[path = "cases/partial_clones.rs"]
+mod partial_clones;
+
 #[cfg(unix)]
 #[path = "cases/safety_properties.rs"]
 mod safety_properties;
 
 #[cfg(unix)]
+#[path = "cases/staging_cleanup.rs"]
+mod staging_cleanup;
+
+#[cfg(target_os = "macos")]
+#[path = "cases/donor_metadata.rs"]
+mod donor_metadata;
+
+#[cfg(unix)]
 #[path = "cases/adopt.rs"]
 mod adopt;
+
+#[cfg(unix)]
+#[path = "cases/adopt_layout.rs"]
+mod adopt_layout;
+
+#[cfg(target_os = "macos")]
+#[path = "cases/adopt_compact.rs"]
+mod adopt_compact;
 
 static NEXT: AtomicU64 = AtomicU64::new(0);
 struct Fixture {
@@ -445,7 +466,7 @@ fn empty_large_and_sparse_files_have_private_writes() -> Result<()> {
 
 #[cfg(target_os = "linux")]
 #[test]
-fn nested_tracked_fifo_falls_back_without_blocking_or_touching_source() -> Result<()> {
+fn nested_tracked_fifo_is_rewritten_without_blocking_or_touching_source() -> Result<()> {
     let f = Fixture::new()?;
     fs::create_dir(f.source.join("tree"))?;
     fs::write(f.source.join("tree/file"), "committed")?;
@@ -458,7 +479,8 @@ fn nested_tracked_fifo_falls_back_without_blocking_or_touching_source() -> Resul
     let mut child = command(env!("CARGO_BIN_EXE_git-twig"), &f.source);
     child.args(["new", "--detach", "../feature"]);
     let output = checked(bounded_output(child)?)?;
-    assert!(!String::from_utf8_lossy(&output.stderr).contains("CoW: verified"));
+    // The FIFO is never opened: Git writes that path and the rest is shared.
+    native(&output);
     assert_eq!(fs::read(f.destination().join("tree/file"))?, b"committed");
     assert_eq!(fs::read(f.root.join("original"))?, b"committed");
     use std::os::unix::fs::FileTypeExt;
@@ -595,7 +617,11 @@ fn git_c_main_layout_creates_a_sibling_from_head() -> Result<()> {
 fn linked_source_retains_failed_staging_in_the_common_git_directory() -> Result<()> {
     let f = Fixture::new()?;
     checked(f.add()?)?;
-    let output = twig(&f.destination(), &["new", "-b", "main", "../third", "HEAD"])?;
+    // A refusal only Git's registration discovers: `main` blocks `main/nested`.
+    let output = twig(
+        &f.destination(),
+        &["new", "-b", "main/nested", "../third", "HEAD"],
+    )?;
     assert!(!output.status.success());
     assert_eq!(f.stages()?.len(), 1);
     assert!(f.destination().join(".git").is_file());
@@ -783,7 +809,8 @@ fn successful_dirty_source_repair_cleans_its_staging() -> Result<()> {
 fn failed_create_retains_private_staging_in_git_metadata() -> Result<()> {
     use std::os::unix::fs::PermissionsExt;
     let f = Fixture::new()?;
-    let output = f.twig(&["new", "-b", "main", "../feature", "HEAD"])?;
+    // A refusal only Git's registration discovers: `main` blocks `main/nested`.
+    let output = f.twig(&["new", "-b", "main/nested", "../feature", "HEAD"])?;
     assert!(!output.status.success());
     let stages = f.stages()?;
     assert_eq!(stages.len(), 1);
@@ -1287,7 +1314,7 @@ fn directory_clone_permissions_follow_umask_not_source_modes() -> Result<()> {
 
 #[cfg(unix)]
 #[test]
-fn replaced_directory_symlink_delegates_without_traversing_it() -> Result<()> {
+fn replaced_directory_symlink_is_rewritten_without_traversing_it() -> Result<()> {
     use std::os::unix::fs::symlink;
     let f = Fixture::new()?;
     fs::create_dir_all(f.source.join("tree/sub"))?;
@@ -1297,7 +1324,8 @@ fn replaced_directory_symlink_delegates_without_traversing_it() -> Result<()> {
     fs::rename(f.source.join("tree/sub"), f.root.join("outside"))?;
     symlink(f.root.join("outside"), f.source.join("tree/sub"))?;
     let output = checked(f.add()?)?;
-    assert!(!String::from_utf8_lossy(&output.stderr).contains("CoW: verified"));
+    native(&output);
+    assert!(fs::symlink_metadata(f.destination().join("tree/sub"))?.is_dir());
     assert_eq!(
         fs::read(f.destination().join("tree/sub/file"))?,
         b"committed"

@@ -1,0 +1,578 @@
+{
+  "schemaVersion": 4,
+  "filesystem": "case-sensitive-image",
+  "imageSizeGib": 24,
+  "warmup": true,
+  "requireNative": true,
+  "selectedBackend": null,
+  "suite": "real-image-cohort",
+  "generatedAtUnixMs": 1794960453810,
+  "commit": "ace60d62f1584532efa6ebceef481d21f2483989",
+  "dirty": false,
+  "candidateSha256": "eaa9c3990dfabc0bfaa0614abd8efdbde07149c77fa96c0eb0636cf446cd88e7",
+  "gitVersion": "git version 2.56.1",
+  "platform": "macos aarch64 25.5.0",
+  "cpu": "Apple M1 Ultra",
+  "concurrency": 1,
+  "worktreesPerCohort": 1,
+  "repeats": 3,
+  "repositories": [
+    {
+      "label": "openclaw",
+      "commit": "410c0dda40702e25263b49b8b7d0786a5e49e366",
+      "donor_commit": null
+    }
+  ],
+  "notes": [
+    "Each image-backed backend/repeat gets a fresh, isolated sparse filesystem image (capacity/format recorded in imageSizeGiB/filesystem). Seed uses git clone --shared --no-checkout plus explicit pinned-commit checkout. Original repositories and object stores are read-only inputs; seed history uses alternates outside image.",
+    "One operation warmup per backend in its own seed/registry so it cannot become a measured donor. Removed before APFS snapshots; retained on Linux/host and excluded by the before snapshot. Global/system config and fixture hooks disabled. Backend order alternates by repeat.",
+    "A barrier releases the bounded worker pool simultaneously; each worker starts its next queued create only after its previous CLI returns. worktreesPerCohort is the total count; concurrency is the maximum in flight. Create wall time includes thread startup/barrier and ends at the last CLI completion, excluding final coordinator checkpoint/join work. Per-operation latency measures only that CLI. harnessCpuMsDuringCreate records self CPU (coordinator and worker threads), excluding CLI child CPU. No verification/generation competes with creates. No retries: failures are data.",
+    "First git status is measured sequentially after all creates and the initial space snapshot. Full byte/symlink/executable verification follows each first status; its CPU is outside creation timing. A first-status sum is not a concurrent-status wall time.",
+    "Allocated space is total minus free blocks from statvfs on the isolated filesystem, sampled after sync until stable (or marked unstable). This includes working files, indexes, retained staging and filesystem metadata, not logical size/du/st_blocks. Host sparse-image allocation is not the metric.",
+    "After initial verification/space measurement, one data-bearing byte in the largest regular target file matching the original donor (offset and file length recorded) is changed in place; if no such data exists, the probe is not applicable. Additional filesystem allocation is sampled; seed file must remain unchanged. APFS images are detached and deleted after saving each cohort; Linux images and fixtures are retained after unmount; no benchmark input paths or source file contents are serialized.",
+    "Local warm-cache results. A sparse loopback/disk image is a controlled filesystem, not a claim about native host-volume maximum throughput. Report failures alongside latency and allocation; do not compare unequal successful counts as identical capacity.",
+    "Schema 4 records source/donor and target commits/trees separately. Different-revision checkout bytes come from an independent Git oracle outside the measured filesystem and worktree registry. Later measured creates may legitimately reuse earlier completed targets. requireNative=false is only for explicitly named fallback baselines; native flags and clone counts remain recorded, never relabeled.",
+    "Shared Apple M1 Ultra Mac Studio, internal APFS storage. Published v0.5.0 arm64 archive verified against release SHA-256. Stock Git 2.56.1. Original v0.4 pins and agreed counts; warmup enabled; concurrency one; three paired rounds. Original host Workers starter raw results independently qualified after header-parser correction and are not repeated. Remaining host jobs and the separate originally planned case-sensitive allocation target only. No competing builds/tests; background apps not stopped."
+  ],
+  "cohorts": [
+    {
+      "repository": "openclaw",
+      "sourceCommit": "410c0dda40702e25263b49b8b7d0786a5e49e366",
+      "sourceTree": "16be5eb7eee60e1285bb8be4db00d9910b200e42",
+      "targetCommit": "410c0dda40702e25263b49b8b7d0786a5e49e366",
+      "targetTree": "16be5eb7eee60e1285bb8be4db00d9910b200e42",
+      "backend": "git",
+      "repeat": 0,
+      "trackedFiles": 65500,
+      "logicalBytesPerWorktree": 776199844,
+      "createWallMs": 17500.11575,
+      "harnessCpuMsDuringCreate": 2.9219999999995707,
+      "observerWallMs": 17500.659917,
+      "createsPerSecond": 0.05714247918617338,
+      "statusAndVerificationWallMs": 19792.642333,
+      "succeeded": 1,
+      "failed": 0,
+      "verifiedFiles": 65500,
+      "sourceUnchanged": true,
+      "privateWriteTested": true,
+      "warmupCleanupRecovered": false,
+      "privateWriteFileBytes": 5944742,
+      "privateWriteOffset": 0,
+      "before": {
+        "allocatedBytes": 2429509632,
+        "totalBytes": 25560047616,
+        "stable": true,
+        "observedAllocatedBytes": [
+          2429509632,
+          2429509632,
+          2429509632
+        ]
+      },
+      "afterCreate": {
+        "allocatedBytes": 3389882368,
+        "totalBytes": 25560047616,
+        "stable": true,
+        "observedAllocatedBytes": [
+          3389882368,
+          3389882368,
+          3389882368
+        ]
+      },
+      "afterStatus": {
+        "allocatedBytes": 3389767680,
+        "totalBytes": 25560047616,
+        "stable": false,
+        "observedAllocatedBytes": [
+          3388948480,
+          3389493248,
+          3389104128,
+          3389263872,
+          3389181952,
+          3389505536,
+          3389067264,
+          3389448192,
+          3389886464,
+          3389173760,
+          3389411328,
+          3389767680
+        ]
+      },
+      "afterPrivateWrites": {
+        "allocatedBytes": 3389571072,
+        "totalBytes": 25560047616,
+        "stable": false,
+        "observedAllocatedBytes": [
+          3389308928,
+          3389370368,
+          3389575168,
+          3389808640,
+          3388944384,
+          3389034496,
+          3389145088,
+          3389206528,
+          3389374464,
+          3389452288,
+          3389513728,
+          3389571072
+        ]
+      },
+      "growthAfterCreateBytes": 960372736,
+      "growthAfterStatusBytes": 960258048,
+      "privateWriteGrowthBytes": -196608,
+      "operations": [
+        {
+          "worker": 0,
+          "createMs": 17500.023375,
+          "createStartedAtMs": 0.092292,
+          "createFinishedAtMs": 17500.11575,
+          "firstStatusMs": 1738.715375,
+          "exitCode": 0,
+          "nativeCow": false,
+          "verifiedClones": null,
+          "gitWrittenPaths": null,
+          "verified": true,
+          "error": null
+        }
+      ]
+    },
+    {
+      "repository": "openclaw",
+      "sourceCommit": "410c0dda40702e25263b49b8b7d0786a5e49e366",
+      "sourceTree": "16be5eb7eee60e1285bb8be4db00d9910b200e42",
+      "targetCommit": "410c0dda40702e25263b49b8b7d0786a5e49e366",
+      "targetTree": "16be5eb7eee60e1285bb8be4db00d9910b200e42",
+      "backend": "twig",
+      "repeat": 0,
+      "trackedFiles": 65500,
+      "logicalBytesPerWorktree": 776199844,
+      "createWallMs": 21855.893625,
+      "harnessCpuMsDuringCreate": 1.2639999999992142,
+      "observerWallMs": 21856.608416,
+      "createsPerSecond": 0.045754249044117956,
+      "statusAndVerificationWallMs": 20997.169875,
+      "succeeded": 1,
+      "failed": 0,
+      "verifiedFiles": 65500,
+      "sourceUnchanged": true,
+      "privateWriteTested": true,
+      "warmupCleanupRecovered": false,
+      "privateWriteFileBytes": 5944742,
+      "privateWriteOffset": 0,
+      "before": {
+        "allocatedBytes": 2424614912,
+        "totalBytes": 25560047616,
+        "stable": true,
+        "observedAllocatedBytes": [
+          2424614912,
+          2424614912,
+          2424614912
+        ]
+      },
+      "afterCreate": {
+        "allocatedBytes": 2457309184,
+        "totalBytes": 25560047616,
+        "stable": true,
+        "observedAllocatedBytes": [
+          2457309184,
+          2457309184,
+          2457309184
+        ]
+      },
+      "afterStatus": {
+        "allocatedBytes": 2457554944,
+        "totalBytes": 25560047616,
+        "stable": true,
+        "observedAllocatedBytes": [
+          2457432064,
+          2457501696,
+          2457554944,
+          2457554944,
+          2457554944
+        ]
+      },
+      "afterPrivateWrites": {
+        "allocatedBytes": 2457337856,
+        "totalBytes": 25560047616,
+        "stable": true,
+        "observedAllocatedBytes": [
+          2457337856,
+          2457337856,
+          2457337856
+        ]
+      },
+      "growthAfterCreateBytes": 32694272,
+      "growthAfterStatusBytes": 32940032,
+      "privateWriteGrowthBytes": -217088,
+      "operations": [
+        {
+          "worker": 0,
+          "createMs": 21855.819832999998,
+          "createStartedAtMs": 0.07375000000000001,
+          "createFinishedAtMs": 21855.893625,
+          "firstStatusMs": 14409.546291999999,
+          "exitCode": 0,
+          "nativeCow": true,
+          "verifiedClones": 65498,
+          "gitWrittenPaths": 0,
+          "verified": true,
+          "error": null
+        }
+      ]
+    },
+    {
+      "repository": "openclaw",
+      "sourceCommit": "410c0dda40702e25263b49b8b7d0786a5e49e366",
+      "sourceTree": "16be5eb7eee60e1285bb8be4db00d9910b200e42",
+      "targetCommit": "410c0dda40702e25263b49b8b7d0786a5e49e366",
+      "targetTree": "16be5eb7eee60e1285bb8be4db00d9910b200e42",
+      "backend": "twig",
+      "repeat": 1,
+      "trackedFiles": 65500,
+      "logicalBytesPerWorktree": 776199844,
+      "createWallMs": 16932.571708,
+      "harnessCpuMsDuringCreate": 1.5470000000022992,
+      "observerWallMs": 16933.564625,
+      "createsPerSecond": 0.05905777440337299,
+      "statusAndVerificationWallMs": 26653.796209,
+      "succeeded": 1,
+      "failed": 0,
+      "verifiedFiles": 65500,
+      "sourceUnchanged": true,
+      "privateWriteTested": true,
+      "warmupCleanupRecovered": false,
+      "privateWriteFileBytes": 5944742,
+      "privateWriteOffset": 0,
+      "before": {
+        "allocatedBytes": 2424545280,
+        "totalBytes": 25560047616,
+        "stable": true,
+        "observedAllocatedBytes": [
+          2424545280,
+          2424545280,
+          2424545280
+        ]
+      },
+      "afterCreate": {
+        "allocatedBytes": 2456989696,
+        "totalBytes": 25560047616,
+        "stable": true,
+        "observedAllocatedBytes": [
+          2456989696,
+          2456989696,
+          2456989696
+        ]
+      },
+      "afterStatus": {
+        "allocatedBytes": 2457034752,
+        "totalBytes": 25560047616,
+        "stable": true,
+        "observedAllocatedBytes": [
+          2457034752,
+          2457034752,
+          2457034752
+        ]
+      },
+      "afterPrivateWrites": {
+        "allocatedBytes": 2457042944,
+        "totalBytes": 25560047616,
+        "stable": true,
+        "observedAllocatedBytes": [
+          2457042944,
+          2457042944,
+          2457042944
+        ]
+      },
+      "growthAfterCreateBytes": 32444416,
+      "growthAfterStatusBytes": 32489472,
+      "privateWriteGrowthBytes": 8192,
+      "operations": [
+        {
+          "worker": 0,
+          "createMs": 16932.41125,
+          "createStartedAtMs": 0.160416,
+          "createFinishedAtMs": 16932.571708,
+          "firstStatusMs": 17385.149250000002,
+          "exitCode": 0,
+          "nativeCow": true,
+          "verifiedClones": 65498,
+          "gitWrittenPaths": 0,
+          "verified": true,
+          "error": null
+        }
+      ]
+    },
+    {
+      "repository": "openclaw",
+      "sourceCommit": "410c0dda40702e25263b49b8b7d0786a5e49e366",
+      "sourceTree": "16be5eb7eee60e1285bb8be4db00d9910b200e42",
+      "targetCommit": "410c0dda40702e25263b49b8b7d0786a5e49e366",
+      "targetTree": "16be5eb7eee60e1285bb8be4db00d9910b200e42",
+      "backend": "git",
+      "repeat": 1,
+      "trackedFiles": 65500,
+      "logicalBytesPerWorktree": 776199844,
+      "createWallMs": 17382.386416999998,
+      "harnessCpuMsDuringCreate": 3.372000000003027,
+      "observerWallMs": 17383.592167,
+      "createsPerSecond": 0.057529500035852305,
+      "statusAndVerificationWallMs": 6316.187167,
+      "succeeded": 1,
+      "failed": 0,
+      "verifiedFiles": 65500,
+      "sourceUnchanged": true,
+      "privateWriteTested": true,
+      "warmupCleanupRecovered": false,
+      "privateWriteFileBytes": 5944742,
+      "privateWriteOffset": 0,
+      "before": {
+        "allocatedBytes": 2429632512,
+        "totalBytes": 25560047616,
+        "stable": true,
+        "observedAllocatedBytes": [
+          2429632512,
+          2429632512,
+          2429632512
+        ]
+      },
+      "afterCreate": {
+        "allocatedBytes": 3389841408,
+        "totalBytes": 25560047616,
+        "stable": true,
+        "observedAllocatedBytes": [
+          3389841408,
+          3389841408,
+          3389841408
+        ]
+      },
+      "afterStatus": {
+        "allocatedBytes": 3389669376,
+        "totalBytes": 25560047616,
+        "stable": true,
+        "observedAllocatedBytes": [
+          3389620224,
+          3389345792,
+          3389677568,
+          3389198336,
+          3389669376,
+          3389669376,
+          3389669376
+        ]
+      },
+      "afterPrivateWrites": {
+        "allocatedBytes": 3388866560,
+        "totalBytes": 25560047616,
+        "stable": true,
+        "observedAllocatedBytes": [
+          3388866560,
+          3388866560,
+          3388866560
+        ]
+      },
+      "growthAfterCreateBytes": 960208896,
+      "growthAfterStatusBytes": 960036864,
+      "privateWriteGrowthBytes": -802816,
+      "operations": [
+        {
+          "worker": 0,
+          "createMs": 17382.165624999998,
+          "createStartedAtMs": 0.22070900000000002,
+          "createFinishedAtMs": 17382.386416999998,
+          "firstStatusMs": 488.137625,
+          "exitCode": 0,
+          "nativeCow": false,
+          "verifiedClones": null,
+          "gitWrittenPaths": null,
+          "verified": true,
+          "error": null
+        }
+      ]
+    },
+    {
+      "repository": "openclaw",
+      "sourceCommit": "410c0dda40702e25263b49b8b7d0786a5e49e366",
+      "sourceTree": "16be5eb7eee60e1285bb8be4db00d9910b200e42",
+      "targetCommit": "410c0dda40702e25263b49b8b7d0786a5e49e366",
+      "targetTree": "16be5eb7eee60e1285bb8be4db00d9910b200e42",
+      "backend": "git",
+      "repeat": 2,
+      "trackedFiles": 65500,
+      "logicalBytesPerWorktree": 776199844,
+      "createWallMs": 18556.590083,
+      "harnessCpuMsDuringCreate": 3.764999999999418,
+      "observerWallMs": 18557.12375,
+      "createsPerSecond": 0.053889211084967414,
+      "statusAndVerificationWallMs": 6892.233708,
+      "succeeded": 1,
+      "failed": 0,
+      "verifiedFiles": 65500,
+      "sourceUnchanged": true,
+      "privateWriteTested": true,
+      "warmupCleanupRecovered": false,
+      "privateWriteFileBytes": 5944742,
+      "privateWriteOffset": 0,
+      "before": {
+        "allocatedBytes": 2425372672,
+        "totalBytes": 25560047616,
+        "stable": true,
+        "observedAllocatedBytes": [
+          2425372672,
+          2425372672,
+          2425372672
+        ]
+      },
+      "afterCreate": {
+        "allocatedBytes": 3389857792,
+        "totalBytes": 25560047616,
+        "stable": true,
+        "observedAllocatedBytes": [
+          3389857792,
+          3389857792,
+          3389857792
+        ]
+      },
+      "afterStatus": {
+        "allocatedBytes": 3389808640,
+        "totalBytes": 25560047616,
+        "stable": false,
+        "observedAllocatedBytes": [
+          3389345792,
+          3389546496,
+          3389861888,
+          3388895232,
+          3389018112,
+          3389448192,
+          3388956672,
+          3389669376,
+          3389513728,
+          3389349888,
+          3389452288,
+          3389808640
+        ]
+      },
+      "afterPrivateWrites": {
+        "allocatedBytes": 3389800448,
+        "totalBytes": 25560047616,
+        "stable": false,
+        "observedAllocatedBytes": [
+          3388891136,
+          3388891136,
+          3389292544,
+          3389050880,
+          3389624320,
+          3389362176,
+          3389632512,
+          3389804544,
+          3389157376,
+          3389538304,
+          3389702144,
+          3389800448
+        ]
+      },
+      "growthAfterCreateBytes": 964485120,
+      "growthAfterStatusBytes": 964435968,
+      "privateWriteGrowthBytes": -8192,
+      "operations": [
+        {
+          "worker": 0,
+          "createMs": 18556.450333,
+          "createStartedAtMs": 0.139708,
+          "createFinishedAtMs": 18556.590083,
+          "firstStatusMs": 316.062167,
+          "exitCode": 0,
+          "nativeCow": false,
+          "verifiedClones": null,
+          "gitWrittenPaths": null,
+          "verified": true,
+          "error": null
+        }
+      ]
+    },
+    {
+      "repository": "openclaw",
+      "sourceCommit": "410c0dda40702e25263b49b8b7d0786a5e49e366",
+      "sourceTree": "16be5eb7eee60e1285bb8be4db00d9910b200e42",
+      "targetCommit": "410c0dda40702e25263b49b8b7d0786a5e49e366",
+      "targetTree": "16be5eb7eee60e1285bb8be4db00d9910b200e42",
+      "backend": "twig",
+      "repeat": 2,
+      "trackedFiles": 65500,
+      "logicalBytesPerWorktree": 776199844,
+      "createWallMs": 18483.514875,
+      "harnessCpuMsDuringCreate": 1.3019999999960419,
+      "observerWallMs": 18484.53275,
+      "createsPerSecond": 0.05410226392343572,
+      "statusAndVerificationWallMs": 19978.117625,
+      "succeeded": 1,
+      "failed": 0,
+      "verifiedFiles": 65500,
+      "sourceUnchanged": true,
+      "privateWriteTested": true,
+      "warmupCleanupRecovered": false,
+      "privateWriteFileBytes": 5944742,
+      "privateWriteOffset": 0,
+      "before": {
+        "allocatedBytes": 2425114624,
+        "totalBytes": 25560047616,
+        "stable": true,
+        "observedAllocatedBytes": [
+          2425114624,
+          2425114624,
+          2425114624
+        ]
+      },
+      "afterCreate": {
+        "allocatedBytes": 2457747456,
+        "totalBytes": 25560047616,
+        "stable": true,
+        "observedAllocatedBytes": [
+          2457747456,
+          2457747456,
+          2457747456
+        ]
+      },
+      "afterStatus": {
+        "allocatedBytes": 2458251264,
+        "totalBytes": 25560047616,
+        "stable": true,
+        "observedAllocatedBytes": [
+          2457960448,
+          2458009600,
+          2458136576,
+          2458169344,
+          2458251264,
+          2458251264,
+          2458251264
+        ]
+      },
+      "afterPrivateWrites": {
+        "allocatedBytes": 2457759744,
+        "totalBytes": 25560047616,
+        "stable": true,
+        "observedAllocatedBytes": [
+          2457759744,
+          2457759744,
+          2457759744
+        ]
+      },
+      "growthAfterCreateBytes": 32632832,
+      "growthAfterStatusBytes": 33136640,
+      "privateWriteGrowthBytes": -491520,
+      "operations": [
+        {
+          "worker": 0,
+          "createMs": 18483.453333,
+          "createStartedAtMs": 0.06145799999999999,
+          "createFinishedAtMs": 18483.514875,
+          "firstStatusMs": 12249.363416,
+          "exitCode": 0,
+          "nativeCow": true,
+          "verifiedClones": 65498,
+          "gitWrittenPaths": 0,
+          "verified": true,
+          "error": null
+        }
+      ]
+    }
+  ],
+  "failures": []
+}

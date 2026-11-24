@@ -34,7 +34,8 @@ agent that can execute Git commands; they do not install or intercept client hoo
 
 ```text
 git twig new [<git-worktree options>] <path> [<commit>]
-git twig adopt [--dry-run | --prepare | --dedupe] <linked-worktree>
+git twig adopt [--dry-run] [--yes] [--compact [--offline] | --move-only] [--worktrees-dir=<root>] [<worktree>]
+git twig adopt [--prepare | --dedupe] <linked-worktree>
 git twig list [--porcelain [-z]]
 git twig remove <path>
 git twig move <path> <new-path>
@@ -50,9 +51,10 @@ git twig --version
 
 - `new`: create an ordinary linked worktree. Supported requests use native CoW;
   other requests use Git's normal checkout.
-- `adopt` (experimental since v0.5.0): inspect
-  existing linked worktrees for matching current bytes. See the adoption section;
-  it is not automatic cleanup or a session manager.
+- `adopt`: on development main, discover registered worktrees, preview a sibling
+  layout and ask before relocating. Published v0.5 has the earlier sharing-only
+  command; check help for `--worktrees-dir`. Explicit `--prepare`/`--dedupe` keep
+  their sharing-only behavior. This is not an agent session manager.
 - `list`: show worktrees in human-readable form. `--porcelain` is Git's stable
   machine-readable format; `-z` uses NUL separators for safe path parsing.
 - `remove`: remove a worktree and its registration. Check for changes and ask
@@ -116,9 +118,10 @@ Do not assume that creating a worktree moved an existing editor/session there.
 - Prefer explicit Twig creation when you control creation. A client's built-in
   isolation/worktree feature may call stock Git independently; merely installing
   this skill does not intercept it or guarantee CoW for app-managed worktrees.
-- Existing Git worktrees need no conversion to be usable. Inspect and work in them
-  normally. Do not replace their files or move them to try to gain sharing, and do
-  not promise that Twig can compact an active existing APFS checkout.
+- Existing Git worktrees need no conversion to be usable. To move nested
+  worktrees into a sibling layout, preview `adopt` and coordinate with their
+  owning agents before asking for approval. Never move an active app-managed
+  checkout silently. Moving does not compact an APFS checkout.
 - Respect the client's paths, session records, branches and cleanup lifecycle.
   Do not install lifecycle hooks, rewrite agent settings, take ownership of its
   worktree inventory, or disable its safety checks as part of ordinary Twig use.
@@ -131,33 +134,71 @@ Do not assume that creating a worktree moved an existing editor/session there.
   native CoW when trace output confirms it; a successful Git fallback is valid but
   not evidence of sharing. Do not promise fixed speed or exclusive space savings.
 
-## Inspect or adopt an existing worktree
+## Adopt an existing worktree layout
 
-First check `git twig adopt -h`; older installed releases do not have this command.
-Run from a distinct donor checkout of the same repository:
+First check `git twig adopt -h` for `--worktrees-dir`: this relocation flow is
+unreleased development main, not the published v0.5 sharing-only default.
 
 ```sh
-git -C main twig adopt --dry-run ../existing
+git -C main twig adopt --dry-run --worktrees-dir=/path/to/repo
+git -C main twig adopt --worktrees-dir=/path/to/repo
 ```
 
-Inspection does not replace files or refresh the index. It compares same-path
-regular files tracked in both checkouts by their current raw bytes, not HEAD or clean status.
-Dirty and staged work must survive unchanged. Missing, different, empty,
-symlinked, multiply-linked and cross-device candidates are skipped. Report these
-limits rather than promising all worktree bytes can be shared.
+Default adoption discovers this repository's registered worktrees and proposes
+`/path/to/repo/{main,feat-x,...}`. The original clone uses `main/` regardless of
+its checked-out branch; branch slashes become hyphens. Omit `--worktrees-dir` to
+choose a root interactively, or reuse the saved per-repository root. Add a target
+worktree path to move only that checkout. Do not silently adopt unrelated agents'
+worktrees: inspect and explain the complete plan, coordinate active sessions,
+and get approval. The CLI confirms by default; use `--yes` only after explicit
+approval of the displayed plan, with an explicit or saved root.
 
-On supported Linux filesystems, explicit `--dedupe` uses kernel in-place
-comparison/sharing without replacing inodes. Start with the dry-run and explain
-that a changed or unsupported range can stop the operation after earlier ranges
-were shared; no contents are rolled back. Do not infer exclusive space reclaimed
-from reported logical/kernel byte counts. Do not loop over every agent's
-worktrees or assume permission to perform unrelated maintenance.
+Adoption preserves current staged, dirty, untracked and ignored work rather than
+reconstructing HEAD. It refuses occupied destinations, directory-name collisions,
+locked/prunable registrations, active Git lockfiles, cross-device moves and
+submodule relocation. Git repairs registrations after relocation. Sessions,
+editors, external absolute paths and client-owned records are not updated; explain
+what the owner must restart or reconfigure. Report the retained recovery journal
+on failure and never remove parked files automatically.
 
-On macOS, `--prepare` only retains private verified clones for inspection and can
-consume extra space. It does NOT compact the original; `--dedupe` is unavailable.
-Never substitute clone-and-rename on an active APFS checkout: editors and writable
-mappings can keep writing the old inode. Leave existing agent ownership, paths,
-branches, index, permissions and registration intact. No agent hook is required.
+After adoption, `git twig new -b feat/x` uses the saved root without an explicit
+destination. Explicit creation destinations keep their existing Git semantics.
+Use the new absolute paths for every subsequent tool call.
+
+Layout and sharing are separate. On Linux, confirmed layout adoption attempts
+kernel in-place sharing of identical same-path tracked regular files against the
+main checkout. Unsupported/changed ranges are reported separately from a
+successful move; earlier deduplicated ranges are not rolled back. Neither logical
+matching bytes nor kernel byte counts prove exclusive physical space reclaimed.
+On macOS, moving alone leaves sharing unchanged, but interactive adoption offers
+an explicit offline compaction step. First preview `adopt --compact --dry-run`.
+Before approving compaction, have the owner save work and CLOSE every agent,
+editor, build and server using donor/target worktrees. A paused process can still
+hold descriptors or writable mappings. Do not infer exclusive ownership from
+lsof/process scans or simply pass an offline flag on the owner's behalf.
+
+For explicitly approved automation, use `--compact --offline --yes` with the
+reviewed explicit/saved root. `--yes` alone never authorizes APFS replacement;
+`--move-only` opts out of sharing on either platform. Compaction uses verified
+native CoW clones of matching tracked current bytes, preserving supported target
+metadata and index entries, not restoring HEAD. It changes inodes/ctime and may
+cause the next status to refresh its stat cache. Verified old copies are retired
+to release their references; indefinite backups would keep old extents pinned.
+
+An open original prevents retirement. A failure after swapping stops and retains
+installed/recovery copies: report the journal path and do not restart agents,
+retry, delete originals or blindly roll back over possible writes. Unsupported
+metadata/files remain untouched. Snapshots are never deleted and physical space
+reclaimed is not inferred from matching logical bytes. This remains an explicitly
+offline operation, not live APFS deduplication. Ordinary Git worktrees do not need
+a format conversion.
+
+The explicit v0.5 sharing-only modes remain available from a distinct donor:
+`git -C main twig adopt --prepare ../existing` retains private verified clones,
+and Linux `--dedupe` compares/shares ranges in place without replacing inodes.
+These --prepare clones can consume extra space and are never installed. Never
+substitute clone-and-rename on an active APFS checkout: open writers can retain
+the old inode. These modes do not relocate worktrees or need agent hooks.
 
 ## Know what is copied
 

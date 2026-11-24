@@ -1,0 +1,286 @@
+{
+  "schemaVersion": 1,
+  "kind": "published-real-repository-capture",
+  "release": "v0.5.0",
+  "releaseCommit": "4d2622f77ea8bfecc1f3fd6f1930686648990bbd",
+  "protocol": {
+    "rounds": 3,
+    "concurrency": 1,
+    "warmup": true,
+    "inputPins": "original v0.4 comparisons",
+    "timingBoundary": "CLI creation; first status and independent full verification recorded separately"
+  },
+  "inputs": [
+    {
+      "label": "workers-starter",
+      "revision": "d0b1ee485dc1cf2bc0b2a3511cf8cf1057624d02",
+      "worktrees": 10,
+      "imageGiB": 16,
+      "hostTiming": true,
+      "tree": "d4e01b1be340f6770de5b6b6e4bbcc090312b1aa",
+      "trackedBlobs": 6,
+      "logicalBlobBytes": 1421,
+      "shallow": false,
+      "promisor": false
+    },
+    {
+      "label": "twig",
+      "revision": "96c43950e4c0d8524de4ad53157c136eb222d39c",
+      "worktrees": 10,
+      "imageGiB": 16,
+      "hostTiming": true,
+      "tree": "efa8b786a16488976f20b96e63a2417d1ce7bf07",
+      "trackedBlobs": 45,
+      "logicalBlobBytes": 388029,
+      "shallow": false,
+      "promisor": false
+    },
+    {
+      "label": "axo",
+      "revision": "67af816be26633039e8507d93d577b2073d6f5fd",
+      "worktrees": 1,
+      "imageGiB": 16,
+      "hostTiming": true,
+      "tree": "675920882d5a4c2b8d42db9e0673b3c3625a2b95",
+      "trackedBlobs": 2083,
+      "logicalBlobBytes": 26185024,
+      "shallow": false,
+      "promisor": false
+    },
+    {
+      "label": "openclaw",
+      "revision": "410c0dda40702e25263b49b8b7d0786a5e49e366",
+      "worktrees": 1,
+      "imageGiB": 24,
+      "hostTiming": true,
+      "tree": "16be5eb7eee60e1285bb8be4db00d9910b200e42",
+      "trackedBlobs": 65500,
+      "logicalBlobBytes": 776199844,
+      "shallow": true,
+      "promisor": false
+    },
+    {
+      "label": "pulumi",
+      "revision": "430261138aa08539cd598b9269bfe8f82fd49b78",
+      "worktrees": 1,
+      "imageGiB": 16,
+      "hostTiming": true,
+      "tree": "56771086e70ddbd601b405740afddc2b7a42510a",
+      "trackedBlobs": 14811,
+      "logicalBlobBytes": 1255510318,
+      "shallow": false,
+      "promisor": false
+    },
+    {
+      "label": "linux",
+      "revision": "23c62304dde29abe92013d85910d03a77dada35d",
+      "worktrees": 1,
+      "imageGiB": 32,
+      "hostTiming": false,
+      "tree": "78c11a69c8b8226b0cefc40082c0cdc8030b2f8b",
+      "trackedBlobs": 97371,
+      "logicalBlobBytes": 1676008970,
+      "shallow": true,
+      "promisor": false
+    }
+  ],
+  "candidateHashes": {
+    "linux-xfs": {
+      "sha256": "63853935620fef55977053e7de6671bbcf17da839f36dd426348c126910cda97",
+      "archiveSha256": "819e1ebea0039fc440f255fc5abb2d8be735a831e54c9b93d082bd3e0301eea5",
+      "asset": "git-twig-v0.5.0-x86_64-unknown-linux-gnu.tar.gz"
+    },
+    "linux-btrfs": {
+      "sha256": "63853935620fef55977053e7de6671bbcf17da839f36dd426348c126910cda97",
+      "archiveSha256": "819e1ebea0039fc440f255fc5abb2d8be735a831e54c9b93d082bd3e0301eea5",
+      "asset": "git-twig-v0.5.0-x86_64-unknown-linux-gnu.tar.gz"
+    },
+    "macos-host": {
+      "sha256": "eaa9c3990dfabc0bfaa0614abd8efdbde07149c77fa96c0eb0636cf446cd88e7",
+      "archiveSha256": "5a87935d88ee9e3a7b861a7c2b87db23bb9ee0058fab4f9e0092cb5f0427b16a",
+      "asset": "git-twig-v0.5.0-aarch64-apple-darwin.tar.gz"
+    },
+    "macos-apfs-case-sensitive": {
+      "sha256": "eaa9c3990dfabc0bfaa0614abd8efdbde07149c77fa96c0eb0636cf446cd88e7",
+      "archiveSha256": "5a87935d88ee9e3a7b861a7c2b87db23bb9ee0058fab4f9e0092cb5f0427b16a",
+      "asset": "git-twig-v0.5.0-aarch64-apple-darwin.tar.gz"
+    }
+  },
+  "observations": [
+    {
+      "target": "linux-xfs",
+      "repository": "workers-starter",
+      "file": "bench/results/sha256-63853935620f/linux-xfs/2026-11-17/run-234752.172-41cbcf3b-dc70-4878-a1d5-334401ec4b87/workers-starter.json",
+      "sha256": "a4f2172c719f0c1cabf125c936cf61b3b26bca1ef9e57f06d633c46c6b60f176",
+      "manifest": "bench/results/sha256-63853935620f/linux-xfs/2026-11-17/run-234752.172-41cbcf3b-dc70-4878-a1d5-334401ec4b87/manifest.json",
+      "status": "verified",
+      "qualification": "bench/results/sha256-63853935620f/linux-xfs/2026-11-17/run-234752.172-41cbcf3b-dc70-4878-a1d5-334401ec4b87/workers-starter.qualification.json"
+    },
+    {
+      "target": "linux-xfs",
+      "repository": "twig",
+      "file": "bench/results/sha256-63853935620f/linux-xfs/2026-11-17/run-235242.451-d4dc3f6a-c09f-4c1c-bedb-c0bbfc365348/twig.json",
+      "sha256": "7a5ab39b8bbe925025f45d9a7a45b97f7a84d376c51d4b25f3f3b05e2accdd03",
+      "manifest": "bench/results/sha256-63853935620f/linux-xfs/2026-11-17/run-235242.451-d4dc3f6a-c09f-4c1c-bedb-c0bbfc365348/manifest.json",
+      "status": "verified"
+    },
+    {
+      "target": "linux-xfs",
+      "repository": "axo",
+      "file": "bench/results/sha256-63853935620f/linux-xfs/2026-11-17/run-235242.451-d4dc3f6a-c09f-4c1c-bedb-c0bbfc365348/axo.json",
+      "sha256": "d9db73fef1458c515e62416a2e8ff0094eeae3b6a8a7fc9b8f7d8a103bd1f5f7",
+      "manifest": "bench/results/sha256-63853935620f/linux-xfs/2026-11-17/run-235242.451-d4dc3f6a-c09f-4c1c-bedb-c0bbfc365348/manifest.json",
+      "status": "verified"
+    },
+    {
+      "target": "linux-xfs",
+      "repository": "openclaw",
+      "file": "bench/results/sha256-63853935620f/linux-xfs/2026-11-17/run-235242.451-d4dc3f6a-c09f-4c1c-bedb-c0bbfc365348/openclaw.json",
+      "sha256": "ab57034fc4e53df8f3cbfcf23e27f25ee0ad067813f0fbd8745a5b1e28608881",
+      "manifest": "bench/results/sha256-63853935620f/linux-xfs/2026-11-17/run-235242.451-d4dc3f6a-c09f-4c1c-bedb-c0bbfc365348/manifest.json",
+      "status": "interrupted",
+      "interruption": "bench/results/sha256-63853935620f/linux-xfs/2026-11-17/run-235242.451-d4dc3f6a-c09f-4c1c-bedb-c0bbfc365348/interruption.json"
+    },
+    {
+      "target": "macos-apfs-case-sensitive",
+      "repository": "workers-starter",
+      "file": "bench/results/sha256-eaa9c3990dfa/macos-apfs-case-sensitive/2026-11-18/run-000502.573-0b3c6571-da7c-4305-8087-930527be2bdd/workers-starter.json",
+      "sha256": "bb3adf0dc6a73d48ab58291937f3eafba964802f0b842ec6a804064bf02cb042",
+      "manifest": "bench/results/sha256-eaa9c3990dfa/macos-apfs-case-sensitive/2026-11-18/run-000502.573-0b3c6571-da7c-4305-8087-930527be2bdd/manifest.json",
+      "status": "verified"
+    },
+    {
+      "target": "macos-apfs-case-sensitive",
+      "repository": "twig",
+      "file": "bench/results/sha256-eaa9c3990dfa/macos-apfs-case-sensitive/2026-11-18/run-000502.573-0b3c6571-da7c-4305-8087-930527be2bdd/twig.json",
+      "sha256": "c2244234a91f87d368ef8c2050e4a0126b8a4aec736f500d1a2016c08e66adbd",
+      "manifest": "bench/results/sha256-eaa9c3990dfa/macos-apfs-case-sensitive/2026-11-18/run-000502.573-0b3c6571-da7c-4305-8087-930527be2bdd/manifest.json",
+      "status": "verified"
+    },
+    {
+      "target": "macos-apfs-case-sensitive",
+      "repository": "axo",
+      "file": "bench/results/sha256-eaa9c3990dfa/macos-apfs-case-sensitive/2026-11-18/run-000502.573-0b3c6571-da7c-4305-8087-930527be2bdd/axo.json",
+      "sha256": "7ab0a9307e2c3805767a6ea7db77d8781e7f903e51f0354e15dbd8c63f34893e",
+      "manifest": "bench/results/sha256-eaa9c3990dfa/macos-apfs-case-sensitive/2026-11-18/run-000502.573-0b3c6571-da7c-4305-8087-930527be2bdd/manifest.json",
+      "status": "verified"
+    },
+    {
+      "target": "macos-apfs-case-sensitive",
+      "repository": "openclaw",
+      "file": "bench/results/sha256-eaa9c3990dfa/macos-apfs-case-sensitive/2026-11-18/run-000502.573-0b3c6571-da7c-4305-8087-930527be2bdd/openclaw.json",
+      "sha256": "a9827659a94012e3cb23929a2b405036204fdab7f530956fd24c8b11ac7b2c4e",
+      "manifest": "bench/results/sha256-eaa9c3990dfa/macos-apfs-case-sensitive/2026-11-18/run-000502.573-0b3c6571-da7c-4305-8087-930527be2bdd/manifest.json",
+      "status": "verified"
+    },
+    {
+      "target": "macos-apfs-case-sensitive",
+      "repository": "pulumi",
+      "file": "bench/results/sha256-eaa9c3990dfa/macos-apfs-case-sensitive/2026-11-18/run-000502.573-0b3c6571-da7c-4305-8087-930527be2bdd/pulumi.json",
+      "sha256": "b2ffb17d33e8360b8c240158a1f0dbf909046506ded8fa28666be37d1c298dbd",
+      "manifest": "bench/results/sha256-eaa9c3990dfa/macos-apfs-case-sensitive/2026-11-18/run-000502.573-0b3c6571-da7c-4305-8087-930527be2bdd/manifest.json",
+      "status": "verified"
+    },
+    {
+      "target": "macos-apfs-case-sensitive",
+      "repository": "linux",
+      "file": "bench/results/sha256-eaa9c3990dfa/macos-apfs-case-sensitive/2026-11-18/run-000502.573-0b3c6571-da7c-4305-8087-930527be2bdd/linux.json",
+      "sha256": "d79345fb5505cdac6633ec6512689dadd39a0656b38cac665eac00c071223f99",
+      "manifest": "bench/results/sha256-eaa9c3990dfa/macos-apfs-case-sensitive/2026-11-18/run-000502.573-0b3c6571-da7c-4305-8087-930527be2bdd/manifest.json",
+      "status": "verified"
+    },
+    {
+      "target": "macos-host",
+      "repository": "workers-starter",
+      "file": "bench/results/sha256-eaa9c3990dfa/macos-host/2026-11-17/run-234752.121-e825a49b-3c07-4bb0-baf5-7d6fa0e54a12/workers-starter.json",
+      "sha256": "9fc9b36f8f006ec60b21d5f30b852e9d7a5d5906f6cce389f1f1f2fcb6d11be3",
+      "manifest": "bench/results/sha256-eaa9c3990dfa/macos-host/2026-11-17/run-234752.121-e825a49b-3c07-4bb0-baf5-7d6fa0e54a12/manifest.json",
+      "status": "verified",
+      "qualification": "bench/results/sha256-eaa9c3990dfa/macos-host/2026-11-17/run-234752.121-e825a49b-3c07-4bb0-baf5-7d6fa0e54a12/workers-starter.qualification.json"
+    },
+    {
+      "target": "macos-host",
+      "repository": "twig",
+      "file": "bench/results/sha256-eaa9c3990dfa/macos-host/2026-11-17/run-235242.141-a624706e-b021-4faa-9d9b-2609c6a0ca8c/twig.json",
+      "sha256": "5cb4a6b638c55891b64cf056842cc5b8bbadba630e141eb5256b4d3294464a3a",
+      "manifest": "bench/results/sha256-eaa9c3990dfa/macos-host/2026-11-17/run-235242.141-a624706e-b021-4faa-9d9b-2609c6a0ca8c/manifest.json",
+      "status": "verified"
+    },
+    {
+      "target": "macos-host",
+      "repository": "axo",
+      "file": "bench/results/sha256-eaa9c3990dfa/macos-host/2026-11-17/run-235242.141-a624706e-b021-4faa-9d9b-2609c6a0ca8c/axo.json",
+      "sha256": "ec6dca76575485119895ebfb24a739b78f429e933608e121a300c77e69fe132e",
+      "manifest": "bench/results/sha256-eaa9c3990dfa/macos-host/2026-11-17/run-235242.141-a624706e-b021-4faa-9d9b-2609c6a0ca8c/manifest.json",
+      "status": "verified"
+    },
+    {
+      "target": "macos-host",
+      "repository": "openclaw",
+      "file": "bench/results/sha256-eaa9c3990dfa/macos-host/2026-11-17/run-235242.141-a624706e-b021-4faa-9d9b-2609c6a0ca8c/openclaw.json",
+      "sha256": "2e726f6d1d6b7e5a8f07da83440bc942492cdd5beeb90ff4cd060a7341a8048c",
+      "manifest": "bench/results/sha256-eaa9c3990dfa/macos-host/2026-11-17/run-235242.141-a624706e-b021-4faa-9d9b-2609c6a0ca8c/manifest.json",
+      "status": "verified"
+    },
+    {
+      "target": "macos-host",
+      "repository": "pulumi",
+      "file": "bench/results/sha256-eaa9c3990dfa/macos-host/2026-11-17/run-235242.141-a624706e-b021-4faa-9d9b-2609c6a0ca8c/pulumi.json",
+      "sha256": "6fb473415913f033d8a7e1c64468c41cde8523c6c939fd7103bb2d4b16b7849f",
+      "manifest": "bench/results/sha256-eaa9c3990dfa/macos-host/2026-11-17/run-235242.141-a624706e-b021-4faa-9d9b-2609c6a0ca8c/manifest.json",
+      "status": "verified"
+    }
+  ],
+  "unmeasured": [
+    {
+      "target": "linux-xfs",
+      "repository": "pulumi",
+      "reason": "Linux environment exited; not run or retried"
+    },
+    {
+      "target": "linux-xfs",
+      "repository": "linux",
+      "reason": "Linux environment exited; not run or retried"
+    },
+    {
+      "target": "linux-btrfs",
+      "repository": "workers-starter",
+      "reason": "Linux environment exited; not run or retried"
+    },
+    {
+      "target": "linux-btrfs",
+      "repository": "twig",
+      "reason": "Linux environment exited; not run or retried"
+    },
+    {
+      "target": "linux-btrfs",
+      "repository": "axo",
+      "reason": "Linux environment exited; not run or retried"
+    },
+    {
+      "target": "linux-btrfs",
+      "repository": "openclaw",
+      "reason": "Linux environment exited; not run or retried"
+    },
+    {
+      "target": "linux-btrfs",
+      "repository": "pulumi",
+      "reason": "Linux environment exited; not run or retried"
+    },
+    {
+      "target": "linux-btrfs",
+      "repository": "linux",
+      "reason": "Linux environment exited; not run or retried"
+    }
+  ],
+  "verifiedCreates": 408,
+  "verifiedCohorts": 84,
+  "interruptedResults": 1,
+  "notes": [
+    "Published release archives, not source-built substitute candidates. Original raw results and campaign manifests are unchanged.",
+    "Two initial orchestration gate failures expected donorCommit instead of the schema-4 donor_commit header. Original successful worker results were independently qualified after correcting only the parser; no measurement repeated.",
+    "Linux host reboot interrupted OpenClaw/XFS and prevented remaining XFS and queued Btrfs jobs. Partial records are diagnostic only, not complete paired comparisons.",
+    "Host timing and isolated image allocation are separate environments. Warm-cache shared-host observations, not cross-host speed, bare-device, saturation or population-tail claims.",
+    "Unstable allocation remains observed data, excluded from comparative allocation claims. Website files and data selectors are untouched."
+  ]
+}

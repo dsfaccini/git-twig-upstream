@@ -1,0 +1,90 @@
+{
+  "schemaVersion": 1,
+  "artifacts": [
+    {
+      "name": "axo-axo.svg",
+      "bytes": 2325,
+      "sha256": "48686cd0f5a00ea4626094b5d92035e9fe5b62fb2a020631cdab896b5d3f7879"
+    },
+    {
+      "name": "axo.csv",
+      "bytes": 607,
+      "sha256": "8728a6fa1c9f4f1536f32b3643453ec79610228d5ff0c3c1da6c06d61e9568d4"
+    },
+    {
+      "name": "axo.json",
+      "bytes": 18952,
+      "sha256": "d9db73fef1458c515e62416a2e8ff0094eeae3b6a8a7fc9b8f7d8a103bd1f5f7"
+    },
+    {
+      "name": "axo.report.json",
+      "bytes": 1537,
+      "sha256": "f9cac92b060d633d63bb31890f732f3e17f2dc72ae827e1b53fa80a0d05494d3"
+    },
+    {
+      "name": "axo.summary.json",
+      "bytes": 1323,
+      "sha256": "9b38e6bbd9f78dee82961f8b5af5a9b0eac5792dad38428d3c99472eeb977aa9"
+    },
+    {
+      "name": "gate-fix.bundle",
+      "bytes": 773,
+      "sha256": "6ef1498f624d611817d48fb7ff3adda38f518c86cd2e8b850fa556341caf0f89"
+    },
+    {
+      "name": "harness.bundle",
+      "bytes": 9736,
+      "sha256": "c4492739edf79d9f2215a476732a45c8e43a3fffd6cb37cdd6c018f75ffa3762"
+    },
+    {
+      "name": "interruption.json",
+      "bytes": 869,
+      "sha256": "bf6de40eb6d0ce14416cfac539897ede0043863eaf1d39634aaf6dc2769d4c1e"
+    },
+    {
+      "name": "manifest.json",
+      "bytes": 4841,
+      "sha256": "0a6d61d283b1f1681ab7a1d83db3e7d01b588ec2a624e1863dcf86f92864f6e3"
+    },
+    {
+      "name": "openclaw.json",
+      "bytes": 11957,
+      "sha256": "ab57034fc4e53df8f3cbfcf23e27f25ee0ad067813f0fbd8745a5b1e28608881"
+    },
+    {
+      "name": "release-SHA256SUMS",
+      "bytes": 333,
+      "sha256": "d740266abc1df5eeea15f90d88f5b99d2ceccdff836fc075e6d4c54cb7e31f27"
+    },
+    {
+      "name": "release-provenance.json",
+      "bytes": 2721,
+      "sha256": "584c78920e293a838e5bc2317ec428b555ae092a2ff9ce23de7b3c50108044b1"
+    },
+    {
+      "name": "twig-twig.svg",
+      "bytes": 2327,
+      "sha256": "48408c21060f3368de3a01ca3d73fea30222c2b1e18a32a3d928d1a7f63a4cf7"
+    },
+    {
+      "name": "twig.csv",
+      "bytes": 622,
+      "sha256": "f56b4e9733c5b70f37fdfe3f5ac825ae7293a839ce2bd3360506fe1a2c4483e1"
+    },
+    {
+      "name": "twig.json",
+      "bytes": 39485,
+      "sha256": "7a5ab39b8bbe925025f45d9a7a45b97f7a84d376c51d4b25f3f3b05e2accdd03"
+    },
+    {
+      "name": "twig.report.json",
+      "bytes": 1554,
+      "sha256": "671faad09cdf8ccb5a97ca9914a632ca086eb070a950e66f2686e1c191a3c1da"
+    },
+    {
+      "name": "twig.summary.json",
+      "bytes": 1339,
+      "sha256": "78a2d8b73ae2f31e4574c473f0b967201fd819324335f014b723bb34758df81f"
+    }
+  ]
+}

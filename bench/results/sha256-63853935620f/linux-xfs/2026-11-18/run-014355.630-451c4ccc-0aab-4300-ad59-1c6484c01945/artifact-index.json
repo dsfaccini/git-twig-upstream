@@ -1,0 +1,45 @@
+{
+  "schemaVersion": 1,
+  "artifacts": [
+    {
+      "name": "manifest.json",
+      "bytes": 3079,
+      "sha256": "8de59f6571e805a16bd1e07d13aaedd876e5432535753cf6ffc874ec6a2aa1d7"
+    },
+    {
+      "name": "workers-starter-workers-starter.svg",
+      "bytes": 2341,
+      "sha256": "ba3bb2c9185f748e2a6cea87e9609cc032ba0417312de1af7ad4678dff4b4170"
+    },
+    {
+      "name": "workers-starter.csv",
+      "bytes": 617,
+      "sha256": "916845fc68398e55d80e93f3475cedd90d549e69b6c7f8d66f42efab464b4d8d"
+    },
+    {
+      "name": "workers-starter.json",
+      "bytes": 48229,
+      "sha256": "725066c17f2db8dec8beaff8728dc0d4b8ad079666d413dd22369904d36452e6"
+    },
+    {
+      "name": "workers-starter.json.stderr.log",
+      "bytes": 5310,
+      "sha256": "fdc103695f6c2ba9a1ee314531b92f8fc4ec4dbc73b392cf79cf9db4d3647a86"
+    },
+    {
+      "name": "workers-starter.json.stdout.log",
+      "bytes": 197,
+      "sha256": "fa2b421c6550e62628b0d5a6e134625c5c83b6aad83e9c9d7b659a32a23010d0"
+    },
+    {
+      "name": "workers-starter.report.json",
+      "bytes": 1714,
+      "sha256": "7c77eb7bb0674a77470fb05d30e2052fcf995812fe7f9e35636df7707a90a56e"
+    },
+    {
+      "name": "workers-starter.summary.json",
+      "bytes": 1345,
+      "sha256": "02b6a1456d21106ffae9f1018c5704f80b1e777f066870f866f6d4e778fd23a3"
+    }
+  ]
+}

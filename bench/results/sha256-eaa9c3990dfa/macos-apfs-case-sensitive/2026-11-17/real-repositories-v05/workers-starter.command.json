@@ -1,0 +1,23 @@
+[
+  "/Users/leostera/Developer/github.com/leostera/git-twig/main/target/v05-real-macos-2026-11-17/bin/twig-real-bench",
+  "--repo",
+  "workers-starter=/Users/leostera/Developer/github.com/leostera/git-twig/main/target/workers-starter",
+  "--revision",
+  "workers-starter=d0b1ee485dc1cf2bc0b2a3511cf8cf1057624d02",
+  "--candidate",
+  "/Users/leostera/Developer/github.com/leostera/git-twig/main/target/v05-real-macos-2026-11-17/bin/git-twig",
+  "--filesystem",
+  "case-sensitive-image",
+  "--image-gib",
+  "32",
+  "--worktrees",
+  "10",
+  "--concurrency",
+  "1",
+  "--repeats",
+  "3",
+  "--warmup",
+  "true",
+  "--output",
+  "/Users/leostera/Developer/github.com/leostera/git-twig/main/target/v05-real-macos-2026-11-17/workers-starter.json"
+]

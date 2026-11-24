@@ -1,0 +1,75 @@
+{
+  "schemaVersion": 1,
+  "kind": "real-repository-campaign",
+  "generatedAt": "2026-11-18T02:51:12.536Z",
+  "commit": "c4d3d4e8fc4738f083f3aa2dab2b299f507aa9f2",
+  "dirty": false,
+  "candidate": {
+    "version": "git-twig 0.5.0",
+    "sourceCommit": "4d2622f77ea8bfecc1f3fd6f1930686648990bbd",
+    "sha256": "63853935620fef55977053e7de6671bbcf17da839f36dd426348c126910cda97"
+  },
+  "git": {
+    "version": "git version 2.43.0",
+    "sha256": "eb54b535467e0975c1284d4c4d08eea779aeb248a5d34b02e2ee171382e22201"
+  },
+  "worker": {
+    "sha256": "261bc7a230fcbaeab9f88e1c0a86c03b7b1f6464fcf80360865993912bcde32f"
+  },
+  "config": {
+    "target": "linux-xfs",
+    "filesystem": "linux-xfs-image",
+    "rounds": 3,
+    "concurrency": 1,
+    "warmup": true,
+    "budgetSeconds": 17563,
+    "pointSeconds": 7200,
+    "minimumFreeGiB": 128,
+    "maxGrowthGiB": 160,
+    "environment": "Threadripper 2990WX; kernel 7.0.0-43-generic; Git 2.43.0; owned loopback images on ext4 /dev/sda1; no bare-device claim. Original v0.4 pins, published v0.5.0, serial paired three rounds with warmup. Long allocation settlement; first stable complete repository attempt, all attempts retained."
+  },
+  "inputs": [
+    {
+      "label": "pulumi",
+      "revision": "430261138aa08539cd598b9269bfe8f82fd49b78",
+      "worktrees": 1,
+      "imageGiB": 16,
+      "hostTiming": true
+    }
+  ],
+  "status": "completed",
+  "stopReason": null,
+  "resourceSamples": [
+    {
+      "freeGiB": 337.6767921447754,
+      "growthGiB": 0.000003814697265625,
+      "elapsedMs": 0.5734979999251664
+    },
+    {
+      "freeGiB": 315.4124069213867,
+      "growthGiB": 22.264389038085938,
+      "elapsedMs": 783381.0058749998
+    }
+  ],
+  "jobs": [
+    {
+      "repository": "pulumi",
+      "file": "pulumi.json",
+      "status": "completed",
+      "verified": true,
+      "allocationComparable": true,
+      "timeoutMs": 7200000,
+      "error": null,
+      "startedElapsedMs": 21.29268499976024,
+      "finishedElapsedMs": 783410.8307090001,
+      "exitCode": 0
+    }
+  ],
+  "notes": [
+    "Published v0.5.0 vs frozen stock Git; release asset provenance is retained alongside this campaign. Three paired rounds, concurrency one, warmup enabled. Original v0.4 input pins and counts.",
+    "No retries, no automatic exclusion of errors, and no website changes. Unstable allocation observations remain raw data, not comparative allocation claims.",
+    "Host timing and filesystem-image allocation are separate environments; never combine them into one cohort. Warm caches on shared hosts; background apps not stopped. No cold-cache, saturation or universal speed claim.",
+    "Full independent raw-byte/mode/symlink verification, native-clone checks, source isolation and private writes are mandatory. Verification follows creation timing. Original sources are read-only; applications and dependency scripts are never executed.",
+    "Observed nearest-rank percentiles from small finite samples are not population tail estimates. CLI creation and subsequent first-status latency are reported separately."
+  ]
+}

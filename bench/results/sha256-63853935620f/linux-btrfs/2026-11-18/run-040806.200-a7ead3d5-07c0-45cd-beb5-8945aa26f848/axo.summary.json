@@ -1,0 +1,43 @@
+{
+  "schemaVersion": 1,
+  "repository": "axo",
+  "filesystem": "linux-btrfs-image",
+  "summary": [
+    {
+      "backend": "git",
+      "rounds": 3,
+      "operations": 3,
+      "allocationComparable": true,
+      "batchCreateMedianMs": 276.407985,
+      "createsPerSecondMedian": 3.6178404903895958,
+      "logicalBytesPerSecondMedian": 94733240.06902333,
+      "createP50Ms": 276.159333,
+      "createP95Ms": 282.647875,
+      "createP99Ms": 282.647875,
+      "createMaxMs": 282.647875,
+      "firstStatusP50Ms": 113.78869499999999,
+      "allocationMedianBytes": 33001472,
+      "allocationMinBytes": 32870400,
+      "allocationMaxBytes": 33165312,
+      "maxHarnessCpuWallRatio": 0.00510735920708306
+    },
+    {
+      "backend": "twig",
+      "rounds": 3,
+      "operations": 3,
+      "allocationComparable": true,
+      "batchCreateMedianMs": 493.6962,
+      "createsPerSecondMedian": 2.0255371623277636,
+      "logicalBytesPerSecondMedian": 53038739.20844439,
+      "createP50Ms": 493.45419000000004,
+      "createP95Ms": 499.73916499999996,
+      "createP99Ms": 499.73916499999996,
+      "createMaxMs": 499.73916499999996,
+      "firstStatusP50Ms": 111.93852799999999,
+      "allocationMedianBytes": 4751360,
+      "allocationMinBytes": 4685824,
+      "allocationMaxBytes": 4816896,
+      "maxHarnessCpuWallRatio": 0.003139582601608402
+    }
+  ]
+}

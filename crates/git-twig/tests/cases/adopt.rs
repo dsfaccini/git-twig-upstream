@@ -9,7 +9,7 @@ use std::{
 };
 
 #[derive(Debug, PartialEq, Eq)]
-struct Snapshot {
+pub(super) struct Snapshot {
     bytes: Vec<u8>,
     mode: u32,
     inode: u64,
@@ -20,7 +20,7 @@ struct Snapshot {
     mtime: (i64, i64),
 }
 
-fn files(root: &Path) -> Result<BTreeMap<PathBuf, Snapshot>> {
+pub(super) fn files(root: &Path) -> Result<BTreeMap<PathBuf, Snapshot>> {
     fn visit(
         root: &Path,
         directory: &Path,
@@ -64,7 +64,7 @@ fn files(root: &Path) -> Result<BTreeMap<PathBuf, Snapshot>> {
     visit(root, root, &mut result)?;
     Ok(result)
 }
-fn index(path: &Path) -> Result<Vec<u8>> {
+pub(super) fn index(path: &Path) -> Result<Vec<u8>> {
     let output = git(
         path,
         &["rev-parse", "--path-format=absolute", "--git-path", "index"],

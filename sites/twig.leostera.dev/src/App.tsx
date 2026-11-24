@@ -1,7 +1,7 @@
 import { useEffect, useState } from "react";
 import { Button } from "@ui-sdk/react/button";
 import benchmarks from "virtual:twig-benchmarks";
-import { PreviewChart } from "./PreviewChart";
+import { DiskChart } from "./PreviewChart";
 import { copyText } from "./clipboard";
 
 export const onboardPrompt =
@@ -43,6 +43,8 @@ function AgentMarks() {
 }
 
 export default function App() {
+  const [platform, setPlatform] = useState<"mac" | "linux">("mac");
+  const [filesystem, setFilesystem] = useState<"btrfs" | "xfs">("btrfs");
   const [copy, setCopy] = useState<"ready" | "copied" | "failed">("ready");
   useEffect(() => {
     if (copy === "ready") return;
@@ -96,7 +98,14 @@ export default function App() {
           </div>
         </section>
         <section className="benchmarks" aria-label="Disk usage comparison">
-          <PreviewChart datasets={benchmarks.datasets} />
+          <div className="platform-switch" role="group" aria-label="Operating system">
+            <button aria-label="Mac" title="Mac" aria-pressed={platform === "mac"} onClick={() => setPlatform("mac")}><img src="/apple.svg" width="20" height="20" alt="" /></button>
+            <button aria-label="Linux" title="Linux" aria-pressed={platform === "linux"} onClick={() => setPlatform("linux")}><img src="/linux.svg" width="20" height="20" alt="" /></button>
+            {platform === "linux" && <select aria-label="Linux filesystem" value={filesystem} onChange={e => setFilesystem(e.target.value === "xfs" ? "xfs" : "btrfs")}>
+              <option value="btrfs">Btrfs</option><option value="xfs">XFS</option>
+            </select>}
+          </div>
+          <DiskChart data={platform === "mac" ? benchmarks.mac : benchmarks[filesystem]} />
         </section>
       </main>
       <footer>

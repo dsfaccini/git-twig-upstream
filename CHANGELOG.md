@@ -6,6 +6,62 @@ describe changes from this baseline after they are implemented and verified.
 
 ## Unreleased
 
+### Added
+
+- Optional offline APFS compaction during adoption: `--compact` previews and
+  applies verified native CoW replacements with supported target metadata and
+  index contents preserved. Interactive use requires explicit saved/closed-tree
+  confirmation; automation requires `--compact --offline --yes`. `--move-only`
+  disables sharing. Old copies are retired only after verification with a native
+  busy-file guard; failures retain both copies and a recovery journal. This is
+  not safe live deduplication or a measured physical-space claim.
+
+- `git twig adopt` discovers registered worktrees, previews a sibling layout and
+  asks before relocating the original clone and linked checkouts. A single
+  `--worktrees-dir` option selects a root; omitted roots are prompted and saved
+  per repository after success. An optional target adopts only one checkout.
+- `adopt --dry-run` previews without writes; noninteractive application requires
+  `--yes` with an explicit or saved root. Atomic no-overwrite moves preserve
+  dirty/staged/ignored work, repair Git links and retain a recovery journal.
+  Cross-device, locked, colliding and submodule layouts are refused.
+- After adoption, `git twig new -b <branch>` can use the saved root without an
+  explicit destination. Linux attempts in-place sharing after relocation; move-only
+  macOS adoption reports sharing unchanged. Explicit v0.5 `--prepare`/`--dedupe` modes remain
+  sharing-only and never replace live files.
+
+### Changed
+
+- Shared files are read once, not twice. The stat data of every verified file
+  is recorded in the installed index, so the first `git status` in a new
+  worktree no longer rehashes every file. Verification itself is unchanged
+  ([RFD0024](docs/rfds/RFD0024-verified-index-reuse.md)).
+- On Linux, large inventories are cloned on up to eight threads.
+- A donor with deleted tracked files, or tracked paths replaced by a symlink,
+  directory or other entry, no longer disables sharing for the whole worktree.
+  Git writes those paths and the remaining files are still shared.
+- Clone normalization skips `chmod` for files that already have checkout
+  permissions.
+
+### Fixed
+
+- Probe atomic no-overwrite directory renames before relocating any worktree.
+  Drivers such as NTFS-3g that reject the primitive are refused without moving
+  user data; there is no overwrite-prone ordinary-rename fallback.
+
+- Blobless partial clones no longer fetch one blob per file. Tree listings stop
+  asking for blob sizes, and a target that needs blobs written by Git is left
+  to stock Git, which fetches absent blobs in one batch.
+- On macOS, new worktrees no longer inherit the donor's extended attributes
+  (including quarantine) or BSD flags such as hidden and immutable.
+- A branch name Git would refuse (already existing or invalid) is refused before
+  any checkout is staged, so a mistyped command no longer retains a full clone.
+- Repositories with a separate Git directory, including submodules, share from
+  the checkout Twig runs in rather than always delegating to Git.
+- Staging is removed even when a tracked path is too long under the staging
+  prefix, or (exFAT) when `._name` companion files vanish during removal.
+- Immutable donor files, tracked or ignored, no longer force a fallback and
+  leave undeletable staging that retained ignored bytes under Git metadata.
+
 ## [0.5.0] — 2026-11-17
 
 Share unchanged files across revisions and more checkout policies, and inspect

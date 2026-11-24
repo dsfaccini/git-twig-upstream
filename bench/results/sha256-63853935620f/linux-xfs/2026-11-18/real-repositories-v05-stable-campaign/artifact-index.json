@@ -1,0 +1,85 @@
+{
+  "schemaVersion": 1,
+  "artifacts": [
+    {
+      "name": "SHA256SUMS",
+      "bytes": 333,
+      "sha256": "d740266abc1df5eeea15f90d88f5b99d2ceccdff836fc075e6d4c54cb7e31f27"
+    },
+    {
+      "name": "driver-config.json",
+      "bytes": 992,
+      "sha256": "f8ddfd8e29e02841d33f3424a0f19094105c777dc8219704c732f6e08a41c9a3"
+    },
+    {
+      "name": "preflight.log",
+      "bytes": 433,
+      "sha256": "9da116914cb3a073f42f9b063541259b17d2983f2755e25ab0ab92cb1de02aa2"
+    },
+    {
+      "name": "preflight.py",
+      "bytes": 2263,
+      "sha256": "895a5844e876bbee4c96a2367fb8cadf49c864730ee17b341fe2255a881af66a"
+    },
+    {
+      "name": "premeasurement-config-failure-driver-config.json",
+      "bytes": 991,
+      "sha256": "191e0b169adb99a498979be3a3d823c95005048ff9a55254a3f966bdf3d33c9b"
+    },
+    {
+      "name": "premeasurement-config-failure-stable-state.json",
+      "bytes": 436,
+      "sha256": "d2ee85d0d62848d601cd3345b0d13f6dc627b044e4e3bfbee594a219ea2f96ca"
+    },
+    {
+      "name": "premeasurement-config-failure-supervisor.log",
+      "bytes": 730,
+      "sha256": "71643176bcb2526518ed9681d9c6f7e4cbc3dc2455327256747129ce7cd5b036"
+    },
+    {
+      "name": "provenance.json",
+      "bytes": 2721,
+      "sha256": "b9121c8788fce3eb539b18754de5912bf8e730af1fffbd967ef901cd49a02c19"
+    },
+    {
+      "name": "setup-config-failure/driver-config.json",
+      "bytes": 991,
+      "sha256": "191e0b169adb99a498979be3a3d823c95005048ff9a55254a3f966bdf3d33c9b"
+    },
+    {
+      "name": "setup-config-failure/stable-plan.json",
+      "bytes": 1524,
+      "sha256": "6e99bc71de283ad003271a1e5540bdd9912ad5ca6bfb09dcf016cf6717b2e056"
+    },
+    {
+      "name": "setup-config-failure/stable-state.json",
+      "bytes": 436,
+      "sha256": "d2ee85d0d62848d601cd3345b0d13f6dc627b044e4e3bfbee594a219ea2f96ca"
+    },
+    {
+      "name": "setup-config-failure/supervisor.log",
+      "bytes": 730,
+      "sha256": "71643176bcb2526518ed9681d9c6f7e4cbc3dc2455327256747129ce7cd5b036"
+    },
+    {
+      "name": "stability.bundle",
+      "bytes": 107600,
+      "sha256": "013acf7365afd41f97bc9641d28c1162b9615ca96644d356b4b11c1fe758dccc"
+    },
+    {
+      "name": "stable-plan.json",
+      "bytes": 1525,
+      "sha256": "b95cf5e3afdcdcb2f8bd4bf861275215f821b254c3f77e854500e80967d2f9cc"
+    },
+    {
+      "name": "stable-state.json",
+      "bytes": 7300,
+      "sha256": "93a18cf0128e00c684522601ece53e7c5c7395bb75c5c98a650f21209adb186f"
+    },
+    {
+      "name": "supervisor.log",
+      "bytes": 6380,
+      "sha256": "af163809029d60cb380caaee074939623732665fa55d16d544ca5a9b650671e9"
+    }
+  ]
+}

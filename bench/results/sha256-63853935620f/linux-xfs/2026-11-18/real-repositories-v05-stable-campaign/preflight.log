@@ -1,0 +1,8 @@
+/home/leostera/Developer/github.com/leostera/git-twig/bench-v05-real/target/v05-stable-c4d3d4e/preflight.py:11: SyntaxWarning: invalid escape sequence '\.'
+  promisor=subprocess.run([str(git),'-C',str(path),'config','--get-regexp','remote\..*\.promisor'],env=env,capture_output=True,text=True,timeout=30)
+workers-starter 6 1421
+twig 45 388029
+axo 2083 26185024
+openclaw 65500 776199844
+pulumi 14811 1255510318
+linux 97371 1676008970

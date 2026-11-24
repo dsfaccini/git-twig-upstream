@@ -1,0 +1,70 @@
+{
+  "schemaVersion": 1,
+  "startedAt": "2026-11-18T00:26:15.900Z",
+  "harnessCheckoutCommit": "368a722de2da3e203a4b3676800ec3925c4ce79e",
+  "candidateSourceTag": "v0.5.0",
+  "candidateSourceCommit": "4d2622f77ea8bfecc1f3fd6f1930686648990bbd",
+  "workerSourceCommit": "4d2622f77ea8bfecc1f3fd6f1930686648990bbd",
+  "platform": "ProductName:\t\tmacOS\nProductVersion:\t\t26.5\nBuildVersion:\t\t25F71",
+  "cpu": "Apple M1 Ultra",
+  "gitVersion": "git version 2.56.1",
+  "gitExecPath": "/opt/homebrew/opt/git/libexec/git-core",
+  "binaries": {
+    "git-twig": {
+      "path": "/Users/leostera/Developer/github.com/leostera/git-twig/main/target/v05-real-macos-2026-11-17/bin/git-twig",
+      "sha256": "eaa9c3990dfabc0bfaa0614abd8efdbde07149c77fa96c0eb0636cf446cd88e7"
+    },
+    "twig-real-bench": {
+      "path": "/Users/leostera/Developer/github.com/leostera/git-twig/main/target/v05-real-macos-2026-11-17/bin/twig-real-bench",
+      "sha256": "e87ab58784f43695425230148fc9a8b9871bc71482502141da23f6b37e2c3ba2"
+    },
+    "git": {
+      "path": "/Users/leostera/Developer/github.com/leostera/git-twig/main/target/v05-real-macos-2026-11-17/bin/git",
+      "sha256": "b5eaefb829ec3b61176f83ed7fddc333a9d92e762ec4e558f55baadc4314297d"
+    }
+  },
+  "jobs": [
+    {
+      "name": "openclaw",
+      "path": "/Users/leostera/Developer/github.com/leostera/git-twig/main/target/apfs-v04-final-2026-11-17/input/openclaw.git",
+      "revision": "410c0dda40702e25263b49b8b7d0786a5e49e366",
+      "worktrees": 1
+    },
+    {
+      "name": "pulumi",
+      "path": "/Users/leostera/Developer/github.com/leostera/git-twig/exp-issue5-reproduction-fixtures/docs",
+      "revision": "430261138aa08539cd598b9269bfe8f82fd49b78",
+      "worktrees": 1
+    }
+  ],
+  "config": {
+    "filesystem": "case-sensitive-image",
+    "imageGib": 32,
+    "repeats": 3,
+    "concurrency": 1,
+    "warmup": true,
+    "minimumHostFreeGiB": 128
+  },
+  "notes": [
+    "Published v0.5.0 GitHub arm64 archive, not an earlier candidate.",
+    "Real repository pins and batch sizes match the historical v0.4 campaign. Allocation-only refresh; raw harness timings are retained but not promoted as website claims.",
+    "Additional isolated filesystem allocation after first status, including Git metadata; not exclusive per-file allocation or adopted-space savings.",
+    "Three paired rounds; separate image and seed per backend/round. No measured retries or silent exclusions. All correctness and native/private-write checks remain enabled.",
+    "Shared Apple M1 Ultra host, warm cache. No intentional competing tests, builds, or benchmark campaigns. No application code/dependencies executed.",
+    "A separate real-repository campaign was observed active on this Mac during preflight. These followups wait for it and any other observed real-bench worker to finish, then require 60 seconds without workers.",
+    "Known other active campaign controller PID59270: target/v05-real-20261117T234358. It is not modified or stopped.",
+    "Same published binary, frozen Git/harness, pins, 32-GiB image size, warmup, batch size and three paired repetitions as the original allocation campaign."
+  ],
+  "followupOf": {
+    "directory": "/Users/leostera/Developer/github.com/leostera/git-twig/main/target/v05-real-macos-2026-11-17",
+    "manifestSHA256": "e0c71b0a1889450823ede31b77b2c1e62af8356c798b07a0ff62a7562364d6ac",
+    "reason": "Owner requested reruns until allocation sampling settles; four original Git observations were unstable and remain unchanged."
+  },
+  "stoppingRule": {
+    "eligibility": "First complete three-round paired campaign per repository where every before/afterStatus allocation sample is stable, all byte/mode/link/source/private-write checks pass, and Twig is native.",
+    "selection": "Stability only, independent of measured savings. Retain every attempt, stable or unstable; do not pool or silently discard attempts.",
+    "maxAttemptsPerRepository": 5,
+    "maxElapsedMinutes": 150,
+    "quietSecondsBeforeEachAttempt": 60
+  }
+}

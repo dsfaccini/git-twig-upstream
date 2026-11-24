@@ -1,0 +1,60 @@
+{
+  "schemaVersion": 1,
+  "target": "linux-btrfs",
+  "repository": "pulumi",
+  "release": "v0.5.0",
+  "rawSha256": "d96b49bbfb668dd5f0baf46e69bd4f1a5fe5e2c0e1e732aae8964037e5c8b61a",
+  "worktreesPerCohort": 1,
+  "concurrency": 1,
+  "pairedRounds": 3,
+  "warmup": true,
+  "allocationComparable": true,
+  "allocationDisplay": [
+    {
+      "backend": "git",
+      "label": "1.2 GiB"
+    },
+    {
+      "backend": "twig",
+      "label": "24.4 MiB"
+    }
+  ],
+  "summary": [
+    {
+      "backend": "git",
+      "rounds": 3,
+      "operations": 3,
+      "allocationComparable": true,
+      "batchCreateMedianMs": 5283.359202,
+      "createsPerSecondMedian": 0.18927352121382415,
+      "logicalBytesPerSecondMedian": 237634858.80814812,
+      "createP50Ms": 5282.796212,
+      "createP95Ms": 5321.623645,
+      "createP99Ms": 5321.623645,
+      "createMaxMs": 5321.623645,
+      "firstStatusP50Ms": 395.09494099999995,
+      "allocationMedianBytes": 1311641600,
+      "allocationMinBytes": 1311625216,
+      "allocationMaxBytes": 1311756288,
+      "maxHarnessCpuWallRatio": 0.0008623301626501904
+    },
+    {
+      "backend": "twig",
+      "rounds": 3,
+      "operations": 3,
+      "allocationComparable": true,
+      "batchCreateMedianMs": 2971.154967,
+      "createsPerSecondMedian": 0.33656945231965074,
+      "logicalBytesPerSecondMedian": 422566420.11093056,
+      "createP50Ms": 2970.933286,
+      "createP95Ms": 2975.716653,
+      "createP99Ms": 2975.716653,
+      "createMaxMs": 2975.716653,
+      "firstStatusP50Ms": 3565.784637,
+      "allocationMedianBytes": 25624576,
+      "allocationMinBytes": 25526272,
+      "allocationMaxBytes": 25821184,
+      "maxHarnessCpuWallRatio": 0.00045911100441650265
+    }
+  ]
+}

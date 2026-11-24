@@ -110,11 +110,8 @@ fn generated_dirty_donors_match_stock_and_keep_private_writes_isolated() -> Resu
             let donor = inventory(&f.source)?;
             let index_before = fs::read(f.source.join(".git/index"))?;
             let output = checked(f.add()?)?;
-            if seed % 2 == 0 {
-                assert!(String::from_utf8_lossy(&output.stderr).contains("stock Git:"));
-            } else {
-                native(&output);
-            }
+            // Even seeds also move tracked files away: Git writes those paths.
+            native(&output);
             let expected = inventory(&f.root.join("stock"))?;
             assert_eq!(
                 inventory(&f.destination())?,
@@ -205,7 +202,7 @@ fn after_registration(f: &Fixture, action: &str) -> Result<Output> {
             r#"#!/bin/sh
 if [ -f "$TWIG_TEST_LATE_FAILURE" ]; then
   for arg in "$@"; do
-    if [ "$arg" = "read-tree" ]; then
+    if [ "$arg" = "update-index" ]; then
       printf 'injected index installation failure\n' >&2
       exit 93
     fi

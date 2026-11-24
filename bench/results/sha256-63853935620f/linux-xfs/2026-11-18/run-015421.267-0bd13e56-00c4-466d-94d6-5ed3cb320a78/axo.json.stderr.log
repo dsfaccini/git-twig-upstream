@@ -1,0 +1,30 @@
+axo: git, repeat 1/3, 1 creates with concurrency 1
+cohort workers launched: 1; queued creates: 1
+git: CLI completed 1/1; content verification pending
+  0.26s creates; 1 ok / 0 failed; allocation after status: 31.21 MiB
+  Linux image retained at /home/leostera/Developer/github.com/leostera/git-twig/bench-v05-real/target/real-images/1794966861303-3834/axo-git-0.img
+axo: twig, repeat 1/3, 1 creates with concurrency 1
+cohort workers launched: 1; queued creates: 1
+twig: CLI completed 1/1; content verification pending
+  0.58s creates; 1 ok / 0 failed; allocation after status: 1.79 MiB
+  Linux image retained at /home/leostera/Developer/github.com/leostera/git-twig/bench-v05-real/target/real-images/1794966861303-3834/axo-twig-0.img
+axo: twig, repeat 2/3, 1 creates with concurrency 1
+cohort workers launched: 1; queued creates: 1
+twig: CLI completed 1/1; content verification pending
+  0.57s creates; 1 ok / 0 failed; allocation after status: 1.79 MiB
+  Linux image retained at /home/leostera/Developer/github.com/leostera/git-twig/bench-v05-real/target/real-images/1794966861303-3834/axo-twig-1.img
+axo: git, repeat 2/3, 1 creates with concurrency 1
+cohort workers launched: 1; queued creates: 1
+git: CLI completed 1/1; content verification pending
+  0.23s creates; 1 ok / 0 failed; allocation after status: 31.21 MiB
+  Linux image retained at /home/leostera/Developer/github.com/leostera/git-twig/bench-v05-real/target/real-images/1794966861303-3834/axo-git-1.img
+axo: git, repeat 3/3, 1 creates with concurrency 1
+cohort workers launched: 1; queued creates: 1
+git: CLI completed 1/1; content verification pending
+  0.22s creates; 1 ok / 0 failed; allocation after status: 31.21 MiB
+  Linux image retained at /home/leostera/Developer/github.com/leostera/git-twig/bench-v05-real/target/real-images/1794966861303-3834/axo-git-2.img
+axo: twig, repeat 3/3, 1 creates with concurrency 1
+cohort workers launched: 1; queued creates: 1
+twig: CLI completed 1/1; content verification pending
+  0.57s creates; 1 ok / 0 failed; allocation after status: 1.79 MiB
+  Linux image retained at /home/leostera/Developer/github.com/leostera/git-twig/bench-v05-real/target/real-images/1794966861303-3834/axo-twig-2.img

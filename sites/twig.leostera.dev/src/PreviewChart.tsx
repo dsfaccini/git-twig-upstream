@@ -1,141 +1,65 @@
-import { useState } from "react";
-import type { LatestDataset } from "../scripts/benchmarks";
+import type { DiskComparison } from "../scripts/benchmarks";
 
-export function disk(bytes: number): string {
-  const magnitude = Math.abs(bytes);
-  const unit =
-    magnitude >= 2 ** 30
-      ? ([2 ** 30, "GiB"] as const)
-      : magnitude >= 2 ** 20
-        ? ([2 ** 20, "MiB"] as const)
-        : ([2 ** 10, "KiB"] as const);
-  return `${(bytes / unit[0]).toFixed(2)} ${unit[1]}`;
+function disk(bytes: number): string {
+  return bytes >= 1024 ** 3
+    ? `${(bytes / 1024 ** 3).toFixed(1)} GiB`
+    : `${(bytes / 1024 ** 2).toFixed(bytes < 10 * 1024 ** 2 ? 1 : 0)} MiB`;
 }
-function duration(ms: number): string {
-  return ms >= 1000 ? `${(ms / 1000).toFixed(2)} s` : `${ms.toFixed(0)} ms`;
-}
-const backendLabels = {
-  git: "stock Git",
-  candidate: "git twig",
-};
-const source = (path: string) =>
-  `https://github.com/leostera/git-twig/blob/main/${path}`;
-
-export function PreviewChart({ datasets }: { datasets: LatestDataset[] }) {
-  const [target, setTarget] = useState(
-    () =>
-      new URLSearchParams(location.search).get("filesystem") ??
-      datasets[0]!.target,
+export function DiskChart({ data }: { data: DiskComparison[] }) {
+  const scale = Math.max(
+    1,
+    ...data.map((repo) => repo.twigBytes / repo.gitBytes),
   );
-  const [metric, setMetric] = useState<"bytes" | "timeMs">("bytes");
-  const data = datasets.find((d) => d.target === target) ?? datasets[0]!;
-  const values = data.profiles.flatMap(
-    (p) => p.measurements?.map((m) => m[metric]) ?? [],
-  );
-  const lower = Math.min(0, ...values);
-  const upper = Math.max(1, ...values);
-  const scale = (value: number) => ((value - lower) / (upper - lower)) * 100;
-  const format = metric === "bytes" ? disk : duration;
-  function select(next: string) {
-    setTarget(next);
-    const url = new URL(location.href);
-    url.searchParams.set("filesystem", next);
-    history.replaceState(null, "", url);
-  }
   return (
-    <figure className="disk-chart preview-chart">
+    <figure className="disk-chart">
       <figcaption>
-        <h2>{metric === "bytes" ? "Disk use" : "Creation time"}</h2>
-        <span>v0.5 · candidate measurements</span>
+        <h2>Disk use</h2>
+        <span>Git = 100%</span>
       </figcaption>
-      <div className="chart-controls" aria-label="Filesystem">
-        {datasets.map((d) => (
-          <button
-            key={d.target}
-            aria-pressed={d.target === data.target}
-            onClick={() => select(d.target)}
-          >
-            {d.label}
-          </button>
-        ))}
-      </div>
-      <div className="chart-controls metric-controls" aria-label="Measurement">
-        <button
-          aria-pressed={metric === "bytes"}
-          onClick={() => setMetric("bytes")}
-        >
-          Disk allocation
-        </button>
-        <button
-          aria-pressed={metric === "timeMs"}
-          onClick={() => setMetric("timeMs")}
-        >
-          Creation time
-        </button>
-        <span>lower is better</span>
-      </div>
-      <p className="chart-scale">
-        Shared linear scale: {format(lower)} – {format(upper)}
-      </p>
-      <div className="preview-profiles">
-        {data.profiles.map((profile) => (
-          <section className="repo-group" key={profile.profile}>
+      {data.map((repo) => {
+        const saved = (1 - repo.twigBytes / repo.gitBytes) * 100;
+        const rows = [
+          { label: "git worktree", bytes: repo.gitBytes, kind: "git" },
+          { label: "git twig", bytes: repo.twigBytes, kind: "twig" },
+        ];
+        return (
+          <section className="repo-group" key={repo.name}>
             <div className="repo-heading">
-              <h3>{profile.label}</h3>
+              <h3>
+                <a href={repo.source}>{repo.name}</a>
+                {repo.worktrees > 1 && (
+                  <small className="cohort-count" title={`${repo.worktrees} sequential worktrees`}>×{repo.worktrees}</small>
+                )}
+              </h3>
+              <span className={saved >= 0 ? "less" : "more"}>
+                {Math.abs(saved).toFixed(1)}% {saved >= 0 ? "less" : "more"}
+              </span>
             </div>
-            {profile.measurements ? (
-              profile.measurements.map((value) => (
-                <div className="bar-row" key={value.backend}>
-                  <code>{backendLabels[value.backend]}</code>
-                  <div className="bar-track" aria-hidden="true">
+            <p className="sr-only">
+              {repo.worktrees} worktrees, {repo.concurrency} in flight.
+              Additional filesystem allocation after first status; {repo.rounds} local
+              rounds. Bar lengths are relative to Git for each repo, not
+              absolute across repos.
+            </p>
+            <div className="bars">
+              {rows.map(({ label, bytes, kind }) => (
+                <div className="bar-row" key={label}>
+                  <code>{label}</code>
+                  <div className="bar-track">
                     <div
-                      className={`bar ${value.backend}`}
+                      className={`bar ${kind}`}
                       style={{
-                        left: `${Math.min(scale(0), scale(value[metric]))}%`,
-                        width: `${(Math.abs(value[metric]) / (upper - lower)) * 100}%`,
+                        width: `${(bytes / repo.gitBytes / scale) * 100}%`,
                       }}
                     />
                   </div>
-                  <span
-                    title={
-                      metric === "bytes"
-                        ? `Observed range: ${disk(value.minBytes)} – ${disk(value.maxBytes)}`
-                        : undefined
-                    }
-                  >
-                    {format(value[metric])}
-                  </span>
+                  <span>{disk(bytes)}</span>
                 </div>
-              ))
-            ) : (
-              <p className="not-compared">
-                Not compared: incomplete or unstable paired group.
-              </p>
-            )}
+              ))}
+            </div>
           </section>
-        ))}
-      </div>
-      <p className="chart-notes">
-        Median of {data.rounds} batches × {data.worktrees} sequential creates.
-        Warm cache. Allocation includes Git metadata after first status.
-      </p>
-      <p
-        className={`chart-health ${data.failedPoints || data.unstablePoints ? "has-issues" : ""}`}
-      >
-        {data.verifiedCreates} verified creates across all levels ·{" "}
-        {data.failedPoints} failed{" "}
-        {data.failedPoints === 1 ? "point" : "points"}
-        {" · "}
-        {data.unstablePoints} unstable observations retained.
-        Incomplete/unstable groups are not compared.
-      </p>
-      <p className="chart-links">
-        <a href={source(data.snapshot)}>Raw results</a>
-        {" · "}
-        <a href={source("bench/preview.md")}>Method & limitations</a>
-        {" · "}
-        <span>Pre-release synthetic workloads</span>
-      </p>
+        );
+      })}
     </figure>
   );
 }

@@ -68,7 +68,7 @@ fn inspection_and_failed_native_operations_preserve_portable_worktrees() -> Resu
 }
 
 #[test]
-fn cross_filesystem_targets_are_skipped_without_changing_current_data() -> Result<()> {
+fn cross_filesystem_layout_is_refused_and_sharing_preserves_current_data() -> Result<()> {
     let Some(other) = std::env::var_os("TWIG_TEST_CROSS_FILESYSTEM_ROOT") else {
         return Ok(());
     };
@@ -97,6 +97,14 @@ fn cross_filesystem_targets_are_skipped_without_changing_current_data() -> Resul
             let text = String::from_utf8_lossy(&output.stdout);
             assert!(text.contains("matched_files=0"), "{text}");
             assert!(text.contains("different devices"), "{text}");
+        } else if mode == "--dry-run" {
+            // Layout preview now refuses a cross-device migration. The explicit
+            // v0.5 prepare/dedupe modes still perform sharing-only inspection.
+            assert!(
+                String::from_utf8_lossy(&output.stderr).contains("different filesystem"),
+                "{output:?}"
+            );
+            assert!(adopt::stages(&f)?.is_empty());
         } else {
             assert_eq!(mode, "--prepare", "{output:?}");
             let scratch = adopt::stages(&f)?;

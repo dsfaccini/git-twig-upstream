@@ -1,0 +1,45 @@
+{
+  "schemaVersion": 1,
+  "artifacts": [
+    {
+      "name": "manifest.json",
+      "bytes": 3064,
+      "sha256": "8db925db78f0424933250244e6ccca81934b3b7490a98e9b378e2ed4a7564cc5"
+    },
+    {
+      "name": "pulumi-pulumi.svg",
+      "bytes": 2336,
+      "sha256": "8adda1f03b22dfa2d38bc240cf5f0c9a76ccee7be6f5082271ee66ef485f3b16"
+    },
+    {
+      "name": "pulumi.csv",
+      "bytes": 627,
+      "sha256": "105a3b93d830ffe4abdcb48f505a55b8646e26a450dde641f555328dd5a34a21"
+    },
+    {
+      "name": "pulumi.json",
+      "bytes": 28290,
+      "sha256": "d96b49bbfb668dd5f0baf46e69bd4f1a5fe5e2c0e1e732aae8964037e5c8b61a"
+    },
+    {
+      "name": "pulumi.json.stderr.log",
+      "bytes": 2253,
+      "sha256": "ce405ec28ff9009cf06cd3f90d99df4fa026b855a80de7d9aac36525fafc5a92"
+    },
+    {
+      "name": "pulumi.json.stdout.log",
+      "bytes": 190,
+      "sha256": "1401c92984a967048d7593ffbac987aecbeb50a533712d424ba51d098863d4a6"
+    },
+    {
+      "name": "pulumi.report.json",
+      "bytes": 1717,
+      "sha256": "661fabec2a264925f8b81957d0fc47c03d2160b865bc6a6b146b197e8729e02a"
+    },
+    {
+      "name": "pulumi.summary.json",
+      "bytes": 1348,
+      "sha256": "3307d4c483763b7359225d71d7fc73c3a97623f16cbf0f1eaaff12f98d9adf1d"
+    }
+  ]
+}

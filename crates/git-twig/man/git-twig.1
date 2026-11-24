@@ -18,18 +18,31 @@ Git's worktree implementation, without inheriting local or ignored files.
 .SH COMMANDS
 .TP
 .B new [-b branch | --detach] path [commit]
-Create a worktree. Since v0.5.0, Twig can select a nearby donor worktree for
+Create a worktree. With a previously adopted root, new -b branch alone selects
+root/branch (branch slashes become hyphens). Explicit paths keep Git semantics. Since v0.5.0, Twig can select a nearby donor worktree for
 other commits; matching files are verified clones and Git writes the rest.
 Unsupported options delegate to Git.
 .TP
-.B adopt [--dry-run | --prepare | --dedupe] linked-worktree
-Experimental existing-worktree sharing, run from another donor checkout in the
-same repository. Default and --dry-run inspect matching current bytes of regular
-files tracked in both checkouts.
---prepare retains verified private clones without replacing existing files.
-Linux --dedupe uses in-place kernel comparison/sharing; APFS live replacement
-is unsupported. Neither logical matching bytes nor ioctl bytes measure exclusive
-physical savings. Does not restore HEAD, rewrite the index, or alter registration.
+.B adopt [--dry-run] [--yes] [--compact [--offline] | --move-only] [--worktrees-dir=root] [worktree]
+Discover registered worktrees and show a sibling layout under root. The original
+clone occupies main regardless of its branch. Prompt for an unsaved root and
+confirm every move; --dry-run changes nothing. Noninteractive use requires --yes
+and an explicit or saved root. An optional target selects only that worktree.
+Preserves branches, index bytes and dirty, untracked and ignored files. Refuses
+cross-device moves, occupied destinations, locked registrations and submodule
+relocation. Git repairs links after moves. Recovery journals are retained.
+Coordinate editors and agents before moving: stored absolute paths are not updated.
+Linux then attempts safe in-place deduplication; --move-only disables sharing.
+macOS interactive adoption offers optional offline compaction. Save work and close
+agents, editors, builds and servers using donor/target worktrees first. Automation
+requires --compact --offline --yes; --yes alone never authorizes APFS replacement.
+CoW candidates are verified against current bytes and supported target metadata,
+then atomically exchanged; old copies are retired only after verification. Index
+entries are preserved, but inode/ctime changes may trigger a later stat refresh.
+Open originals prevent retirement. Failure retains copies and a recovery journal;
+do not restart agents or delete recovery files blindly. This is not live deduplication.
+Explicit --prepare or --dedupe linked-worktree retain the v0.5 sharing-only modes.
+The --prepare clones are never installed. No exclusive physical savings are measured.
 .TP
 .B list [--porcelain [-z]]
 List worktrees. Porcelain is Git's stable machine-readable format.

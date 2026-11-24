@@ -1,0 +1,51 @@
+{
+  "candidate": "published v0.5.0 archive for the host architecture",
+  "sourceTag": "v0.5.0",
+  "sourceCommit": "4d2622f77ea8bfecc1f3fd6f1930686648990bbd",
+  "baseline": "stock Git; record version and hash",
+  "repeats": 3,
+  "concurrency": 1,
+  "warmup": true,
+  "imageGib": 32,
+  "workloads": [
+    {
+      "name": "workers-starter",
+      "revision": "d0b1ee485dc1cf2bc0b2a3511cf8cf1057624d02",
+      "worktrees": 10
+    },
+    {
+      "name": "twig",
+      "revision": "96c43950e4c0d8524de4ad53157c136eb222d39c",
+      "worktrees": 10
+    },
+    {
+      "name": "axo",
+      "revision": "67af816be26633039e8507d93d577b2073d6f5fd",
+      "worktrees": 1
+    },
+    {
+      "name": "linux",
+      "revision": "23c62304dde29abe92013d85910d03a77dada35d",
+      "worktrees": 1
+    },
+    {
+      "name": "openclaw",
+      "revision": "410c0dda40702e25263b49b8b7d0786a5e49e366",
+      "worktrees": 1
+    },
+    {
+      "name": "pulumi",
+      "revision": "430261138aa08539cd598b9269bfe8f82fd49b78",
+      "worktrees": 1
+    }
+  ],
+  "linuxFilesystems": [
+    "linux-xfs-image",
+    "linux-btrfs-image"
+  ],
+  "notes": [
+    "Separate disk-only comparison per filesystem. Raw timing remains evidence but is not displayed.",
+    "Freeze binary/harness/Git identities. Keep all raw failures and unstable allocator observations.",
+    "Do not execute application code or install dependencies. No simultaneous campaigns on a shared backing disk."
+  ]
+}

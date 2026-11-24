@@ -57,15 +57,18 @@ pub fn materialize(
     for (name, node) in &tree.children {
         let source = root.join(name);
         let target = data.join(name);
+        // A donor in use has deleted and replaced tracked paths. Leave those for
+        // Git to write, and keep sharing everything that is still what Git tracks.
+        if !still_tracked_kind(&source, node)? {
+            continue;
+        }
         match node {
             Node::Directory(directory) => {
-                ensure!(
-                    fs::symlink_metadata(&source)?.is_dir(),
-                    "source directory changed type"
-                );
                 #[cfg(target_os = "linux")]
                 {
-                    clone_tracked_directory(&source, &target, directory, modes)?;
+                    let mut files = Vec::new();
+                    plan_tracked_directory(&source, &target, directory, &mut files)?;
+                    clone_planned_files(&files, modes)?;
                     continue; // The Linux walker already establishes types and checkout modes.
                 }
                 #[cfg(not(target_os = "linux"))]
@@ -74,13 +77,7 @@ pub fn materialize(
                     let _ = directory;
                 }
             }
-            Node::File { .. } => {
-                ensure!(
-                    fs::symlink_metadata(&source)?.is_file(),
-                    "source is not a regular file"
-                );
-                native::clone_path(&source, &target)?;
-            }
+            Node::File { .. } => native::clone_path(&source, &target)?,
             Node::Symlink => native::symlink(&fs::read_link(&source)?, &target)?,
         }
         normalize(
@@ -103,16 +100,21 @@ pub fn materialize(
 // Linux FICLONE works on regular files, not directory trees. Walk only the
 // committed inventory so ignored files and unrelated special files are never opened.
 #[cfg(target_os = "linux")]
-fn clone_tracked_directory(
+struct PlannedFile {
+    source: std::path::PathBuf,
+    target: std::path::PathBuf,
+    executable: bool,
+}
+
+/// Create the tracked directories and symlinks, and list the regular files to
+/// clone. Directories exist before any file worker starts.
+#[cfg(target_os = "linux")]
+fn plan_tracked_directory(
     source: &Path,
     target: &Path,
     directory: &Directory,
-    modes: &native::FileModes,
+    files: &mut Vec<PlannedFile>,
 ) -> Result<()> {
-    ensure!(
-        fs::symlink_metadata(source)?.is_dir(),
-        "source directory changed type"
-    );
     // mkdir already applies umask/default ACL and inherits SGID/GID like Git.
     // Even chmod(mode | SGID) clears SGID when its group is not in our groups.
     fs::create_dir(target)?;
@@ -121,16 +123,89 @@ fn clone_tracked_directory(
         let target = target.join(name);
         match node {
             Node::Directory(directory) => {
-                clone_tracked_directory(&source, &target, directory, modes)?;
+                if still_tracked_kind(&source, node)? {
+                    plan_tracked_directory(&source, &target, directory, files)?;
+                }
             }
-            Node::File { executable } => {
-                native::clone_path(&source, &target)?;
-                modes.apply(&target, *executable)?;
+            // Checked by the worker that clones it, next to the clone itself.
+            Node::File { executable } => files.push(PlannedFile {
+                source,
+                target,
+                executable: *executable,
+            }),
+            Node::Symlink => {
+                if still_tracked_kind(&source, node)? {
+                    native::symlink(&fs::read_link(&source)?, &target)?;
+                }
             }
-            Node::Symlink => native::symlink(&fs::read_link(&source)?, &target)?,
         }
     }
     Ok(())
+}
+
+/// Reflink each planned file. One clone is a handful of system calls with no
+/// shared state, so a large inventory is split across a few threads.
+#[cfg(target_os = "linux")]
+fn clone_planned_files(files: &[PlannedFile], modes: &native::FileModes) -> Result<()> {
+    let clone = |file: &PlannedFile| -> Result<()> {
+        let kind = Node::File {
+            executable: file.executable,
+        };
+        if still_tracked_kind(&file.source, &kind)? {
+            native::clone_path(&file.source, &file.target)?;
+            modes.apply(&file.target, file.executable)?;
+        }
+        Ok(())
+    };
+    let workers = clone_worker_count(
+        files.len(),
+        std::thread::available_parallelism().map_or(1, usize::from),
+    );
+    if workers == 1 {
+        return files.iter().try_for_each(clone);
+    }
+    // Every worker joins before the first error is returned: nothing may still
+    // be writing private files when preparation fails over to Git.
+    std::thread::scope(|scope| {
+        let handles: Vec<_> = files
+            .chunks(files.len().div_ceil(workers))
+            .map(|chunk| scope.spawn(move || chunk.iter().try_for_each(clone)))
+            .collect();
+        handles
+            .into_iter()
+            .map(|handle| {
+                handle
+                    .join()
+                    .map_err(|_| anyhow::anyhow!("clone worker panicked"))?
+            })
+            .collect::<Vec<Result<()>>>()
+            .into_iter()
+            .collect()
+    })
+}
+
+#[cfg(any(target_os = "linux", test))]
+fn clone_worker_count(files: usize, cpus: usize) -> usize {
+    if files >= 1024 { cpus.clamp(1, 8) } else { 1 }
+}
+
+/// Whether a donor path still holds the kind of entry the target tracks there.
+/// Only a hint for skipping work: private bytes are verified afterwards.
+fn still_tracked_kind(source: &Path, node: &Node) -> Result<bool> {
+    let kind = match fs::symlink_metadata(source) {
+        Ok(metadata) => metadata.file_type(),
+        Err(error) if error.kind() == std::io::ErrorKind::NotFound => return Ok(false),
+        Err(error) => return Err(error.into()),
+    };
+    Ok(same_kind(node, kind))
+}
+
+fn same_kind(node: &Node, kind: fs::FileType) -> bool {
+    match node {
+        Node::Directory(_) => kind.is_dir(),
+        Node::File { .. } => kind.is_file(),
+        Node::Symlink => kind.is_symlink(),
+    }
 }
 
 fn normalize(
@@ -139,51 +214,83 @@ fn normalize(
     actual: fs::FileType,
     modes: &native::FileModes,
 ) -> Result<()> {
+    // The donor replaced this tracked path with something else. Drop the clone:
+    // an absent private path is one Git writes.
+    if !same_kind(node, actual) {
+        return remove_private_tree(path, actual);
+    }
+    let metadata = fs::symlink_metadata(path)?;
+    // Before anything else: an immutable clone refuses the changes below.
+    native::discard_donor_metadata(path, &metadata)?;
     match node {
         Node::Directory(expected) => {
-            ensure!(actual.is_dir(), "cloned directory changed type");
             // Source directories may be read-only; checkout permissions come from this umask.
-            modes.apply_directory(path)?;
-            let mut remaining = expected.children.len();
+            modes.ensure(path, &metadata, true)?;
             for child in fs::read_dir(path)? {
                 let child = child?;
                 let actual = child.file_type()?;
                 match expected.children.get(&child.file_name()) {
-                    Some(node) => {
-                        normalize(&child.path(), node, actual, modes)?;
-                        remaining -= 1;
-                    }
+                    Some(node) => normalize(&child.path(), node, actual, modes)?,
                     None => remove_private_tree(&child.path(), actual)?,
                 }
             }
-            ensure!(remaining == 0, "tracked path missing from cloned directory");
         }
-        Node::File { executable } => {
-            ensure!(actual.is_file(), "cloned regular file changed type");
-            modes.apply(path, *executable)?;
-        }
-        Node::Symlink => ensure!(actual.is_symlink(), "cloned symlink changed type"),
+        Node::File { executable } => modes.ensure(path, &metadata, *executable)?,
+        Node::Symlink => {}
     }
     Ok(())
 }
 
 pub(super) fn remove_private_tree(path: &Path, kind: fs::FileType) -> Result<()> {
+    match remove_entry(path, kind) {
+        // A tracked path Git can reach relative to its checkout may exceed PATH_MAX
+        // under the staging prefix. The standard library removes relative to open
+        // directories, without following symlinks, so no path grows that long.
+        Err(error) if too_long(&error) && kind.is_dir() => Ok(fs::remove_dir_all(path)?),
+        result => result,
+    }
+}
+
+fn too_long(error: &anyhow::Error) -> bool {
+    error
+        .downcast_ref::<std::io::Error>()
+        .is_some_and(|error| error.kind() == std::io::ErrorKind::InvalidFilename)
+}
+
+fn remove_entry(path: &Path, kind: fs::FileType) -> Result<()> {
     if kind.is_dir() {
         // Only owned staging/cloned entries reach here. Never follow a symlink.
         #[cfg(unix)]
-        {
+        unlocked(path, || {
             use std::os::unix::fs::PermissionsExt;
-            fs::set_permissions(path, fs::Permissions::from_mode(0o700))?;
-        }
+            fs::set_permissions(path, fs::Permissions::from_mode(0o700))
+        })?;
         for child in fs::read_dir(path)? {
             let child = child?;
-            remove_private_tree(&child.path(), child.file_type()?)?;
+            remove_entry(&child.path(), child.file_type()?)?;
         }
         fs::remove_dir(path)?;
     } else {
-        fs::remove_file(path)?;
+        unlocked(path, || match fs::remove_file(path) {
+            // Absence is the goal. exFAT's `._name` companions vanish with their
+            // file after the directory listing already named them.
+            Err(error) if error.kind() == std::io::ErrorKind::NotFound => Ok(()),
+            result => result,
+        })?;
     }
     Ok(())
+}
+
+/// Cloned donor entries keep the donor's immutable flags, which refuse removal.
+/// Pay for unlocking only when an operation is actually refused.
+fn unlocked(path: &Path, operation: impl Fn() -> std::io::Result<()>) -> Result<()> {
+    match operation() {
+        Err(error) if error.kind() == std::io::ErrorKind::PermissionDenied => {
+            native::clear_user_flags(path)?;
+            Ok(operation()?)
+        }
+        result => Ok(result?),
+    }
 }
 
 #[cfg(test)]
@@ -198,6 +305,13 @@ mod tests {
             tree.insert(&["a".into(), "b".into()], Kind::Symlink)
                 .is_err()
         );
+    }
+    #[test]
+    fn small_inventories_clone_on_one_thread_and_large_ones_are_bounded() {
+        assert_eq!(clone_worker_count(1023, 64), 1);
+        assert_eq!(clone_worker_count(1024, 64), 8);
+        assert_eq!(clone_worker_count(100_000, 2), 2);
+        assert_eq!(clone_worker_count(100_000, 1), 1);
     }
     #[test]
     fn rejects_duplicate_paths() {

@@ -1,0 +1,110 @@
+{
+  "schemaVersion": 1,
+  "kind": "real-repository-campaign",
+  "generatedAt": "2026-11-17T23:47:52.173Z",
+  "commit": "63f1edc0cbf2fd40f0907a3e053f4757baa65a8d",
+  "dirty": false,
+  "candidate": {
+    "version": "git-twig 0.5.0",
+    "sourceCommit": "4d2622f77ea8bfecc1f3fd6f1930686648990bbd",
+    "sha256": "63853935620fef55977053e7de6671bbcf17da839f36dd426348c126910cda97"
+  },
+  "git": {
+    "version": "git version 2.43.0",
+    "sha256": "eb54b535467e0975c1284d4c4d08eea779aeb248a5d34b02e2ee171382e22201"
+  },
+  "worker": {
+    "sha256": "beb63e90e653c629028fe630e750112cfeca27ca406f3a761e10d66fefb33d17"
+  },
+  "config": {
+    "target": "linux-xfs",
+    "filesystem": "linux-xfs-image",
+    "rounds": 3,
+    "concurrency": 1,
+    "warmup": true,
+    "budgetSeconds": 7200,
+    "pointSeconds": 1800,
+    "minimumFreeGiB": 128,
+    "maxGrowthGiB": 160,
+    "environment": "Shared Linux kernel 7.0.0-43-generic, Ubuntu Noble privileged test container, stock Git 2.43.0. Published v0.5.0 x86_64 archive verified against release SHA-256. Owned XFS reflink=1 sparse loopback images backed by ext4 /dev/sda1; warm caches and original v0.4 repository pins. One campaign per backing disk, no intentional competing builds/tests; not bare-device or host-volume claims."
+  },
+  "inputs": [
+    {
+      "label": "workers-starter",
+      "revision": "d0b1ee485dc1cf2bc0b2a3511cf8cf1057624d02",
+      "worktrees": 10,
+      "imageGiB": 16,
+      "hostTiming": true
+    },
+    {
+      "label": "twig",
+      "revision": "96c43950e4c0d8524de4ad53157c136eb222d39c",
+      "worktrees": 10,
+      "imageGiB": 16,
+      "hostTiming": true
+    },
+    {
+      "label": "axo",
+      "revision": "67af816be26633039e8507d93d577b2073d6f5fd",
+      "worktrees": 1,
+      "imageGiB": 16,
+      "hostTiming": true
+    },
+    {
+      "label": "openclaw",
+      "revision": "410c0dda40702e25263b49b8b7d0786a5e49e366",
+      "worktrees": 1,
+      "imageGiB": 24,
+      "hostTiming": true
+    },
+    {
+      "label": "pulumi",
+      "revision": "430261138aa08539cd598b9269bfe8f82fd49b78",
+      "worktrees": 1,
+      "imageGiB": 16,
+      "hostTiming": true
+    },
+    {
+      "label": "linux",
+      "revision": "23c62304dde29abe92013d85910d03a77dada35d",
+      "worktrees": 1,
+      "imageGiB": 32,
+      "hostTiming": false
+    }
+  ],
+  "status": "failed",
+  "stopReason": "Error: Wrong repository input",
+  "resourceSamples": [
+    {
+      "freeGiB": 377.4357261657715,
+      "growthGiB": 0.00000762939453125,
+      "elapsedMs": 1.330484999999996
+    },
+    {
+      "freeGiB": 377.054874420166,
+      "growthGiB": 0.380859375,
+      "elapsedMs": 27181.741651
+    }
+  ],
+  "jobs": [
+    {
+      "repository": "workers-starter",
+      "file": "workers-starter.json",
+      "status": "failed",
+      "verified": false,
+      "allocationComparable": false,
+      "timeoutMs": 1800000,
+      "error": "Error: Wrong repository input",
+      "startedElapsedMs": 26.50604,
+      "finishedElapsedMs": 27214.341809,
+      "exitCode": 0
+    }
+  ],
+  "notes": [
+    "Published v0.5.0 vs frozen stock Git; release asset provenance is retained alongside this campaign. Three paired rounds, concurrency one, warmup enabled. Original v0.4 input pins and counts.",
+    "No retries, no automatic exclusion of errors, and no website changes. Unstable allocation observations remain raw data, not comparative allocation claims.",
+    "Host timing and filesystem-image allocation are separate environments; never combine them into one cohort. Warm caches on shared hosts; background apps not stopped. No cold-cache, saturation or universal speed claim.",
+    "Full independent raw-byte/mode/symlink verification, native-clone checks, source isolation and private writes are mandatory. Verification follows creation timing. Original sources are read-only; applications and dependency scripts are never executed.",
+    "Observed nearest-rank percentiles from small finite samples are not population tail estimates. CLI creation and subsequent first-status latency are reported separately."
+  ]
+}

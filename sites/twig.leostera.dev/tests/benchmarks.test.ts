@@ -1,64 +1,33 @@
 import { expect, test } from "bun:test";
-import { loadBenchmarks } from "../scripts/benchmarks";
-import { loadPreview, previewSchema } from "../scripts/preview";
+import { loadBenchmarks, loadPlatforms } from "../scripts/benchmarks";
 
-test("website compares only stock Git and latest Twig, without cross-revision", () => {
-  const { datasets } = loadBenchmarks();
-  expect(datasets.map((d) => d.target)).toEqual([
-    "macos-apfs",
-    "macos-apfs-case-sensitive",
-    "linux-xfs",
-    "linux-btrfs",
-  ]);
-  for (const dataset of datasets) {
-    expect("baseline" in dataset).toBe(false);
-    expect(dataset.profiles).toHaveLength(5);
-    expect(dataset.profiles.some((p) => p.profile === "cross-revision")).toBe(
-      false,
-    );
-    for (const profile of dataset.profiles) {
-      expect(profile.measurements?.map((m) => m.backend)).toEqual([
-        "git",
-        "candidate",
-      ]);
-    }
+const repositories = [
+  "Linux kernel", "Pulumi docs", "OpenClaw", "Axo", "git-twig", "Workers starter",
+];
+
+test("uses verified checked-in allocation measurements", () => {
+  const data = loadBenchmarks();
+  expect(data.map(d => d.name)).toEqual(repositories);
+  expect(data[0]!.gitBytes).toBeGreaterThan(data[0]!.twigBytes);
+  expect(data.every(d => d.source.startsWith("https://github.com/leostera/git-twig/"))).toBe(true);
+});
+
+test("provides complete paired real-repository comparisons for all platforms", () => {
+  const platforms = loadPlatforms();
+  expect(Object.keys(platforms)).toEqual(["mac", "xfs", "btrfs"]);
+  for (const rows of Object.values(platforms)) {
+    expect(rows.map(d => d.name)).toEqual(repositories);
+    expect(rows.every(d => d.gitBytes > 0 && d.twigBytes > 0 && d.rounds === 3 && d.concurrency === 1)).toBe(true);
+    expect(rows.map(d => d.worktrees)).toEqual([1, 1, 1, 1, 10, 10]);
   }
 });
 
-test("public values are derived from the full archived comparison", () => {
-  const raw = loadPreview();
-  const shown = loadBenchmarks();
-  for (const dataset of shown.datasets) {
-    const original = raw.datasets.find((d) => d.target === dataset.target)!;
-    for (const profile of dataset.profiles) {
-      const values = original.profiles.find(
-        (p) => p.profile === profile.profile,
-      )!.measurements!;
-      expect(profile.measurements).toEqual([
-        { ...values[0], backend: "git" as const },
-        { ...values[2], backend: "candidate" as const },
-      ]);
-    }
-  }
-});
-
-test("retains complete campaign counts and source identities", () => {
-  const { datasets } = loadBenchmarks();
-  expect(datasets.reduce((sum, d) => sum + d.verifiedCreates, 0)).toBe(992);
-  expect(datasets.reduce((sum, d) => sum + d.failedPoints, 0)).toBe(2);
-  expect(datasets.reduce((sum, d) => sum + d.unstablePoints, 0)).toBe(1);
-  expect(new Set(datasets.map((d) => d.candidate.sourceCommit)).size).toBe(1);
-});
-
-test("rejects missing backends, nonfinite metrics and mixed sources", () => {
-  const data = loadPreview();
-  const row = data.datasets[0]!.profiles[0]!.measurements!;
-  row[0].backend = "candidate";
-  expect(() => previewSchema.parse(data)).toThrow();
-  row[0].backend = "git";
-  row[0].bytes = Number.NaN;
-  expect(() => previewSchema.parse(data)).toThrow();
-  const other = loadPreview();
-  other.datasets[0]!.candidate.sourceCommit = "0".repeat(40);
-  expect(() => previewSchema.parse(other)).toThrow();
+test("retains the audited absolute allocation values", () => {
+  const data = loadPlatforms();
+  expect(data.mac[0]!.gitBytes).toBe(1964982272);
+  expect(data.mac[0]!.twigBytes).toBe(46772224);
+  expect(data.xfs[0]!.gitBytes).toBe(1982636032);
+  expect(data.xfs[0]!.twigBytes).toBe(74174464);
+  expect(data.btrfs[0]!.gitBytes).toBe(1981104128);
+  expect(data.btrfs[0]!.twigBytes).toBe(200765440);
 });

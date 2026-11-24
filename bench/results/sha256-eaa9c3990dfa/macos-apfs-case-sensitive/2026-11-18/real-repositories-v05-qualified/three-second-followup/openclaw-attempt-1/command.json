@@ -1,0 +1,23 @@
+[
+  "/Users/leostera/Developer/github.com/leostera/git-twig/main/target/v05-real-macos-2026-11-17/bin/twig-real-bench",
+  "--repo",
+  "openclaw=/Users/leostera/Developer/github.com/leostera/git-twig/main/target/apfs-v04-final-2026-11-17/input/openclaw.git",
+  "--revision",
+  "openclaw=410c0dda40702e25263b49b8b7d0786a5e49e366",
+  "--candidate",
+  "/Users/leostera/Developer/github.com/leostera/git-twig/main/target/v05-real-macos-2026-11-17/bin/git-twig",
+  "--filesystem",
+  "case-sensitive-image",
+  "--image-gib",
+  "32",
+  "--worktrees",
+  "1",
+  "--concurrency",
+  "1",
+  "--repeats",
+  "3",
+  "--warmup",
+  "true",
+  "--output",
+  "/Users/leostera/Developer/github.com/leostera/git-twig/main/target/v05-real-macos-stability-2026-11-18/openclaw-attempt-1/openclaw.json"
+]

@@ -1,0 +1,30 @@
+linux: git, repeat 1/3, 1 creates with concurrency 1
+cohort workers launched: 1; queued creates: 1
+git: CLI completed 1/1; content verification pending
+  9.24s creates; 1 ok / 0 failed; allocation after status: 1890.79 MiB
+  Linux image retained at /home/leostera/Developer/github.com/leostera/git-twig/bench-v05-real/target/real-images/1794971056065-7953/linux-git-0.img
+linux: twig, repeat 1/3, 1 creates with concurrency 1
+cohort workers launched: 1; queued creates: 1
+twig: CLI completed 1/1; content verification pending
+  34.55s creates; 1 ok / 0 failed; allocation after status: 70.73 MiB
+  Linux image retained at /home/leostera/Developer/github.com/leostera/git-twig/bench-v05-real/target/real-images/1794971056065-7953/linux-twig-0.img
+linux: twig, repeat 2/3, 1 creates with concurrency 1
+cohort workers launched: 1; queued creates: 1
+twig: CLI completed 1/1; content verification pending
+  120.80s creates; 1 ok / 0 failed; allocation after status: 70.74 MiB
+  Linux image retained at /home/leostera/Developer/github.com/leostera/git-twig/bench-v05-real/target/real-images/1794971056065-7953/linux-twig-1.img
+linux: git, repeat 2/3, 1 creates with concurrency 1
+cohort workers launched: 1; queued creates: 1
+git: CLI completed 1/1; content verification pending
+  8.69s creates; 1 ok / 0 failed; allocation after status: 1890.79 MiB
+  Linux image retained at /home/leostera/Developer/github.com/leostera/git-twig/bench-v05-real/target/real-images/1794971056065-7953/linux-git-1.img
+linux: git, repeat 3/3, 1 creates with concurrency 1
+cohort workers launched: 1; queued creates: 1
+git: CLI completed 1/1; content verification pending
+  21.01s creates; 1 ok / 0 failed; allocation after status: 1890.79 MiB
+  Linux image retained at /home/leostera/Developer/github.com/leostera/git-twig/bench-v05-real/target/real-images/1794971056065-7953/linux-git-2.img
+linux: twig, repeat 3/3, 1 creates with concurrency 1
+cohort workers launched: 1; queued creates: 1
+twig: CLI completed 1/1; content verification pending
+  23.81s creates; 1 ok / 0 failed; allocation after status: 70.74 MiB
+  Linux image retained at /home/leostera/Developer/github.com/leostera/git-twig/bench-v05-real/target/real-images/1794971056065-7953/linux-twig-2.img

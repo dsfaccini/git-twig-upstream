@@ -1,0 +1,46 @@
+{
+  "schemaVersion": 1,
+  "originalResultSha256": "a4f2172c719f0c1cabf125c936cf61b3b26bca1ef9e57f06d633c46c6b60f176",
+  "measurementCommit": "63f1edc0cbf2fd40f0907a3e053f4757baa65a8d",
+  "validatorCommit": "ace60d6",
+  "verified": true,
+  "reason": "Original gate expected donorCommit; schema-4 worker uses donor_commit. Raw data and failed manifest unchanged. No measurement repeated.",
+  "summary": [
+    {
+      "backend": "git",
+      "rounds": 3,
+      "operations": 30,
+      "allocationComparable": true,
+      "batchCreateMedianMs": 151.483519,
+      "createsPerSecondMedian": 66.01378200093173,
+      "logicalBytesPerSecondMedian": 93805.584223324,
+      "createP50Ms": 15.128018,
+      "createP95Ms": 16.392599,
+      "createP99Ms": 16.608588,
+      "createMaxMs": 16.608588,
+      "firstStatusP50Ms": 4.017037999999999,
+      "allocationMedianBytes": 598016,
+      "allocationMinBytes": 598016,
+      "allocationMaxBytes": 598016,
+      "maxHarnessCpuWallRatio": 0.07933676959817566
+    },
+    {
+      "backend": "twig",
+      "rounds": 3,
+      "operations": 30,
+      "allocationComparable": true,
+      "batchCreateMedianMs": 830.1706770000001,
+      "createsPerSecondMedian": 12.045715751051514,
+      "logicalBytesPerSecondMedian": 17116.9620822442,
+      "createP50Ms": 83.98441399999999,
+      "createP95Ms": 88.460764,
+      "createP99Ms": 88.533253,
+      "createMaxMs": 88.533253,
+      "firstStatusP50Ms": 4.058292,
+      "allocationMedianBytes": 245760,
+      "allocationMinBytes": 245760,
+      "allocationMaxBytes": 245760,
+      "maxHarnessCpuWallRatio": 0.016260294640514334
+    }
+  ]
+}

@@ -1,0 +1,31 @@
+linux: git, repeat 1/3, 1 creates with concurrency 1
+cohort workers launched: 1; queued creates: 1
+git: CLI completed 1/1; content verification pending
+  31.60s creates; 1 ok / 0 failed; allocation after status: 1874.25 MiB
+  disposable image detached and removed
+linux: twig, repeat 1/3, 1 creates with concurrency 1
+cohort workers launched: 1; queued creates: 1
+twig: CLI completed 1/1; content verification pending
+  27.87s creates; 1 ok / 0 failed; allocation after status: 44.61 MiB
+  disposable image detached and removed
+linux: twig, repeat 2/3, 1 creates with concurrency 1
+cohort workers launched: 1; queued creates: 1
+twig: CLI completed 1/1; content verification pending
+  24.50s creates; 1 ok / 0 failed; allocation after status: 44.59 MiB
+  disposable image detached and removed
+linux: git, repeat 2/3, 1 creates with concurrency 1
+cohort workers launched: 1; queued creates: 1
+git: CLI completed 1/1; content verification pending
+  25.78s creates; 1 ok / 0 failed; allocation after status: 1873.95 MiB
+  disposable image detached and removed
+linux: git, repeat 3/3, 1 creates with concurrency 1
+cohort workers launched: 1; queued creates: 1
+git: CLI completed 1/1; content verification pending
+  25.86s creates; 1 ok / 0 failed; allocation after status: 1873.74 MiB
+  disposable image detached and removed
+linux: twig, repeat 3/3, 1 creates with concurrency 1
+cohort workers launched: 1; queued creates: 1
+twig: CLI completed 1/1; content verification pending
+  25.72s creates; 1 ok / 0 failed; allocation after status: 44.77 MiB
+  disposable image detached and removed
+/Users/leostera/Developer/github.com/leostera/git-twig/main/target/v05-real-macos-2026-11-17/linux.json

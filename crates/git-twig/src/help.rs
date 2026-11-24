@@ -6,7 +6,7 @@ Usage: git twig <command> [options]
 
 Commands:
   new       Create a linked worktree; use -b <branch> or --detach
-  adopt     EXPERIMENT: inspect/prepare existing files; Linux in-place dedupe
+  adopt     Preview and confirm a sibling layout for existing worktrees
   list      List worktrees (--porcelain for machine-readable output)
   remove    Remove a worktree
   move      Move a worktree
@@ -34,7 +34,7 @@ Other requests and unsupported worktree options use stock Git. Requires Git 2.40
 Set TWIG_TRACE=1 to report backend selection to stderr.
 ";
 
-const NEW: &str = "Usage: git twig new [<git-worktree options>] <path> [<commit>]
+const NEW: &str = "Usage: git twig new [<git-worktree options>] <path> [<commit>]\n       git twig new -b <branch>  # destination from a previously adopted root
 
   -b <branch>       Create a new branch
   -B <branch>       Create or reset a branch (delegates to Git)
@@ -56,6 +56,34 @@ also be on that filesystem; otherwise creation delegates to Git.
 See git help worktree for the full Git worktree option reference.
 ";
 
+const ADOPT: &str = "Usage: git twig adopt [options] [<worktree>]
+
+  --worktrees-dir <root>  Preview root/{main,feat-x,...}; remember after adoption
+  --dry-run              Preview layout/sharing without writes
+  --yes                  Apply the reviewed plan; explicit/saved root required
+  --compact              Request matching-file compaction as well as relocation
+  --offline              Affirm donor/target worktrees are saved and closed
+  --move-only            Relocate without attempting file sharing
+
+No target: include the original clone and this repository's registered worktrees.
+A target selects only that checkout. The original clone uses main/ regardless of branch.
+An unsaved root is prompted; no global layout modes. No overwrites or forced unlocks.
+Coordinate agents/editors first: stored absolute session paths are not updated.
+
+macOS: interactive adoption offers compaction and requires explicit offline consent.
+Automation requires --compact --offline --yes. --yes alone is move-only on macOS.
+Stop agents/editors/builds/servers first; paused processes can retain writable mappings.
+Verified native CoW replacements preserve current bytes, supported metadata and index
+entries, but change inode/ctime. Old versions are retired only after verification.
+An open original prevents retirement; failure retains copies and a recovery journal.
+Never treat process scans or --offline as proof that a live worktree is safe.
+
+Linux: native in-place sharing remains the default; --move-only disables it.
+Matching logical/kernel bytes do not measure exclusive physical space reclaimed.
+Explicit --prepare/--dedupe <linked-worktree> keep v0.5 sharing-only semantics:
+--prepare clones are never installed; Linux --dedupe does not replace inodes.
+";
+
 fn is_help(arg: &OsString) -> bool {
     arg == "-h" || arg == "--help"
 }
@@ -70,9 +98,7 @@ pub fn for_args(args: &[OsString]) -> Option<String> {
     }
     let help = match command {
         "new" => return Some(NEW.into()),
-        "adopt" => {
-            "adopt [--dry-run | --prepare | --dedupe] <linked-worktree>\nExperimental: run from a different donor checkout in the same repository.\nDefault/--dry-run compares current tracked-file bytes without writes.\n--prepare retains private verified clones in Git metadata, without replacing files.\n--dedupe is Linux-only in-place sharing; APFS live replacement is unsupported.\nDirty/staged contents are not restored to HEAD. No physical savings claim."
-        }
+        "adopt" => return Some(ADOPT.into()),
         "list" => {
             "list [--verbose] [--porcelain [-z]]\nList worktrees; --porcelain is Git's stable machine-readable format."
         }

@@ -1,0 +1,220 @@
+{
+  "schemaVersion": 1,
+  "kind": "real-repository-campaign",
+  "generatedAt": "2026-11-18T00:05:02.573Z",
+  "commit": "ace60d62f1584532efa6ebceef481d21f2483989",
+  "dirty": false,
+  "candidate": {
+    "version": "git-twig 0.5.0",
+    "sourceCommit": "4d2622f77ea8bfecc1f3fd6f1930686648990bbd",
+    "sha256": "eaa9c3990dfabc0bfaa0614abd8efdbde07149c77fa96c0eb0636cf446cd88e7"
+  },
+  "git": {
+    "version": "git version 2.56.1",
+    "sha256": "b5eaefb829ec3b61176f83ed7fddc333a9d92e762ec4e558f55baadc4314297d"
+  },
+  "worker": {
+    "sha256": "c48b9f59b44faa9e4977259e71ff4eb6d83f1b6a588a049c4a7a60257e1e6a4f"
+  },
+  "config": {
+    "target": "macos-apfs-case-sensitive",
+    "filesystem": "case-sensitive-image",
+    "rounds": 3,
+    "concurrency": 1,
+    "warmup": true,
+    "budgetSeconds": 7200,
+    "pointSeconds": 1800,
+    "minimumFreeGiB": 128,
+    "maxGrowthGiB": 160,
+    "environment": "Shared Apple M1 Ultra Mac Studio, internal APFS storage. Published v0.5.0 arm64 archive verified against release SHA-256. Stock Git 2.56.1. Original v0.4 pins and agreed counts; warmup enabled; concurrency one; three paired rounds. Original host Workers starter raw results independently qualified after header-parser correction and are not repeated. Remaining host jobs and the separate originally planned case-sensitive allocation target only. No competing builds/tests; background apps not stopped."
+  },
+  "inputs": [
+    {
+      "label": "workers-starter",
+      "revision": "d0b1ee485dc1cf2bc0b2a3511cf8cf1057624d02",
+      "worktrees": 10,
+      "imageGiB": 16,
+      "hostTiming": true
+    },
+    {
+      "label": "twig",
+      "revision": "96c43950e4c0d8524de4ad53157c136eb222d39c",
+      "worktrees": 10,
+      "imageGiB": 16,
+      "hostTiming": true
+    },
+    {
+      "label": "axo",
+      "revision": "67af816be26633039e8507d93d577b2073d6f5fd",
+      "worktrees": 1,
+      "imageGiB": 16,
+      "hostTiming": true
+    },
+    {
+      "label": "openclaw",
+      "revision": "410c0dda40702e25263b49b8b7d0786a5e49e366",
+      "worktrees": 1,
+      "imageGiB": 24,
+      "hostTiming": true
+    },
+    {
+      "label": "pulumi",
+      "revision": "430261138aa08539cd598b9269bfe8f82fd49b78",
+      "worktrees": 1,
+      "imageGiB": 16,
+      "hostTiming": true
+    },
+    {
+      "label": "linux",
+      "revision": "23c62304dde29abe92013d85910d03a77dada35d",
+      "worktrees": 1,
+      "imageGiB": 32,
+      "hostTiming": false
+    }
+  ],
+  "status": "completed",
+  "stopReason": null,
+  "resourceSamples": [
+    {
+      "freeGiB": 576.3862533569336,
+      "growthGiB": 0.000011444091796875,
+      "elapsedMs": 0.8090420000000051
+    },
+    {
+      "freeGiB": 576.2213668823242,
+      "growthGiB": 0.16489791870117188,
+      "elapsedMs": 48494.371
+    },
+    {
+      "freeGiB": 576.2213096618652,
+      "growthGiB": 0.16495513916015625,
+      "elapsedMs": 48547.897458
+    },
+    {
+      "freeGiB": 575.0651054382324,
+      "growthGiB": 1.3211593627929688,
+      "elapsedMs": 94634.3595
+    },
+    {
+      "freeGiB": 575.0396842956543,
+      "growthGiB": 1.3465805053710938,
+      "elapsedMs": 94690.34020800001
+    },
+    {
+      "freeGiB": 576.0575065612793,
+      "growthGiB": 0.32875823974609375,
+      "elapsedMs": 151124.332833
+    },
+    {
+      "freeGiB": 576.0574798583984,
+      "growthGiB": 0.3287849426269531,
+      "elapsedMs": 151182.130083
+    },
+    {
+      "freeGiB": 577.8768882751465,
+      "growthGiB": -1.4906234741210938,
+      "elapsedMs": 913982.490708
+    },
+    {
+      "freeGiB": 577.8768653869629,
+      "growthGiB": -1.4906005859375,
+      "elapsedMs": 914096.106292
+    },
+    {
+      "freeGiB": 577.6032752990723,
+      "growthGiB": -1.217010498046875,
+      "elapsedMs": 1278932.735125
+    },
+    {
+      "freeGiB": 577.6025466918945,
+      "growthGiB": -1.2162818908691406,
+      "elapsedMs": 1279575.591458
+    },
+    {
+      "freeGiB": 575.8420372009277,
+      "growthGiB": 0.5442276000976562,
+      "elapsedMs": 2463328.1989579997
+    }
+  ],
+  "jobs": [
+    {
+      "repository": "workers-starter",
+      "file": "workers-starter.json",
+      "status": "completed",
+      "verified": true,
+      "allocationComparable": true,
+      "timeoutMs": 1800000,
+      "error": null,
+      "startedElapsedMs": 28.35816700000001,
+      "finishedElapsedMs": 48547.384167,
+      "exitCode": 0
+    },
+    {
+      "repository": "twig",
+      "file": "twig.json",
+      "status": "completed",
+      "verified": true,
+      "allocationComparable": true,
+      "timeoutMs": 1800000,
+      "error": null,
+      "startedElapsedMs": 48576.402833,
+      "finishedElapsedMs": 94689.914292,
+      "exitCode": 0
+    },
+    {
+      "repository": "axo",
+      "file": "axo.json",
+      "status": "completed",
+      "verified": true,
+      "allocationComparable": true,
+      "timeoutMs": 1800000,
+      "error": null,
+      "startedElapsedMs": 94721.53516700001,
+      "finishedElapsedMs": 151181.560375,
+      "exitCode": 0
+    },
+    {
+      "repository": "openclaw",
+      "file": "openclaw.json",
+      "status": "completed",
+      "verified": true,
+      "allocationComparable": false,
+      "timeoutMs": 1800000,
+      "error": null,
+      "startedElapsedMs": 151209.38499999998,
+      "finishedElapsedMs": 914095.402625,
+      "exitCode": 0
+    },
+    {
+      "repository": "pulumi",
+      "file": "pulumi.json",
+      "status": "completed",
+      "verified": true,
+      "allocationComparable": false,
+      "timeoutMs": 1800000,
+      "error": null,
+      "startedElapsedMs": 914125.5155420001,
+      "finishedElapsedMs": 1279566.1700829999,
+      "exitCode": 0
+    },
+    {
+      "repository": "linux",
+      "file": "linux.json",
+      "status": "completed",
+      "verified": true,
+      "allocationComparable": false,
+      "timeoutMs": 1800000,
+      "error": null,
+      "startedElapsedMs": 1279767.218583,
+      "finishedElapsedMs": 2463427.788875,
+      "exitCode": 0
+    }
+  ],
+  "notes": [
+    "Published v0.5.0 vs frozen stock Git; release asset provenance is retained alongside this campaign. Three paired rounds, concurrency one, warmup enabled. Original v0.4 input pins and counts.",
+    "No retries, no automatic exclusion of errors, and no website changes. Unstable allocation observations remain raw data, not comparative allocation claims.",
+    "Host timing and filesystem-image allocation are separate environments; never combine them into one cohort. Warm caches on shared hosts; background apps not stopped. No cold-cache, saturation or universal speed claim.",
+    "Full independent raw-byte/mode/symlink verification, native-clone checks, source isolation and private writes are mandatory. Verification follows creation timing. Original sources are read-only; applications and dependency scripts are never executed.",
+    "Observed nearest-rank percentiles from small finite samples are not population tail estimates. CLI creation and subsequent first-status latency are reported separately."
+  ]
+}

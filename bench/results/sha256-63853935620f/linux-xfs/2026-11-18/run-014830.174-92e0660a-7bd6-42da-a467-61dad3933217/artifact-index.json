@@ -1,0 +1,45 @@
+{
+  "schemaVersion": 1,
+  "artifacts": [
+    {
+      "name": "manifest.json",
+      "bytes": 3056,
+      "sha256": "152f99b5dbcb57098056e85a53f851a6bf8b2bcbf95ee9987ac587d410116bd1"
+    },
+    {
+      "name": "twig-twig.svg",
+      "bytes": 2327,
+      "sha256": "b1bc78a2e995868c64a17574ba6440412b47a71eef3f163fd03a785e902d2bcd"
+    },
+    {
+      "name": "twig.csv",
+      "bytes": 620,
+      "sha256": "08bc773b27fd930801ee4dad9f0cff9cc19cd14b649a46d4d635a35821b5235d"
+    },
+    {
+      "name": "twig.json",
+      "bytes": 48284,
+      "sha256": "723bbfe947f68b7f8141798d603a70b7577be272761f8d569a04b29cb1b8444f"
+    },
+    {
+      "name": "twig.json.stderr.log",
+      "bytes": 5184,
+      "sha256": "d7b5b50d79958e21a660f609f1a2e6971a79cd194417fa59c5006ce73f3abc97"
+    },
+    {
+      "name": "twig.json.stdout.log",
+      "bytes": 186,
+      "sha256": "ba478785e2f0870f09b25b47d54ded57849e1a2090d23167555d74faaf5923c1"
+    },
+    {
+      "name": "twig.report.json",
+      "bytes": 1706,
+      "sha256": "bc6bfb176d963d7c23593a4dd5b9b4e34553e749016d9708faff78bc8f9b55a4"
+    },
+    {
+      "name": "twig.summary.json",
+      "bytes": 1337,
+      "sha256": "4a4729799963c4e67a726b87f75486a980abbd763ab5b0e7b329f91a5a07c5ba"
+    }
+  ]
+}

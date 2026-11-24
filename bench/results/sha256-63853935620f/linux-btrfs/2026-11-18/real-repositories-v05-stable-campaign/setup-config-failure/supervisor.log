@@ -1,0 +1,14 @@
+attempt linux-xfs workers-starter 1
+failed /home/leostera/Developer/github.com/leostera/git-twig/bench-v05-real/target/v05-stable-c4d3d4e/stable-state.json
+12 |   if (!Array.isArray(value)) throw new Error("Expected array");
+13 |   return value;
+14 | }
+15 | export function string(value: unknown): string {
+16 |   if (typeof value !== "string" || !value.length)
+17 |     throw new Error("Expected nonempty string");
+                   ^
+error: Expected nonempty string
+      at string (/home/leostera/Developer/github.com/leostera/git-twig/bench-v05-real/bench/lib/results.ts:17:15)
+      at stableCampaign (/home/leostera/Developer/github.com/leostera/git-twig/bench-v05-real/bench/real-stable.ts:134:13)
+
+Bun v1.4.4 (Linux x64)
